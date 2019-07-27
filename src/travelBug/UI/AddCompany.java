@@ -16,8 +16,8 @@ public class AddCompany extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtFCompanyName, txtFShortForm;
 	private JTextArea tADescription;
-	private JLabel lblErrorCompanyName, lblPhoneNumber, lblDescription, lblErrorDescription, lblErrorPhoneNum,
-			lblCompanyName, lblShortForm, lblTitle, lblErrorShortForm;
+	private JLabel lblPhoneNumber, lblDescription,lblCompanyName, lblShortForm, lblTitle ;
+	private Label  lblErrorDescription, lblErrorPhoneNum, lblErrorShortForm,lblErrorCompanyName;
 	private JTextField txtFPhoneNum;
 	private LinkArray<Company> cArray = new LinkArray<Company>();
 	private ReadWriteFile<Company> rFile = new ReadWriteFile<Company>("Company.txt", Company.class);
@@ -86,28 +86,32 @@ public class AddCompany extends JPanel {
 		txtFPhoneNum.setColumns(10);
 
 		//====================== Error Message ==========================
-		lblErrorCompanyName = new JLabel("");
+		lblErrorCompanyName = new Label("");
 		lblErrorCompanyName.setForeground(Color.RED);
+		lblErrorCompanyName.setBackground(Color.white);
 		lblErrorCompanyName.setBackground(new Color(0, 0, 0, 0));
 		lblErrorCompanyName.setBounds(277, 106, 322, 16);
 		add(lblErrorCompanyName);
 
-		lblErrorShortForm = new JLabel("");
+		lblErrorShortForm = new Label("");
 		lblErrorShortForm.setForeground(Color.RED);
+		lblErrorShortForm.setForeground(Color.white);
 		lblErrorShortForm.setBackground(new Color(0, 0, 0, 0));
 		lblErrorShortForm.setBounds(277, 165, 358, 16);
 		add(lblErrorShortForm);
 
-		lblErrorPhoneNum = new JLabel("");
+		lblErrorPhoneNum = new Label("");
 		lblErrorPhoneNum.setForeground(Color.RED);
+		lblErrorPhoneNum.setForeground(Color.white);
 		lblErrorPhoneNum.setBackground(new Color(0, 0, 0, 0));
 		lblErrorPhoneNum.setBounds(277, 222, 358, 16);
 		add(lblErrorPhoneNum);
 
-		lblErrorDescription = new JLabel("");
+		lblErrorDescription = new Label("");
 		lblErrorDescription.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		lblErrorDescription.setBackground(new Color(0, 0, 0, 0));
 		lblErrorDescription.setForeground(Color.RED);
+		lblErrorDescription.setForeground(Color.white);
 		lblErrorDescription.setBounds(277, 369, 426, 16);
 		add(lblErrorDescription);
 

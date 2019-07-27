@@ -15,8 +15,8 @@ import java.awt.event.ActionEvent;
 public class AddLocation extends JPanel {
 	private static final long serialVersionUID = 1L;		// Serializable purpose
 	private JTextField txtLocationName, txtContinent, txtState;
-	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblCountry, lblState, lblType, lblErrorLocationName,
-			lblErrorContinent, lblErrorType, lblErrorState, lblErrorCountry;
+	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblCountry, lblState, lblType;
+	private Label lblErrorLocationName,lblErrorContinent, lblErrorType, lblErrorState, lblErrorCountry;
 	private JComboBox<String> cbCountry, cbType;
 	private LinkArray<Location> lArray = new LinkArray<Location>();
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt", Location.class);
@@ -146,28 +146,33 @@ public class AddLocation extends JPanel {
 		add(btnCancel);
 		
 		//===================== Error message ====================
-		lblErrorLocationName = new JLabel("");
+		lblErrorLocationName = new Label("");
 		lblErrorLocationName.setForeground(Color.RED);
+		lblErrorLocationName.setBackground(Color.white);
 		lblErrorLocationName.setBounds(300, 120, 265, 16);
 		add(lblErrorLocationName);
 
-		lblErrorContinent = new JLabel("");
+		lblErrorContinent = new Label("");
 		lblErrorContinent.setForeground(Color.RED);
+		lblErrorContinent.setBackground(Color.white);
 		lblErrorContinent.setBounds(300, 179, 265, 16);
 		add(lblErrorContinent);
 
-		lblErrorCountry = new JLabel("");
+		lblErrorCountry = new Label("");
 		lblErrorCountry.setForeground(Color.RED);
+		lblErrorCountry.setBackground(Color.white);
 		lblErrorCountry.setBounds(600, 208, 265, 16);
 		add(lblErrorCountry);
 
-		lblErrorState = new JLabel("");
+		lblErrorState = new Label("");
 		lblErrorState.setForeground(Color.RED);
+		lblErrorState.setBackground(Color.white);
 		lblErrorState.setBounds(300, 294, 265, 16);
 		add(lblErrorState);
 
-		lblErrorType = new JLabel("");
+		lblErrorType = new Label("");
 		lblErrorType.setForeground(Color.RED);
+		lblErrorType.setBackground(Color.white);
 		lblErrorType.setBounds(600, 322, 265, 16);
 		add(lblErrorType);
 	}

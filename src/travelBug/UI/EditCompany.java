@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Label;
 
 public class EditCompany extends JFrame {
 
@@ -32,6 +33,16 @@ public class EditCompany extends JFrame {
 	private int companyFoundindex;
 
 	public EditCompany(String input) {
+		// ======================================== Jpanel Setting ==============================================/
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 583, 533);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		// ========================================= Validate the company =======================================/
 		boolean gotCompany = false;
 		companyFoundindex = 0;
 		cArray = rFile.readLinkArray();
@@ -44,14 +55,10 @@ public class EditCompany extends JFrame {
 		if(gotCompany == false) {
 			//Redirect to the previous page
 			
+			
 		}
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 583, 533);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
+		// ========================================== Content component ===================================================/
 		JLabel lblNewLabel = new JLabel("Company Name:");
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel.setBounds(10, 31, 118, 14);
@@ -62,10 +69,7 @@ public class EditCompany extends JFrame {
 		txtAsd.setBounds(176, 29, 207, 20);
 		contentPane.add(txtAsd);
 		txtAsd.setColumns(10);
-		JLabel lblErrorCompanyName = new JLabel("");
-		lblErrorCompanyName.setForeground(Color.RED);
-		lblErrorCompanyName.setBounds(217, 31, 207, 14);
-		contentPane.add(lblErrorCompanyName);
+		
 		
 		JLabel lblShortForm = new JLabel("Short Form:");
 		lblShortForm.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -77,10 +81,6 @@ public class EditCompany extends JFrame {
 		shortF.setBounds(176, 60, 207, 20);
 		contentPane.add(shortF);
 		shortF.setColumns(10);
-		JLabel lblErrorShortForm = new JLabel("");
-		lblErrorShortForm.setForeground(Color.RED);
-		lblErrorShortForm.setBounds(217, 68, 207, 14);
-		contentPane.add(lblErrorShortForm);
 		
 		JLabel lblPhoneNumber = new JLabel("Phone Number:");
 		lblPhoneNumber.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -89,16 +89,9 @@ public class EditCompany extends JFrame {
 		
 		phoneN = new JTextField();
 		phoneN.setText(cArray.getIndexElement(companyFoundindex).getPhoneNum());
-
 		phoneN.setBounds(176, 107, 207, 20);
 		contentPane.add(phoneN);
 		phoneN.setColumns(10);
-		JLabel lblErrorPhoneNum = new JLabel("");
-		lblErrorPhoneNum.setForeground(Color.RED);
-		lblErrorPhoneNum.setBounds(217, 110, 207, 14);
-		contentPane.add(lblErrorPhoneNum);
-		
-		
 		
 		JLabel lblDescription = new JLabel("Description:");
 		lblDescription.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -110,11 +103,34 @@ public class EditCompany extends JFrame {
 		Descriptiontxt.setBounds(10, 192, 373, 240);
 		contentPane.add(Descriptiontxt);
 		Descriptiontxt.setColumns(10);
-		JLabel lblErrorDescription = new JLabel("");
+		
+		// ================================================Error Message=============================================//
+		
+		Label lblErrorCompanyName = new Label("");
+		lblErrorCompanyName.setForeground(Color.RED);
+		lblErrorCompanyName.setBackground(Color.white);
+		lblErrorCompanyName.setBounds(217, 31, 207, 14);
+		contentPane.add(lblErrorCompanyName);
+		
+		Label lblErrorDescription = new Label("");
 		lblErrorDescription.setForeground(Color.RED);
+		lblErrorDescription.setBackground(Color.white);
 		lblErrorDescription.setBounds(90, 238, 154, 14);
 		contentPane.add(lblErrorDescription);
 		
+		Label lblErrorShortForm = new Label("");
+		lblErrorShortForm.setForeground(Color.RED);
+		lblErrorShortForm.setBackground(Color.white);
+		lblErrorShortForm.setBounds(217, 68, 207, 14);
+		contentPane.add(lblErrorShortForm);
+		
+		Label lblErrorPhoneNum = new Label("");
+		lblErrorPhoneNum.setForeground(Color.RED);
+		lblErrorPhoneNum.setBackground(Color.white);
+		lblErrorPhoneNum.setBounds(217, 110, 207, 14);
+		contentPane.add(lblErrorPhoneNum);
+		
+		// ==================================================Button ====================================================//
 		JButton btnModify = new JButton("Modify");
 		btnModify.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnModify.addActionListener(new ActionListener() {

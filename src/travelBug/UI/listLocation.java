@@ -7,25 +7,13 @@ import travelBug.library.*;
 import travelBug.obj.*;
 //=========================
 
-import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.EventQueue;
+import java.awt.*;
 import java.util.Vector;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import java.awt.Font;
-import java.awt.ScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;

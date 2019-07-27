@@ -1,7 +1,7 @@
 package travelBug.UI;
 
 //=========================
-//Import Package
+//	Import Package
 //=========================
 import travelBug.library.*;
 import travelBug.obj.*;
@@ -13,22 +13,22 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class AddLocation extends JPanel {
-	private static final long serialVersionUID = 1L;
-	private JTextField txtLocationName;
-	private JTextField txtContinent;
-	private JTextField txtState;
+	private static final long serialVersionUID = 1L;		// Serializable purpose
+	private JTextField txtLocationName, txtContinent, txtState;
 	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblCountry, lblState, lblType, lblErrorLocationName,
 			lblErrorContinent, lblErrorType, lblErrorState, lblErrorCountry;
-	private JComboBox cbCountry, cbType;
+	private JComboBox<String> cbCountry, cbType;
 	private LinkArray<Location> lArray = new LinkArray<Location>();
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt", Location.class);
 
-	@SuppressWarnings("unchecked")
 	public AddLocation() {
+		//===================== JPanel setting ======================
+		UIControl.titleName = "Add Travel Location";
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 
+		//===================== Content component =====================
 		txtLocationName = new JTextField();
 		txtLocationName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtLocationName.setBounds(300, 90, 500, 30);
@@ -89,20 +89,17 @@ public class AddLocation extends JPanel {
 		add(txtState);
 		txtState.setColumns(10);
 
-		cbCountry = new JComboBox();
-		cbCountry.setFont(new Font("Tahoma", Font.PLAIN, 16));
-
-		cbCountry.setModel(new DefaultComboBoxModel(new String[] { "<Choose country>", "Afghanistan", "Albania",
-				"Algeria", "Andorra", "Angola", "Antigua & Deps", "Argentina", "Armenia", "Australia", "Austria",
-				"Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin",
-				"Bhutan", "Bolivia", "Bosnia Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina",
-				"Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Rep", "Chad", "Chile",
-				"China", "Colombia", "Comoros", "Congo", "Congo {Democratic Rep}", "Costa Rica", "Croatia", "Cuba",
-				"Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor",
-				"Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji",
-				"Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala",
-				"Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia",
-				"Iran", "Iraq", "Ireland {Republic}", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan",
+		cbCountry = new JComboBox<String>(new String[] { "<Choose country>", "Afghanistan", "Albania", "Algeria",
+				"Andorra", "Angola", "Antigua & Deps", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
+				"Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+				"Bolivia", "Bosnia Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina", "Burundi",
+				"Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Rep", "Chad", "Chile", "China",
+				"Colombia", "Comoros", "Congo", "Congo {Democratic Rep}", "Costa Rica", "Croatia", "Cuba", "Cyprus",
+				"Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador",
+				"Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland",
+				"France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea",
+				"Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran",
+				"Iraq", "Ireland {Republic}", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan",
 				"Kazakhstan", "Kenya", "Kiribati", "Korea North", "Korea South", "Kosovo", "Kuwait", "Kyrgyzstan",
 				"Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
 				"Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands",
@@ -116,14 +113,14 @@ public class AddLocation extends JPanel {
 				"Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
 				"Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan",
 				"Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay",
-				"Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe" }));
+				"Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe" });
+		cbCountry.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cbCountry.setBounds(300, 208, 300, 30);
 		add(cbCountry);
 
-		cbType = new JComboBox();
+		cbType = new JComboBox<String>(new String[] { "<Choose Type>", "Small City", "Medium City", "Large City",
+				"Natural formation", "Designated Park/Reserve", "Man-made landmark" });
 		cbType.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		cbType.setModel(new DefaultComboBoxModel(new String[] { "<Choose Type>", "Small City", "Medium City",
-				"Large City", "Natural formation", "Designated Park/Reserve", "Man-made landmark" }));
 		cbType.setBounds(300, 324, 300, 30);
 		add(cbType);
 
@@ -147,7 +144,8 @@ public class AddLocation extends JPanel {
 		});
 		btnCancel.setBounds(300, 400, 120, 35);
 		add(btnCancel);
-
+		
+		//===================== Error message ====================
 		lblErrorLocationName = new JLabel("");
 		lblErrorLocationName.setForeground(Color.RED);
 		lblErrorLocationName.setBounds(300, 120, 265, 16);
@@ -172,10 +170,9 @@ public class AddLocation extends JPanel {
 		lblErrorType.setForeground(Color.RED);
 		lblErrorType.setBounds(600, 322, 265, 16);
 		add(lblErrorType);
-
 	}
 
-	public void submit() {
+	private void submit() {
 		lArray = lFile.readLinkArray();
 
 		String locationName = txtLocationName.getText();
@@ -184,7 +181,7 @@ public class AddLocation extends JPanel {
 		String country = cbCountry.getSelectedItem().toString();
 		String type = cbType.getSelectedItem().toString();
 
-		int error = 0;
+		boolean error = false;
 		lblErrorLocationName.setText("");
 		lblErrorContinent.setText("");
 		lblErrorCountry.setText("");
@@ -192,33 +189,31 @@ public class AddLocation extends JPanel {
 		lblErrorType.setText("");
 		if (locationName.isEmpty()) {
 			lblErrorLocationName.setText("The location name cannot be empty");
-			error++;
+			error = true;
 		}
 		if (continent.isEmpty()) {
 			lblErrorContinent.setText("The continent cannot be empty");
-			error++;
+			error = true;
 		}
 		if (state.isEmpty()) {
 			lblErrorState.setText("The state cannot be empty");
-			error++;
+			error = true;
 		}
 		if (cbCountry.getSelectedIndex() == 0) {
 			lblErrorCountry.setText("Please select country");
-			error++;
+			error = true;
 		}
 		if (cbType.getSelectedIndex() == 0) {
 			lblErrorType.setText("Please select type");
-			error++;
+			error = true;
 		}
-		if (error == 0) {
+		if (!error) {
 			Location location = new Location(locationName, continent, country, state, type);
 			lArray.addItem(location);
 			lFile.writeLinkArray(lArray);
 			listLocation listLocation = new listLocation();
 			listLocation.setVisible(true);
 			// redirect the page to the location list
-
 		}
-
 	}
 }

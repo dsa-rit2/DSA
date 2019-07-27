@@ -11,7 +11,6 @@ public class Main {
 			public void run() {
 				try {
 					UIControl frame = new UIControl();
-//					AddLocation frame = new AddLocation();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

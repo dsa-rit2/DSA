@@ -6,16 +6,15 @@ import javax.swing.*;
 public class UIControl extends JFrame {
 	private static final long serialVersionUID = 1L;								// Serializable purpose
 	protected final String currentDirectoryPath = System.getProperty("user.dir");	// Get root directory path
+	protected static String titleName = "";
 	
 	public UIControl() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) { e.printStackTrace(); }
 		
 		setResizable(false);
-		setTitle("TravelBug");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(currentDirectoryPath + "\\images\\logo.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(900, 630));
 		setBounds(new Rectangle(new Dimension(900, 600)));
@@ -45,5 +44,7 @@ public class UIControl extends JFrame {
 		backgroundImg.setBounds(0, 0, 894, 620);
 		backgroundImg.setIcon(new ImageIcon(currentDirectoryPath + "\\images\\form-background.jpg"));
 		getContentPane().add(backgroundImg);
+		
+		setTitle("TravelBug - " + titleName);	// Set Title
 	}
 }

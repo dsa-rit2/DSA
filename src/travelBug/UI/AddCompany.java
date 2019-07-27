@@ -23,10 +23,13 @@ public class AddCompany extends JPanel {
 	private ReadWriteFile<Company> rFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 
 	public AddCompany() {
+		//==================== JPanel setting =====================
+		UIControl.titleName = "Add TravelLeg Company";
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 
+		//==================== Content component ====================
 		lblTitle = new JLabel("Add Company");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 29));
@@ -82,6 +85,7 @@ public class AddCompany extends JPanel {
 		add(txtFPhoneNum);
 		txtFPhoneNum.setColumns(10);
 
+		//====================== Error Message ==========================
 		lblErrorCompanyName = new JLabel("");
 		lblErrorCompanyName.setForeground(Color.RED);
 		lblErrorCompanyName.setBackground(new Color(0, 0, 0, 0));
@@ -107,6 +111,7 @@ public class AddCompany extends JPanel {
 		lblErrorDescription.setBounds(277, 369, 426, 16);
 		add(lblErrorDescription);
 
+		//========================= Button ==========================
 		JButton btnBack = new JButton("Back");
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		btnBack.setBounds(259, 402, 120, 35);

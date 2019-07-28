@@ -22,6 +22,7 @@ public class AddCompany extends JPanel {
 	private LinkArray<Company> cArray = new LinkArray<Company>();
 	private ReadWriteFile<Company> rFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 
+	
 	public AddCompany() {
 		//==================== JPanel setting =====================
 		UIControl.titleName = "Add TravelLeg Company";

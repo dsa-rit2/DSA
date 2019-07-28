@@ -10,6 +10,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
 					UIControl frame = new UIControl();
 					frame.setVisible(true);
 				} catch (Exception e) {

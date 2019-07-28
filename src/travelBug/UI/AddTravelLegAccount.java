@@ -41,8 +41,11 @@ public class AddTravelLegAccount extends JFrame {
 	private JTextField txtUserNameNum;
 	private JTextField textField;
 
+	public static void main(String[] args) {
+		AddTravelLegAccount account = new AddTravelLegAccount("ss");
+		account.setVisible(true);
+	}
 	public AddTravelLegAccount(String anything) {
-		
 		// ========================================Jpanel Setting ==================================================//
 		getContentPane().setBackground(new Color(204, 255, 0));
 		getContentPane().setForeground(Color.WHITE);
@@ -75,7 +78,8 @@ public class AddTravelLegAccount extends JFrame {
 		getContentPane().add(lblUsername);
 
 		JTextField txtUserFront = new JTextField();
-		txtUserFront.setText(shortFormString);
+//		txtUserFront.setText(shortFormString);
+		txtUserFront.setText(anything);
 		txtUserFront.setEditable(false);
 		txtUserFront.setBounds(131, 63, 79, 22);
 		getContentPane().add(txtUserFront);

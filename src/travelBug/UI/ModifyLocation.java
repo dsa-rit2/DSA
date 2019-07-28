@@ -208,9 +208,9 @@ public class ModifyLocation extends JFrame {
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listLocation listLocation = new listLocation();
-				dispose();
-				listLocation.setVisible(true);
+//				ListLocation listLocation = new ListLocation();
+//				dispose();
+//				listLocation.setVisible(true);
 			}
 		});
 		btnCancel.setBounds(265, 259, 97, 25);
@@ -266,9 +266,9 @@ public class ModifyLocation extends JFrame {
 			lArray.getIndexElement(companyFound).setType(type);
 			lFile.writeLinkArray(lArray);
 			lArray.getIndexElement(companyFound).print();
-			listLocation listLocation = new listLocation();
-			dispose();
-			listLocation.setVisible(true);
+//			ListLocation listLocation = new ListLocation();
+//			dispose();
+//			listLocation.setVisible(true);
 			//redirect the page to the location list
 			
 		}

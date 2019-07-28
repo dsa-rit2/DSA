@@ -19,9 +19,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class listLocation extends JPanel {
+public class ListLocation extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTable table;
 	private LinkArray<Location> lArray = new LinkArray<Location>();
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt", Location.class);
@@ -31,28 +30,14 @@ public class listLocation extends JPanel {
 	private JButton btnDelete;
 	private JButton btnModify;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					listLocation frame = new listLocation();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public listLocation() {
+	public ListLocation(UIControl parent) {
 		// ======================== Jpanel setting ================================//
-		setBounds(100, 100, 620, 322);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(null);
+//		UIControl.titleName = "Location List";
+		setLayout(null);
+		setBackground(new Color(0, 0, 0, 0));
+		setBounds(new Rectangle(new Dimension(900, 450)));
 
-		// ======================== Content component ================================//
-		JTableHeader header = new JTableHeader();
+
 		tableModel = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -63,6 +48,7 @@ public class listLocation extends JPanel {
 		lArray = lFile.readLinkArray();
 
 		table = new JTable(tableModel);
+		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -74,7 +60,8 @@ public class listLocation extends JPanel {
 					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						ModifyLocation frame = new ModifyLocation(vector.elementAt(0).toString(), vector.elementAt(2).toString());
+						ModifyLocation frame = new ModifyLocation(vector.elementAt(0).toString(),
+								vector.elementAt(2).toString());
 						frame.setVisible(true);
 					}
 
@@ -96,7 +83,7 @@ public class listLocation extends JPanel {
 		table.setBounds(34, 31, 537, 167);
 //		contentPane.add(table);
 		scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(29, 31, 561, 193);
+		scrollPane.setBounds(12, 60, 876, 330);
 		scrollPane.setEnabled(false);
 		add(scrollPane);
 
@@ -111,23 +98,28 @@ public class listLocation extends JPanel {
 		}
 
 		JLabel lblNewLabel = new JLabel("List Country");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel.setBounds(34, 2, 236, 25);
-		contentPane.add(lblNewLabel);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblNewLabel.setBounds(12, 13, 200, 35);
+		add(lblNewLabel);
 
 		// ======================== Button ================================//
 
 		JButton btnNewButton = new JButton("Add Location");
+		btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddLocation iAddLocation = new AddLocation();
-				iAddLocation.setVisible(true);
+//				AddLocation iAddLocation = new AddLocation();
+//				iAddLocation.setVisible(true);
 			}
 		});
-		btnNewButton.setBounds(53, 237, 121, 25);
-		contentPane.add(btnNewButton);
+		btnNewButton.setBounds(12, 403, 130, 35);
+		add(btnNewButton);
 
 		btnDelete = new JButton("Delete");
+		btnDelete.setForeground(Color.RED);
+		btnDelete.setBackground(Color.WHITE);
+		btnDelete.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tableModel = (DefaultTableModel) table.getModel();
@@ -157,10 +149,11 @@ public class listLocation extends JPanel {
 			}
 		});
 
-		btnDelete.setBounds(313, 237, 97, 25);
-		contentPane.add(btnDelete);
+		btnDelete.setBounds(758, 403, 130, 35);
+		add(btnDelete);
 
 		btnModify = new JButton("Modify");
+		btnModify.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tableModel = (DefaultTableModel) table.getModel();
@@ -170,7 +163,8 @@ public class listLocation extends JPanel {
 					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						ModifyLocation frame = new ModifyLocation(vector.elementAt(0).toString(), vector.elementAt(2).toString());
+						ModifyLocation frame = new ModifyLocation(vector.elementAt(0).toString(),
+								vector.elementAt(2).toString());
 						frame.setVisible(true);
 					}
 				} else {
@@ -179,8 +173,8 @@ public class listLocation extends JPanel {
 
 			}
 		});
-		btnModify.setBounds(193, 237, 97, 25);
-		contentPane.add(btnModify);
+		btnModify.setBounds(616, 403, 130, 35);
+		add(btnModify);
 	}
 
 	// =============================== Additional function

@@ -2,12 +2,17 @@ package travelBug.library;
 
 import java.util.regex.*;
 import javax.swing.JOptionPane;
+
+import travelBug.UI.UIControl;
+
 import java.util.*;
 import java.security.SecureRandom;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public class library {
+	public static final String currentDirectoryPath = System.getProperty("user.dir");	// Get root directory path
+	public static UIControl frame = null;
 	private static final Random RANDOM = new SecureRandom();
 	private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 

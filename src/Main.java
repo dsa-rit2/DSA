@@ -1,22 +1,15 @@
-import travelBug.library.*;
-import travelBug.obj.*;
 import travelBug.UI.*;
-
-import java.awt.EventQueue;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 public class Main {
-
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UIControl frame = new UIControl();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+        SwingUtilities.invokeLater(() -> {
+    		try {
+    			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    		} catch (Exception e) { e.printStackTrace(); }
+            new UIControl("TravelBug").setVisible(true);
+        });
 	}
 
 }

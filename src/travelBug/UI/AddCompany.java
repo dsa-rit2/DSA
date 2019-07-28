@@ -24,7 +24,7 @@ public class AddCompany extends JPanel {
 
 	public AddCompany() {
 		//==================== JPanel setting =====================
-		UIControl.titleName = "Add TravelLeg Company";
+//		UIControl.titleName = "Add TravelLeg Company";
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
@@ -88,30 +88,25 @@ public class AddCompany extends JPanel {
 		//====================== Error Message ==========================
 		lblErrorCompanyName = new Label("");
 		lblErrorCompanyName.setForeground(Color.RED);
-		lblErrorCompanyName.setBackground(Color.white);
-		lblErrorCompanyName.setBackground(new Color(0, 0, 0, 0));
+		lblErrorCompanyName.setBackground(new Color(255, 255, 255, 0));
 		lblErrorCompanyName.setBounds(277, 106, 322, 16);
 		add(lblErrorCompanyName);
 
 		lblErrorShortForm = new Label("");
 		lblErrorShortForm.setForeground(Color.RED);
-		lblErrorShortForm.setForeground(Color.white);
-		lblErrorShortForm.setBackground(new Color(0, 0, 0, 0));
+		lblErrorShortForm.setBackground(new Color(255, 255, 255, 0));
 		lblErrorShortForm.setBounds(277, 165, 358, 16);
 		add(lblErrorShortForm);
 
 		lblErrorPhoneNum = new Label("");
 		lblErrorPhoneNum.setForeground(Color.RED);
-		lblErrorPhoneNum.setForeground(Color.white);
-		lblErrorPhoneNum.setBackground(new Color(0, 0, 0, 0));
+		lblErrorPhoneNum.setBackground(new Color(255, 255, 255, 0));
 		lblErrorPhoneNum.setBounds(277, 222, 358, 16);
 		add(lblErrorPhoneNum);
 
 		lblErrorDescription = new Label("");
-		lblErrorDescription.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblErrorDescription.setBackground(new Color(0, 0, 0, 0));
+		lblErrorDescription.setBackground(new Color(255, 255, 255, 0));
 		lblErrorDescription.setForeground(Color.RED);
-		lblErrorDescription.setForeground(Color.white);
 		lblErrorDescription.setBounds(277, 369, 426, 16);
 		add(lblErrorDescription);
 

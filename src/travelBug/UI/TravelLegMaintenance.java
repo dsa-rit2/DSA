@@ -57,7 +57,7 @@ public class TravelLegMaintenance extends JFrame {
 	private Vector vector;
 
 	public TravelLegMaintenance() {
-		tArray = tFile.readLinkArray();
+		// ========================== Jpanel setting ===========================//
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 811, 514);
 		contentPane = new JPanel();
@@ -65,6 +65,8 @@ public class TravelLegMaintenance extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		// ========================== Content component =========================//
+		tArray = tFile.readLinkArray();
 		tfSearch = new JTextField();
 		tfSearch.setBounds(69, 27, 116, 22);
 		contentPane.add(tfSearch);
@@ -131,17 +133,7 @@ public class TravelLegMaintenance extends JFrame {
 			}
 			j++;
 		}
-
-		JButton btnNewButton = new JButton("Reset");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				tfSearch.setText("");
-				updateLabel(null);
-			}
-		});
-		btnNewButton.setBounds(12, 78, 87, 25);
-		contentPane.add(btnNewButton);
-
+		
 		tfSearch.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
@@ -162,6 +154,19 @@ public class TravelLegMaintenance extends JFrame {
 				updateLabel(tfSearch.getText());
 			}
 		});
+
+		// =============================== Button ===================================//
+		JButton btnNewButton = new JButton("Reset");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				tfSearch.setText("");
+				updateLabel(null);
+			}
+		});
+		btnNewButton.setBounds(12, 78, 87, 25);
+		contentPane.add(btnNewButton);
+
+		
 
 	}
 

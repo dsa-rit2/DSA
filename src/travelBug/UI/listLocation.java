@@ -53,13 +53,15 @@ public class listLocation extends JFrame {
 	 * Create the frame.
 	 */
 	public listLocation() {
-		lArray = lFile.readLinkArray();
+		//======================== Jpanel setting  ================================//
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 620, 322);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		// ======================== Content component ================================//
 		JTableHeader header = new JTableHeader();
 		tableModel = new DefaultTableModel() {
 			@Override
@@ -68,6 +70,7 @@ public class listLocation extends JFrame {
 				return false;
 			}
 		};
+		lArray = lFile.readLinkArray();
 
 		table = new JTable(tableModel);
 		table.addMouseListener(new MouseAdapter() {
@@ -123,6 +126,8 @@ public class listLocation extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel.setBounds(34, 2, 236, 25);
 		contentPane.add(lblNewLabel);
+		
+		// ======================== Button ================================//
 
 		JButton btnNewButton = new JButton("Add Location");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -193,7 +198,7 @@ public class listLocation extends JFrame {
 		contentPane.add(btnModify);
 
 	}
-
+	// =============================== Additional function ============================//
 	public void load() {
 		tableModel.setRowCount(0);
 		for (int i = 0; i < lArray.size(); i++) {
@@ -203,7 +208,6 @@ public class listLocation extends JFrame {
 			tableModel.addRow(dataStrings);
 			lArray.getIndexElement(i).print();
 		}
-
 	}
 
 //	    public boolean isCellEditable(int row, int column) {

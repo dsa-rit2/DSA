@@ -46,7 +46,8 @@ public class TravelLegModify extends JFrame {
 	}
 
 	public TravelLegModify(Vector vector, String ID) {
-		rArray = rFile.readLinkArray();
+		
+		// ================================== Jpanel setting ================================//
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 674, 380);
 		contentPane = new JPanel();
@@ -55,6 +56,8 @@ public class TravelLegModify extends JFrame {
 		contentPane.setLayout(null);
 		getContentPane().setBackground(Color.YELLOW);
 
+		// ================================== Content component ==============================//
+		rArray = rFile.readLinkArray();
 		JLabel lblSourceLocation = new JLabel("Source location       :");
 		lblSourceLocation.setBounds(21, 13, 126, 16);
 		contentPane.add(lblSourceLocation);
@@ -95,46 +98,6 @@ public class TravelLegModify extends JFrame {
 		tfFromTime.setBounds(104, 202, 116, 22);
 		contentPane.add(tfFromTime);
 		tfFromTime.setColumns(10);
-
-		Button button = new Button("Confirm");
-		button.setBounds(259, 268, 109, 32);
-		contentPane.add(button);
-
-		JLabel lblsrcError = new JLabel("");
-		lblsrcError.setForeground(Color.RED);
-		lblsrcError.setBackground(Color.WHITE);
-		lblsrcError.setBounds(293, 13, 279, 16);
-		contentPane.add(lblsrcError);
-
-		JLabel lbldestError = new JLabel("");
-		lbldestError.setForeground(Color.RED);
-		lbldestError.setBackground(Color.WHITE);
-		lbldestError.setBounds(293, 42, 314, 16);
-		contentPane.add(lbldestError);
-
-		JLabel lblttError = new JLabel("");
-		lblttError.setForeground(Color.RED);
-		lblttError.setBackground(Color.WHITE);
-		lblttError.setBounds(293, 71, 353, 16);
-		contentPane.add(lblttError);
-
-		JLabel lblFromDateError = new JLabel("");
-		lblFromDateError.setForeground(Color.RED);
-		lblFromDateError.setBackground(Color.WHITE);
-		lblFromDateError.setBounds(21, 173, 219, 16);
-		contentPane.add(lblFromDateError);
-
-		JLabel lblToTimeError = new JLabel("");
-		lblToTimeError.setForeground(Color.RED);
-		lblToTimeError.setBackground(Color.WHITE);
-		lblToTimeError.setBounds(330, 235, 248, 16);
-		contentPane.add(lblToTimeError);
-
-		JLabel lblFromTimeError = new JLabel("");
-		lblFromTimeError.setForeground(Color.RED);
-		lblFromTimeError.setBackground(Color.WHITE);
-		lblFromTimeError.setBounds(21, 235, 264, 16);
-		contentPane.add(lblFromTimeError);
 
 		JLabel lblFromDate = new JLabel("From Date :");
 		lblFromDate.setHorizontalAlignment(SwingConstants.LEFT);
@@ -185,7 +148,48 @@ public class TravelLegModify extends JFrame {
 
 		tfFromTime.setText(vector.elementAt(5).toString());
 		tfToTime.setText(vector.elementAt(6).toString());
+		
+		// ============================ Error message =============================//
+		Label lblsrcError = new Label("");
+		lblsrcError.setForeground(Color.RED);
+		lblsrcError.setBackground(Color.WHITE);
+		lblsrcError.setBounds(293, 13, 279, 16);
+		contentPane.add(lblsrcError);
 
+		Label lbldestError = new Label("");
+		lbldestError.setForeground(Color.RED);
+		lbldestError.setBackground(Color.WHITE);
+		lbldestError.setBounds(293, 42, 314, 16);
+		contentPane.add(lbldestError);
+
+		Label lblttError = new Label("");
+		lblttError.setForeground(Color.RED);
+		lblttError.setBackground(Color.WHITE);
+		lblttError.setBounds(293, 71, 353, 16);
+		contentPane.add(lblttError);
+
+		Label lblFromDateError = new Label("");
+		lblFromDateError.setForeground(Color.RED);
+		lblFromDateError.setBackground(Color.WHITE);
+		lblFromDateError.setBounds(21, 173, 219, 16);
+		contentPane.add(lblFromDateError);
+
+		Label lblToTimeError = new Label("");
+		lblToTimeError.setForeground(Color.RED);
+		lblToTimeError.setBackground(Color.WHITE);
+		lblToTimeError.setBounds(330, 235, 248, 16);
+		contentPane.add(lblToTimeError);
+
+		Label lblFromTimeError = new Label("");
+		lblFromTimeError.setForeground(Color.RED);
+		lblFromTimeError.setBackground(Color.WHITE);
+		lblFromTimeError.setBounds(21, 235, 264, 16);
+		contentPane.add(lblFromTimeError);
+
+		// ================================= Button ================================//
+		Button button = new Button("Confirm");
+		button.setBounds(259, 268, 109, 32);
+		contentPane.add(button);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int count = 0;

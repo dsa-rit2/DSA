@@ -123,7 +123,8 @@ public class AddLocation extends JPanel {
 		cbType.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cbType.setBounds(300, 324, 300, 30);
 		add(cbType);
-
+		
+		// ==================================== Button ==================================//
 		JButton btnAdd = new JButton("Add");
 		btnAdd.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		btnAdd.addActionListener(new ActionListener() {

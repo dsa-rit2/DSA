@@ -113,8 +113,6 @@ public class ListCompany extends JFrame {
 
 		});
 		contentPane.add(btnModify);
-
-				
 	}
 
 	// ===================================== Function ===================================//

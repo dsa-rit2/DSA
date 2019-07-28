@@ -39,6 +39,7 @@ public class UIControl extends JFrame {
 		addLocation.setLocation(0, 115);
 		getContentPane().add(addLocation);
 		
+		
 		//===================== Background image ======================
 		JLabel backgroundImg = new JLabel();
 		backgroundImg.setBounds(0, 0, 894, 620);

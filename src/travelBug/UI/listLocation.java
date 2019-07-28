@@ -1,7 +1,7 @@
 package travelBug.UI;
 
 //=========================
-//Import Package
+//	Import Package
 //=========================
 import travelBug.library.*;
 import travelBug.obj.*;
@@ -19,23 +19,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class listLocation extends JFrame {
-
+public class listLocation extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
 	private LinkArray<Location> lArray = new LinkArray<Location>();
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt", Location.class);
-	private JTextField searchField;
 	private DefaultTableModel tableModel;
 	private JScrollPane scrollPane;
-	private DefaultTableModel defaultTableModel;
 	private Vector vector;
 	private JButton btnDelete;
 	private JButton btnModify;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -49,18 +44,13 @@ public class listLocation extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public listLocation() {
-		//======================== Jpanel setting  ================================//
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// ======================== Jpanel setting ================================//
 		setBounds(100, 100, 620, 322);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		// ======================== Content component ================================//
 		JTableHeader header = new JTableHeader();
 		tableModel = new DefaultTableModel() {
@@ -84,9 +74,7 @@ public class listLocation extends JFrame {
 					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						ModifyLocation frame = new ModifyLocation(vector.elementAt(0).toString(),
-								vector.elementAt(2).toString());
-						dispose();
+						ModifyLocation frame = new ModifyLocation(vector.elementAt(0).toString(), vector.elementAt(2).toString());
 						frame.setVisible(true);
 					}
 
@@ -110,7 +98,7 @@ public class listLocation extends JFrame {
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(29, 31, 561, 193);
 		scrollPane.setEnabled(false);
-		getContentPane().add(scrollPane);
+		add(scrollPane);
 
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			int j = 0;
@@ -126,14 +114,13 @@ public class listLocation extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel.setBounds(34, 2, 236, 25);
 		contentPane.add(lblNewLabel);
-		
+
 		// ======================== Button ================================//
 
 		JButton btnNewButton = new JButton("Add Location");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AddLocation iAddLocation = new AddLocation();
-				dispose();
 				iAddLocation.setVisible(true);
 			}
 		});
@@ -163,7 +150,7 @@ public class listLocation extends JFrame {
 							load();
 						}
 					}
-				}else {
+				} else {
 					library.dialogMessage("Please choose one location to delete");
 				}
 
@@ -183,12 +170,10 @@ public class listLocation extends JFrame {
 					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						ModifyLocation frame = new ModifyLocation(vector.elementAt(0).toString(),
-								vector.elementAt(2).toString());
-						dispose();
+						ModifyLocation frame = new ModifyLocation(vector.elementAt(0).toString(), vector.elementAt(2).toString());
 						frame.setVisible(true);
-					} 
-				}else {
+					}
+				} else {
 					library.dialogMessage("Please choose one location to modify");
 				}
 
@@ -196,9 +181,10 @@ public class listLocation extends JFrame {
 		});
 		btnModify.setBounds(193, 237, 97, 25);
 		contentPane.add(btnModify);
-
 	}
-	// =============================== Additional function ============================//
+
+	// =============================== Additional function
+	// ============================//
 	public void load() {
 		tableModel.setRowCount(0);
 		for (int i = 0; i < lArray.size(); i++) {

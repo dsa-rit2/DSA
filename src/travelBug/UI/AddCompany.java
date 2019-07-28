@@ -207,7 +207,6 @@ public class AddCompany extends JPanel {
 					"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (result == JOptionPane.OK_OPTION) {
 				try {
-//					dispose();
 					new AddTravelLegAccount(companyName).setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -1,6 +1,11 @@
 package travelBug.library;
 
 import java.util.regex.*;
+
+import javax.swing.JOptionPane;
+
+import travelBug.UI.AddTravelLegAccount;
+
 import java.util.*;
 import java.security.SecureRandom;
 import java.time.*;
@@ -225,4 +230,8 @@ public class library {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
 		return now.format(formatter);
 	}
+	public static void dialogMessage(String message) {
+		JOptionPane.showMessageDialog(null, message);
+	}
+	
 }

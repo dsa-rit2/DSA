@@ -299,9 +299,7 @@ public class AddTravelLeg extends JFrame {
 							srcLocationString, fromDate, toDate, fromTime, toTime);
 					rArray.addItem(travelLegInfo);
 					rFile.writeLinkArray(rArray);
-					JFrame frame = new JFrame("JOptionPane showMessageDialog example");
-					JOptionPane.showMessageDialog(frame, "Schedule added successful!!!");
-					frame.dispose();
+					library.dialogMessage("Schedule added successful!!!");
 					dispose();
 				}
 			}

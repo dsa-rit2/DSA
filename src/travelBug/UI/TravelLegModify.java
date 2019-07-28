@@ -317,9 +317,7 @@ public class TravelLegModify extends JFrame {
 						}
 					}
 					rFile.writeLinkArray(rArray);
-					JFrame frame = new JFrame("JOptionPane showMessageDialog example");
-					JOptionPane.showMessageDialog(frame, "Schedule added successful!!!");
-					frame.dispose();
+					library.dialogMessage("Schedule added successful!!!");
 					dispose();
 				}
 			}

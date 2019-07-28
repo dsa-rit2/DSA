@@ -164,7 +164,7 @@ public class listLocation extends JFrame {
 						}
 					}
 				}else {
-					JOptionPane.showMessageDialog(null, "Please choose one location to delete");
+					library.dialogMessage("Please choose one location to delete");
 				}
 
 			}
@@ -189,7 +189,7 @@ public class listLocation extends JFrame {
 						frame.setVisible(true);
 					} 
 				}else {
-					JOptionPane.showMessageDialog(null, "Please choose one location to modify");
+					library.dialogMessage("Please choose one location to modify");
 				}
 
 			}

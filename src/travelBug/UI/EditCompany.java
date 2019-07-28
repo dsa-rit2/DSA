@@ -200,10 +200,7 @@ public class EditCompany extends JFrame {
 					for (int i = 0; i < cArray.size(); i++) {
 						cArray.getIndexElement(i).print();
 					}
-					JFrame frame = new JFrame("JOptionPane showMessageDialog example");
-
-					JOptionPane.showMessageDialog(frame,"Company Updated successful!!!");
-//					System.exit(0);
+					library.dialogMessage("Company Updated successful!!!");
 					//Redirect the page to another
 				}
 				

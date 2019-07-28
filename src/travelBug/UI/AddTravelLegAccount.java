@@ -158,8 +158,7 @@ public class AddTravelLegAccount extends JFrame {
 					TravelLegAccount pAccount = new TravelLegAccount(username, password);
 					tArray.addItem(pAccount);
 					tFile.writeLinkArray(tArray);
-					JFrame frame = new JFrame("JOptionPane showMessageDialog example");
-					JOptionPane.showMessageDialog(frame,"Account added successful!!!");
+					library.dialogMessage("Account added successful!!!");
 					//Redirect the frame to the details of the company
 				}
 

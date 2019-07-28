@@ -103,8 +103,7 @@ public class ListCompany extends JFrame {
 		btnModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (displayList.getSelectedValue() == null) {
-					JFrame frame = new JFrame("JOptionPane showMessageDialog example");
-					JOptionPane.showMessageDialog(frame, "You must select  company first");
+					library.dialogMessage("You must select company first");
 				} else {
 					String getCompany = displayList.getSelectedValue().toString();
 					dispose();

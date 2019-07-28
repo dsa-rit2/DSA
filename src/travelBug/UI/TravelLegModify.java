@@ -128,12 +128,6 @@ public class TravelLegModify extends JFrame {
 		contentPane.add(tfToTime);
 		tfToTime.setColumns(10);
 
-		JLabel lblToDateEror = new JLabel("");
-		lblToDateEror.setForeground(Color.RED);
-		lblToDateEror.setBackground(Color.WHITE);
-		lblToDateEror.setBounds(330, 173, 219, 16);
-		contentPane.add(lblToDateEror);
-
 		tfSourceL.setText(vector.elementAt(1).toString());
 		tfDestinationL.setText(vector.elementAt(2).toString());
 		cbTransport.setSelectedItem(vector.elementAt(7));
@@ -173,6 +167,12 @@ public class TravelLegModify extends JFrame {
 		lblFromDateError.setBackground(Color.WHITE);
 		lblFromDateError.setBounds(21, 173, 219, 16);
 		contentPane.add(lblFromDateError);
+		
+		Label lblToDateEror = new Label("");
+		lblToDateEror.setForeground(Color.RED);
+		lblToDateEror.setBackground(Color.WHITE);
+		lblToDateEror.setBounds(330, 173, 219, 16);
+		contentPane.add(lblToDateEror);
 
 		Label lblToTimeError = new Label("");
 		lblToTimeError.setForeground(Color.RED);

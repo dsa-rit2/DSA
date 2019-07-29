@@ -130,7 +130,7 @@ public class AddLocation extends JPanel {
 		// ==================================== Button ==================================//
 		JButton btnAdd = new JButton("Add");
 		btnAdd.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		btnAdd.addActionListener(event -> { submit(); });
+		btnAdd.addActionListener(event -> submit());
 		btnAdd.setBounds(453, 400, 120, 35);
 		add(btnAdd);
 

@@ -15,7 +15,6 @@ public class UIControl extends JFrame {
 	}
 	
 	private void createGUI() {
-		setVisible(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(library.currentDirectoryPath + "\\images\\logo.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

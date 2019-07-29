@@ -21,9 +21,12 @@ public class AddCompany extends JPanel {
 	private JTextField txtFPhoneNum;
 	private LinkArray<Company> cArray = new LinkArray<Company>();
 	private ReadWriteFile<Company> rFile = new ReadWriteFile<Company>("Company.txt", Company.class);
-
-	public AddCompany() {
+	private final UIControl mainFrame;		// Store main frame
+	
+	public AddCompany(UIControl parent) {
 		//==================== JPanel setting =====================
+		super();
+		this.mainFrame = parent;
 //		UIControl.titleName = "Add TravelLeg Company";
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
@@ -202,16 +205,14 @@ public class AddCompany extends JPanel {
 					"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (result == JOptionPane.OK_OPTION) {
 				try {
-					new AddTravelLegAccount(companyName).setVisible(true);
+					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddTravelLegAccount(mainFrame,companyName)));
+//					new AddTravelLegAccount(companyName).setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			} else {
-				// redirect to the listcompany
 				try {
-//					frame.setVisible(false);
-//					dispose();
-
+					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

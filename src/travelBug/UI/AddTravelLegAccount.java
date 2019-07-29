@@ -26,7 +26,7 @@ import javax.swing.JTable;
 import javax.management.loading.PrivateClassLoader;
 import javax.swing.JButton;
 
-public class AddTravelLegAccount extends JFrame {
+public class AddTravelLegAccount extends JPanel {
 	private static final long serialVersionUID = 5629499624569369278L;
 	private JPanel contentPane;
 	private JTextField tfUsername;
@@ -40,19 +40,16 @@ public class AddTravelLegAccount extends JFrame {
 	private ReadWriteFile<Company> cFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 	private JTextField txtUserNameNum;
 	private JTextField textField;
+	private final UIControl mainFrame;
 
-	public AddTravelLegAccount(String anything) {
+	public AddTravelLegAccount(UIControl parent,String anything) {
 		
 		// ========================================Jpanel Setting ==================================================//
-		getContentPane().setBackground(new Color(204, 255, 0));
-		getContentPane().setForeground(Color.WHITE);
-		setResizable(false);
-		setTitle("TravelBug");
-		setResizable(false);
-		setBackground(new Color(255, 218, 185));
-		setBounds(100, 100, 611, 440);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
+		super();
+		this.mainFrame = parent;
+		setLayout(null);
+		setBackground(new Color(0, 0, 0, 0));
+		setBounds(new Rectangle(new Dimension(900, 450)));
 		
 
 		
@@ -72,50 +69,50 @@ public class AddTravelLegAccount extends JFrame {
 		
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setBounds(12, 66, 89, 16);
-		getContentPane().add(lblUsername);
+		add(lblUsername);
 
 		JTextField txtUserFront = new JTextField();
 		txtUserFront.setText(shortFormString);
 		txtUserFront.setEditable(false);
 		txtUserFront.setBounds(131, 63, 79, 22);
-		getContentPane().add(txtUserFront);
+		add(txtUserFront);
 		txtUserFront.setColumns(10);
 
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setBounds(12, 107, 89, 16);
-		getContentPane().add(lblPassword);
+		add(lblPassword);
 
 		txtPassword = new JTextField();
 		txtPassword.setBounds(131, 104, 256, 22);
-		getContentPane().add(txtPassword);
+		add(txtPassword);
 		txtPassword.setColumns(10);
 
 		txtUserNameNum = new JTextField();
 		txtUserNameNum.setBounds(230, 63, 79, 22);
-		getContentPane().add(txtUserNameNum);
+		add(txtUserNameNum);
 		txtUserNameNum.setColumns(10);
 		
 		JLabel lblAddTravelLeg = new JLabel(anything);
 		lblAddTravelLeg.setFont(new Font("Times New Roman", Font.BOLD, 28));
 		lblAddTravelLeg.setBounds(12, 13, 392, 46);
-		getContentPane().add(lblAddTravelLeg);
+		add(lblAddTravelLeg);
 		
 		JLabel lblNewLabel = new JLabel(".");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel.setBounds(215, 69, 24, 16);
-		getContentPane().add(lblNewLabel);
+		add(lblNewLabel);
 		
 		// ============================================ Error Message ===============================================//
 		
 		JLabel lblUsernameError = new JLabel("");
 		lblUsernameError.setForeground(new Color(255, 0, 0));
 		lblUsernameError.setBounds(141, 85, 416, 16);
-		getContentPane().add(lblUsernameError);
+		add(lblUsernameError);
 
 		JLabel lblPasswordError = new JLabel("");
 		lblPasswordError.setForeground(new Color(255, 0, 0));
 		lblPasswordError.setBounds(141, 127, 416, 16);
-		getContentPane().add(lblPasswordError);
+		add(lblPasswordError);
 
 		// ================================================ Button ====================================================//
 		contentPane = new JPanel();
@@ -167,7 +164,7 @@ public class AddTravelLegAccount extends JFrame {
 
 		btnAdd.setForeground(new Color(0, 0, 0));
 		btnAdd.setBounds(187, 371, 79, 24);
-		getContentPane().add(btnAdd);
+		add(btnAdd);
 
 		Button btnReset = new Button("Reset");
 		btnReset.addActionListener(new ActionListener() {
@@ -180,7 +177,7 @@ public class AddTravelLegAccount extends JFrame {
 		});
 		btnReset.setForeground(new Color(0, 0, 0));
 		btnReset.setBounds(319, 371, 79, 24);
-		getContentPane().add(btnReset);
+		add(btnReset);
 
 		JButton btnGenerate = new JButton("Generate");
 		btnGenerate.addActionListener(new ActionListener() {
@@ -193,7 +190,7 @@ public class AddTravelLegAccount extends JFrame {
 			}
 		});
 		btnGenerate.setBounds(399, 62, 97, 25);
-		getContentPane().add(btnGenerate);
+		add(btnGenerate);
 
 		JButton btnNewButton = new JButton("Generate");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -202,7 +199,7 @@ public class AddTravelLegAccount extends JFrame {
 			}
 		});
 		btnNewButton.setBounds(399, 103, 97, 25);
-		getContentPane().add(btnNewButton);
+		add(btnNewButton);
 
 	}
 }

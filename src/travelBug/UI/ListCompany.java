@@ -19,24 +19,25 @@ import java.awt.event.ActionEvent;
 
 public class ListCompany extends JPanel {
 
-	private JPanel contentPane;
 	private LinkArray<Company> cArray = new LinkArray<Company>();
 	private ReadWriteFile<Company> rFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 	private JTextField textField;
 	private JList displayList;
 	DefaultListModel listModel;
-	private final UIControl mainFrame;		// Store main frame
+	private final UIControl mainFrame;
+	public ListCompany(UIControl parent) {
 
-		public ListCompany(UIControl parent) {
-
-		// =================================== Jpanel setting ===========================//
 		super();
 		this.mainFrame = parent;
+		// =================================== Jpanel setting
+		// ===========================//
+		cArray = rFile.readLinkArray();
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
-		cArray = rFile.readLinkArray();
-		// =================================== Content component =========================//
+
+		// =================================== Content component
+		// =========================//
 		JLabel lblConpanyList = new JLabel("Conpany List");
 		lblConpanyList.setFont(new Font("Arial", Font.BOLD, 15));
 		lblConpanyList.setBounds(20, 11, 125, 14);
@@ -50,7 +51,7 @@ public class ListCompany extends JPanel {
 		displayList.setBounds(20, 36, 300, 300);
 		add(scrollPane);
 		updateList(null);
-		
+
 		JLabel lblSearch = new JLabel("Search:");
 		lblSearch.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblSearch.setBounds(20, 387, 66, 14);
@@ -78,29 +79,33 @@ public class ListCompany extends JPanel {
 		add(textField);
 		textField.setColumns(10);
 
-
-
-		
 		// ============================= Button =====================================//
 		JButton btnModify = new JButton("Select");
 		btnModify.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnModify.setBounds(462, 385, 89, 23);
-		btnModify.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (displayList.getSelectedValue() == null) {
-					library.dialogMessage("You must select company first");
-				} else {
-					String getCompany = displayList.getSelectedValue().toString();
-					
-					new EditCompany(getCompany).setVisible(true);
-				}
+		btnModify.addActionListener(event -> {
+			if (displayList.getSelectedValue() == null) {
+				library.dialogMessage("You must select company first");
+			} else {
+				String getCompany = displayList.getSelectedValue().toString();
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new EditCompany(getCompany,mainFrame)));
 			}
-
 		});
 		add(btnModify);
+
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(event-> {
+			//redirect to mainmenu //
+			
+		});
+		btnBack.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		btnBack.setBounds(596, 385, 89, 23);
+		add(btnBack);
 	}
 
-	// ===================================== Function ===================================//
+	// ===================================== Function
+	// ===================================//
 	public void updateList(String searchItem) {
 		if (searchItem == null) {
 			listModel = (DefaultListModel) displayList.getModel();
@@ -121,3 +126,5 @@ public class ListCompany extends JPanel {
 
 	}
 }
+
+

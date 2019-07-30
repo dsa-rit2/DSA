@@ -1,7 +1,6 @@
 package travelBug.UI;
 
 import java.awt.*;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
@@ -11,10 +10,9 @@ import java.util.Date;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
-public class PlanTrip extends JFrame {
+public class PlanTrip extends JPanel {
 	private static final long serialVersionUID = 5629499624569369278L;
-
-	private JPanel contentPanel;
+	
 	private int cityCount = 1, adultCount = 0, childCount = 0;
 
 	// *** Component Declaration *** //
@@ -32,99 +30,93 @@ public class PlanTrip extends JFrame {
 
 	JDateChooser dateChooser_1 = new JDateChooser(), dateChooser_2 = new JDateChooser(),
 			dateChooser_3 = new JDateChooser(), dateChooser_4 = new JDateChooser(), dateChooser_5 = new JDateChooser(); // Date
-	private final JLabel lblWallpaper = new JLabel("wallpaper");
 	// Selection
+	
+	private final UIControl mainFrame;		// Store main frame
 
 	// *** Create the frame *** //
-	public PlanTrip() {
-		setResizable(false);
-		setTitle("TravelBug - Destination");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(new Rectangle(0, 0, 820, 500));
-		setLocationRelativeTo(null);
-		contentPanel = new JPanel(new GridBagLayout());
-		contentPanel.setBackground(Color.WHITE);
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPanel);
+	public PlanTrip(UIControl parent) {
+		super();
+		this.mainFrame = parent;
+		
+		setLayout(null);
+		setBackground(new Color(0, 0, 0, 0));
+		setBounds(new Rectangle(new Dimension(900, 450)));
 
 		Date getlastestDate = new Date();
 
 		ButtonGroup bg = new ButtonGroup();
-		contentPanel.setLayout(new GridLayout(0, 1, 0, 0));
 
-		JPanel panel = new JPanel();
-		contentPanel.add(panel);
-		panel.setLayout(null);
 		dateChooser_5.setBounds(614, 337, 180, 30);
-		panel.add(dateChooser_5);
+		add(dateChooser_5);
 
 		dateChooser_5.setBorder(new EmptyBorder(1, 1, 1, 1));
 		dateChooser_5.setMinSelectableDate(getlastestDate);
 		locationName5.setBounds(411, 337, 180, 30);
-		panel.add(locationName5);
+		add(locationName5);
 
 		locationName5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		country4.setBounds(10, 294, 180, 30);
-		panel.add(country4);
+		add(country4);
 
 		country4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		place4.setBounds(213, 294, 180, 30);
-		panel.add(place4);
+		add(place4);
 
 		place4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		locationName4.setBounds(411, 294, 180, 30);
-		panel.add(locationName4);
+		add(locationName4);
 
 		locationName4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		dateChooser_4.setBounds(614, 294, 180, 30);
-		panel.add(dateChooser_4);
+		add(dateChooser_4);
 
 		dateChooser_4.setBorder(new EmptyBorder(1, 1, 1, 1));
 		dateChooser_4.setMinSelectableDate(getlastestDate);
 		country5.setBounds(10, 337, 180, 30);
-		panel.add(country5);
+		add(country5);
 
 		country5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		place5.setBounds(213, 337, 180, 30);
-		panel.add(place5);
+		add(place5);
 
 		place5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		dateChooser_1.setBounds(614, 165, 180, 30);
-		panel.add(dateChooser_1);
+		add(dateChooser_1);
 
 		dateChooser_1.setBorder(new EmptyBorder(1, 1, 1, 1));
 		dateChooser_1.setMinSelectableDate(getlastestDate);
 		country2.setBounds(10, 208, 180, 30);
-		panel.add(country2);
+		add(country2);
 
 		country2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		place2.setBounds(213, 208, 180, 30);
-		panel.add(place2);
+		add(place2);
 
 		place2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		locationName2.setBounds(411, 208, 180, 30);
-		panel.add(locationName2);
+		add(locationName2);
 
 		locationName2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		dateChooser_2.setBounds(614, 208, 180, 30);
-		panel.add(dateChooser_2);
+		add(dateChooser_2);
 
 		dateChooser_2.setBorder(new EmptyBorder(1, 1, 1, 1));
 		dateChooser_2.setMinSelectableDate(getlastestDate);
 		country3.setBounds(10, 251, 180, 30);
-		panel.add(country3);
+		add(country3);
 
 		country3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		place3.setBounds(213, 251, 180, 30);
-		panel.add(place3);
+		add(place3);
 
 		place3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		locationName3.setBounds(411, 251, 180, 30);
-		panel.add(locationName3);
+		add(locationName3);
 
 		locationName3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		dateChooser_3.setBounds(614, 251, 180, 30);
-		panel.add(dateChooser_3);
+		add(dateChooser_3);
 
 		dateChooser_3.setBorder(new EmptyBorder(1, 1, 1, 1));
 		dateChooser_3.setMinSelectableDate(getlastestDate);
@@ -133,30 +125,30 @@ public class PlanTrip extends JFrame {
 		JLabel lblType = new JLabel("Location Type:");
 		lblType.setForeground(Color.WHITE);
 		lblType.setBounds(213, 122, 180, 30);
-		panel.add(lblType);
+		add(lblType);
 		lblType.setFont(new Font("Segoe UI", Font.BOLD, 22));
 
 		JLabel lblLocationName = new JLabel("Location Name:");
 		lblLocationName.setForeground(Color.WHITE);
 		lblLocationName.setBounds(411, 122, 180, 30);
-		panel.add(lblLocationName);
+		add(lblLocationName);
 		lblLocationName.setFont(new Font("Segoe UI", Font.BOLD, 22));
 
 		JLabel lblCountry = new JLabel("Country:");
 		lblCountry.setForeground(Color.WHITE);
 		lblCountry.setBounds(10, 122, 180, 30);
-		panel.add(lblCountry);
+		add(lblCountry);
 		lblCountry.setFont(new Font("Segoe UI", Font.BOLD, 22));
 
 		JLabel lblDate = new JLabel("Date:");
 		lblDate.setForeground(Color.WHITE);
 		lblDate.setBounds(614, 122, 180, 30);
-		panel.add(lblDate);
+		add(lblDate);
 		lblDate.setFont(new Font("Segoe UI", Font.BOLD, 22));
 
-		JComboBox<String> multiCityCount = new JComboBox(new String[] { "2", "3", "4", "5" });
+		JComboBox<String> multiCityCount = new JComboBox<String>(new String[] { "2", "3", "4", "5" });
 		multiCityCount.setBounds(333, 74, 50, 30);
-		panel.add(multiCityCount);
+		add(multiCityCount);
 		multiCityCount.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				cityCount = Integer.parseInt(multiCityCount.getSelectedItem().toString());
@@ -168,7 +160,7 @@ public class PlanTrip extends JFrame {
 		// ================ Radio Button =============== //
 		JRadioButton rdbtnSingleCity = new JRadioButton("Single City");
 		rdbtnSingleCity.setBounds(37, 72, 120, 30);
-		panel.add(rdbtnSingleCity);
+		add(rdbtnSingleCity);
 		rdbtnSingleCity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (rdbtnSingleCity.isSelected()) {
@@ -185,7 +177,7 @@ public class PlanTrip extends JFrame {
 
 		JRadioButton rdbtnMultiCity = new JRadioButton("Multi City");
 		rdbtnMultiCity.setBounds(203, 72, 120, 30);
-		panel.add(rdbtnMultiCity);
+		add(rdbtnMultiCity);
 		rdbtnMultiCity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (rdbtnMultiCity.isSelected()) {
@@ -200,29 +192,29 @@ public class PlanTrip extends JFrame {
 		rdbtnMultiCity.setBackground(Color.WHITE);
 		bg.add(rdbtnMultiCity);
 		country1.setBounds(10, 165, 180, 30);
-		panel.add(country1);
+		add(country1);
 
 		// ================ Container =============== //
 		country1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		place1.setBounds(213, 165, 180, 30);
-		panel.add(place1);
+		add(place1);
 
 		place1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		locationName1.setBounds(411, 165, 180, 30);
-		panel.add(locationName1);
+		add(locationName1);
 
 		locationName1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 
 		Button confirmBtn = new Button("Confirm");
 		confirmBtn.setBounds(438, 393, 120, 40);
-		panel.add(confirmBtn);
+		add(confirmBtn);
 		confirmBtn.setForeground(Color.WHITE);
 		confirmBtn.setBackground(Color.GRAY);
 		confirmBtn.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 
 		Button backBtn = new Button("Back");
 		backBtn.setBounds(243, 393, 120, 40);
-		panel.add(backBtn);
+		add(backBtn);
 		backBtn.setForeground(Color.WHITE);
 		backBtn.setBackground(Color.GRAY);
 		backBtn.setActionCommand("");
@@ -230,42 +222,35 @@ public class PlanTrip extends JFrame {
 
 		JLabel lblFindTheBest = new JLabel("Find the best trip");
 		lblFindTheBest.setBounds(0, 0, 784, 45);
-		panel.add(lblFindTheBest);
+		add(lblFindTheBest);
 		lblFindTheBest.setFont(new Font("Segoe UI", Font.BOLD, 30));
 		lblFindTheBest.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// ================= Number of People ================ //
 		JSpinner adultSpinner = new JSpinner();
 		adultSpinner.setBounds(567, 74, 50, 30);
-		panel.add(adultSpinner);
+		add(adultSpinner);
 		adultSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 
 		JSpinner childSpinner = new JSpinner();
 		childSpinner.setBounds(722, 74, 50, 30);
-		panel.add(childSpinner);
+		add(childSpinner);
 		childSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 
 		JLabel lblAdult = new JLabel("Adult: ");
 		lblAdult.setBounds(495, 70, 60, 30);
-		panel.add(lblAdult);
+		add(lblAdult);
 		lblAdult.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		lblAdult.setLabelFor(adultSpinner);
 
 		JLabel lblChild = new JLabel("Child: ");
 		lblChild.setBounds(650, 70, 60, 30);
-		panel.add(lblChild);
+		add(lblChild);
 		lblChild.setLabelFor(lblChild);
 		lblChild.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		lblWallpaper.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Java Assignment\\DSA\\MainAssignment\\Authentication_Wallpaper.jpg"));
-		lblWallpaper.setBounds(0, -1, 816, 485);
-		
-		panel.add(lblWallpaper);
 
-		//
 		confirmBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO - after confirm button click
-
 				/* number of people */
 				adultCount = Integer.parseInt(adultSpinner.getValue().toString());
 				childCount = Integer.parseInt(childSpinner.getValue().toString());
@@ -437,6 +422,5 @@ public class PlanTrip extends JFrame {
 			System.out.println("Error city count.");
 			break;
 		}
-
 	}
 }

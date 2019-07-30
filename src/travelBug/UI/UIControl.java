@@ -24,7 +24,7 @@ public class UIControl extends JFrame {
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		
-		changePanel(new AddCompany(this));
+		changePanel(new AddLocation(this));
 //		changePanel(new ListCompany(this));
 	}
 	

@@ -198,14 +198,12 @@ public class AddCompany extends JPanel {
 			Company oCompany = new Company(companyName, shortForm, phoneNum, description);
 			cArray.addItem(oCompany);
 			rFile.writeLinkArray(cArray);
-//			JFrame frame = new JFrame("Show Message to redirect");
 			int result = JOptionPane.showConfirmDialog(null,
 					"New company,\n" + companyName + " \nadded successful!!!\nDo you want to add new travelleg account",
 					"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (result == JOptionPane.OK_OPTION) {
 				try {
 					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddTravelLegAccount(mainFrame,companyName)));
-//					new AddTravelLegAccount(companyName).setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

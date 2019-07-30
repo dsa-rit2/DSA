@@ -9,9 +9,11 @@ import travelBug.obj.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Label;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
@@ -21,9 +23,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
-public class ModifyLocation extends JFrame {
+public class ModifyLocation extends JPanel {
 	private JTextField txtLocationName,txtContinent,txtState;
 	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblCountry, lblState, lblType;
 	private Label lblErrorLocationName,lblErrorContinent, lblErrorType, lblErrorState, lblErrorCountry;
@@ -32,23 +35,20 @@ public class ModifyLocation extends JFrame {
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt",Location.class); 
 	private JPanel contentPane;
 	private int companyFound;
-	
+	private final UIControl mainFrame;
 	
 	/**
 	 * Create the frame.
 	 */
 	@SuppressWarnings("unchecked")
-	public ModifyLocation(String inputName,String inputState) {
+	public ModifyLocation(UIControl parent,String inputName,String inputState) {
 		
 		//==================== JPanel setting =====================
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 356);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setTitle("TravelBug");
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		super();
+		mainFrame = parent;
+		setLayout(null);
+		setBackground(new Color(0, 0, 0, 0));
+		setBounds(new Rectangle(new Dimension(900, 450)));
 		
 		//==================== Validate the company =====================
 		
@@ -68,11 +68,8 @@ public class ModifyLocation extends JFrame {
 		txtLocationName.setEditable(false);
 		txtLocationName.setBounds(133, 50, 265, 22);
 		txtLocationName.setText(lArray.getIndexElement(companyFound).getName());
-		txtLocationName.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		txtLocationName.addActionListener(event ->{
 				submit();
-			}
 		});
 		contentPane.add(txtLocationName);
 		txtLocationName.setColumns(10);
@@ -80,11 +77,8 @@ public class ModifyLocation extends JFrame {
 		txtContinent = new JTextField();
 		txtContinent.setBounds(133, 88, 265, 22);
 		txtContinent.setText(lArray.getIndexElement(companyFound).getContinent());
-		txtContinent.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		txtContinent.addActionListener(event ->{
 				submit();
-			}
 		});
 		contentPane.add(txtContinent);
 		txtContinent.setColumns(10);
@@ -118,11 +112,8 @@ public class ModifyLocation extends JFrame {
 		txtState.setEditable(false);
 		txtState.setBounds(133, 165, 265, 22);
 		txtState.setText(lArray.getIndexElement(companyFound).getState());
-		txtState.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		txtState.addActionListener(event->{
 				submit();
-			}
 		});
 		contentPane.add(txtState);
 		txtState.setColumns(10);
@@ -196,32 +187,23 @@ public class ModifyLocation extends JFrame {
 		// ============================================== Button ============================================= //
 
 		JButton btnAdd = new JButton("Change");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnAdd.addActionListener(event->{
 				submit();
-				//redirect to list location
-			}
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 		});
 		btnAdd.setBounds(133, 259, 97, 25);
 		contentPane.add(btnAdd);
 
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				ListLocation listLocation = new ListLocation();
-//				dispose();
-//				listLocation.setVisible(true);
-			}
+		btnCancel.addActionListener(event->{
+			library.dialogMessage("The page will redirect to the list company");
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 		});
 		btnCancel.setBounds(265, 259, 97, 25);
 		contentPane.add(btnCancel);
-		//unable to detect when got wrong
-//		if(foundCompany == false) {
-//			listLocation listLocation = new listLocation();
-//			dispose();
-//			listLocation.setVisible(true);
-//			// redirect the page to the list location
-//		}
+		if(foundCompany == false) {
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
+		}
 	}
 	public void submit() {
 		lArray = lFile.readLinkArray();
@@ -266,10 +248,7 @@ public class ModifyLocation extends JFrame {
 			lArray.getIndexElement(companyFound).setType(type);
 			lFile.writeLinkArray(lArray);
 			lArray.getIndexElement(companyFound).print();
-//			ListLocation listLocation = new ListLocation();
-//			dispose();
-//			listLocation.setVisible(true);
-			//redirect the page to the location list
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
 			
 		}
 	}

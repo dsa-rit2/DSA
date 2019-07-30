@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -156,7 +157,6 @@ public class EditCompany extends JPanel {
 						if (cArray.getIndexElement(i).getShortForm().equalsIgnoreCase(sFormString)) {
 							errorCompanyName = true;
 						}
-//						System.out.println(cArray.indexGetElement(i).getCompanyName());
 					}
 				}
 				if (sFormString.isEmpty()) {
@@ -202,7 +202,7 @@ public class EditCompany extends JPanel {
 						cArray.getIndexElement(i).print();
 					}
 					library.dialogMessage("Company Updated successful!!!");
-					//Redirect the page to another
+					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 				}
 				
 				

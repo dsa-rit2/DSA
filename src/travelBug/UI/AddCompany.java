@@ -120,10 +120,9 @@ public class AddCompany extends JPanel {
 		add(btnBack);
 
 		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnSubmit.addActionListener(event ->{
 				submit();
-			}
+			
 		});
 		btnSubmit.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		btnSubmit.setBounds(449, 402, 120, 35);

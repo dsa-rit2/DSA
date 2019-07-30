@@ -17,45 +17,31 @@ import javax.swing.event.DocumentListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ListCompany extends JFrame {
+public class ListCompany extends JPanel {
 
-	private JPanel contentPane;
 	private LinkArray<Company> cArray = new LinkArray<Company>();
 	private ReadWriteFile<Company> rFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 	private JTextField textField;
 	private JList displayList;
 	DefaultListModel listModel;
+	private final UIControl mainFrame;
+	public ListCompany(UIControl parent) {
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ListCompany frame = new ListCompany();
-
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public ListCompany() {
-
-		// =================================== Jpanel setting ===========================//
+		super();
+		this.mainFrame = parent;
+		// =================================== Jpanel setting
+		// ===========================//
 		cArray = rFile.readLinkArray();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 605, 515);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		setTitle("Conpany");
+		setLayout(null);
+		setBackground(new Color(0, 0, 0, 0));
+		setBounds(new Rectangle(new Dimension(900, 450)));
 
-		// =================================== Content component =========================//
+		// =================================== Content component
+		// =========================//
 		JLabel lblConpanyList = new JLabel("Conpany List");
 		lblConpanyList.setFont(new Font("Arial", Font.BOLD, 15));
 		lblConpanyList.setBounds(20, 11, 125, 14);
-		contentPane.add(lblConpanyList);
+		add(lblConpanyList);
 
 		listModel = new DefaultListModel();
 		displayList = new JList(listModel);
@@ -63,13 +49,13 @@ public class ListCompany extends JFrame {
 		JScrollPane scrollPane = new JScrollPane(displayList);
 		scrollPane.setBounds(20, 36, 300, 300);
 		displayList.setBounds(20, 36, 300, 300);
-		contentPane.add(scrollPane);
+		add(scrollPane);
 		updateList(null);
-		
+
 		JLabel lblSearch = new JLabel("Search:");
 		lblSearch.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblSearch.setBounds(20, 387, 66, 14);
-		contentPane.add(lblSearch);
+		add(lblSearch);
 
 		textField = new JTextField();
 		textField.setBounds(96, 386, 185, 20);
@@ -90,32 +76,36 @@ public class ListCompany extends JFrame {
 				updateList(textField.getText());
 			}
 		});
-		contentPane.add(textField);
+		add(textField);
 		textField.setColumns(10);
 
-
-
-		
 		// ============================= Button =====================================//
 		JButton btnModify = new JButton("Select");
 		btnModify.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnModify.setBounds(462, 385, 89, 23);
-		btnModify.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (displayList.getSelectedValue() == null) {
-					library.dialogMessage("You must select company first");
-				} else {
-					String getCompany = displayList.getSelectedValue().toString();
-					dispose();
-					new EditCompany(getCompany).setVisible(true);
-				}
+		btnModify.addActionListener(event -> {
+			if (displayList.getSelectedValue() == null) {
+				library.dialogMessage("You must select company first");
+			} else {
+				String getCompany = displayList.getSelectedValue().toString();
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new EditCompany(getCompany,mainFrame)));
 			}
-
 		});
-		contentPane.add(btnModify);
+		add(btnModify);
+
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(event-> {
+			//redirect to mainmenu //
+			
+		});
+		btnBack.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		btnBack.setBounds(596, 385, 89, 23);
+		add(btnBack);
 	}
 
-	// ===================================== Function ===================================//
+	// ===================================== Function
+	// ===================================//
 	public void updateList(String searchItem) {
 		if (searchItem == null) {
 			listModel = (DefaultListModel) displayList.getModel();
@@ -136,3 +126,5 @@ public class ListCompany extends JFrame {
 
 	}
 }
+
+

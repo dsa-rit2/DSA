@@ -13,17 +13,20 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Label;
+import java.awt.Rectangle;
 
-public class EditCompany extends JFrame {
+public class EditCompany extends JPanel {
 
-	private JPanel contentPane;
+
 	private JTextField txtAsd;
 	private JTextField shortF;
 	private JTextField phoneN;
@@ -31,17 +34,16 @@ public class EditCompany extends JFrame {
 	private LinkArray<Company> cArray = new LinkArray<Company>();
 	private ReadWriteFile<Company> rFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 	private int companyFoundindex;
+	private final UIControl mainFrame;
 
-	public EditCompany(String input) {
+	public EditCompany(String input,UIControl parent) {
 		// ======================================== Jpanel Setting ==============================================/
+		super();
+		this.mainFrame = parent;
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 583, 533);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
+		setLayout(null);
+		setBackground(new Color(0, 0, 0, 0));
+		setBounds(new Rectangle(new Dimension(900, 450)));
 		// ========================================= Validate the company =======================================/
 		boolean gotCompany = false;
 		companyFoundindex = 0;
@@ -62,46 +64,46 @@ public class EditCompany extends JFrame {
 		JLabel lblNewLabel = new JLabel("Company Name:");
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblNewLabel.setBounds(10, 31, 118, 14);
-		contentPane.add(lblNewLabel);
+		add(lblNewLabel);
 		
 		txtAsd = new JTextField();
 		txtAsd.setText(cArray.getIndexElement(companyFoundindex).getCompanyName());
 		txtAsd.setBounds(176, 29, 207, 20);
-		contentPane.add(txtAsd);
+		add(txtAsd);
 		txtAsd.setColumns(10);
 		
 		
 		JLabel lblShortForm = new JLabel("Short Form:");
 		lblShortForm.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblShortForm.setBounds(10, 68, 118, 14);
-		contentPane.add(lblShortForm);
+		add(lblShortForm);
 		
 		shortF = new JTextField();
 		shortF.setText(cArray.getIndexElement(companyFoundindex).getShortForm());
 		shortF.setBounds(176, 60, 207, 20);
-		contentPane.add(shortF);
+		add(shortF);
 		shortF.setColumns(10);
 		
 		JLabel lblPhoneNumber = new JLabel("Phone Number:");
 		lblPhoneNumber.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblPhoneNumber.setBounds(10, 110, 118, 14);
-		contentPane.add(lblPhoneNumber);
+		add(lblPhoneNumber);
 		
 		phoneN = new JTextField();
 		phoneN.setText(cArray.getIndexElement(companyFoundindex).getPhoneNum());
 		phoneN.setBounds(176, 107, 207, 20);
-		contentPane.add(phoneN);
+		add(phoneN);
 		phoneN.setColumns(10);
 		
 		JLabel lblDescription = new JLabel("Description:");
 		lblDescription.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lblDescription.setBounds(10, 153, 118, 14);
-		contentPane.add(lblDescription);
+		add(lblDescription);
 		
 		Descriptiontxt = new JTextField();
 		Descriptiontxt.setText(cArray.getIndexElement(companyFoundindex).getDescription());
 		Descriptiontxt.setBounds(10, 192, 373, 240);
-		contentPane.add(Descriptiontxt);
+	    add(Descriptiontxt);
 		Descriptiontxt.setColumns(10);
 		
 		// ================================================Error Message=============================================//
@@ -110,31 +112,31 @@ public class EditCompany extends JFrame {
 		lblErrorCompanyName.setForeground(Color.RED);
 		lblErrorCompanyName.setBackground(Color.white);
 		lblErrorCompanyName.setBounds(217, 31, 207, 14);
-		contentPane.add(lblErrorCompanyName);
+		add(lblErrorCompanyName);
 		
 		Label lblErrorDescription = new Label("");
 		lblErrorDescription.setForeground(Color.RED);
 		lblErrorDescription.setBackground(Color.white);
 		lblErrorDescription.setBounds(90, 238, 154, 14);
-		contentPane.add(lblErrorDescription);
+		add(lblErrorDescription);
 		
 		Label lblErrorShortForm = new Label("");
 		lblErrorShortForm.setForeground(Color.RED);
 		lblErrorShortForm.setBackground(Color.white);
 		lblErrorShortForm.setBounds(217, 68, 207, 14);
-		contentPane.add(lblErrorShortForm);
+		add(lblErrorShortForm);
 		
 		Label lblErrorPhoneNum = new Label("");
 		lblErrorPhoneNum.setForeground(Color.RED);
 		lblErrorPhoneNum.setBackground(Color.white);
 		lblErrorPhoneNum.setBounds(217, 110, 207, 14);
-		contentPane.add(lblErrorPhoneNum);
+		add(lblErrorPhoneNum);
 		
 		// ==================================================Button ====================================================//
 		JButton btnModify = new JButton("Modify");
 		btnModify.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		btnModify.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnModify.addActionListener(event-> {
+			
 				String companyName = txtAsd.getText();
 				int error = 0;
 				String sFormString =  shortF.getText();
@@ -155,7 +157,6 @@ public class EditCompany extends JFrame {
 						if (cArray.getIndexElement(i).getShortForm().equalsIgnoreCase(sFormString)) {
 							errorCompanyName = true;
 						}
-//						System.out.println(cArray.indexGetElement(i).getCompanyName());
 					}
 				}
 				if (sFormString.isEmpty()) {
@@ -201,14 +202,14 @@ public class EditCompany extends JFrame {
 						cArray.getIndexElement(i).print();
 					}
 					library.dialogMessage("Company Updated successful!!!");
-					//Redirect the page to another
+					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 				}
 				
 				
-			}
+			
 		});
 		btnModify.setBounds(441, 405, 89, 23);
-		contentPane.add(btnModify);
+		add(btnModify);
 		
 		
 		

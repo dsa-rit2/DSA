@@ -69,50 +69,57 @@ public class AddTravelLegAccount extends JPanel {
 		// ======================================== Content component ==============================================//
 		
 		JLabel lblUsername = new JLabel("Username:");
-		lblUsername.setBounds(12, 135, 89, 16);
+		lblUsername.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblUsername.setBounds(163, 166, 107, 19);
 		add(lblUsername);
 
 		JTextField txtUserFront = new JTextField();
 		txtUserFront.setText(shortFormString);
 		txtUserFront.setEditable(false);
-		txtUserFront.setBounds(131, 132, 79, 22);
+		txtUserFront.setBounds(313, 163, 79, 22);
 		add(txtUserFront);
 		txtUserFront.setColumns(10);
 
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(12, 182, 89, 16);
+		lblPassword.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblPassword.setBounds(163, 213, 107, 16);
 		add(lblPassword);
 
 		txtPassword = new JTextField();
-		txtPassword.setBounds(131, 179, 256, 22);
+		txtPassword.setBounds(313, 210, 256, 22);
 		add(txtPassword);
 		txtPassword.setColumns(10);
 
 		txtUserNameNum = new JTextField();
-		txtUserNameNum.setBounds(222, 132, 79, 22);
+		txtUserNameNum.setBounds(404, 163, 79, 22);
 		add(txtUserNameNum);
 		txtUserNameNum.setColumns(10);
 		
 		JLabel lblAddTravelLeg = new JLabel(anything);
-		lblAddTravelLeg.setFont(new Font("Times New Roman", Font.BOLD, 32));
-		lblAddTravelLeg.setBounds(12, 42, 392, 67);
+		lblAddTravelLeg.setFont(new Font("Segoe UI Emoji", Font.BOLD, 27));
+		lblAddTravelLeg.setBounds(163, 86, 538, 67);
 		add(lblAddTravelLeg);
 		
 		JLabel lblNewLabel = new JLabel(".");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel.setBounds(214, 134, 24, 16);
+		lblNewLabel.setBounds(393, 169, 24, 16);
 		add(lblNewLabel);
+		
+		JLabel lblAddTravellegAccount = new JLabel("Add Travelleg Account");
+		lblAddTravellegAccount.setFont(new Font("Segoe UI", Font.BOLD, 27));
+		lblAddTravellegAccount.setBounds(156, 38, 502, 51);
+		add(lblAddTravellegAccount);
 		
 		// ============================================ Error Message ===============================================//
 		
 		JLabel lblUsernameError = new JLabel("");
 		lblUsernameError.setForeground(new Color(255, 0, 0));
-		lblUsernameError.setBounds(128, 163, 416, 16);
+		lblUsernameError.setBounds(313, 185, 416, 16);
 		add(lblUsernameError);
 
 		JLabel lblPasswordError = new JLabel("");
 		lblPasswordError.setForeground(new Color(255, 0, 0));
-		lblPasswordError.setBounds(141, 127, 416, 16);
+		lblPasswordError.setBounds(312, 233, 416, 16);
 		add(lblPasswordError);
 
 		// ================================================ Button ====================================================//
@@ -163,7 +170,7 @@ public class AddTravelLegAccount extends JPanel {
 		});
 
 		btnAdd.setForeground(new Color(0, 0, 0));
-		btnAdd.setBounds(185, 317, 79, 24);
+		btnAdd.setBounds(313, 319, 79, 24);
 		add(btnAdd);
 
 		Button btnReset = new Button("Reset");
@@ -176,7 +183,7 @@ public class AddTravelLegAccount extends JPanel {
 			}
 		});
 		btnReset.setForeground(new Color(0, 0, 0));
-		btnReset.setBounds(317, 317, 79, 24);
+		btnReset.setBounds(490, 319, 79, 24);
 		add(btnReset);
 
 		JButton btnGenerate = new JButton("Generate");
@@ -189,7 +196,7 @@ public class AddTravelLegAccount extends JPanel {
 				} while (checkRepeat);
 			}
 		});
-		btnGenerate.setBounds(399, 131, 97, 25);
+		btnGenerate.setBounds(618, 162, 97, 25);
 		add(btnGenerate);
 
 		JButton btnNewButton = new JButton("Generate");
@@ -198,8 +205,7 @@ public class AddTravelLegAccount extends JPanel {
 				txtPassword.setText(library.generatePassword());
 			}
 		});
-		btnNewButton.setBounds(399, 178, 97, 25);
+		btnNewButton.setBounds(618, 209, 97, 25);
 		add(btnNewButton);
-
 	}
 }

@@ -4,9 +4,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Libraries"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="images"/>
+	<classpathentry kind="src" path="libraries"/>
 	<classpathentry kind="lib" path="libraries/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="libraries/jgoodies-common-1.2.0.jar"/>
 	<classpathentry kind="lib" path="libraries/jgoodies-looks-2.4.1.jar"/>
 	<classpathentry kind="lib" path="libraries/junit-4.6.jar"/>
+
 	<classpathentry kind="output" path="bin"/>
 </classpath>

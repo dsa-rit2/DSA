@@ -25,8 +25,6 @@ public class UIControl extends JFrame {
 		getContentPane().setLayout(null);
 		
 		changePanel(new AddLocation(this));
-		
-
 	}
 	
 	public void changePanel(JPanel panelName) {

@@ -8,7 +8,7 @@ import travelBug.obj.*;
 //=========================
 
 import java.awt.*;
-import javax.swing.DefaultListModel;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
@@ -22,25 +22,10 @@ import java.awt.event.MouseEvent;
 import java.util.Vector;
 import javax.swing.border.MatteBorder;
 
-public class TravelLegMaintenance extends JFrame {
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
+public class TravelLegMaintenance extends JPanel {
 
-					TravelLegMaintenance frame = new TravelLegMaintenance();
-					frame.setVisible(true);
-					frame.setTitle("Travel Leg Maintenance");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-			}
-		});
-	}
 
 	private static final long serialVersionUID = 5629499624569369278L;
-	private JPanel contentPane;
 	private JTextField tfUsername;
 	private JTextField txtPassword;
 	private LinkArray<TravelLegInfo> tArray = new LinkArray<TravelLegInfo>();
@@ -55,26 +40,26 @@ public class TravelLegMaintenance extends JFrame {
 	private DefaultTableModel defaultTableModel;
 	private JTable table;
 	private Vector vector;
+	private final UIControl mainFrame;	
 
-	public TravelLegMaintenance() {
+	public TravelLegMaintenance(UIControl parent) {
+		super();
+		this.mainFrame = parent;
 		// ========================== Jpanel setting ===========================//
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 811, 514);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		setLayout(null);
+		setBackground(new Color(0, 0, 0, 0));
+		setBounds(new Rectangle(new Dimension(900, 450)));
 
 		// ========================== Content component =========================//
 		tArray = tFile.readLinkArray();
 		tfSearch = new JTextField();
 		tfSearch.setBounds(69, 27, 116, 22);
-		contentPane.add(tfSearch);
+		add(tfSearch);
 		tfSearch.setColumns(10);
 
 		lblSearchJLabel = new JLabel("Search :");
 		lblSearchJLabel.setBounds(8, 30, 49, 16);
-		contentPane.add(lblSearchJLabel);
+		add(lblSearchJLabel);
 
 		defaultTableModel = new DefaultTableModel() {
 			public boolean isCellEditable(int row, int column) {
@@ -94,9 +79,7 @@ public class TravelLegMaintenance extends JFrame {
 					int SelectedRowIndex = table.getSelectedRow();
 					vector = (Vector) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
-						TravelLegModify travelLegModify = new TravelLegModify(vector, vector.elementAt(0).toString());
-						dispose();
-						travelLegModify.setVisible(true);
+						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new TravelLegModify(vector, vector.elementAt(0).toString(),mainFrame)));
 					}
 
 				}
@@ -122,7 +105,7 @@ public class TravelLegMaintenance extends JFrame {
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(192, 10, 578, 416);
-		getContentPane().add(scrollPane);
+		add(scrollPane);
 
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			int j = 0;
@@ -164,7 +147,7 @@ public class TravelLegMaintenance extends JFrame {
 			}
 		});
 		btnNewButton.setBounds(12, 78, 87, 25);
-		contentPane.add(btnNewButton);
+		add(btnNewButton);
 
 		
 

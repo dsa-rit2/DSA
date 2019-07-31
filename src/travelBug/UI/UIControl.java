@@ -55,7 +55,8 @@ public class UIControl extends JFrame {
 		backgroundImg.setIcon(new ImageIcon(library.currentDirectoryPath + "\\images\\form-background.jpg"));
 		getContentPane().add(backgroundImg);
 
-		update(getGraphics()); // Update graphics
+		// ===================== Update graphics =======================
+		update(getGraphics()); 
 		revalidate();
 		repaint();
 	}

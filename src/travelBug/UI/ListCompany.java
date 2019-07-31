@@ -11,16 +11,18 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ListCompany extends JPanel {
-	private static final long serialVersionUID = 1L;		// Serializable purpose
+	private static final long serialVersionUID = 1L; // Serializable purpose
 	private LinkArray<Company> cArray = new LinkArray<Company>();
 	private ReadWriteFile<Company> rFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 	private JTextField textField;
 	private JList displayList;
 	DefaultListModel listModel;
 	private final UIControl mainFrame;
-	
+
 	public ListCompany(UIControl parent) {
 		super();
 		this.mainFrame = parent;
@@ -79,9 +81,9 @@ public class ListCompany extends JPanel {
 		textField.setColumns(10);
 
 		// ============================= Button =====================================//
-		JButton btnModify = new JButton("Select");
+		JButton btnModify = new JButton("Modify");
 		btnModify.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		btnModify.setBounds(620, 300, 120, 35);
+		btnModify.setBounds(620, 300, 208, 35);
 		btnModify.addActionListener(event -> {
 			if (displayList.getSelectedValue() == null) {
 				library.dialogMessage("You must select company first");
@@ -93,13 +95,26 @@ public class ListCompany extends JPanel {
 		add(btnModify);
 
 		JButton btnBack = new JButton("Back");
-		btnBack.addActionListener(event-> {
-			//redirect to mainmenu //
-			
+		btnBack.addActionListener(event -> {
+			// redirect to mainmenu //
+
 		});
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		btnBack.setBounds(620, 359, 120, 35);
+		btnBack.setBounds(620, 359, 208, 35);
 		add(btnBack);
+
+		JButton btnNewButton = new JButton("List Travelleg Account");
+		btnNewButton.addActionListener(event -> {
+			if (displayList.getSelectedValue() == null) {
+				library.dialogMessage("You must select company first");
+			} else {
+				String getCompany = displayList.getSelectedValue().toString();
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new listTravelLegAccount(mainFrame,getCompany)));
+			}
+		});
+		btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		btnNewButton.setBounds(618, 238, 210, 35);
+		add(btnNewButton);
 	}
 
 	// ==================== Function ==================== //
@@ -123,5 +138,3 @@ public class ListCompany extends JPanel {
 
 	}
 }
-
-

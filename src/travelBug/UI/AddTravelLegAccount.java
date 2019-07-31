@@ -55,7 +55,7 @@ public class AddTravelLegAccount extends JPanel {
 
 		
 		// ======================================== Validate ===================================================//
-		// Read the file and find the shortform
+		// Read the file and find the company name
 		
 		tArray = tFile.readLinkArray();
 		cArray = cFile.readLinkArray();

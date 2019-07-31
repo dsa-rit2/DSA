@@ -24,6 +24,7 @@ import javax.swing.table.TableModel;
 
 import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
+import travelBug.obj.Company;
 import travelBug.obj.TravelLegAccount;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -39,10 +40,13 @@ public class listTravelLegAccount extends JPanel {
 	private JScrollPane scrollPane;
 	private LinkArray<TravelLegAccount> lArray = new LinkArray<TravelLegAccount>();
 	private ReadWriteFile<TravelLegAccount> lFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt", TravelLegAccount.class);
+	private LinkArray<Company> cArray = new LinkArray<Company>();
+	private ReadWriteFile<Company> cFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 	private JTextField textField;
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
 	private String shortFormString = null;
+	private int indexCompany = 0;
 	/**
 	 * Launch the application.
 	 */
@@ -56,6 +60,7 @@ public class listTravelLegAccount extends JPanel {
 		setBounds(new Rectangle(new Dimension(900, 450)));
 		setLayout(null);
 		// ===============================================Content Component =================================//
+		boolean gotCompany = false;
 		tableModel = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -64,7 +69,14 @@ public class listTravelLegAccount extends JPanel {
 			}
 		};
 		lArray = lFile.readLinkArray();
-
+		cArray = cFile.readLinkArray();
+		for(int i=0;i<cArray.size();i++) {
+			if(cArray.getIndexElement(i).getCompanyName().equalsIgnoreCase(companyName)) {
+				gotCompany = true;
+				indexCompany = i;
+				break;
+			}
+		}
 		table = new JTable(tableModel);
 		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		table.addMouseListener(new MouseAdapter() {
@@ -111,7 +123,7 @@ public class listTravelLegAccount extends JPanel {
 		
 		btnNewButton = new JButton("Add Travelleg Account");
 		btnNewButton.addActionListener(event->{
-			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddTravelLegAccount(mainFrame)));
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddTravelLegAccount(mainFrame,cArray.getIndexElement(indexCompany).getCompanyName())));
 		});
 		btnNewButton.setBounds(170, 403, 174, 34);
 		add(btnNewButton);
@@ -140,6 +152,8 @@ public class listTravelLegAccount extends JPanel {
 		tableModel.setRowCount(0);
 		for (int i = 0; i < lArray.size(); i++) {
 			String[] dataStrings = { lArray.getIndexElement(i).getUsername(),lArray.getIndexElement(i).getPassword()};
+//			if()
+			//Need to do something 
 			tableModel.addRow(dataStrings);
 			lArray.getIndexElement(i).print();
 		}

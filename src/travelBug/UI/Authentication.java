@@ -3,13 +3,16 @@ package travelBug.UI;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Label;
+import java.awt.Rectangle;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.lang.reflect.Array;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +25,9 @@ import javax.swing.border.EmptyBorder;
 import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
 import travelBug.library.library;
+import travelBug.obj.Admin;
+import travelBug.obj.Customer;
+import travelBug.obj.Person;
 import travelBug.obj.TravelLegAccount;
 import travelBug.obj.User;
 
@@ -32,6 +38,13 @@ public class Authentication extends JFrame {
 	private LinkArray<TravelLegAccount> tArray = new LinkArray<TravelLegAccount>();
 	private ReadWriteFile<TravelLegAccount> tFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt",
 			TravelLegAccount.class);
+	
+	private LinkArray<Person> cArray = new LinkArray<Person>();
+	private ReadWriteFile<Person> cFile = new ReadWriteFile<Person>("CustomerAccount.txt", Person.class);
+	
+	private LinkArray<Admin> aArray = new LinkArray<Admin>();
+	
+	
 	private LinkArray<User> uArray = new LinkArray<User>();
 
 	public static void main(String [] args) {
@@ -39,7 +52,12 @@ public class Authentication extends JFrame {
 		frame.setVisible(true);
 	}
 	
+	
+	//private UIControl fram;
+	
 	public Authentication() {
+		
+		//this.fram = parent;
 
 		//=============Read TravelLeg Account and add role to link array==================//
 		tArray = tFile.readLinkArray();
@@ -48,14 +66,21 @@ public class Authentication extends JFrame {
 					"travelLegAcc"));
 		}
 
-		// Customer haven't done
+		//=============Read Customer Account and add role to link array==================//
+		cArray = cFile.readLinkArray();
+		for(int i = 0 ; i < cArray.size(); i++) {
+			uArray.addItem(new User(cArray.getIndexElement(i).getUsername(), cArray.getIndexElement(i).getPassword(),
+					"CustomerAcc"));
+		}
+		
 
 		
 		//=============================Login Content===============================//
 		setTitle("TravelBug - Login");
 		setResizable(false);
-		setBackground(new Color(255, 218, 185));
-		setBounds(100, 100, 600, 400);
+		getContentPane().setLayout(null);
+		setBackground(new Color(0, 0, 0, 0));
+		setBounds(new Rectangle(new Dimension(900, 450)));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -69,27 +94,27 @@ public class Authentication extends JFrame {
 
 		TextField usernameField = new TextField();
 		usernameField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		usernameField.setBounds(257, 122, 180, 30);
+		usernameField.setBounds(332, 172, 180, 30);
 		panel.add(usernameField);
 
 		Label username_label = new Label("Username :");
 		username_label.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		username_label.setBounds(140, 122, 106, 30);
+		username_label.setBounds(220, 172, 106, 30);
 		panel.add(username_label);
 
 		Label password_label = new Label("Password :");
 		password_label.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		password_label.setBounds(140, 179, 103, 30);
+		password_label.setBounds(223, 226, 103, 30);
 		panel.add(password_label);
 
 		JPasswordField passwordField = new JPasswordField();
-		passwordField.setBounds(257, 179, 180, 30);
+		passwordField.setBounds(332, 226, 180, 30);
 		panel.add(passwordField);
 
 		JTextPane txt_Title = new JTextPane();
 		txt_Title.setFont(new Font("Monospaced", Font.BOLD, 32));
 		txt_Title.setText("TravelBug");
-		txt_Title.setBounds(201, 33, 177, 49);
+		txt_Title.setBounds(335, 52, 177, 49);
 		panel.add(txt_Title);
 
 		Label usernameErrorLabel = new Label("");
@@ -112,7 +137,7 @@ public class Authentication extends JFrame {
 		loginBtn.setFont(new Font("Segoe UI", Font.PLAIN, 26));
 		loginBtn.setForeground(Color.WHITE);
 		loginBtn.setBackground(Color.GRAY);
-		loginBtn.setBounds(201, 250, 177, 40);
+		loginBtn.setBounds(359, 289, 132, 40);
 		
 		
 		// ============ When user click login button ===============//

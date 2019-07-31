@@ -20,10 +20,13 @@ public class AddLocation extends JPanel {
 	private JComboBox<String> cbCountry, cbType;
 	private LinkArray<Location> lArray = new LinkArray<Location>();
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt", Location.class);
+	private final UIControl mainFrame;		// Store main frame
 
-	public AddLocation() {
+	public AddLocation(UIControl parent) {
+		super();
+		this.mainFrame = parent;
 		//===================== JPanel setting ======================
-		UIControl.titleName = "Add Travel Location";
+//		UIControl.titleName = "Add Travel Location";
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
@@ -127,21 +130,14 @@ public class AddLocation extends JPanel {
 		// ==================================== Button ==================================//
 		JButton btnAdd = new JButton("Add");
 		btnAdd.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				submit();
-			}
-		});
+		btnAdd.addActionListener(event -> { submit(); });
 		btnAdd.setBounds(453, 400, 120, 35);
 		add(btnAdd);
 
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				listLocation listLocation = new listLocation();
-				listLocation.setVisible(true);
-			}
+		btnCancel.addActionListener(event -> {
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
 		});
 		btnCancel.setBounds(300, 400, 120, 35);
 		add(btnCancel);
@@ -181,6 +177,7 @@ public class AddLocation extends JPanel {
 	private void submit() {
 		lArray = lFile.readLinkArray();
 
+		//===================== Get data =======================
 		String locationName = txtLocationName.getText();
 		String continent = txtContinent.getText();
 		String state = txtContinent.getText();
@@ -188,38 +185,45 @@ public class AddLocation extends JPanel {
 		String type = cbType.getSelectedItem().toString();
 
 		boolean error = false;
+		
+		//=============== Reset error message =============
 		lblErrorLocationName.setText("");
 		lblErrorContinent.setText("");
 		lblErrorCountry.setText("");
 		lblErrorState.setText("");
 		lblErrorType.setText("");
+		
+		//=============== Check validation ==============
 		if (locationName.isEmpty()) {
 			lblErrorLocationName.setText("The location name cannot be empty");
 			error = true;
 		}
+		
 		if (continent.isEmpty()) {
 			lblErrorContinent.setText("The continent cannot be empty");
 			error = true;
 		}
+		
 		if (state.isEmpty()) {
 			lblErrorState.setText("The state cannot be empty");
 			error = true;
 		}
+		
 		if (cbCountry.getSelectedIndex() == 0) {
 			lblErrorCountry.setText("Please select country");
 			error = true;
 		}
+		
 		if (cbType.getSelectedIndex() == 0) {
 			lblErrorType.setText("Please select type");
 			error = true;
 		}
+		
 		if (!error) {
 			Location location = new Location(locationName, continent, country, state, type);
 			lArray.addItem(location);
 			lFile.writeLinkArray(lArray);
-			listLocation listLocation = new listLocation();
-			listLocation.setVisible(true);
-			// redirect the page to the location list
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
 		}
 	}
 }

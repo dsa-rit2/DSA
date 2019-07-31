@@ -31,7 +31,7 @@ public class AddTravelLegAccount extends JPanel {
 	private static final long serialVersionUID = 5629499624569369278L;
 	private JPanel contentPane;
 	private JTextField tfUsername;
-	private JTextField txtPassword;
+	private JPasswordField txtPassword;
 	private ReadWriteFile<TravelLegAccount> readWriteFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt",
 			TravelLegAccount.class);
 	private LinkArray<TravelLegAccount> tArray = new LinkArray<TravelLegAccount>();
@@ -42,6 +42,7 @@ public class AddTravelLegAccount extends JPanel {
 	private JTextField txtUserNameNum;
 	private JTextField textField;
 	private final UIControl mainFrame;
+	private String shortFormString = null;
 	public AddTravelLegAccount(UIControl parent,String anything) {
 		
 		// ========================================Jpanel Setting ==================================================//
@@ -55,7 +56,7 @@ public class AddTravelLegAccount extends JPanel {
 		
 		// ======================================== Validate ===================================================//
 		// Read the file and find the shortform
-		String shortFormString = null;
+		
 		tArray = tFile.readLinkArray();
 		cArray = cFile.readLinkArray();
 		for (int i = 0; i < cArray.size(); i++) {
@@ -85,7 +86,7 @@ public class AddTravelLegAccount extends JPanel {
 		lblPassword.setBounds(163, 213, 107, 16);
 		add(lblPassword);
 
-		txtPassword = new JTextField();
+		txtPassword = new JPasswordField();
 		txtPassword.setBounds(313, 210, 256, 22);
 		add(txtPassword);
 		txtPassword.setColumns(10);
@@ -112,13 +113,15 @@ public class AddTravelLegAccount extends JPanel {
 		
 		// ============================================ Error Message ===============================================//
 		
-		JLabel lblUsernameError = new JLabel("");
+		Label lblUsernameError = new Label("");
 		lblUsernameError.setForeground(new Color(255, 0, 0));
+		lblUsernameError.setBackground(Color.white);
 		lblUsernameError.setBounds(313, 185, 416, 16);
 		add(lblUsernameError);
 
-		JLabel lblPasswordError = new JLabel("");
+		Label lblPasswordError = new Label("");
 		lblPasswordError.setForeground(new Color(255, 0, 0));
+		lblPasswordError.setBackground(Color.white);
 		lblPasswordError.setBounds(312, 233, 416, 16);
 		add(lblPasswordError);
 
@@ -127,7 +130,7 @@ public class AddTravelLegAccount extends JPanel {
 		Button btnAdd = new Button("Add");
 		btnAdd.addActionListener(event->{
 				String username = txtUserFront.getText() + "." + txtUserNameNum.getText();
-				String password = String.valueOf(txtPassword.getText());
+				String password = String.valueOf(txtPassword.getPassword());
 				String checkPass = library.validPassword(password);
 				int error = 0;
 
@@ -149,7 +152,6 @@ public class AddTravelLegAccount extends JPanel {
 						error++;
 					}
 				}
-				// The auto number compare got crush or not
 				if (password.isEmpty()) {
 					lblPasswordError.setText("The password cannot be empty");
 					error++;
@@ -162,8 +164,23 @@ public class AddTravelLegAccount extends JPanel {
 					TravelLegAccount pAccount = new TravelLegAccount(username, password);
 					tArray.addItem(pAccount);
 					tFile.writeLinkArray(tArray);
-					library.dialogMessage("Account added successful!!!");
-					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
+					int result = JOptionPane.showConfirmDialog(null,
+							"Add travelleg account successful\n Do you want to add more",
+							"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					if (result == JOptionPane.OK_OPTION) {
+						try {
+							SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddTravelLegAccount(mainFrame,shortFormString)));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} else {
+						try {
+//							SwingUtilities.invokeLater(() -> mainFrame.changePanel(new (mainFrame)));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+//					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 				}
 
 			

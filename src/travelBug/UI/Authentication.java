@@ -16,8 +16,8 @@ public class Authentication extends JPanel {
 	private ReadWriteFile<TravelLegAccount> tFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt",
 			TravelLegAccount.class);
 
-	private LinkArray<Person> cArray = new LinkArray<Person>();
-	private ReadWriteFile<Person> cFile = new ReadWriteFile<Person>("CustomerAccount.txt", Person.class);
+	private LinkArray<Customer> cArray = new LinkArray<Customer>();
+	private ReadWriteFile<Customer> cFile = new ReadWriteFile<Customer>("Customer.txt", Customer.class);
 
 	private LinkArray<Admin> aArray = new LinkArray<Admin>();
 	private LinkArray<User> uArray = new LinkArray<User>();

@@ -156,7 +156,7 @@ public class library {
 			System.out.println("[Error] - The password length must more or equal to 6");
 			return "The password length must more or equal to 6";
 		} else {
-			Pattern passPat = Pattern.compile("\\w*");
+			Pattern passPat = Pattern.compile("((?=.*\\d)(?=.*[a-zA-Z]).{6,15})");
 			Matcher matchpass = passPat.matcher(password);
 			if (!matchpass.matches()) {
 				System.out.println("[Error] - The password must only contain character and numeric");

@@ -1,8 +1,8 @@
 package travelBug.UI;
-
 //=========================
 //Import Package
 //=========================
+import travelBug.UI.*;
 import travelBug.library.*;
 import travelBug.obj.*;
 //=========================
@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.JTextArea;
 import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
@@ -26,7 +27,7 @@ import javax.swing.JTable;
 import javax.management.loading.PrivateClassLoader;
 import javax.swing.JButton;
 
-public class AddTravelLegAccount extends JFrame {
+public class AddTravelLegAccount extends JPanel {
 	private static final long serialVersionUID = 5629499624569369278L;
 	private JPanel contentPane;
 	private JTextField tfUsername;
@@ -40,22 +41,15 @@ public class AddTravelLegAccount extends JFrame {
 	private ReadWriteFile<Company> cFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 	private JTextField txtUserNameNum;
 	private JTextField textField;
-
-	public static void main(String[] args) {
-		AddTravelLegAccount account = new AddTravelLegAccount("ss");
-		account.setVisible(true);
-	}
-	public AddTravelLegAccount(String anything) {
+	private final UIControl mainFrame;
+	public AddTravelLegAccount(UIControl parent,String anything) {
+		
 		// ========================================Jpanel Setting ==================================================//
-		getContentPane().setBackground(new Color(204, 255, 0));
-		getContentPane().setForeground(Color.WHITE);
-		setResizable(false);
-		setTitle("TravelBug");
-		setResizable(false);
-		setBackground(new Color(255, 218, 185));
-		setBounds(100, 100, 611, 440);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
+		super();
+		this.mainFrame = parent;
+		setLayout(null);
+		setBackground(new Color(0, 0, 0, 0));
+		setBounds(new Rectangle(new Dimension(900, 450)));
 		
 
 		
@@ -74,58 +68,64 @@ public class AddTravelLegAccount extends JFrame {
 		// ======================================== Content component ==============================================//
 		
 		JLabel lblUsername = new JLabel("Username:");
-		lblUsername.setBounds(12, 66, 89, 16);
-		getContentPane().add(lblUsername);
+		lblUsername.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblUsername.setBounds(163, 166, 107, 19);
+		add(lblUsername);
 
 		JTextField txtUserFront = new JTextField();
 //		txtUserFront.setText(shortFormString);
 		txtUserFront.setText(anything);
 		txtUserFront.setEditable(false);
-		txtUserFront.setBounds(131, 63, 79, 22);
-		getContentPane().add(txtUserFront);
+		txtUserFront.setBounds(313, 163, 79, 22);
+		add(txtUserFront);
 		txtUserFront.setColumns(10);
 
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(12, 107, 89, 16);
-		getContentPane().add(lblPassword);
+		lblPassword.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblPassword.setBounds(163, 213, 107, 16);
+		add(lblPassword);
 
 		txtPassword = new JTextField();
-		txtPassword.setBounds(131, 104, 256, 22);
-		getContentPane().add(txtPassword);
+		txtPassword.setBounds(313, 210, 256, 22);
+		add(txtPassword);
 		txtPassword.setColumns(10);
 
 		txtUserNameNum = new JTextField();
-		txtUserNameNum.setBounds(230, 63, 79, 22);
-		getContentPane().add(txtUserNameNum);
+		txtUserNameNum.setBounds(404, 163, 79, 22);
+		add(txtUserNameNum);
 		txtUserNameNum.setColumns(10);
 		
 		JLabel lblAddTravelLeg = new JLabel(anything);
-		lblAddTravelLeg.setFont(new Font("Times New Roman", Font.BOLD, 28));
-		lblAddTravelLeg.setBounds(12, 13, 392, 46);
-		getContentPane().add(lblAddTravelLeg);
+		lblAddTravelLeg.setFont(new Font("Segoe UI Emoji", Font.BOLD, 27));
+		lblAddTravelLeg.setBounds(163, 86, 538, 67);
+		add(lblAddTravelLeg);
 		
 		JLabel lblNewLabel = new JLabel(".");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel.setBounds(215, 69, 24, 16);
-		getContentPane().add(lblNewLabel);
+		lblNewLabel.setBounds(393, 169, 24, 16);
+		add(lblNewLabel);
+		
+		JLabel lblAddTravellegAccount = new JLabel("Add Travelleg Account");
+		lblAddTravellegAccount.setFont(new Font("Segoe UI", Font.BOLD, 27));
+		lblAddTravellegAccount.setBounds(156, 38, 502, 51);
+		add(lblAddTravellegAccount);
 		
 		// ============================================ Error Message ===============================================//
 		
 		JLabel lblUsernameError = new JLabel("");
 		lblUsernameError.setForeground(new Color(255, 0, 0));
-		lblUsernameError.setBounds(141, 85, 416, 16);
-		getContentPane().add(lblUsernameError);
+		lblUsernameError.setBounds(313, 185, 416, 16);
+		add(lblUsernameError);
 
 		JLabel lblPasswordError = new JLabel("");
 		lblPasswordError.setForeground(new Color(255, 0, 0));
-		lblPasswordError.setBounds(141, 127, 416, 16);
-		getContentPane().add(lblPasswordError);
+		lblPasswordError.setBounds(312, 233, 416, 16);
+		add(lblPasswordError);
 
 		// ================================================ Button ====================================================//
 		contentPane = new JPanel();
 		Button btnAdd = new Button("Add");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnAdd.addActionListener(event->{
 				String username = txtUserFront.getText() + "." + txtUserNameNum.getText();
 				String password = String.valueOf(txtPassword.getText());
 				String checkPass = library.validPassword(password);
@@ -163,15 +163,15 @@ public class AddTravelLegAccount extends JFrame {
 					tArray.addItem(pAccount);
 					tFile.writeLinkArray(tArray);
 					library.dialogMessage("Account added successful!!!");
-					//Redirect the frame to the details of the company
+					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 				}
 
-			}
+			
 		});
 
 		btnAdd.setForeground(new Color(0, 0, 0));
-		btnAdd.setBounds(187, 371, 79, 24);
-		getContentPane().add(btnAdd);
+		btnAdd.setBounds(313, 319, 79, 24);
+		add(btnAdd);
 
 		Button btnReset = new Button("Reset");
 		btnReset.addActionListener(new ActionListener() {
@@ -183,8 +183,8 @@ public class AddTravelLegAccount extends JFrame {
 			}
 		});
 		btnReset.setForeground(new Color(0, 0, 0));
-		btnReset.setBounds(319, 371, 79, 24);
-		getContentPane().add(btnReset);
+		btnReset.setBounds(490, 319, 79, 24);
+		add(btnReset);
 
 		JButton btnGenerate = new JButton("Generate");
 		btnGenerate.addActionListener(new ActionListener() {
@@ -196,8 +196,8 @@ public class AddTravelLegAccount extends JFrame {
 				} while (checkRepeat);
 			}
 		});
-		btnGenerate.setBounds(399, 62, 97, 25);
-		getContentPane().add(btnGenerate);
+		btnGenerate.setBounds(618, 162, 97, 25);
+		add(btnGenerate);
 
 		JButton btnNewButton = new JButton("Generate");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -205,8 +205,7 @@ public class AddTravelLegAccount extends JFrame {
 				txtPassword.setText(library.generatePassword());
 			}
 		});
-		btnNewButton.setBounds(399, 103, 97, 25);
-		getContentPane().add(btnNewButton);
-
+		btnNewButton.setBounds(618, 209, 97, 25);
+		add(btnNewButton);
 	}
 }

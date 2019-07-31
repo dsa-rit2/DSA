@@ -21,10 +21,12 @@ public class AddCompany extends JPanel {
 	private JTextField txtFPhoneNum;
 	private LinkArray<Company> cArray = new LinkArray<Company>();
 	private ReadWriteFile<Company> rFile = new ReadWriteFile<Company>("Company.txt", Company.class);
-
+	private final UIControl mainFrame;		// Store main frame
 	
-	public AddCompany() {
+	public AddCompany(UIControl parent) {
 		//==================== JPanel setting =====================
+		super();
+		this.mainFrame = parent;
 //		UIControl.titleName = "Add TravelLeg Company";
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
@@ -113,18 +115,23 @@ public class AddCompany extends JPanel {
 
 		//========================= Button ==========================
 		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				library.dialogMessage("The page will redirect to the list company");
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
+			}
+		});
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		btnBack.setBounds(259, 402, 120, 35);
+		btnBack.setBounds(466, 391, 120, 35);
 		add(btnBack);
 
 		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnSubmit.addActionListener(event ->{
 				submit();
-			}
+			
 		});
 		btnSubmit.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		btnSubmit.setBounds(449, 402, 120, 35);
+		btnSubmit.setBounds(287, 391, 120, 35);
 		add(btnSubmit);
 	}
 
@@ -197,22 +204,18 @@ public class AddCompany extends JPanel {
 			Company oCompany = new Company(companyName, shortForm, phoneNum, description);
 			cArray.addItem(oCompany);
 			rFile.writeLinkArray(cArray);
-//			JFrame frame = new JFrame("Show Message to redirect");
 			int result = JOptionPane.showConfirmDialog(null,
 					"New company,\n" + companyName + " \nadded successful!!!\nDo you want to add new travelleg account",
 					"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (result == JOptionPane.OK_OPTION) {
 				try {
-					new AddTravelLegAccount(companyName).setVisible(true);
+					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddTravelLegAccount(mainFrame,companyName)));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			} else {
-				// redirect to the listcompany
 				try {
-//					frame.setVisible(false);
-//					dispose();
-
+					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -29,8 +29,11 @@ public class ListLocation extends JPanel {
 	private Vector vector;
 	private JButton btnDelete;
 	private JButton btnModify;
+	private final UIControl mainFrame;
 
 	public ListLocation(UIControl parent) {
+		super();
+		this.mainFrame = parent;
 		// ======================== Jpanel setting ================================//
 //		UIControl.titleName = "Location List";
 		setLayout(null);
@@ -60,9 +63,8 @@ public class ListLocation extends JPanel {
 					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						ModifyLocation frame = new ModifyLocation(vector.elementAt(0).toString(),
-								vector.elementAt(2).toString());
-						frame.setVisible(true);
+						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,vector.elementAt(0).toString(),
+								vector.elementAt(2).toString())));
 					}
 
 				}
@@ -97,7 +99,7 @@ public class ListLocation extends JPanel {
 			j++;
 		}
 
-		JLabel lblNewLabel = new JLabel("List Country");
+		JLabel lblNewLabel = new JLabel("List Location");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblNewLabel.setBounds(12, 13, 200, 35);
@@ -107,11 +109,8 @@ public class ListLocation extends JPanel {
 
 		JButton btnNewButton = new JButton("Add Location");
 		btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				AddLocation iAddLocation = new AddLocation();
-//				iAddLocation.setVisible(true);
-			}
+		btnNewButton.addActionListener(event ->{
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddLocation(mainFrame)));
 		});
 		btnNewButton.setBounds(12, 403, 130, 35);
 		add(btnNewButton);
@@ -163,9 +162,8 @@ public class ListLocation extends JPanel {
 					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						ModifyLocation frame = new ModifyLocation(vector.elementAt(0).toString(),
-								vector.elementAt(2).toString());
-						frame.setVisible(true);
+						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,vector.elementAt(0).toString(),
+								vector.elementAt(2).toString())));
 					}
 				} else {
 					library.dialogMessage("Please choose one location to modify");
@@ -190,8 +188,4 @@ public class ListLocation extends JPanel {
 		}
 	}
 
-//	    public boolean isCellEditable(int row, int column) {
-//	       //all cells false
-//	       return false;
-//	    }
 }

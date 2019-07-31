@@ -19,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
-public class AddTravelLeg extends JFrame {
+public class AddTravelLeg extends JPanel {
 
 	private JPanel contentPane;
 	private JTextField tfSourceL;
@@ -28,61 +28,41 @@ public class AddTravelLeg extends JFrame {
 	private JTextField tfToTime;
 	private LinkArray<TravelLegInfo> rArray = new LinkArray<TravelLegInfo>();
 	private ReadWriteFile<TravelLegInfo> rFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
+	private final UIControl mainframe;		// Store main frame
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddTravelLeg frame = new AddTravelLeg();
-					frame.setVisible(true);
-					frame.setTitle("Add New Schedule");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public AddTravelLeg() {
+	
+	public AddTravelLeg(UIControl parent) {
+		super();
+		this.mainframe= parent;
 		// =========================== Jpanel setting ==========================//
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 674, 380);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		getContentPane().setBackground(Color.YELLOW);
+		setLayout(null);
+		setBackground(new Color(0, 0, 0, 0));
+		setBounds(new Rectangle(new Dimension(900, 450)));
 
 		// ============================ Content component =========================//
 		JLabel lblSourceLocation = new JLabel("Source location       :");
 		lblSourceLocation.setBounds(21, 13, 126, 16);
-		contentPane.add(lblSourceLocation);
+		add(lblSourceLocation);
 
 		tfSourceL = new JTextField();
 		tfSourceL.setBounds(159, 10, 116, 22);
-		contentPane.add(tfSourceL);
+		add(tfSourceL);
 		tfSourceL.setColumns(10);
 
 		JLabel lblDestinationLocation = new JLabel("Destination Location :");
 		lblDestinationLocation.setBounds(21, 42, 135, 16);
-		contentPane.add(lblDestinationLocation);
+		add(lblDestinationLocation);
 
 		tfDestinationL = new JTextField();
 		tfDestinationL.setBounds(159, 39, 116, 22);
-		contentPane.add(tfDestinationL);
+		add(tfDestinationL);
 		tfDestinationL.setColumns(10);
 
 		String[] selectionString = { "Select The transport type", "Airplane", "Rail/Train", "Bus", "Car", "Ferry",
 				"Boat" };
 		JComboBox cbTransport = new JComboBox(selectionString);
 		cbTransport.setBounds(21, 71, 172, 22);
-		contentPane.add(cbTransport);
+		add(cbTransport);
 
 		Date fromToDayDate = new Date();
 		JDateChooser dcFromDate = new JDateChooser();
@@ -90,94 +70,94 @@ public class AddTravelLeg extends JFrame {
 		dcFromDate.setBounds(104, 138, 116, 22);
 		JTextFieldDateEditor editor1 = (JTextFieldDateEditor) dcFromDate.getDateEditor();
 		editor1.setEditable(false);
-		contentPane.add(dcFromDate);
+		add(dcFromDate);
 
 		JLabel lblDuration = new JLabel("Duration :");
 		lblDuration.setBounds(21, 109, 83, 16);
-		contentPane.add(lblDuration);
+		add(lblDuration);
 
 		tfFromTime = new JTextField();
 		tfFromTime.setBounds(104, 202, 116, 22);
-		contentPane.add(tfFromTime);
+		add(tfFromTime);
 
 		tfFromTime.setColumns(10);
 
 		Button button = new Button("Confirm");
 		button.setBounds(404, 272, 109, 32);
-		contentPane.add(button);
+		add(button);
 
 		JLabel lblFromDate = new JLabel("From Date :");
 		lblFromDate.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFromDate.setBounds(21, 141, 71, 16);
-		contentPane.add(lblFromDate);
+		add(lblFromDate);
 
 		JDateChooser dcToDate = new JDateChooser();
 		dcToDate.setMinSelectableDate(fromToDayDate);
 		dcToDate.setBounds(397, 138, 116, 22);
 		JTextFieldDateEditor editor = (JTextFieldDateEditor) dcToDate.getDateEditor();
 		editor.setEditable(false);
-		contentPane.add(dcToDate);
+		add(dcToDate);
 
 		JLabel lblToDate = new JLabel("To Date :");
 		lblToDate.setBounds(330, 138, 56, 16);
-		contentPane.add(lblToDate);
+		add(lblToDate);
 
 		JLabel lblFromTime = new JLabel("From Time :");
 		lblFromTime.setBounds(21, 205, 77, 16);
-		contentPane.add(lblFromTime);
+		add(lblFromTime);
 
 		JLabel lblToTime = new JLabel("To Time :");
 		lblToTime.setBounds(330, 205, 64, 16);
-		contentPane.add(lblToTime);
+		add(lblToTime);
 
 		tfToTime = new JTextField();
 		tfToTime.setBounds(397, 202, 116, 22);
-		contentPane.add(tfToTime);
+		add(tfToTime);
 		tfToTime.setColumns(10);
 
 		// ======================= Error Message =============================//
 
 		Label lblsrcError = new Label("");
-		lblsrcError.setForeground(Color.RED);
 		lblsrcError.setBackground(Color.WHITE);
+		lblsrcError.setForeground(Color.RED);
 		lblsrcError.setBounds(293, 13, 279, 16);
-		contentPane.add(lblsrcError);
+		add(lblsrcError);
 
 		Label lbldestError = new Label("");
-		lbldestError.setForeground(Color.RED);
 		lbldestError.setBackground(Color.WHITE);
+		lbldestError.setForeground(Color.RED);
 		lbldestError.setBounds(293, 42, 314, 16);
-		contentPane.add(lbldestError);
+		add(lbldestError);
 
 		Label lblttError = new Label("");
-		lblttError.setForeground(Color.RED);
 		lblttError.setBackground(Color.WHITE);
+		lblttError.setForeground(Color.RED);
 		lblttError.setBounds(293, 71, 353, 16);
-		contentPane.add(lblttError);
+		add(lblttError);
 
 		Label lblFromDateError = new Label("");
-		lblFromDateError.setForeground(Color.RED);
 		lblFromDateError.setBackground(Color.WHITE);
+		lblFromDateError.setForeground(Color.RED);
 		lblFromDateError.setBounds(31, 167, 279, 16);
-		contentPane.add(lblFromDateError);
+		add(lblFromDateError);
 
 		Label lblToTimeError = new Label("");
-		lblToTimeError.setForeground(Color.RED);
 		lblToTimeError.setBackground(Color.WHITE);
+		lblToTimeError.setForeground(Color.RED);
 		lblToTimeError.setBounds(330, 235, 290, 16);
-		contentPane.add(lblToTimeError);
+		add(lblToTimeError);
 
 		Label lblFromTimeError = new Label("");
-		lblFromTimeError.setForeground(Color.RED);
 		lblFromTimeError.setBackground(Color.WHITE);
+		lblFromTimeError.setForeground(Color.RED);
 		lblFromTimeError.setBounds(21, 235, 289, 16);
-		contentPane.add(lblFromTimeError);
+		add(lblFromTimeError);
 
 		Label lblToDateEror = new Label("");
-		lblToDateEror.setForeground(Color.RED);
 		lblToDateEror.setBackground(Color.WHITE);
+		lblToDateEror.setForeground(Color.RED);
 		lblToDateEror.setBounds(330, 167, 290, 16);
-		contentPane.add(lblToDateEror);
+		add(lblToDateEror);
 
 		// ================================ Button =================================//
 		button.addActionListener(new ActionListener() {
@@ -232,7 +212,7 @@ public class AddTravelLeg extends JFrame {
 					lblToDateEror.setText("[Date should be filled!]");
 					count++;
 				} else {
-					lblFromDateError.setText("");
+					lblToDateEror .setText("");
 					dateString = new SimpleDateFormat("yyyy-MM-dd").format(dcToDate.getDate());
 					toDate = LocalDate.parse(dateString);
 				}
@@ -300,7 +280,7 @@ public class AddTravelLeg extends JFrame {
 					rArray.addItem(travelLegInfo);
 					rFile.writeLinkArray(rArray);
 					library.dialogMessage("Schedule added successful!!!");
-					dispose();
+					SwingUtilities.invokeLater(() -> mainframe.changePanel(new TravelLegMaintenance(mainframe)));
 				}
 			}
 		});

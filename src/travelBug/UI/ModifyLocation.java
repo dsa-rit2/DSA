@@ -9,9 +9,11 @@ import travelBug.obj.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Label;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
@@ -21,9 +23,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
-public class ModifyLocation extends JFrame {
+public class ModifyLocation extends JPanel {
 	private JTextField txtLocationName,txtContinent,txtState;
 	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblCountry, lblState, lblType;
 	private Label lblErrorLocationName,lblErrorContinent, lblErrorType, lblErrorState, lblErrorCountry;
@@ -32,33 +35,30 @@ public class ModifyLocation extends JFrame {
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt",Location.class); 
 	private JPanel contentPane;
 	private int companyFound;
-	
+	private final UIControl mainFrame;
 	
 	/**
 	 * Create the frame.
 	 */
 	@SuppressWarnings("unchecked")
-	public ModifyLocation(String inputName,String inputState) {
+	public ModifyLocation(UIControl parent,String inputName,String inputState) {
 		
 		//==================== JPanel setting =====================
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 356);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setTitle("TravelBug");
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		super();
+		mainFrame = parent;
+		setLayout(null);
+		setBackground(new Color(0, 0, 0, 0));
+		setBounds(new Rectangle(new Dimension(900, 450)));
 		
 		//==================== Validate the company =====================
 		
 		companyFound = 0;
-		boolean foundCompany = false;
+		boolean foundLocation = false;
 		lArray = lFile.readLinkArray();
 		for(int i = 0;i<lArray.size();i++) {
 			if(inputName.equalsIgnoreCase(lArray.getIndexElement(i).getName())&& inputState.equalsIgnoreCase(lArray.getIndexElement(i).getState())) {
 				companyFound = i;
-				foundCompany = true;
+				foundLocation = true;
 			}
 		}
 		
@@ -66,65 +66,61 @@ public class ModifyLocation extends JFrame {
 		
 		txtLocationName = new JTextField();
 		txtLocationName.setEditable(false);
-		txtLocationName.setBounds(133, 50, 265, 22);
+		txtLocationName.setBounds(367, 120, 265, 25);
 		txtLocationName.setText(lArray.getIndexElement(companyFound).getName());
-		txtLocationName.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		txtLocationName.addActionListener(event ->{
 				submit();
-			}
 		});
-		contentPane.add(txtLocationName);
+		add(txtLocationName);
 		txtLocationName.setColumns(10);
 
 		txtContinent = new JTextField();
-		txtContinent.setBounds(133, 88, 265, 22);
+		txtContinent.setBounds(367, 171, 265, 25);
 		txtContinent.setText(lArray.getIndexElement(companyFound).getContinent());
-		txtContinent.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		txtContinent.addActionListener(event ->{
 				submit();
-			}
 		});
-		contentPane.add(txtContinent);
+		add(txtContinent);
 		txtContinent.setColumns(10);
 
 		lblNewLabel = new JLabel("Modify Location");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel.setBounds(12, 0, 186, 40);
-		contentPane.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblNewLabel.setBounds(246, 50, 265, 40);
+		add(lblNewLabel);
 
 		lblNewLabel_1 = new JLabel("Location Name");
-		lblNewLabel_1.setBounds(12, 53, 96, 16);
-		contentPane.add(lblNewLabel_1);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblNewLabel_1.setBounds(218, 123, 137, 22);
+		add(lblNewLabel_1);
 
 		lblNewLabel_2 = new JLabel("Continent");
-		lblNewLabel_2.setBounds(12, 91, 56, 16);
-		contentPane.add(lblNewLabel_2);
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblNewLabel_2.setBounds(263, 171, 96, 25);
+		add(lblNewLabel_2);
 
 		lblCountry = new JLabel("Country");
-		lblCountry.setBounds(12, 129, 56, 16);
-		contentPane.add(lblCountry);
+		lblCountry.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblCountry.setBounds(279, 223, 80, 26);
+		add(lblCountry);
 
 		lblState = new JLabel("State");
-		lblState.setBounds(12, 168, 56, 16);
-		contentPane.add(lblState);
+		lblState.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblState.setBounds(301, 272, 56, 22);
+		add(lblState);
 
 		lblType = new JLabel("Type");
-		lblType.setBounds(12, 200, 56, 16);
-		contentPane.add(lblType);
+		lblType.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblType.setBounds(303, 323, 56, 28);
+		add(lblType);
 
 		txtState = new JTextField();
 		txtState.setEditable(false);
-		txtState.setBounds(133, 165, 265, 22);
+		txtState.setBounds(367, 272, 265, 29);
 		txtState.setText(lArray.getIndexElement(companyFound).getState());
-		txtState.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		txtState.addActionListener(event->{
 				submit();
-			}
 		});
-		contentPane.add(txtState);
+		add(txtState);
 		txtState.setColumns(10);
 
 		cbCountry = new JComboBox();
@@ -154,74 +150,69 @@ public class ModifyLocation extends JFrame {
 				"Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan",
 				"Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay",
 				"Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe" }));
-		cbCountry.setBounds(133, 126, 163, 22);
+		cbCountry.setBounds(367, 220, 163, 26);
 		cbCountry.setSelectedItem(lArray.getIndexElement(companyFound).getCountry());
-		contentPane.add(cbCountry);
+		add(cbCountry);
 		
 		
 		cbType = new JComboBox();
 		cbType.setModel(new DefaultComboBoxModel(new String[] {"<Choose Type>", "Small City", "Medium City",
 				"Large City", "Natural formation", "Designated Park/Reserve", "Man-made landmark" }));
-		cbType.setBounds(133, 206, 172, 22);
+		cbType.setBounds(367, 327, 172, 26);
 		cbType.setSelectedItem(lArray.getIndexElement(companyFound).getType());
-		contentPane.add(cbType);
+		add(cbType);
 		
 		//=============================================== Error Message =====================================================//
 
 		lblErrorLocationName = new Label("");
 		lblErrorLocationName.setForeground(Color.RED);
-		lblErrorLocationName.setBounds(133, 71, 265, 16);
-		contentPane.add(lblErrorLocationName);
+		lblErrorLocationName.setBackground(Color.white);
+		lblErrorLocationName.setBounds(367, 142, 265, 26);
+		add(lblErrorLocationName);
 
 		lblErrorContinent = new Label("");
 		lblErrorContinent.setForeground(Color.RED);
-		lblErrorContinent.setBounds(133, 110, 265, 16);
-		contentPane.add(lblErrorContinent);
+		lblErrorContinent.setBackground(Color.WHITE);
+		lblErrorContinent.setBounds(367, 192, 265, 25);
+		add(lblErrorContinent);
 
 		lblErrorCountry = new Label("");
 		lblErrorCountry.setForeground(Color.RED);
-		lblErrorCountry.setBounds(133, 149, 265, 16);
-		contentPane.add(lblErrorCountry);
+		lblErrorCountry.setBackground(Color.white);
+		lblErrorCountry.setBounds(367, 243, 265, 25);
+		add(lblErrorCountry);
 
 		lblErrorState = new Label("");
 		lblErrorState.setForeground(Color.RED);
-		lblErrorState.setBounds(133, 188, 265, 16);
-		contentPane.add(lblErrorState);
+		lblErrorState.setBackground(Color.white);
+		lblErrorState.setBounds(367, 296, 265, 25);
+		add(lblErrorState);
 
 		lblErrorType = new Label("");
 		lblErrorType.setForeground(Color.RED);
-		lblErrorType.setBounds(133, 230, 265, 16);
-		contentPane.add(lblErrorType);
+		lblErrorType.setBackground(Color.WHITE);
+		lblErrorType.setBounds(367, 352, 265, 23);
+		add(lblErrorType);
 		
 		// ============================================== Button ============================================= //
 
 		JButton btnAdd = new JButton("Change");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnAdd.addActionListener(event->{
 				submit();
-				//redirect to list location
-			}
 		});
-		btnAdd.setBounds(133, 259, 97, 25);
-		contentPane.add(btnAdd);
+		btnAdd.setBounds(279, 393, 97, 25);
+		add(btnAdd);
 
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				ListLocation listLocation = new ListLocation();
-//				dispose();
-//				listLocation.setVisible(true);
-			}
+		btnCancel.addActionListener(event->{
+			library.dialogMessage("The page will redirect to the list location");
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
 		});
-		btnCancel.setBounds(265, 259, 97, 25);
-		contentPane.add(btnCancel);
-		//unable to detect when got wrong
-//		if(foundCompany == false) {
-//			listLocation listLocation = new listLocation();
-//			dispose();
-//			listLocation.setVisible(true);
-//			// redirect the page to the list location
-//		}
+		btnCancel.setBounds(489, 393, 97, 25);
+		add(btnCancel);
+		if(foundLocation == false) {
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
+		}
 	}
 	public void submit() {
 		lArray = lFile.readLinkArray();
@@ -266,10 +257,8 @@ public class ModifyLocation extends JFrame {
 			lArray.getIndexElement(companyFound).setType(type);
 			lFile.writeLinkArray(lArray);
 			lArray.getIndexElement(companyFound).print();
-//			ListLocation listLocation = new ListLocation();
-//			dispose();
-//			listLocation.setVisible(true);
-			//redirect the page to the location list
+			library.dialogMessage("The location is updated\nThe page will redirect to list location");
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
 			
 		}
 	}

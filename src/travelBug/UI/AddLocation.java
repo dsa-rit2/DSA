@@ -91,38 +91,38 @@ public class AddLocation extends JPanel {
 		});
 		add(txtState);
 		txtState.setColumns(10);
-
-		cbCountry = new JComboBox<String>(new String[] { "<Choose country>", "Afghanistan", "Albania", "Algeria",
-				"Andorra", "Angola", "Antigua & Deps", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
-				"Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
-				"Bolivia", "Bosnia Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina", "Burundi",
-				"Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Rep", "Chad", "Chile", "China",
-				"Colombia", "Comoros", "Congo", "Congo {Democratic Rep}", "Costa Rica", "Croatia", "Cuba", "Cyprus",
-				"Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador",
-				"Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland",
-				"France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea",
-				"Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran",
-				"Iraq", "Ireland {Republic}", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan",
-				"Kazakhstan", "Kenya", "Kiribati", "Korea North", "Korea South", "Kosovo", "Kuwait", "Kyrgyzstan",
-				"Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
-				"Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands",
-				"Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro",
-				"Morocco", "Mozambique", "Myanmar, {Burma}", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand",
-				"Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea",
-				"Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russian Federation",
-				"Rwanda", "St Kitts & Nevis", "St Lucia", "Saint Vincent & the Grenadines", "Samoa", "San Marino",
-				"Sao Tome & Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore",
-				"Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain",
-				"Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
-				"Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan",
-				"Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay",
-				"Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe" });
+		String[] country = new String[] { "<Choose country>", "Afghanistan", "Albania", "Algeria",
+		"Andorra", "Angola", "Antigua & Deps", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
+		"Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+		"Bolivia", "Bosnia Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina", "Burundi",
+		"Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Rep", "Chad", "Chile", "China",
+		"Colombia", "Comoros", "Congo", "Congo {Democratic Rep}", "Costa Rica", "Croatia", "Cuba", "Cyprus",
+		"Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador",
+		"Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland",
+		"France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea",
+		"Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran",
+		"Iraq", "Ireland {Republic}", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan",
+		"Kazakhstan", "Kenya", "Kiribati", "Korea North", "Korea South", "Kosovo", "Kuwait", "Kyrgyzstan",
+		"Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+		"Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands",
+		"Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro",
+		"Morocco", "Mozambique", "Myanmar, {Burma}", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand",
+		"Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea",
+		"Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russian Federation",
+		"Rwanda", "St Kitts & Nevis", "St Lucia", "Saint Vincent & the Grenadines", "Samoa", "San Marino",
+		"Sao Tome & Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore",
+		"Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain",
+		"Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
+		"Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan",
+		"Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay",
+		"Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe" };
+		cbCountry = new JComboBox(country);
 		cbCountry.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cbCountry.setBounds(300, 208, 300, 30);
 		add(cbCountry);
-
-		cbType = new JComboBox<String>(new String[] { "<Choose Type>", "Small City", "Medium City", "Large City",
-				"Natural formation", "Designated Park/Reserve", "Man-made landmark" });
+		String[] state = { "<Choose Type>", "Small City", "Medium City", "Large City",
+				"Natural formation", "Designated Park/Reserve", "Man-made landmark" };
+		cbType = new JComboBox(state);
 		cbType.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cbType.setBounds(300, 324, 300, 30);
 		add(cbType);
@@ -130,16 +130,19 @@ public class AddLocation extends JPanel {
 		// ==================================== Button ==================================//
 		JButton btnAdd = new JButton("Add");
 		btnAdd.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		btnAdd.addActionListener(event -> { submit(); });
-		btnAdd.setBounds(453, 400, 120, 35);
+		btnAdd.addActionListener(event -> submit());
+		btnAdd.setBounds(300, 400, 120, 35);
 		add(btnAdd);
 
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		btnCancel.addActionListener(event -> {
+//			library.dialogMessage("The page will redirect to list location");
+			
+			JOptionPane.showMessageDialog(null, "The page will redirect to list location\n");
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
 		});
-		btnCancel.setBounds(300, 400, 120, 35);
+		btnCancel.setBounds(502, 400, 120, 35);
 		add(btnCancel);
 		
 		//===================== Error message ====================
@@ -223,7 +226,22 @@ public class AddLocation extends JPanel {
 			Location location = new Location(locationName, continent, country, state, type);
 			lArray.addItem(location);
 			lFile.writeLinkArray(lArray);
-			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
+			int result = JOptionPane.showConfirmDialog(null,
+					"Add location successful!!!\nDo you want to add more location??",
+					"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if (result == JOptionPane.OK_OPTION) {
+				try {
+					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddLocation(mainFrame)));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }

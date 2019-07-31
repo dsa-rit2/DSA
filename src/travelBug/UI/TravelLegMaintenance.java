@@ -24,7 +24,6 @@ import javax.swing.border.MatteBorder;
 
 public class TravelLegMaintenance extends JPanel {
 
-
 	private static final long serialVersionUID = 5629499624569369278L;
 	private JTextField tfUsername;
 	private JTextField txtPassword;
@@ -40,7 +39,7 @@ public class TravelLegMaintenance extends JPanel {
 	private DefaultTableModel defaultTableModel;
 	private JTable table;
 	private Vector vector;
-	private final UIControl mainFrame;	
+	private final UIControl mainFrame;
 
 	public TravelLegMaintenance(UIControl parent) {
 		super();
@@ -79,7 +78,8 @@ public class TravelLegMaintenance extends JPanel {
 					int SelectedRowIndex = table.getSelectedRow();
 					vector = (Vector) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
-						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new TravelLegModify(vector, vector.elementAt(0).toString(),mainFrame)));
+						SwingUtilities.invokeLater(() -> mainFrame
+								.changePanel(new TravelLegModify(vector, vector.elementAt(0).toString(), mainFrame)));
 					}
 
 				}
@@ -116,24 +116,21 @@ public class TravelLegMaintenance extends JPanel {
 			}
 			j++;
 		}
-		
+
 		tfSearch.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
 				updateLabel(tfSearch.getText());
 			}
 
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
 				updateLabel(tfSearch.getText());
 			}
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
 				updateLabel(tfSearch.getText());
 			}
 		});
@@ -148,9 +145,6 @@ public class TravelLegMaintenance extends JPanel {
 		});
 		btnNewButton.setBounds(12, 78, 87, 25);
 		add(btnNewButton);
-
-		
-
 	}
 
 	public void updateLabel(String searchItem) {

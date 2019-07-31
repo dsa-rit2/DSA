@@ -44,12 +44,13 @@ public class ListCompany extends JPanel {
 		add(lblConpanyList);
 
 		listModel = new DefaultListModel();
-		displayList = new JList(listModel);
-		displayList.setBorder(new LineBorder(new Color(0, 0, 0)));
-		JScrollPane scrollPane = new JScrollPane(displayList);
+		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(20, 36, 300, 300);
-		displayList.setBounds(20, 36, 300, 300);
 		add(scrollPane);
+		displayList = new JList(listModel);
+		displayList.setFont(new Font("Calibri", Font.BOLD, 15));
+		scrollPane.setViewportView(displayList);
+		displayList.setBorder(new LineBorder(new Color(0, 0, 0)));
 		updateList(null);
 
 		JLabel lblSearch = new JLabel("Search:");
@@ -82,7 +83,7 @@ public class ListCompany extends JPanel {
 		// ============================= Button =====================================//
 		JButton btnModify = new JButton("Select");
 		btnModify.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		btnModify.setBounds(462, 385, 89, 23);
+		btnModify.setBounds(502, 368, 106, 55);
 		btnModify.addActionListener(event -> {
 			if (displayList.getSelectedValue() == null) {
 				library.dialogMessage("You must select company first");
@@ -100,7 +101,7 @@ public class ListCompany extends JPanel {
 			
 		});
 		btnBack.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		btnBack.setBounds(596, 385, 89, 23);
+		btnBack.setBounds(650, 368, 106, 55);
 		add(btnBack);
 	}
 

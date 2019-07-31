@@ -25,11 +25,11 @@ public class UIControl extends JFrame {
 		getContentPane().setLayout(null);
 		
 		//============= Change Panel Section =============
-//		changePanel(new AddLocation(this));
+//	changePanel(new AddLocation(this));
 //		changePanel(new PlanTrip(this));
 //		changePanel(new TravelLegMaintenance(this));
 //		changePanel(new AddCompany(this));
-//		changePanel(new ListCompany(this));
+	changePanel(new ListCompany(this));
 //		changePanel(new AddCompany(this));
 	}
 	

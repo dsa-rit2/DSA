@@ -18,10 +18,6 @@ public class ReadWriteFile<T> {
 	private FileOutputStream fileOutput = null;
 	private String fileName = null;
 
-	public ReadWriteFile() {
-
-	}
-
 	public ReadWriteFile(String fileName, Class<T> oc) {
 		this.fileName = fileName;
 		this.classObject = oc;

@@ -21,7 +21,6 @@ import com.toedter.calendar.JTextFieldDateEditor;
 
 public class AddTravelLeg extends JPanel {
 
-	private JPanel contentPane;
 	private JTextField tfSourceL;
 	private JTextField tfDestinationL;
 	private JTextField tfFromTime;
@@ -65,7 +64,7 @@ public class AddTravelLeg extends JPanel {
 		add(cbTransport);
 
 		Date fromToDayDate = new Date();
-		JDateChooser dcFromDate = new JDateChooser();
+		JDateChooser dcFromDate =   new JDateChooser();
 		dcFromDate.setMinSelectableDate(fromToDayDate);
 		dcFromDate.setBounds(104, 138, 116, 22);
 		JTextFieldDateEditor editor1 = (JTextFieldDateEditor) dcFromDate.getDateEditor();
@@ -280,7 +279,6 @@ public class AddTravelLeg extends JPanel {
 					rArray.addItem(travelLegInfo);
 					rFile.writeLinkArray(rArray);
 					library.dialogMessage("Schedule added successful!!!");
-					SwingUtilities.invokeLater(() -> mainframe.changePanel(new TravelLegMaintenance(mainframe)));
 				}
 			}
 		});

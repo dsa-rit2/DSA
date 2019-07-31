@@ -25,8 +25,8 @@ public class AddLocation extends JPanel {
 	public AddLocation(UIControl parent) {
 		super();
 		this.mainFrame = parent;
+		
 		//===================== JPanel setting ======================
-//		UIControl.titleName = "Add Travel Location";
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));

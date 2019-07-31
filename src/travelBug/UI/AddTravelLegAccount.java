@@ -1,8 +1,8 @@
 package travelBug.UI;
-
 //=========================
 //Import Package
 //=========================
+import travelBug.UI.*;
 import travelBug.library.*;
 import travelBug.obj.*;
 //=========================
@@ -42,7 +42,6 @@ public class AddTravelLegAccount extends JPanel {
 	private JTextField txtUserNameNum;
 	private JTextField textField;
 	private final UIControl mainFrame;
-
 	public AddTravelLegAccount(UIControl parent,String anything) {
 		
 		// ========================================Jpanel Setting ==================================================//
@@ -74,7 +73,8 @@ public class AddTravelLegAccount extends JPanel {
 		add(lblUsername);
 
 		JTextField txtUserFront = new JTextField();
-		txtUserFront.setText(shortFormString);
+//		txtUserFront.setText(shortFormString);
+		txtUserFront.setText(anything);
 		txtUserFront.setEditable(false);
 		txtUserFront.setBounds(313, 163, 79, 22);
 		add(txtUserFront);

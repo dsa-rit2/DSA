@@ -1,6 +1,9 @@
 package travelBug.UI;
 
 import java.awt.*;
+import java.nio.channels.NonReadableChannelException;
+import java.util.Vector;
+
 import javax.swing.*;
 
 import travelBug.library.library;
@@ -23,7 +26,7 @@ public class UIControl extends JFrame {
 		pack();
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
-
+		
 		// ============= Change Panel Section =============
 //		changePanel(new AddLocation(this));
 //		changePanel(new PlanTrip(this));
@@ -31,7 +34,7 @@ public class UIControl extends JFrame {
 //		changePanel(new AddCompany(this));
 //		changePanel(new ListCompany(this));
 //		changePanel(new AddCompany(this));
-		changePanel(new Authentication(this));
+//		changePanel(new Authentication(this));
 	}
 
 	public void changePanel(JPanel panelName) {

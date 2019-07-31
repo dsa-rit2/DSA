@@ -6,8 +6,6 @@ package travelBug.UI;
 import travelBug.library.*;
 import travelBug.obj.*;
 //=========================
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +15,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Vector;
+import javax.swing.*;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
@@ -26,8 +25,11 @@ public class TravelLegModify extends JPanel {
 	private JTextField tfDestinationL;
 	private JTextField tfFromTime;
 	private JTextField tfToTime;
+	private JDateChooser dcFromDate;
+	private JDateChooser dcToDate;
 	private LinkArray<TravelLegInfo> rArray = new LinkArray<TravelLegInfo>();
 	private ReadWriteFile<TravelLegInfo> rFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
+
 	private final UIControl mainframe; // Store main frame
 
 	public TravelLegModify(Vector vector, String ID, UIControl parent) {
@@ -65,7 +67,7 @@ public class TravelLegModify extends JPanel {
 		add(cbTransport);
 
 		Date fromToDayDate = new Date();
-		JDateChooser dcFromDate = new JDateChooser();
+		dcFromDate = new JDateChooser();
 		dcFromDate.setMinSelectableDate(fromToDayDate);
 		dcFromDate.setBounds(104, 138, 116, 22);
 		JTextFieldDateEditor editor1 = (JTextFieldDateEditor) dcFromDate.getDateEditor();
@@ -86,7 +88,7 @@ public class TravelLegModify extends JPanel {
 		lblFromDate.setBounds(21, 141, 71, 16);
 		add(lblFromDate);
 
-		JDateChooser dcToDate = new JDateChooser();
+		dcToDate = new JDateChooser();
 		dcToDate.setMinSelectableDate(fromToDayDate);
 		dcToDate.setBounds(397, 138, 116, 22);
 		JTextFieldDateEditor editor = (JTextFieldDateEditor) dcToDate.getDateEditor();
@@ -172,6 +174,8 @@ public class TravelLegModify extends JPanel {
 		Button button = new Button("Confirm");
 		button.setBounds(259, 268, 109, 32);
 		add(button);
+		
+		
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int count = 0;

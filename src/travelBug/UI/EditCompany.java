@@ -23,6 +23,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Label;
 import java.awt.Rectangle;
+import javax.swing.SwingConstants;
+import javax.swing.JTextPane;
 
 public class EditCompany extends JPanel {
 
@@ -62,74 +64,79 @@ public class EditCompany extends JPanel {
 		
 		// ========================================== Content component ===================================================/
 		JLabel lblNewLabel = new JLabel("Company Name:");
-		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblNewLabel.setBounds(10, 31, 118, 14);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblNewLabel.setBounds(228, 71, 141, 30);
 		add(lblNewLabel);
 		
 		txtAsd = new JTextField();
+		txtAsd.setFont(new Font("Calibri", Font.BOLD, 14));
 		txtAsd.setText(cArray.getIndexElement(companyFoundindex).getCompanyName());
-		txtAsd.setBounds(176, 29, 207, 20);
+		txtAsd.setBounds(417, 76, 207, 28);
 		add(txtAsd);
 		txtAsd.setColumns(10);
 		
 		
 		JLabel lblShortForm = new JLabel("Short Form:");
-		lblShortForm.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblShortForm.setBounds(10, 68, 118, 14);
+		lblShortForm.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblShortForm.setBounds(228, 144, 141, 30);
 		add(lblShortForm);
 		
 		shortF = new JTextField();
+		shortF.setFont(new Font("Calibri", Font.BOLD, 14));
 		shortF.setText(cArray.getIndexElement(companyFoundindex).getShortForm());
-		shortF.setBounds(176, 60, 207, 20);
+		shortF.setBounds(417, 149, 207, 28);
 		add(shortF);
 		shortF.setColumns(10);
 		
 		JLabel lblPhoneNumber = new JLabel("Phone Number:");
-		lblPhoneNumber.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblPhoneNumber.setBounds(10, 110, 118, 14);
+		lblPhoneNumber.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblPhoneNumber.setBounds(228, 212, 141, 30);
 		add(lblPhoneNumber);
 		
 		phoneN = new JTextField();
+		phoneN.setFont(new Font("Calibri", Font.BOLD, 14));
 		phoneN.setText(cArray.getIndexElement(companyFoundindex).getPhoneNum());
-		phoneN.setBounds(176, 107, 207, 20);
+		phoneN.setBounds(417, 217, 207, 28);
 		add(phoneN);
 		phoneN.setColumns(10);
 		
 		JLabel lblDescription = new JLabel("Description:");
-		lblDescription.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblDescription.setBounds(10, 153, 118, 14);
+		lblDescription.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblDescription.setBounds(228, 275, 141, 30);
 		add(lblDescription);
 		
 		Descriptiontxt = new JTextField();
+		Descriptiontxt.setFont(new Font("Calibri", Font.BOLD, 15));
+		Descriptiontxt.setHorizontalAlignment(SwingConstants.LEFT);
 		Descriptiontxt.setText(cArray.getIndexElement(companyFoundindex).getDescription());
-		Descriptiontxt.setBounds(10, 192, 373, 240);
+		Descriptiontxt.setBounds(417, 275, 219, 28);
 	    add(Descriptiontxt);
-		Descriptiontxt.setColumns(10);
+		Descriptiontxt.setColumns(20);
 		
 		// ================================================Error Message=============================================//
 		
 		Label lblErrorCompanyName = new Label("");
 		lblErrorCompanyName.setForeground(Color.RED);
 		lblErrorCompanyName.setBackground(Color.white);
-		lblErrorCompanyName.setBounds(217, 31, 207, 14);
+		lblErrorCompanyName.setBounds(667, 73, 207, 14);
 		add(lblErrorCompanyName);
 		
 		Label lblErrorDescription = new Label("");
 		lblErrorDescription.setForeground(Color.RED);
 		lblErrorDescription.setBackground(Color.white);
-		lblErrorDescription.setBounds(90, 238, 154, 14);
+		lblErrorDescription.setBounds(667, 275, 207, 14);
 		add(lblErrorDescription);
 		
 		Label lblErrorShortForm = new Label("");
 		lblErrorShortForm.setForeground(Color.RED);
 		lblErrorShortForm.setBackground(Color.white);
-		lblErrorShortForm.setBounds(217, 68, 207, 14);
+		lblErrorShortForm.setBounds(667, 144, 207, 14);
 		add(lblErrorShortForm);
 		
 		Label lblErrorPhoneNum = new Label("");
 		lblErrorPhoneNum.setForeground(Color.RED);
 		lblErrorPhoneNum.setBackground(Color.white);
-		lblErrorPhoneNum.setBounds(217, 110, 207, 14);
+		lblErrorPhoneNum.setBounds(667, 212, 207, 14);
 		add(lblErrorPhoneNum);
 		
 		// ==================================================Button ====================================================//
@@ -208,8 +215,13 @@ public class EditCompany extends JPanel {
 				
 			
 		});
-		btnModify.setBounds(441, 405, 89, 23);
+		btnModify.setBounds(276, 354, 141, 62);
 		add(btnModify);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.setFont(new Font("Calibri", Font.BOLD, 15));
+		btnBack.setBounds(457, 354, 141, 63);
+		add(btnBack);
 		
 		
 		

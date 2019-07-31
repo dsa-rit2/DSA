@@ -115,8 +115,14 @@ public class AddCompany extends JPanel {
 
 		//========================= Button ==========================
 		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				library.dialogMessage("The page will redirect to the list company");
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
+			}
+		});
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		btnBack.setBounds(259, 402, 120, 35);
+		btnBack.setBounds(466, 391, 120, 35);
 		add(btnBack);
 
 		JButton btnSubmit = new JButton("Submit");
@@ -125,7 +131,7 @@ public class AddCompany extends JPanel {
 			
 		});
 		btnSubmit.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		btnSubmit.setBounds(449, 402, 120, 35);
+		btnSubmit.setBounds(287, 391, 120, 35);
 		add(btnSubmit);
 	}
 
@@ -198,14 +204,12 @@ public class AddCompany extends JPanel {
 			Company oCompany = new Company(companyName, shortForm, phoneNum, description);
 			cArray.addItem(oCompany);
 			rFile.writeLinkArray(cArray);
-//			JFrame frame = new JFrame("Show Message to redirect");
 			int result = JOptionPane.showConfirmDialog(null,
 					"New company,\n" + companyName + " \nadded successful!!!\nDo you want to add new travelleg account",
 					"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (result == JOptionPane.OK_OPTION) {
 				try {
 					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddTravelLegAccount(mainFrame,companyName)));
-//					new AddTravelLegAccount(companyName).setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

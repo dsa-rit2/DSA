@@ -63,9 +63,8 @@ public class ListLocation extends JPanel {
 					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						ModifyLocation frame = new ModifyLocation(mainFrame,vector.elementAt(0).toString(),
-								vector.elementAt(2).toString());
-						frame.setVisible(true);
+						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,vector.elementAt(0).toString(),
+								vector.elementAt(2).toString())));
 					}
 
 				}
@@ -100,7 +99,7 @@ public class ListLocation extends JPanel {
 			j++;
 		}
 
-		JLabel lblNewLabel = new JLabel("List Country");
+		JLabel lblNewLabel = new JLabel("List Location");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblNewLabel.setBounds(12, 13, 200, 35);
@@ -163,9 +162,8 @@ public class ListLocation extends JPanel {
 					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						ModifyLocation frame = new ModifyLocation(mainFrame,vector.elementAt(0).toString(),
-								vector.elementAt(2).toString());
-						frame.setVisible(true);
+						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,vector.elementAt(0).toString(),
+								vector.elementAt(2).toString())));
 					}
 				} else {
 					library.dialogMessage("Please choose one location to modify");

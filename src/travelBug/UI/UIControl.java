@@ -1,6 +1,9 @@
 package travelBug.UI;
 
 import java.awt.*;
+import java.nio.channels.NonReadableChannelException;
+import java.util.Vector;
+
 import javax.swing.*;
 
 import travelBug.library.library;
@@ -24,12 +27,8 @@ public class UIControl extends JFrame {
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		
-<<<<<<< HEAD
 		changePanel(new TravelLegMaintenance(this));
-=======
-		changePanel(new AddCompany(this));
 //		changePanel(new ListCompany(this));
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 	}
 	
 	public void changePanel(JPanel panelName) {

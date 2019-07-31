@@ -79,7 +79,8 @@ public class TravelLegMaintenance extends JPanel {
 					int SelectedRowIndex = table.getSelectedRow();
 					vector = (Vector) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
-						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new TravelLegModify(vector, vector.elementAt(0).toString(),mainFrame)));
+						String iDString = vector.elementAt(0).toString();
+						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddTravelLeg(mainFrame)));
 					}
 
 				}

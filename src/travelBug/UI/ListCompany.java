@@ -44,29 +44,34 @@ public class ListCompany extends JPanel {
 		JLabel lblConpanyList = new JLabel("Company List");
 		lblConpanyList.setHorizontalAlignment(SwingConstants.CENTER);
 		lblConpanyList.setFont(new Font("Segoe UI", Font.PLAIN, 30));
-		lblConpanyList.setBounds(12, 13, 876, 50);
+		lblConpanyList.setBounds(-175, -9, 623, 50);
 		add(lblConpanyList);
 
 		listModel = new DefaultListModel();
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(80, 114, 451, 280);
-		add(scrollPane);
 		displayList = new JList(listModel);
+		displayList.setBounds(51, 71, 256, 278);
 		updateList(null);
+		add(displayList);
 		displayList.setFont(new Font("Calibri", Font.BOLD, 15));
-		scrollPane.setViewportView(displayList);
 		displayList.setBorder(new LineBorder(new Color(0, 0, 0)));
+		
+	
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(51, 71, 256, 278);
+		add(scrollPane);
+		
+		
 		
 
 		JLabel lblSearch = new JLabel("Search:");
 		lblSearch.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSearch.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		lblSearch.setBounds(575, 116, 65, 20);
+		lblSearch.setBounds(25, 405, 65, 20);
 		add(lblSearch);
 
 		textField = new JTextField();
 		textField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		textField.setBounds(652, 114, 200, 25);
+		textField.setBounds(100, 403, 200, 25);
 		textField.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
@@ -128,61 +133,61 @@ public class ListCompany extends JPanel {
 		
 		JLabel label = new JLabel("Company Name:");
 		label.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		label.setBounds(369, 36, 141, 30);
+		label.setBounds(368, 71, 141, 30);
 		add(label);
 		
 		txtAsd = new JTextField();
 		txtAsd.setText((String) null);
 		txtAsd.setFont(new Font("Calibri", Font.BOLD, 14));
 		txtAsd.setColumns(10);
-		txtAsd.setBounds(514, 38, 160, 28);
+		txtAsd.setBounds(519, 76, 160, 28);
 		add(txtAsd);
 		
 		Label lblErrorCompanyName = new Label("");
 		lblErrorCompanyName.setForeground(Color.RED);
 		lblErrorCompanyName.setBackground(Color.WHITE);
-		lblErrorCompanyName.setBounds(683, 52, 207, 14);
+		lblErrorCompanyName.setBounds(685, 87, 207, 14);
 		add(lblErrorCompanyName);
 		
 		JLabel label_2 = new JLabel("Short Form:");
 		label_2.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		label_2.setBounds(369, 89, 141, 30);
+		label_2.setBounds(369, 130, 141, 30);
 		add(label_2);
 		
 		shortF = new JTextField();
 		shortF.setText((String) null);
 		shortF.setFont(new Font("Calibri", Font.BOLD, 14));
 		shortF.setColumns(10);
-		shortF.setBounds(514, 94, 160, 28);
+		shortF.setBounds(519, 135, 160, 28);
 		add(shortF);
 		
 		Label lblErrorShortForm = new Label("");
 		lblErrorShortForm.setForeground(Color.RED);
 		lblErrorShortForm.setBackground(Color.WHITE);
-		lblErrorShortForm.setBounds(683, 105, 207, 14);
+		lblErrorShortForm.setBounds(685, 135, 207, 14);
 		add(lblErrorShortForm);
 		
 		JLabel label_4 = new JLabel("Phone Number:");
 		label_4.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		label_4.setBounds(369, 152, 141, 30);
+		label_4.setBounds(368, 198, 141, 30);
 		add(label_4);
 		
 		phoneN = new JTextField();
 		phoneN.setText((String) null);
 		phoneN.setFont(new Font("Calibri", Font.BOLD, 14));
 		phoneN.setColumns(10);
-		phoneN.setBounds(514, 157, 158, 28);
+		phoneN.setBounds(521, 203, 158, 28);
 		add(phoneN);
 		
 		Label lblErrorPhoneNum = new Label("");
 		lblErrorPhoneNum.setForeground(Color.RED);
 		lblErrorPhoneNum.setBackground(Color.WHITE);
-		lblErrorPhoneNum.setBounds(683, 168, 207, 14);
+		lblErrorPhoneNum.setBounds(685, 203, 207, 14);
 		add(lblErrorPhoneNum);
 		
 		JLabel label_6 = new JLabel("Description:");
 		label_6.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		label_6.setBounds(369, 216, 141, 30);
+		label_6.setBounds(369, 256, 141, 30);
 		add(label_6);
 		
 		Descriptiontxt = new JTextField();
@@ -190,13 +195,13 @@ public class ListCompany extends JPanel {
 		Descriptiontxt.setHorizontalAlignment(SwingConstants.LEFT);
 		Descriptiontxt.setFont(new Font("Calibri", Font.BOLD, 15));
 		Descriptiontxt.setColumns(20);
-		Descriptiontxt.setBounds(514, 221, 160, 28);
+		Descriptiontxt.setBounds(514, 261, 160, 28);
 		add(Descriptiontxt);
 		
 		Label lblErrorDescription = new Label("");
 		lblErrorDescription.setForeground(Color.RED);
 		lblErrorDescription.setBackground(Color.WHITE);
-		lblErrorDescription.setBounds(683, 232, 207, 14);
+		lblErrorDescription.setBounds(685, 256, 207, 14);
 		add(lblErrorDescription);
 		
 		JButton btnModify = new JButton("Modify");
@@ -274,6 +279,7 @@ public class ListCompany extends JPanel {
 		btnModify.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnModify.setBounds(572, 368, 119, 55);
 		add(btnModify);
+		
 	}
 
 	// ==================== Function ==================== //

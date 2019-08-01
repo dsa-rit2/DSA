@@ -201,7 +201,7 @@ public class AddCustomer extends JPanel {
 					} else {
 						try {
 							//list customer
-//							SwingUtilities.invokeLater(() -> mainFrame.changePanel(new listTravelLegAccount(mainFrame)));
+							SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCustomer(mainFrame)));
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

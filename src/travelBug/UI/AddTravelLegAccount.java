@@ -1,4 +1,5 @@
 package travelBug.UI;
+
 //=========================
 //Import Package
 //=========================
@@ -31,7 +32,7 @@ public class AddTravelLegAccount extends JPanel {
 	private static final long serialVersionUID = 5629499624569369278L;
 	private JPanel contentPane;
 	private JTextField tfUsername;
-	private JPasswordField txtPassword;
+	private JTextField txtPassword;
 	private ReadWriteFile<TravelLegAccount> readWriteFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt",
 			TravelLegAccount.class);
 	private LinkArray<TravelLegAccount> tArray = new LinkArray<TravelLegAccount>();
@@ -43,20 +44,21 @@ public class AddTravelLegAccount extends JPanel {
 	private JTextField textField;
 	private final UIControl mainFrame;
 	private String shortFormString = null;
-	public AddTravelLegAccount(UIControl parent,String anything) {
-		
-		// ========================================Jpanel Setting ==================================================//
+
+	public AddTravelLegAccount(UIControl parent, String anything) {
+
+		// ========================================Jpanel Setting
+		// ==================================================//
 		super();
 		this.mainFrame = parent;
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
-		
 
-		
-		// ======================================== Validate ===================================================//
+		// ======================================== Validate
+		// ===================================================//
 		// Read the file and find the company name
-		
+
 		tArray = tFile.readLinkArray();
 		cArray = cFile.readLinkArray();
 		for (int i = 0; i < cArray.size(); i++) {
@@ -65,17 +67,18 @@ public class AddTravelLegAccount extends JPanel {
 			}
 		}
 		tArray = tFile.readLinkArray();
-		
-		// ======================================== Content component ==============================================//
-		
+
+		// ======================================== Content component
+		// ==============================================//
+
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		lblUsername.setBounds(163, 166, 107, 19);
 		add(lblUsername);
 
 		JTextField txtUserFront = new JTextField();
-//		txtUserFront.setText(shortFormString);
-		txtUserFront.setText(anything);
+		txtUserFront.setText(shortFormString);
+//		txtUserFront.setText(anything);
 		txtUserFront.setEditable(false);
 		txtUserFront.setBounds(313, 163, 79, 22);
 		add(txtUserFront);
@@ -86,7 +89,7 @@ public class AddTravelLegAccount extends JPanel {
 		lblPassword.setBounds(163, 213, 107, 16);
 		add(lblPassword);
 
-		txtPassword = new JPasswordField();
+		txtPassword = new JTextField();
 		txtPassword.setBounds(313, 210, 256, 22);
 		add(txtPassword);
 		txtPassword.setColumns(10);
@@ -95,24 +98,25 @@ public class AddTravelLegAccount extends JPanel {
 		txtUserNameNum.setBounds(404, 163, 79, 22);
 		add(txtUserNameNum);
 		txtUserNameNum.setColumns(10);
-		
+
 		JLabel lblAddTravelLeg = new JLabel(anything);
 		lblAddTravelLeg.setFont(new Font("Segoe UI Emoji", Font.BOLD, 27));
 		lblAddTravelLeg.setBounds(163, 86, 538, 67);
 		add(lblAddTravelLeg);
-		
+
 		JLabel lblNewLabel = new JLabel(".");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel.setBounds(393, 169, 24, 16);
 		add(lblNewLabel);
-		
+
 		JLabel lblAddTravellegAccount = new JLabel("Add Travelleg Account");
 		lblAddTravellegAccount.setFont(new Font("Segoe UI", Font.BOLD, 27));
 		lblAddTravellegAccount.setBounds(156, 38, 502, 51);
 		add(lblAddTravellegAccount);
-		
-		// ============================================ Error Message ===============================================//
-		
+
+		// ============================================ Error Message
+		// ===============================================//
+
 		Label lblUsernameError = new Label("");
 		lblUsernameError.setForeground(new Color(255, 0, 0));
 		lblUsernameError.setBackground(Color.white);
@@ -125,65 +129,67 @@ public class AddTravelLegAccount extends JPanel {
 		lblPasswordError.setBounds(312, 233, 416, 16);
 		add(lblPasswordError);
 
-		// ================================================ Button ====================================================//
+		// ================================================ Button
+		// ====================================================//
 		contentPane = new JPanel();
 		Button btnAdd = new Button("Add");
-		btnAdd.addActionListener(event->{
-				String username = txtUserFront.getText() + "." + txtUserNameNum.getText();
-				String password = String.valueOf(txtPassword.getPassword());
-				String checkPass = library.validPassword(password);
-				int error = 0;
+		btnAdd.addActionListener(event -> {
+			String username = txtUserFront.getText() + "." + txtUserNameNum.getText();
+			String password = String.valueOf(txtPassword.getText());
+			String checkPass = library.validPassword(password);
+			int error = 0;
 
-				lblUsernameError.setText("");
-				lblPasswordError.setText("");
+			lblUsernameError.setText("");
+			lblPasswordError.setText("");
 
-				if (txtUserNameNum.getText().isEmpty()) {
-					lblUsernameError.setText("The username code cannot be empty");
+			if (txtUserNameNum.getText().isEmpty()) {
+				lblUsernameError.setText("The username code cannot be empty");
+				error++;
+			} else {
+				boolean errorUsername = false;
+				for (int i = 0; i < tArray.size(); i++) {
+					if (username.equalsIgnoreCase(tArray.getIndexElement(i).getUsername())) {
+						errorUsername = true;
+					}
+				}
+				if (errorUsername) {
+					lblUsernameError.setText("The username is duplicated!!!");
 					error++;
+				}
+			}
+			if (password.isEmpty()) {
+				lblPasswordError.setText("The password cannot be empty");
+				error++;
+			} else if (checkPass != null) {
+				lblPasswordError.setText(checkPass);
+				error++;
+			}
+			if (error == 0) {
+				// run the code for storing
+				TravelLegAccount pAccount = new TravelLegAccount(username, password);
+				tArray.addItem(pAccount);
+				tFile.writeLinkArray(tArray);
+				int result = JOptionPane.showConfirmDialog(null,
+						"Add travelleg account successful\n Do you want to add more", "Confirm",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (result == JOptionPane.OK_OPTION) {
+					try {
+						SwingUtilities.invokeLater(
+								() -> mainFrame.changePanel(new AddTravelLegAccount(mainFrame, shortFormString)));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				} else {
-					boolean errorUsername = false;
-					for (int i = 0; i < tArray.size(); i++) {
-						if(username.equalsIgnoreCase(tArray.getIndexElement(i).getUsername())) {
-							errorUsername = true;
-						}
-					}
-					if(errorUsername) {
-						lblUsernameError.setText("The username is duplicated!!!");
-						error++;
+					try {
+						SwingUtilities.invokeLater(
+								() -> mainFrame.changePanel(new ListTravelLegAccount(mainFrame, anything)));
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
-				if (password.isEmpty()) {
-					lblPasswordError.setText("The password cannot be empty");
-					error++;
-				} else if (checkPass != null) {
-					lblPasswordError.setText(checkPass);
-					error++;
-				}
-				if (error == 0) {
-					// run the code for storing
-					TravelLegAccount pAccount = new TravelLegAccount(username, password);
-					tArray.addItem(pAccount);
-					tFile.writeLinkArray(tArray);
-					int result = JOptionPane.showConfirmDialog(null,
-							"Add travelleg account successful\n Do you want to add more",
-							"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-					if (result == JOptionPane.OK_OPTION) {
-						try {
-							SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddTravelLegAccount(mainFrame,shortFormString)));
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					} else {
-						try {
-//							SwingUtilities.invokeLater(() -> mainFrame.changePanel(new (mainFrame)));
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
 //					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
-				}
+			}
 
-			
 		});
 
 		btnAdd.setForeground(new Color(0, 0, 0));
@@ -204,14 +210,9 @@ public class AddTravelLegAccount extends JPanel {
 		add(btnReset);
 
 		JButton btnGenerate = new JButton("Generate");
-		btnGenerate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				boolean checkRepeat = true;
-				do {
-					txtUserNameNum.setText(library.randomID(0, 99999));
-					checkRepeat = false;
-				} while (checkRepeat);
-			}
+		btnGenerate.addActionListener(event -> {
+			txtUserNameNum.setText(library.randomID(0, 99999));
+
 		});
 		btnGenerate.setBounds(618, 162, 97, 25);
 		add(btnGenerate);
@@ -219,7 +220,16 @@ public class AddTravelLegAccount extends JPanel {
 		JButton btnNewButton = new JButton("Generate");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtPassword.setText(library.generatePassword());
+				boolean repeat = true;
+				String tempPass = null;
+				do {
+					tempPass = library.generatePassword();
+					String t = library.validPassword(tempPass);
+					if( t == null) {
+						repeat = false;
+					}
+				} while (repeat);
+				txtPassword.setText(tempPass);
 			}
 		});
 		btnNewButton.setBounds(618, 209, 97, 25);

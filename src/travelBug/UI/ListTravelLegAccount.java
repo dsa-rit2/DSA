@@ -18,6 +18,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
@@ -32,34 +34,39 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class listTravelLegAccount extends JPanel {
+public class ListTravelLegAccount extends JPanel {
 
 	private final UIControl mainFrame;
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private JScrollPane scrollPane;
 	private LinkArray<TravelLegAccount> lArray = new LinkArray<TravelLegAccount>();
-	private ReadWriteFile<TravelLegAccount> lFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt", TravelLegAccount.class);
+	private ReadWriteFile<TravelLegAccount> lFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt",
+			TravelLegAccount.class);
 	private LinkArray<Company> cArray = new LinkArray<Company>();
 	private ReadWriteFile<Company> cFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 	private JTextField textField;
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
-	private String shortFormString = null;
 	private int indexCompany = 0;
+	private JButton btnNewButton_2;
+	private JButton btnNewButton_3;
+
 	/**
 	 * Launch the application.
 	 */
 
-	public listTravelLegAccount(UIControl parent,String companyName) {
-		// =================================================Panel Setting====================================//
+	public ListTravelLegAccount(UIControl parent, String companyName) {
+		// =================================================Panel
+		// Setting====================================//
 		super();
 		setForeground(Color.RED);
 		this.mainFrame = parent;
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 		setLayout(null);
-		// ===============================================Content Component =================================//
+		// ===============================================Content Component
+		// =================================//
 		boolean gotCompany = false;
 		tableModel = new DefaultTableModel() {
 			@Override
@@ -70,8 +77,9 @@ public class listTravelLegAccount extends JPanel {
 		};
 		lArray = lFile.readLinkArray();
 		cArray = cFile.readLinkArray();
-		for(int i=0;i<cArray.size();i++) {
-			if(cArray.getIndexElement(i).getCompanyName().equalsIgnoreCase(companyName)) {
+		for (int i = 0; i < cArray.size(); i++) {
+			if (cArray.getIndexElement(i).getCompanyName().equalsIgnoreCase(companyName)) {
+				cArray.getIndexElement(i).print();
 				gotCompany = true;
 				indexCompany = i;
 				break;
@@ -93,7 +101,6 @@ public class listTravelLegAccount extends JPanel {
 //						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new (mainFrame,vector.elementAt(0).toString(),
 //								vector.elementAt(1).toString())));
 					}
-
 				}
 			}
 		});
@@ -102,40 +109,71 @@ public class listTravelLegAccount extends JPanel {
 		table.getTableHeader().setResizingAllowed(false);
 		tableModel.addColumn("Username");
 		tableModel.addColumn("Password");
-		load();
+		load(null);
 
 //		table.setShowGrid(false);
 		table.setBounds(34, 31, 537, 167);
 //		contentPane.add(table);
 		scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(12, 60, 876, 330);
+		scrollPane.setBounds(12, 119, 876, 271);
 		scrollPane.setEnabled(false);
 		add(scrollPane);
-		
+
 		textField = new JTextField();
-		textField.setBounds(76, 34, 335, 22);
+		textField.setBounds(74, 84, 335, 22);
+		textField.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				load(textField.getText());
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				load(textField.getText());
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				load(textField.getText());
+			}
+		});
 		add(textField);
 		textField.setColumns(10);
-		
+
 		JLabel lblSearch = new JLabel("Search:");
-		lblSearch.setBounds(27, 37, 56, 16);
+		lblSearch.setBounds(25, 87, 56, 16);
 		add(lblSearch);
 		
-		btnNewButton = new JButton("Add Travelleg Account");
-		btnNewButton.addActionListener(event->{
-			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddTravelLegAccount(mainFrame,cArray.getIndexElement(indexCompany).getCompanyName())));
-		});
-		btnNewButton.setBounds(170, 403, 174, 34);
-		add(btnNewButton);
+		JLabel lblTravellegAccountList = new JLabel("Travelleg Account List");
+		lblTravellegAccountList.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblTravellegAccountList.setBounds(298, 13, 382, 42);
+		add(lblTravellegAccountList);
 		
+		btnNewButton = new JButton("Add");
+		btnNewButton.addActionListener(event -> {
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(
+					new AddTravelLegAccount(mainFrame, cArray.getIndexElement(indexCompany).getCompanyName())));
+		});
+		btnNewButton.setBounds(99, 403, 123, 34);
+		add(btnNewButton);
+
 		btnNewButton_1 = new JButton("Back");
-		btnNewButton_1.addActionListener(event->{
-			//redirect to the page called
+		btnNewButton_1.addActionListener(event -> {
+			// redirect to the page called
 //			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new (mainFrame,vector.elementAt(0).toString(),
 //					vector.elementAt(1).toString())));
 		});
-		btnNewButton_1.setBounds(458, 403, 174, 34);
+		btnNewButton_1.setBounds(634, 403, 123, 34);
 		add(btnNewButton_1);
+		
+		btnNewButton_2 = new JButton("Modify");
+		btnNewButton_2.setBounds(284, 403, 123, 34);
+		add(btnNewButton_2);
+		
+		btnNewButton_3 = new JButton("Delete");
+		btnNewButton_3.setBounds(458, 403, 123, 34);
+		add(btnNewButton_3);
 
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			int j = 0;
@@ -146,17 +184,33 @@ public class listTravelLegAccount extends JPanel {
 			}
 			j++;
 		}
-
 	}
-	public void load() {
-		tableModel.setRowCount(0);
-		for (int i = 0; i < lArray.size(); i++) {
-			String[] dataStrings = { lArray.getIndexElement(i).getUsername(),lArray.getIndexElement(i).getPassword()};
-//			if()
-			//Need to do something 
-			tableModel.addRow(dataStrings);
-			lArray.getIndexElement(i).print();
+
+	public void load(String anythinString) {
+		if (anythinString == null) {
+			tableModel.setRowCount(0);
+			String pString = cArray.getIndexElement(indexCompany).getShortForm();
+			for (int i = 0; i < lArray.size(); i++) {
+				if (lArray.getIndexElement(i).getUsername()
+						.contains(cArray.getIndexElement(indexCompany).getShortForm() + ".")) {
+					String[] dataStrings = { lArray.getIndexElement(i).getUsername(),
+							lArray.getIndexElement(i).getPassword() };
+					tableModel.addRow(dataStrings);
+				}
+			}
+		} else {
+			anythinString = anythinString.toUpperCase();
+			tableModel.setRowCount(0);
+			String pString = cArray.getIndexElement(indexCompany).getShortForm();
+			for (int i = 0; i < lArray.size(); i++) {
+				if (lArray.getIndexElement(i).getUsername()
+						.contains(cArray.getIndexElement(indexCompany).getShortForm() + ".") && lArray.getIndexElement(i).getUsername().toUpperCase()
+						.matches(anythinString + ".*") ) {
+					String[] dataStrings = { lArray.getIndexElement(i).getUsername(),
+							lArray.getIndexElement(i).getPassword() };
+					tableModel.addRow(dataStrings);
+				}
+			}
 		}
 	}
-
 }

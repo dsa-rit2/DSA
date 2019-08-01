@@ -53,10 +53,11 @@ public class ListCompany extends JPanel {
 		scrollPane.setBounds(20, 36, 300, 300);
 		add(scrollPane);
 		displayList = new JList(listModel);
+		updateList(null);
 		displayList.setFont(new Font("Calibri", Font.BOLD, 15));
 		scrollPane.setViewportView(displayList);
 		displayList.setBorder(new LineBorder(new Color(0, 0, 0)));
-		updateList(null);
+		
 
 		JLabel lblSearch = new JLabel("Search:");
 		lblSearch.setFont(new Font("Tahoma", Font.BOLD, 15));

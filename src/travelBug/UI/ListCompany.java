@@ -22,11 +22,6 @@ public class ListCompany extends JPanel {
 	private JList displayList;
 	DefaultListModel listModel;
 	private final UIControl mainFrame;
-
-	private JTextField txtAsd;
-	private JTextField shortF;
-	private JTextField phoneN;
-	private JTextField Descriptiontxt;
 	private int companyFoundindex;
 
 	public ListCompany(UIControl parent) {
@@ -44,34 +39,31 @@ public class ListCompany extends JPanel {
 		JLabel lblConpanyList = new JLabel("Company List");
 		lblConpanyList.setHorizontalAlignment(SwingConstants.CENTER);
 		lblConpanyList.setFont(new Font("Segoe UI", Font.PLAIN, 30));
-		lblConpanyList.setBounds(-175, -9, 623, 50);
+		lblConpanyList.setBounds(123, 13, 623, 50);
 		add(lblConpanyList);
 
 		listModel = new DefaultListModel();
 		displayList = new JList(listModel);
-		displayList.setBounds(51, 71, 256, 278);
+		displayList.setBounds(51, 71, 380, 278);
+		
 		updateList(null);
 		add(displayList);
 		displayList.setFont(new Font("Calibri", Font.BOLD, 15));
 		displayList.setBorder(new LineBorder(new Color(0, 0, 0)));
-		
-	
+
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(51, 71, 256, 278);
+		scrollPane.setBounds(51, 71, 380, 278);
 		add(scrollPane);
-		
-		
-		
 
 		JLabel lblSearch = new JLabel("Search:");
 		lblSearch.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSearch.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		lblSearch.setBounds(25, 405, 65, 20);
+		lblSearch.setBounds(41, 362, 65, 20);
 		add(lblSearch);
 
 		textField = new JTextField();
 		textField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		textField.setBounds(100, 403, 200, 25);
+		textField.setBounds(123, 362, 308, 25);
 		textField.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
@@ -93,193 +85,73 @@ public class ListCompany extends JPanel {
 		textField.setColumns(10);
 
 		// ============================= Button =====================================//
-		JButton btnSelect = new JButton("Select");
-		btnSelect.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		btnSelect.setBounds(403, 368, 106, 55);
-		btnSelect.addActionListener(event -> {
-			if (displayList.getSelectedValue() == null) {
-				library.dialogMessage("You must select company first");
-			} else {
-				String getCompany = displayList.getSelectedValue().toString();
-				boolean gotCompany = false;
-				companyFoundindex = 0;
-				cArray = rFile.readLinkArray();
-				for(int i = 0; i < cArray.size(); i++) {
-					if(getCompany.equalsIgnoreCase(cArray.getIndexElement(i).getCompanyName())) {
-						gotCompany = true;
-						companyFoundindex = i;
-					}
-				}
-				if(gotCompany == false) {
-					//Redirect to the previous page
-					
-					
-				}
-				txtAsd.setText(cArray.getIndexElement(companyFoundindex).getCompanyName());
-				shortF.setText(cArray.getIndexElement(companyFoundindex).getShortForm());
-				phoneN.setText(cArray.getIndexElement(companyFoundindex).getPhoneNum());
-				Descriptiontxt.setText(cArray.getIndexElement(companyFoundindex).getDescription());
-			}
+		JButton btnAdd = new JButton("Add Company");
+		btnAdd.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		btnAdd.setBounds(464, 128, 164, 55);
+		btnAdd.addActionListener(event -> {
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddCompany(mainFrame)));
 		});
-		add(btnSelect);
+		add(btnAdd);
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(event -> {
 			// redirect to mainmenu //
 
 		});
 		btnBack.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		btnBack.setBounds(736, 368, 106, 55);
+		btnBack.setBounds(650, 300, 168, 55);
 		add(btnBack);
-		
-		JLabel label = new JLabel("Company Name:");
-		label.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		label.setBounds(368, 71, 141, 30);
-		add(label);
-		
-		txtAsd = new JTextField();
-		txtAsd.setText((String) null);
-		txtAsd.setFont(new Font("Calibri", Font.BOLD, 14));
-		txtAsd.setColumns(10);
-		txtAsd.setBounds(519, 76, 160, 28);
-		add(txtAsd);
-		
-		Label lblErrorCompanyName = new Label("");
-		lblErrorCompanyName.setForeground(Color.RED);
-		lblErrorCompanyName.setBackground(Color.WHITE);
-		lblErrorCompanyName.setBounds(685, 87, 207, 14);
-		add(lblErrorCompanyName);
-		
-		JLabel label_2 = new JLabel("Short Form:");
-		label_2.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		label_2.setBounds(369, 130, 141, 30);
-		add(label_2);
-		
-		shortF = new JTextField();
-		shortF.setText((String) null);
-		shortF.setFont(new Font("Calibri", Font.BOLD, 14));
-		shortF.setColumns(10);
-		shortF.setBounds(519, 135, 160, 28);
-		add(shortF);
-		
-		Label lblErrorShortForm = new Label("");
-		lblErrorShortForm.setForeground(Color.RED);
-		lblErrorShortForm.setBackground(Color.WHITE);
-		lblErrorShortForm.setBounds(685, 135, 207, 14);
-		add(lblErrorShortForm);
-		
-		JLabel label_4 = new JLabel("Phone Number:");
-		label_4.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		label_4.setBounds(368, 198, 141, 30);
-		add(label_4);
-		
-		phoneN = new JTextField();
-		phoneN.setText((String) null);
-		phoneN.setFont(new Font("Calibri", Font.BOLD, 14));
-		phoneN.setColumns(10);
-		phoneN.setBounds(521, 203, 158, 28);
-		add(phoneN);
-		
-		Label lblErrorPhoneNum = new Label("");
-		lblErrorPhoneNum.setForeground(Color.RED);
-		lblErrorPhoneNum.setBackground(Color.WHITE);
-		lblErrorPhoneNum.setBounds(685, 203, 207, 14);
-		add(lblErrorPhoneNum);
-		
-		JLabel label_6 = new JLabel("Description:");
-		label_6.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		label_6.setBounds(369, 256, 141, 30);
-		add(label_6);
-		
-		Descriptiontxt = new JTextField();
-		Descriptiontxt.setText((String) null);
-		Descriptiontxt.setHorizontalAlignment(SwingConstants.LEFT);
-		Descriptiontxt.setFont(new Font("Calibri", Font.BOLD, 15));
-		Descriptiontxt.setColumns(20);
-		Descriptiontxt.setBounds(514, 261, 160, 28);
-		add(Descriptiontxt);
-		
-		Label lblErrorDescription = new Label("");
-		lblErrorDescription.setForeground(Color.RED);
-		lblErrorDescription.setBackground(Color.WHITE);
-		lblErrorDescription.setBounds(685, 256, 207, 14);
-		add(lblErrorDescription);
-		
+
 		JButton btnModify = new JButton("Modify");
-		btnModify.addActionListener(event-> {
-
-			String companyName = txtAsd.getText();
-			int error = 0;
-			String sFormString =  shortF.getText();
-			String editP  =  phoneN.getText();
-			String descriptionString = Descriptiontxt.getText();
-			
-			lblErrorCompanyName.setText("");
-			lblErrorPhoneNum.setText("");
-			lblErrorShortForm.setText("");
-			lblErrorDescription.setText("");
-
-			if (companyName.isEmpty()) {
-				lblErrorCompanyName.setText("The company name cannot be empty");
-				error++;
+		btnModify.addActionListener(event -> {
+			if (displayList.getSelectedValue() == null) {
+				library.dialogMessage("You must select company first");
 			} else {
-				boolean errorCompanyName = false;
-				for (int i = 0; i < cArray.size(); i++) {
-					if (cArray.getIndexElement(i).getShortForm().equalsIgnoreCase(sFormString)) {
-						errorCompanyName = true;
-					}
-				}
+				String getCompany = displayList.getSelectedValue().toString();
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new EditCompany(getCompany, mainFrame)));
 			}
-			if (sFormString.isEmpty()) {
-				lblErrorShortForm.setText("The short form cannot be empty");
-				error++;
-			} else {
-				boolean errorShortForm = false;
-				for (int i = 0; i < cArray.size(); i++) {
-					if (cArray.getIndexElement(i).getShortForm().equalsIgnoreCase(sFormString)) {
-						errorShortForm = true;
-					}
-//					System.out.println(cArray.indexGetElement(i).getCompanyName());
-				}
-				if (!library.isAlpha(sFormString)) {
-					lblErrorShortForm.setText("The short form must be alphabetic");
-					error++;
-				} else if (sFormString.length() > 10) {
-					lblErrorShortForm.setText("The short form must not excess 10 letter");
-					error++;
-				}
-			}
-			if (phoneN.getText().isEmpty()) {
-				lblErrorPhoneNum.setText("The phone number cannot be empty");
-				error++;
-			} else if (editP == null) {
-				lblErrorPhoneNum.setText("The phone number is invalid");
-				error++;
-			}
-			if (descriptionString.isEmpty()) {
-				lblErrorDescription.setText("The description is empty");
-				error++;
-			}
-			if (error == 0) {
-				cArray.getIndexElement(companyFoundindex).setCompanyName(companyName);
-				cArray.getIndexElement(companyFoundindex).setShortForm(sFormString);
-				cArray.getIndexElement(companyFoundindex).setPhoneNum(editP);
-				cArray.getIndexElement(companyFoundindex).setDescription(descriptionString);
-				
-				rFile.writeLinkArray(cArray);
-				//Print the window for the details thing 
-//				 Show the company info
-				for (int i = 0; i < cArray.size(); i++) {
-					cArray.getIndexElement(i).print();
-				}
-				library.dialogMessage("Company Updated successful!!!");
-				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
-			}
-			
 		});
 		btnModify.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		btnModify.setBounds(572, 368, 119, 55);
+		btnModify.setBounds(650, 191, 173, 48);
 		add(btnModify);
-		
+
+		JButton btnNewButton = new JButton("Delete");
+		btnNewButton.addActionListener(event -> {
+			if (displayList.getSelectedValue() == null) {
+				library.dialogMessage("You must select company first");
+			} else {
+				String getCompany = displayList.getSelectedValue().toString();
+				int choice = JOptionPane.showConfirmDialog(null, "Do you want to delete it?", "Confirm",
+						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				if (choice == JOptionPane.YES_NO_OPTION) {
+					for (int i = 0; i < cArray.size(); i++) {
+						if (cArray.getIndexElement(i).getCompanyName().equalsIgnoreCase(getCompany)) {
+							cArray.deleteIndexItem(i);
+						}
+					}
+					rFile.writeLinkArray(cArray);
+					library.dialogMessage("The company is deleted!!!");
+					updateList(null);
+				}
+			}
+		});
+		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		btnNewButton.setBounds(650, 92, 168, 48);
+		add(btnNewButton);
+
+		JButton btnTravellegAccountList = new JButton("Travelleg Account List");
+		btnTravellegAccountList.addActionListener(event -> {
+			if (displayList.getSelectedValue() == null) {
+				library.dialogMessage("You must select company first");
+			} else {
+				String getCompany = displayList.getSelectedValue().toString();
+				SwingUtilities
+						.invokeLater(() -> mainFrame.changePanel(new ListTravelLegAccount(mainFrame, getCompany)));
+			}
+		});
+		btnTravellegAccountList.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		btnTravellegAccountList.setBounds(464, 237, 164, 55);
+		add(btnTravellegAccountList);
+
 	}
 
 	// ==================== Function ==================== //
@@ -291,10 +163,10 @@ public class ListCompany extends JPanel {
 				listModel.addElement(cArray.getIndexElement(i).getCompanyName());
 			}
 		} else {
+			searchItem = searchItem.toUpperCase();
 			listModel = (DefaultListModel) displayList.getModel();
 			listModel.clear();
 			for (int i = 0; i < cArray.size(); i++) {
-				searchItem = searchItem.toUpperCase();
 				if (cArray.getIndexElement(i).getCompanyName().toUpperCase().matches(searchItem + ".*")) {
 					listModel.addElement(cArray.getIndexElement(i).getCompanyName());
 				}

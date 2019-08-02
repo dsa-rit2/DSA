@@ -26,6 +26,7 @@ import javax.swing.table.TableModel;
 
 import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
+import travelBug.library.library;
 import travelBug.obj.Company;
 import travelBug.obj.TravelLegAccount;
 import javax.swing.JTextField;
@@ -160,9 +161,8 @@ public class ListTravelLegAccount extends JPanel {
 
 		btnNewButton_1 = new JButton("Back");
 		btnNewButton_1.addActionListener(event -> {
-			// redirect to the page called
-//			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new (mainFrame,vector.elementAt(0).toString(),
-//					vector.elementAt(1).toString())));
+			library.dialogMessage("The page will redirect to company list");
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 		});
 		btnNewButton_1.setBounds(634, 403, 123, 34);
 		add(btnNewButton_1);

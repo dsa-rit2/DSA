@@ -32,10 +32,11 @@ public class UIControl extends JFrame {
 //		changePanel(new PlanTrip(this));
 //		changePanel(new TravelLegMaintenance(this));
 //		changePanel(new AddCompany(this));
-		changePanel(new TravelLegMaintenance(this));
-
+//		changePanel(new TravelLegMaintenance(this));
 //		changePanel(new AddCompany(this));
 //		changePanel(new Authentication(this));
+//		changePanel(new ListLocation(this));
+		changePanel(new AddTravelLeg(this));
 	}
 
 	public void changePanel(JPanel panelName) {

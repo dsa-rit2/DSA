@@ -10,11 +10,9 @@ import travelBug.obj.*;
 import java.awt.*;
 import java.util.Vector;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -28,7 +26,7 @@ public class ListLocation extends JPanel {
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt", Location.class);
 	private DefaultTableModel tableModel;
 	private JScrollPane scrollPane;
-	private Vector vector;
+	private Vector<?> vector;
 	private JButton btnDelete;
 	private JButton btnModify;
 	private final UIControl mainFrame;
@@ -40,12 +38,13 @@ public class ListLocation extends JPanel {
 		super();
 		this.mainFrame = parent;
 		// ======================== Jpanel setting ================================//
-//		UIControl.titleName = "Location List";
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 
 		tableModel = new DefaultTableModel() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				// all cells false
@@ -62,7 +61,7 @@ public class ListLocation extends JPanel {
 				if (arg0.getClickCount() == 2) {
 					tableModel = (DefaultTableModel) table.getModel();
 					int SelectedRowIndex = table.getSelectedRow();
-					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+					vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
 						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,
@@ -153,7 +152,7 @@ public class ListLocation extends JPanel {
 				tableModel = (DefaultTableModel) table.getModel();
 				int SelectedRowIndex = table.getSelectedRow();
 				if (SelectedRowIndex > 0) {
-					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+					vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
 						int choice = JOptionPane.showConfirmDialog(null, "Do you want to delete it?", "Confirm",
@@ -188,7 +187,7 @@ public class ListLocation extends JPanel {
 
 				int SelectedRowIndex = table.getSelectedRow();
 				if (SelectedRowIndex >= 0) {
-					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+					vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
 						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,

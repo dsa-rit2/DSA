@@ -116,13 +116,13 @@ public class AddLocation extends JPanel {
 		"Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan",
 		"Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay",
 		"Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe" };
-		cbCountry = new JComboBox(country);
+		cbCountry = new JComboBox<String>(country);
 		cbCountry.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cbCountry.setBounds(300, 208, 300, 30);
 		add(cbCountry);
 		String[] state = { "<Choose Type>", "Small City", "Medium City", "Large City",
 				"Natural formation", "Designated Park/Reserve", "Man-made landmark" };
-		cbType = new JComboBox(state);
+		cbType = new JComboBox<String>(state);
 		cbType.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cbType.setBounds(300, 324, 300, 30);
 		add(cbType);

@@ -1,37 +1,22 @@
 package travelBug.UI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Rectangle;
+//=========================
+//	Import Package
+//=========================
+import travelBug.library.*;
+import travelBug.obj.*;
+//=========================
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
-
-import travelBug.obj.*;
-import travelBug.library.*;
-import travelBug.UI.*;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
 
 public class ListCustomer extends JPanel {
-
-	private JPanel contentPane;
+	private static final long serialVersionUID = 1L; // Serializable purpose
 	private final UIControl mainFrame;
 	private LinkArray<Customer> cArray = new LinkArray<Customer>();
 	private ReadWriteFile<Customer> cFile = new ReadWriteFile<Customer>("Customer.txt", Customer.class);
@@ -40,21 +25,18 @@ public class ListCustomer extends JPanel {
 	private JScrollPane scrollPane;
 	private JTextField textField;
 
-	/**
-	 * Create the frame.
-	 */
 	public ListCustomer(UIControl parent) {
-
-		// =================================== Jpanel setting ============================//
+		// ======================== Jpanel setting ========================//
 		super();
 		this.mainFrame = parent;
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 
-		// =================================== Content Component =============================// 
-		boolean gotCustomer = false;
+		// ====================== Content Component =======================//
 		tableModel = new DefaultTableModel() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				// all cells false
@@ -67,7 +49,7 @@ public class ListCustomer extends JPanel {
 		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
 		lblNewLabel.setBounds(341, 13, 221, 36);
 		add(lblNewLabel);
-		
+
 		table = new JTable(tableModel);
 		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		table.addMouseListener(new MouseAdapter() {
@@ -78,7 +60,7 @@ public class ListCustomer extends JPanel {
 					tableModel = (DefaultTableModel) table.getModel();
 
 					int SelectedRowIndex = table.getSelectedRow();
-					Vector vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+					Vector<?> vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
 //						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new (mainFrame,vector.elementAt(0).toString(),
@@ -106,7 +88,7 @@ public class ListCustomer extends JPanel {
 		lblSearch.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lblSearch.setBounds(35, 81, 56, 16);
 		add(lblSearch);
-		
+
 		textField = new JTextField();
 		textField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		textField.setBounds(101, 76, 212, 27);
@@ -115,10 +97,12 @@ public class ListCustomer extends JPanel {
 			public void removeUpdate(DocumentEvent e) {
 				load(textField.getText());
 			}
+
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 				load(textField.getText());
 			}
+
 			@Override
 			public void changedUpdate(DocumentEvent e) {
 				load(textField.getText());
@@ -126,17 +110,17 @@ public class ListCustomer extends JPanel {
 		});
 		add(textField);
 		textField.setColumns(10);
-		// =============================================Button ========================================//
+		//========================= Buttons ========================== //
 		JButton btnNewButton = new JButton("Add Customer");
-		btnNewButton.addActionListener(event->{
+		btnNewButton.addActionListener(event -> {
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddCustomer(mainFrame)));
 		});
 		btnNewButton.setBounds(217, 401, 124, 36);
 		add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("Back");
-		btnNewButton_1.addActionListener(event->{
-			//redirect to the main menu
+		btnNewButton_1.addActionListener(event -> {
+			// redirect to the main menu
 		});
 		btnNewButton_1.setBounds(457, 401, 127, 36);
 		add(btnNewButton_1);

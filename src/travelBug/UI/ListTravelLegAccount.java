@@ -1,42 +1,26 @@
 package travelBug.UI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Rectangle;
-import java.awt.ScrollPane;
+//=========================
+//	Import Package
+//=========================
+import travelBug.library.*;
+import travelBug.obj.*;
+//=========================
+
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-
-import travelBug.library.LinkArray;
-import travelBug.library.ReadWriteFile;
-import travelBug.library.library;
-import travelBug.obj.Company;
-import travelBug.obj.TravelLegAccount;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ListTravelLegAccount extends JPanel {
-
+	private static final long serialVersionUID = 1L;	// Serializable purpose
 	private final UIControl mainFrame;
 	private JTable table;
 	private DefaultTableModel tableModel;
@@ -47,27 +31,22 @@ public class ListTravelLegAccount extends JPanel {
 	private LinkArray<Company> cArray = new LinkArray<Company>();
 	private ReadWriteFile<Company> cFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 	private JTextField textField;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
+	private JButton btnNewButton, btnNewButton_1, btnNewButton_2, btnNewButton_3;
 	private int indexCompany = 0;
-	private JButton btnNewButton_2;
-	private JButton btnNewButton_3;
 
-	/**
-	 * Launch the application.
-	 */
 
 	public ListTravelLegAccount(UIControl parent, String companyName) {
-		// =================================================Panel Setting====================================//
+		// ==================== JPanel Setting =====================
 		super();
 		setForeground(Color.RED);
 		this.mainFrame = parent;
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 		setLayout(null);
-		// ===============================================Content Component =================================//
-		boolean gotCompany = false;
+		
 		tableModel = new DefaultTableModel() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				// all cells false
@@ -79,7 +58,6 @@ public class ListTravelLegAccount extends JPanel {
 		for (int i = 0; i < cArray.size(); i++) {
 			if (cArray.getIndexElement(i).getCompanyName().equalsIgnoreCase(companyName)) {
 				cArray.getIndexElement(i).print();
-				gotCompany = true;
 				indexCompany = i;
 				break;
 			}
@@ -94,7 +72,7 @@ public class ListTravelLegAccount extends JPanel {
 					tableModel = (DefaultTableModel) table.getModel();
 
 					int SelectedRowIndex = table.getSelectedRow();
-					Vector vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+					Vector<?> vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    				//redirect to the modify travellegaccount
 					}
@@ -194,8 +172,7 @@ public class ListTravelLegAccount extends JPanel {
 
 	public void load(String anythinString) {
 		if (anythinString == null) {
-			tableModel.setRowCount(0);
-			String pString = cArray.getIndexElement(indexCompany).getShortForm();
+			tableModel.setRowCount(0);			
 			for (int i = 0; i < lArray.size(); i++) {
 				if (lArray.getIndexElement(i).getUsername()
 						.contains(cArray.getIndexElement(indexCompany).getShortForm() + ".")) {
@@ -207,7 +184,6 @@ public class ListTravelLegAccount extends JPanel {
 		} else {
 			anythinString = anythinString.toUpperCase();
 			tableModel.setRowCount(0);
-			String pString = cArray.getIndexElement(indexCompany).getShortForm();
 			for (int i = 0; i < lArray.size(); i++) {
 				if (lArray.getIndexElement(i).getUsername()
 						.contains(cArray.getIndexElement(indexCompany).getShortForm() + ".") && lArray.getIndexElement(i).getUsername().toUpperCase()

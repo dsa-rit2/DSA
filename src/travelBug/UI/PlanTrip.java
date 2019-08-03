@@ -169,6 +169,7 @@ public class PlanTrip extends JPanel {
 		citieslbl.setBounds(20, 73, 80, 30);
 		add(citieslbl);
 
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		JComboBox<String> citiesCount = new JComboBox(new String[] {"1", "2", "3", "4", "5" });
 		citiesCount.setBounds(100, 77, 50, 30);
 		add(citiesCount);

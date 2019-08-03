@@ -7,40 +7,20 @@ import travelBug.library.*;
 import travelBug.obj.*;
 //=========================
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Label;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import javax.swing.*;
 
 public class ModifyLocation extends JPanel {
+	private static final long serialVersionUID = 1L;	// Serializable purpose
 	private JTextField txtLocationName,txtContinent,txtState;
 	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblCountry, lblState, lblType;
 	private Label lblErrorLocationName,lblErrorContinent, lblErrorType, lblErrorState, lblErrorCountry;
-	private JComboBox cbCountry, cbType;
+	private JComboBox<Object> cbCountry, cbType;
 	private LinkArray<Location> lArray = new LinkArray<Location>();
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt",Location.class); 
-	private JPanel contentPane;
 	private int companyFound;
 	private final UIControl mainFrame;
 	
-	/**
-	 * Create the frame.
-	 */
-	@SuppressWarnings("unchecked")
 	public ModifyLocation(UIControl parent,String inputName,String inputState) {
 		
 		//==================== JPanel setting =====================
@@ -123,9 +103,9 @@ public class ModifyLocation extends JPanel {
 		add(txtState);
 		txtState.setColumns(10);
 
-		cbCountry = new JComboBox();
+		cbCountry = new JComboBox<Object>();
 		
-		cbCountry.setModel(new DefaultComboBoxModel(new String[] { "<Choose country>", "Afghanistan", "Albania",
+		cbCountry.setModel(new DefaultComboBoxModel<Object>(new String[] { "<Choose country>", "Afghanistan", "Albania",
 				"Algeria", "Andorra", "Angola", "Antigua & Deps", "Argentina", "Armenia", "Australia", "Austria",
 				"Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin",
 				"Bhutan", "Bolivia", "Bosnia Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina",
@@ -155,8 +135,8 @@ public class ModifyLocation extends JPanel {
 		add(cbCountry);
 		
 		
-		cbType = new JComboBox();
-		cbType.setModel(new DefaultComboBoxModel(new String[] {"<Choose Type>", "Small City", "Medium City",
+		cbType = new JComboBox<Object>();
+		cbType.setModel(new DefaultComboBoxModel<Object>(new String[] {"<Choose Type>", "Small City", "Medium City",
 				"Large City", "Natural formation", "Designated Park/Reserve", "Man-made landmark" }));
 		cbType.setBounds(367, 327, 172, 26);
 		cbType.setSelectedItem(lArray.getIndexElement(companyFound).getType());

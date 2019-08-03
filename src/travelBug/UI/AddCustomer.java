@@ -1,37 +1,17 @@
 package travelBug.UI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Rectangle;
+//=========================
+//	Import Package
+//=========================
+import travelBug.library.*;
+import travelBug.obj.*;
+//=========================
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.border.EmptyBorder;
-
-import travelBug.library.LinkArray;
-import travelBug.library.ReadWriteFile;
-import travelBug.library.library;
-import travelBug.obj.Customer;
-import travelBug.obj.TravelLegAccount;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import java.awt.Label;
-
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
+import java.awt.*;
+import javax.swing.*;
 
 public class AddCustomer extends JPanel {
-
+	private static final long serialVersionUID = 1L;	// Serializable purpose
 	private final UIControl mainFrame;
 	private JTextField txtUsername;
 	private JTextField txtName;
@@ -39,16 +19,9 @@ public class AddCustomer extends JPanel {
 	private JTextField txtPhoneNumber;
 	private LinkArray<Customer> cArray = new LinkArray<Customer>();
 	private ReadWriteFile<Customer> cFile = new ReadWriteFile<Customer>("Customer.txt", Customer.class);
-	/**
-	 * Launch the application.
-	 */
-	
 
-	/**
-	 * Create the frame.
-	 */
 	public AddCustomer(UIControl parent) {
-		// =================================================Panel Setting====================================//
+		// ========================= Panel Setting =========================
 		super();
 		setForeground(Color.RED);
 		this.mainFrame = parent;
@@ -56,7 +29,7 @@ public class AddCustomer extends JPanel {
 		setBounds(new Rectangle(new Dimension(900, 450)));
 		setLayout(null);
 		
-		// =================================================Content Component====================================//
+		// ======================= Content Component =======================
 		JLabel lblNewLabel = new JLabel("Add Customer");
 		lblNewLabel.setFont(new Font("Segoe UI Black", Font.BOLD, 25));
 		lblNewLabel.setBounds(342, 13, 219, 39);

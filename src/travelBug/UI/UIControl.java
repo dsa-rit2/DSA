@@ -1,9 +1,6 @@
 package travelBug.UI;
 
 import java.awt.*;
-import java.nio.channels.NonReadableChannelException;
-import java.util.Vector;
-
 import javax.swing.*;
 
 import travelBug.library.library;

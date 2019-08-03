@@ -212,9 +212,9 @@ public class AddCustomer extends JPanel {
 		});
 		btnNewButton.setBounds(290, 348, 105, 39);
 		add(btnNewButton);
-		
 		JButton btnNewButton_1 = new JButton("Cancel");
 		btnNewButton_1.addActionListener(event->{
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCustomer(mainFrame)));
 		});
 		btnNewButton_1.setBounds(486, 348, 110, 39);
 		add(btnNewButton_1);

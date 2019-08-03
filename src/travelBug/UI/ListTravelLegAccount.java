@@ -58,16 +58,14 @@ public class ListTravelLegAccount extends JPanel {
 	 */
 
 	public ListTravelLegAccount(UIControl parent, String companyName) {
-		// =================================================Panel
-		// Setting====================================//
+		// =================================================Panel Setting====================================//
 		super();
 		setForeground(Color.RED);
 		this.mainFrame = parent;
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 		setLayout(null);
-		// ===============================================Content Component
-		// =================================//
+		// ===============================================Content Component =================================//
 		boolean gotCompany = false;
 		tableModel = new DefaultTableModel() {
 			@Override
@@ -98,9 +96,7 @@ public class ListTravelLegAccount extends JPanel {
 					int SelectedRowIndex = table.getSelectedRow();
 					Vector vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
-//	    			Redirect the thing to modify location
-//						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new (mainFrame,vector.elementAt(0).toString(),
-//								vector.elementAt(1).toString())));
+//	    				//redirect to the modify travellegaccount
 					}
 				}
 			}
@@ -151,6 +147,17 @@ public class ListTravelLegAccount extends JPanel {
 		lblTravellegAccountList.setBounds(298, 13, 382, 42);
 		add(lblTravellegAccountList);
 		
+		for (int i = 0; i < table.getColumnCount(); i++) {
+			int j = 0;
+			TableColumn column = table.getColumnModel().getColumn(i);
+			if (i >= 0) {
+				if (i == j)
+					column.setPreferredWidth(100);
+			}
+			j++;
+		}
+		
+		// ==============================================Button =====================================//
 		btnNewButton = new JButton("Add");
 		btnNewButton.addActionListener(event -> {
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(
@@ -168,22 +175,21 @@ public class ListTravelLegAccount extends JPanel {
 		add(btnNewButton_1);
 		
 		btnNewButton_2 = new JButton("Modify");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnNewButton_2.setBounds(284, 403, 123, 34);
 		add(btnNewButton_2);
 		
 		btnNewButton_3 = new JButton("Delete");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnNewButton_3.setBounds(458, 403, 123, 34);
 		add(btnNewButton_3);
 
-		for (int i = 0; i < table.getColumnCount(); i++) {
-			int j = 0;
-			TableColumn column = table.getColumnModel().getColumn(i);
-			if (i >= 0) {
-				if (i == j)
-					column.setPreferredWidth(100);
-			}
-			j++;
-		}
 	}
 
 	public void load(String anythinString) {

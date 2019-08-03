@@ -60,9 +60,7 @@ public class ListLocation extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (arg0.getClickCount() == 2) {
-
 					tableModel = (DefaultTableModel) table.getModel();
-
 					int SelectedRowIndex = table.getSelectedRow();
 					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {

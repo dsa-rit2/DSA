@@ -68,8 +68,7 @@ public class AddTravelLegAccount extends JPanel {
 		}
 		tArray = tFile.readLinkArray();
 
-		// ======================================== Content component
-		// ==============================================//
+		// ======================================== Content component ==============================================//
 
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -114,8 +113,7 @@ public class AddTravelLegAccount extends JPanel {
 		lblAddTravellegAccount.setBounds(156, 38, 502, 51);
 		add(lblAddTravellegAccount);
 
-		// ============================================ Error Message
-		// ===============================================//
+		// ============================================ Error Message ===============================================//
 
 		Label lblUsernameError = new Label("");
 		lblUsernameError.setForeground(new Color(255, 0, 0));
@@ -129,8 +127,7 @@ public class AddTravelLegAccount extends JPanel {
 		lblPasswordError.setBounds(312, 233, 416, 16);
 		add(lblPasswordError);
 
-		// ================================================ Button
-		// ====================================================//
+		// ================================================ Button ====================================================//
 		contentPane = new JPanel();
 		Button btnAdd = new Button("Add");
 		btnAdd.addActionListener(event -> {
@@ -196,18 +193,14 @@ public class AddTravelLegAccount extends JPanel {
 		btnAdd.setBounds(313, 319, 79, 24);
 		add(btnAdd);
 
-		Button btnReset = new Button("Reset");
-		btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txtUserNameNum.setText("");
-				txtPassword.setText("");
-				lblUsernameError.setText("");
-				lblPasswordError.setText("");
-			}
+		Button btnBack = new Button("Back");
+		btnBack.addActionListener(event->{
+			SwingUtilities.invokeLater(
+					() -> mainFrame.changePanel(new ListTravelLegAccount(mainFrame, anything)));
 		});
-		btnReset.setForeground(new Color(0, 0, 0));
-		btnReset.setBounds(490, 319, 79, 24);
-		add(btnReset);
+		btnBack.setForeground(new Color(0, 0, 0));
+		btnBack.setBounds(490, 319, 79, 24);
+		add(btnBack);
 
 		JButton btnGenerate = new JButton("Generate");
 		btnGenerate.addActionListener(event -> {

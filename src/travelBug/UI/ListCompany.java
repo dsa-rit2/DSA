@@ -39,7 +39,7 @@ public class ListCompany extends JPanel {
 		JLabel lblConpanyList = new JLabel("Company List");
 		lblConpanyList.setHorizontalAlignment(SwingConstants.CENTER);
 		lblConpanyList.setFont(new Font("Segoe UI", Font.PLAIN, 30));
-		lblConpanyList.setBounds(123, 13, 623, 50);
+		lblConpanyList.setBounds(60, 13, 308, 50);
 		add(lblConpanyList);
 
 		listModel = new DefaultListModel();
@@ -87,7 +87,7 @@ public class ListCompany extends JPanel {
 		// ============================= Button =====================================//
 		JButton btnAdd = new JButton("Add Company");
 		btnAdd.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		btnAdd.setBounds(464, 128, 164, 55);
+		btnAdd.setBounds(490, 90, 164, 55);
 		btnAdd.addActionListener(event -> {
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddCompany(mainFrame)));
 		});
@@ -98,7 +98,7 @@ public class ListCompany extends JPanel {
 
 		});
 		btnBack.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		btnBack.setBounds(650, 300, 168, 55);
+		btnBack.setBounds(584, 294, 168, 55);
 		add(btnBack);
 
 		JButton btnModify = new JButton("Modify");
@@ -111,7 +111,7 @@ public class ListCompany extends JPanel {
 			}
 		});
 		btnModify.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		btnModify.setBounds(650, 191, 173, 48);
+		btnModify.setBounds(687, 191, 173, 48);
 		add(btnModify);
 
 		JButton btnNewButton = new JButton("Delete");
@@ -135,7 +135,7 @@ public class ListCompany extends JPanel {
 			}
 		});
 		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		btnNewButton.setBounds(650, 92, 168, 48);
+		btnNewButton.setBounds(692, 94, 168, 48);
 		add(btnNewButton);
 
 		JButton btnTravellegAccountList = new JButton("Travelleg Account List");
@@ -149,7 +149,7 @@ public class ListCompany extends JPanel {
 			}
 		});
 		btnTravellegAccountList.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		btnTravellegAccountList.setBounds(464, 237, 164, 55);
+		btnTravellegAccountList.setBounds(490, 189, 164, 55);
 		add(btnTravellegAccountList);
 
 	}

@@ -1,4 +1,5 @@
 import travelBug.UI.*;
+
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -9,7 +10,7 @@ public class Main {
     			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     		} catch (Exception e) { e.printStackTrace(); }
     		
-            new UIControl("TravelBug").setVisible(true);
+    		new Authentication();
         });
 	}
 

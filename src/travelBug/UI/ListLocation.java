@@ -37,7 +37,7 @@ public class ListLocation extends JPanel {
 	public ListLocation(UIControl parent) {
 		super();
 		this.mainFrame = parent;
-		// ======================== Jpanel setting ================================//
+		// ======================== Jpanel setting ==============================
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));

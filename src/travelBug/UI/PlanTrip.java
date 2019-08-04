@@ -28,6 +28,7 @@ public class PlanTrip extends JPanel {
 	JDateChooser dateChooser_1 = new JDateChooser(), dateChooser_2 = new JDateChooser(),
 			dateChooser_3 = new JDateChooser(), dateChooser_4 = new JDateChooser(), dateChooser_5 = new JDateChooser();
 
+	JComboBox<String> continent1, continent2, continent3, continent4, continent5;
 	private final UIControl mainFrame; // Store main frame
 
 	public PlanTrip(UIControl parent) {
@@ -48,120 +49,152 @@ public class PlanTrip extends JPanel {
 		add(lblFindTheBest);
 		lblFindTheBest.setFont(new Font("Segoe UI", Font.BOLD, 30));
 		lblFindTheBest.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		// ======================= Country ======================
 		country1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		country1.setBounds(10, 165, 180, 30);
+		country1.setBounds(200, 165, 150, 30);
 		add(country1);
 
 		country2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		country2.setBounds(10, 208, 180, 30);
+		country2.setBounds(200, 208, 150, 30);
 		add(country2);
 
 		country3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		country3.setBounds(10, 251, 180, 30);
+		country3.setBounds(200, 251, 150, 30);
 		add(country3);
 
 		country4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		country4.setBounds(10, 294, 180, 30);
+		country4.setBounds(200, 294, 150, 30);
 		add(country4);
 
 		country5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		country5.setBounds(10, 337, 180, 30);
+		country5.setBounds(200, 337, 150, 30);
 		add(country5);
 
 		// ======================= Place =======================
 		place1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		place1.setBounds(243, 165, 180, 30);
+		place1.setBounds(390, 165, 149, 30);
 		add(place1);
 
 		place2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		place2.setBounds(243, 208, 180, 30);
+		place2.setBounds(390, 208, 149, 30);
 		add(place2);
 
 		place3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		place3.setBounds(243, 251, 180, 30);
+		place3.setBounds(390, 251, 149, 30);
 		add(place3);
 
 		place4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		place4.setBounds(243, 294, 180, 30);
+		place4.setBounds(390, 294, 149, 30);
 		add(place4);
 
 		place5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		place5.setBounds(243, 337, 180, 30);
+		place5.setBounds(390, 337, 149, 30);
 		add(place5);
 
 		// ========================= Location ========================
 		locationName1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		locationName1.setBounds(480, 165, 180, 30);
+		locationName1.setBounds(580, 165, 150, 30);
 		add(locationName1);
 
 		locationName2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		locationName2.setBounds(480, 208, 180, 30);
+		locationName2.setBounds(580, 208, 150, 30);
 		add(locationName2);
 
 		locationName3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		locationName3.setBounds(480, 251, 180, 30);
+		locationName3.setBounds(580, 251, 150, 30);
 		add(locationName3);
 
 		locationName4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		locationName4.setBounds(480, 294, 180, 30);
+		locationName4.setBounds(580, 294, 150, 30);
 		add(locationName4);
 
 		locationName5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		locationName5.setBounds(480, 337, 180, 30);
+		locationName5.setBounds(580, 337, 150, 30);
 		add(locationName5);
 
 		// ========================= Date chooser ==========================
 		dateChooser_1.setBorder(new EmptyBorder(1, 1, 1, 1));
 		dateChooser_1.setMinSelectableDate(getlastestDate);
-		dateChooser_1.setBounds(708, 165, 180, 30);
+		dateChooser_1.setBounds(758, 165, 130, 30);
 		add(dateChooser_1);
 
 		dateChooser_2.setBorder(new EmptyBorder(1, 1, 1, 1));
 		dateChooser_2.setMinSelectableDate(getlastestDate);
-		dateChooser_2.setBounds(708, 208, 180, 30);
+		dateChooser_2.setBounds(758, 208, 130, 30);
 		add(dateChooser_2);
 
 		dateChooser_3.setBorder(new EmptyBorder(1, 1, 1, 1));
 		dateChooser_3.setMinSelectableDate(getlastestDate);
-		dateChooser_3.setBounds(708, 251, 180, 30);
+		dateChooser_3.setBounds(758, 251, 130, 30);
 		add(dateChooser_3);
 
 		dateChooser_4.setBorder(new EmptyBorder(1, 1, 1, 1));
 		dateChooser_4.setMinSelectableDate(getlastestDate);
-		dateChooser_4.setBounds(708, 294, 180, 30);
+		dateChooser_4.setBounds(758, 294, 130, 30);
 		add(dateChooser_4);
 
 		dateChooser_5.setBorder(new EmptyBorder(1, 1, 1, 1));
 		dateChooser_5.setMinSelectableDate(getlastestDate);
-		dateChooser_5.setBounds(708, 337, 180, 30);
+		dateChooser_5.setBounds(758, 337, 130, 30);
 		add(dateChooser_5);
+
+		// ========================== Continent ============================
+		continent1 = new JComboBox<String>();
+		continent1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		continent1.setBounds(10, 165, 150, 30);
+		add(continent1);
+
+		continent2 = new JComboBox<String>();
+		continent2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		continent2.setBounds(10, 208, 150, 30);
+		add(continent2);
+
+		continent3 = new JComboBox<String>();
+		continent3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		continent3.setBounds(10, 251, 150, 30);
+		add(continent3);
+
+		continent4 = new JComboBox<String>();
+		continent4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		continent4.setBounds(10, 294, 150, 30);
+		add(continent4);
+
+		continent5 = new JComboBox<String>();
+		continent5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		continent5.setBounds(10, 337, 150, 30);
+		add(continent5);
+
+		JLabel lblContinents = new JLabel("Continent:");
+		lblContinents.setForeground(Color.BLACK);
+		lblContinents.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		lblContinents.setBounds(10, 122, 150, 30);
+		add(lblContinents);
 
 		// ================= Label ================ //
 		JLabel lblType = new JLabel("Location Type:");
 		lblType.setForeground(Color.BLACK);
-		lblType.setBounds(243, 122, 180, 30);
+		lblType.setBounds(390, 122, 150, 30);
 		add(lblType);
-		lblType.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblType.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 
 		JLabel lblLocationName = new JLabel("Location Name:");
 		lblLocationName.setForeground(Color.BLACK);
-		lblLocationName.setBounds(480, 122, 180, 30);
+		lblLocationName.setBounds(580, 122, 150, 30);
 		add(lblLocationName);
-		lblLocationName.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblLocationName.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 
 		JLabel lblCountry = new JLabel("Country:");
 		lblCountry.setForeground(Color.BLACK);
-		lblCountry.setBounds(10, 122, 180, 30);
+		lblCountry.setBounds(200, 122, 150, 30);
 		add(lblCountry);
-		lblCountry.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblCountry.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 
 		JLabel lblDate = new JLabel("Date:");
 		lblDate.setForeground(Color.BLACK);
-		lblDate.setBounds(708, 122, 180, 30);
+		lblDate.setBounds(758, 122, 130, 30);
 		add(lblDate);
-		lblDate.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblDate.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 
 		JLabel citieslbl = new JLabel("Cities: ");
 		citieslbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -170,7 +203,8 @@ public class PlanTrip extends JPanel {
 		add(citieslbl);
 
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		JComboBox<String> citiesCount = new JComboBox(new String[] {"1", "2", "3", "4", "5" });
+		JComboBox<String> citiesCount = new JComboBox(new String[] { "1", "2", "3", "4", "5" });
+		citiesCount.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		citiesCount.setBounds(100, 77, 50, 30);
 		add(citiesCount);
 		citiesCount.addItemListener(new ItemListener() {
@@ -179,7 +213,7 @@ public class PlanTrip extends JPanel {
 				checkLocationComponent();
 			}
 		});
-		
+
 		// ================= Number of People ================ //
 		JSpinner adultSpinner = new JSpinner();
 		adultSpinner.setBounds(610, 78, 50, 30);
@@ -222,7 +256,7 @@ public class PlanTrip extends JPanel {
 		backBtn.setBackground(Color.GRAY);
 		backBtn.setActionCommand("");
 		backBtn.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		
+
 		checkLocationComponent();
 	}
 

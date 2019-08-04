@@ -87,16 +87,15 @@ public class AddLocation extends JPanel {
 		add(txtState);
 		txtState.setColumns(10);
 
-		cbCountry = new JComboBox();
+		cbCountry = new JComboBox<String>();
 		loadC(null);
-//		cbCountry.setModel(model);
 		cbCountry.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cbCountry.setBounds(300, 208, 300, 30);
 		add(cbCountry);
 
-		String[] state = { "<Choose Type>", "Small City", "Medium City", "Large City", "Natural formation",
-				"Designated Park/Reserve", "Man-made landmark" };
-		cbType = new JComboBox(state);
+		String[] state = { "<Choose Type>", "Small City", "Medium City", "Large City",
+				"Natural formation", "Designated Park/Reserve", "Man-made landmark" };
+		cbType = new JComboBox<String>(state);
 		cbType.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cbType.setBounds(300, 324, 300, 30);
 		add(cbType);

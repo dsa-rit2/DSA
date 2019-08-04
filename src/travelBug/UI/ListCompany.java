@@ -11,45 +11,37 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableModel;
 
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Vector;
-import java.awt.event.ActionEvent;
 
 public class ListCompany extends JPanel {
 	private static final long serialVersionUID = 1L; // Serializable purpose
 	private LinkArray<Company> cArray = new LinkArray<Company>();
 	private ReadWriteFile<Company> rFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 	private JTextField textField;
-	private JList displayList;
-	DefaultListModel listModel;
+	private JList<String> displayList;
+	DefaultListModel<String> listModel;
 	private final UIControl mainFrame;
-	private int companyFoundindex;
 
 	public ListCompany(UIControl parent) {
 		super();
 		this.mainFrame = parent;
-		// =================================== Jpanel setting
-		// ===========================//
+		// ================= JPanel setting ==================
 		cArray = rFile.readLinkArray();
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 
-		// =================================== Content component
-		// =========================//
+		// ================ Content component ================
 		JLabel lblConpanyList = new JLabel("Company List");
 		lblConpanyList.setHorizontalAlignment(SwingConstants.CENTER);
 		lblConpanyList.setFont(new Font("Segoe UI", Font.PLAIN, 30));
 		lblConpanyList.setBounds(60, 13, 308, 50);
 		add(lblConpanyList);
 
-		
-		listModel = new DefaultListModel();
-		displayList = new JList(listModel);
+		listModel = new DefaultListModel<String>();
+		displayList = new JList<String>(listModel);
 		displayList.setBounds(51, 71, 380, 278);
 		
 		updateList(null);
@@ -102,7 +94,7 @@ public class ListCompany extends JPanel {
 		add(textField);
 		textField.setColumns(10);
 
-		// ============================= Button =====================================//
+		// ==================== Button =====================
 		JButton btnAdd = new JButton("Add Company");
 		btnAdd.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnAdd.setBounds(490, 90, 164, 55);
@@ -175,14 +167,14 @@ public class ListCompany extends JPanel {
 	// ==================== Function ==================== //
 	public void updateList(String searchItem) {
 		if (searchItem == null) {
-			listModel = (DefaultListModel) displayList.getModel();
+			listModel = (DefaultListModel<String>) displayList.getModel();
 			listModel.clear();
 			for (int i = 0; i < cArray.size(); i++) {
 				listModel.addElement(cArray.getIndexElement(i).getCompanyName());
 			}
 		} else {
 			searchItem = searchItem.toUpperCase();
-			listModel = (DefaultListModel) displayList.getModel();
+			listModel = (DefaultListModel<String>) displayList.getModel();
 			listModel.clear();
 			for (int i = 0; i < cArray.size(); i++) {
 				if (cArray.getIndexElement(i).getCompanyName().toUpperCase().matches(searchItem + ".*")) {

@@ -1,55 +1,33 @@
 package travelBug.UI;
 
 //=========================
-//Import Package
+//	Import Package
 //=========================
-import travelBug.UI.*;
 import travelBug.library.*;
 import travelBug.obj.*;
 //=========================
 
 import java.awt.*;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.JTextArea;
-import javax.swing.JCheckBox;
-import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import java.awt.event.ActionListener;
-import java.io.EOFException;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.awt.event.ActionEvent;
-import javax.swing.JTable;
-import javax.management.loading.PrivateClassLoader;
-import javax.swing.JButton;
 
 public class AddTravelLegAccount extends JPanel {
 	private static final long serialVersionUID = 5629499624569369278L;
-	private JPanel contentPane;
-	private JTextField tfUsername;
 	private JTextField txtPassword;
-	private ReadWriteFile<TravelLegAccount> readWriteFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt",
-			TravelLegAccount.class);
 	private LinkArray<TravelLegAccount> tArray = new LinkArray<TravelLegAccount>();
 	private LinkArray<Company> cArray = new LinkArray<Company>();
 	private ReadWriteFile<TravelLegAccount> tFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt",
 			TravelLegAccount.class);
 	private ReadWriteFile<Company> cFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 	private JTextField txtUserNameNum;
-	private JTextField textField;
 	private final UIControl mainFrame;
 	private String anything = null;
 	private String shortFormString = null;
 
 	public AddTravelLegAccount(UIControl parent, String anything) {
 
-		// ========================================Jpanel Setting
-		// ==================================================//
+		// ====================== Jpanel Setting ========================
 		super();
 		this.anything = anything;
 		this.mainFrame = parent;
@@ -57,10 +35,8 @@ public class AddTravelLegAccount extends JPanel {
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 
-		// ======================================== Validate
-		// ===================================================//
+		// ======================== Validate ============================
 		// Read the file and find the company name
-
 		tArray = tFile.readLinkArray();
 		cArray = cFile.readLinkArray();
 		for (int i = 0; i < cArray.size(); i++) {
@@ -74,8 +50,7 @@ public class AddTravelLegAccount extends JPanel {
 
 	public void createGui() {
 		removeAll();
-		// ======================================== Content component
-		// ==============================================//
+		// ======================================== Content component ==============================================//
 
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -135,9 +110,7 @@ public class AddTravelLegAccount extends JPanel {
 		lblPasswordError.setBounds(312, 233, 416, 16);
 		add(lblPasswordError);
 
-		// ================================================ Button
-		// ====================================================//
-		contentPane = new JPanel();
+		// ================================================ Button ====================================================//
 		Button btnAdd = new Button("Add");
 		btnAdd.addActionListener(event -> {
 			String username = txtUserFront.getText() + "." + txtUserNameNum.getText();

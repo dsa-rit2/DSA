@@ -1,7 +1,7 @@
 package travelBug.UI;
 
 //=========================
-//		Import Package
+//	Import Package
 //=========================
 import travelBug.library.*;
 import travelBug.obj.*;
@@ -15,30 +15,28 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
 public class AddTravelLeg extends JPanel {
-
+	private static final long serialVersionUID = 1L; // Serializable purpose
 	private JTextField tfSourceL;
 	private JTextField tfDestinationL;
 	private JTextField tfFromTime;
 	private JTextField tfToTime;
 	private LinkArray<TravelLegInfo> rArray = new LinkArray<TravelLegInfo>();
 	private ReadWriteFile<TravelLegInfo> rFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
-	private final UIControl mainframe;		// Store main frame
+	private final UIControl mainframe; // Store main frame
 
-	
 	public AddTravelLeg(UIControl parent) {
 		super();
-		this.mainframe= parent;
-		// =========================== Jpanel setting ==========================//
+		this.mainframe = parent;
+		// =========================== Jpanel setting ==========================
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 
-		// ============================ Content component =========================//
+		// ========================= Content component =========================
 		JLabel lblSourceLocation = new JLabel("Source location       :");
 		lblSourceLocation.setBounds(21, 13, 126, 16);
 		add(lblSourceLocation);
@@ -57,14 +55,14 @@ public class AddTravelLeg extends JPanel {
 		add(tfDestinationL);
 		tfDestinationL.setColumns(10);
 
-		String[] selectionString = { "Select The transport type", "Airplane", "Rail/Train", "Bus", "Car", "Ferry",
-				"Boat" };
-		JComboBox cbTransport = new JComboBox(selectionString);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		JComboBox cbTransport = new JComboBox(
+				new String[] { "Select The transport type", "Airplane", "Rail/Train", "Bus", "Car", "Ferry", "Boat" });
 		cbTransport.setBounds(21, 71, 172, 22);
 		add(cbTransport);
 
 		Date fromToDayDate = new Date();
-		JDateChooser dcFromDate =   new JDateChooser();
+		JDateChooser dcFromDate = new JDateChooser();
 		dcFromDate.setMinSelectableDate(fromToDayDate);
 		dcFromDate.setBounds(104, 138, 116, 22);
 		JTextFieldDateEditor editor1 = (JTextFieldDateEditor) dcFromDate.getDateEditor();
@@ -211,7 +209,7 @@ public class AddTravelLeg extends JPanel {
 					lblToDateEror.setText("[Date should be filled!]");
 					count++;
 				} else {
-					lblToDateEror .setText("");
+					lblToDateEror.setText("");
 					dateString = new SimpleDateFormat("yyyy-MM-dd").format(dcToDate.getDate());
 					toDate = LocalDate.parse(dateString);
 				}

@@ -10,7 +10,6 @@ import travelBug.obj.*;
 import java.awt.*;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -25,20 +24,13 @@ import javax.swing.border.MatteBorder;
 public class TravelLegMaintenance extends JPanel {
 
 	private static final long serialVersionUID = 5629499624569369278L;
-	private JTextField tfUsername;
-	private JTextField txtPassword;
 	private LinkArray<TravelLegInfo> tArray = new LinkArray<TravelLegInfo>();
 	private ReadWriteFile<TravelLegInfo> tFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
-	private JTextField txtUserNameNum;
-	private JTextField textField;
 	private JTextField tfSearch;
-	private DocumentListener dListener;
 	private JLabel lblSearchJLabel;
-	private JList lsitJList;
-	private DefaultListModel model;
 	private DefaultTableModel defaultTableModel;
 	private JTable table;
-	private Vector vector;
+	private Vector<?> vector;
 	private final UIControl mainFrame;
 
 	public TravelLegMaintenance(UIControl parent) {
@@ -61,6 +53,8 @@ public class TravelLegMaintenance extends JPanel {
 		add(lblSearchJLabel);
 
 		defaultTableModel = new DefaultTableModel() {
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
@@ -76,7 +70,7 @@ public class TravelLegMaintenance extends JPanel {
 					defaultTableModel = (DefaultTableModel) table.getModel();
 
 					int SelectedRowIndex = table.getSelectedRow();
-					vector = (Vector) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
+					vector = (Vector<?>) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new TravelLegModify(vector, vector.elementAt(0).toString(), mainFrame)));
 					}
@@ -97,10 +91,6 @@ public class TravelLegMaintenance extends JPanel {
 		defaultTableModel.addColumn("Transport");
 
 		updateLabel(null);
-
-		String[] strings;
-		// Create the first row
-		// Insert a row at position p
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(192, 10, 578, 416);

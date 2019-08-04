@@ -1,19 +1,19 @@
 package travelBug.UI;
 
 import java.awt.*;
-import java.nio.channels.NonReadableChannelException;
-import java.util.Vector;
-
 import javax.swing.*;
 
 import travelBug.library.library;
+import travelBug.obj.User;
 
 public class UIControl extends JFrame {
 	private static final long serialVersionUID = 1L; // Serializable purpose
-//	protected static String titleName = "";
-
-	public UIControl(String titleName) {
-		super(titleName);
+	public User authUser;
+	
+	public UIControl(User user) {
+		super("TravelBug");
+		this.authUser = user;
+		setVisible(true);
 		createGUI();
 	}
 
@@ -32,11 +32,12 @@ public class UIControl extends JFrame {
 //		changePanel(new PlanTrip(this));
 //		changePanel(new TravelLegMaintenance(this));
 //		changePanel(new AddCompany(this));
-		changePanel(new ListCompany(this));
-
-
+//		changePanel(new ListCompany(this));
 //		changePanel(new AddCompany(this));
 //		changePanel(new Authentication(this));
+//		changePanel(new ListLocation(this));
+//		changePanel(new AddTravelLeg(this));
+		changePanel(new MainMenu(this));
 	}
 
 	public void changePanel(JPanel panelName) {
@@ -56,6 +57,8 @@ public class UIControl extends JFrame {
 
 		// ===================== Background image ======================
 		JLabel backgroundImg = new JLabel();
+		backgroundImg.setVerticalAlignment(SwingConstants.TOP);
+		backgroundImg.setHorizontalAlignment(SwingConstants.CENTER);
 		backgroundImg.setBounds(0, 0, 894, 620);
 		backgroundImg.setIcon(new ImageIcon(library.currentDirectoryPath + "\\images\\form-background.jpg"));
 		getContentPane().add(backgroundImg);

@@ -66,9 +66,8 @@ public class ListLocation extends JPanel {
 					if (vector != null) {
 //	    			Redirect the thing to modify location
 						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,
-								vector.elementAt(0).toString(), vector.elementAt(2).toString())));
+								vector.elementAt(0).toString())));
 					}
-
 				}
 			}
 		});
@@ -152,7 +151,7 @@ public class ListLocation extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				tableModel = (DefaultTableModel) table.getModel();
 				int SelectedRowIndex = table.getSelectedRow();
-				if (SelectedRowIndex > 0) {
+				if (SelectedRowIndex >= 0) {
 					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
@@ -192,7 +191,7 @@ public class ListLocation extends JPanel {
 					if (vector != null) {
 //	    			Redirect the thing to modify location
 						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,
-								vector.elementAt(0).toString(), vector.elementAt(2).toString())));
+								vector.elementAt(0).toString())));
 					}
 				} else {
 					library.dialogMessage("Please choose one location to modify");

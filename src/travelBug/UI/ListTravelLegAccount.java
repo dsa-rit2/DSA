@@ -31,6 +31,7 @@ import travelBug.obj.Company;
 import travelBug.obj.TravelLegAccount;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -52,6 +53,7 @@ public class ListTravelLegAccount extends JPanel {
 	private int indexCompany = 0;
 	private JButton btnNewButton_2;
 	private JButton btnNewButton_3;
+	private Vector vector;
 
 	/**
 	 * Launch the application.
@@ -94,7 +96,7 @@ public class ListTravelLegAccount extends JPanel {
 					tableModel = (DefaultTableModel) table.getModel();
 
 					int SelectedRowIndex = table.getSelectedRow();
-					Vector vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    				//redirect to the modify travellegaccount
 					}
@@ -175,16 +177,46 @@ public class ListTravelLegAccount extends JPanel {
 		add(btnNewButton_1);
 		
 		btnNewButton_2 = new JButton("Modify");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnNewButton_2.addActionListener(event->{
+			tableModel = (DefaultTableModel) table.getModel();
+			int SelectedRowIndex = table.getSelectedRow();
+			if (SelectedRowIndex >= 0) {
+				vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+				if (vector != null) {
+					library.dialogMessage("The page will redirect to modify travelleg account");
+					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new EditTravelLegAccount(mainFrame,companyName,vector.elementAt(0).toString())));
+				}
+			} else {
+				library.dialogMessage("Please choose one location to modify");
 			}
 		});
 		btnNewButton_2.setBounds(284, 403, 123, 34);
 		add(btnNewButton_2);
 		
 		btnNewButton_3 = new JButton("Delete");
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnNewButton_3.addActionListener(event->{
+			tableModel = (DefaultTableModel) table.getModel();
+			int SelectedRowIndex = table.getSelectedRow();
+			if (SelectedRowIndex >= 0) {
+				vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+				if (vector != null) {
+//    			Redirect the thing to modify location
+					int choice = JOptionPane.showConfirmDialog(null, "Do you want to delete it?", "Confirm",
+							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+					if (choice == JOptionPane.YES_NO_OPTION) {
+						for (int i = 0; i < lArray.size(); i++) {
+							if (lArray.getIndexElement(i).getUsername().equalsIgnoreCase(vector.elementAt(0).toString())
+									&& lArray.getIndexElement(i).getPassword()
+											.equalsIgnoreCase(vector.elementAt(1).toString())) {
+								lArray.deleteIndexItem(i);
+							}
+						}
+						lFile.writeLinkArray(lArray);
+						load(null);
+					}
+				}
+			} else {
+				library.dialogMessage("Please choose one location to delete");
 			}
 		});
 		btnNewButton_3.setBounds(458, 403, 123, 34);
@@ -211,7 +243,7 @@ public class ListTravelLegAccount extends JPanel {
 			for (int i = 0; i < lArray.size(); i++) {
 				if (lArray.getIndexElement(i).getUsername()
 						.contains(cArray.getIndexElement(indexCompany).getShortForm() + ".") && lArray.getIndexElement(i).getUsername().toUpperCase()
-						.matches(anythinString + ".*") ) {
+						.contains("." + anythinString) ) {
 					String[] dataStrings = { lArray.getIndexElement(i).getUsername(),
 							lArray.getIndexElement(i).getPassword() };
 					tableModel.addRow(dataStrings);

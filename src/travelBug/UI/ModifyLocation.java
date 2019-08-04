@@ -27,7 +27,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 public class ModifyLocation extends JPanel {
-	private JTextField txtLocationName,txtContinent,txtState;
+	private JTextField txtLocationName,txtState;
 	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblCountry, lblState, lblType;
 	private Label lblErrorLocationName,lblErrorContinent, lblErrorType, lblErrorState, lblErrorCountry;
 	private JComboBox cbCountry, cbType;
@@ -35,13 +35,14 @@ public class ModifyLocation extends JPanel {
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt",Location.class); 
 	private JPanel contentPane;
 	private int companyFound;
+	private JComboBox cbContinent;
 	private final UIControl mainFrame;
 	
 	/**
 	 * Create the frame.
 	 */
 	@SuppressWarnings("unchecked")
-	public ModifyLocation(UIControl parent,String inputName,String inputState) {
+	public ModifyLocation(UIControl parent,String inputName) {
 		
 		//==================== JPanel setting =====================
 		super();
@@ -56,7 +57,7 @@ public class ModifyLocation extends JPanel {
 		boolean foundLocation = false;
 		lArray = lFile.readLinkArray();
 		for(int i = 0;i<lArray.size();i++) {
-			if(inputName.equalsIgnoreCase(lArray.getIndexElement(i).getName())&& inputState.equalsIgnoreCase(lArray.getIndexElement(i).getState())) {
+			if(inputName.equalsIgnoreCase(lArray.getIndexElement(i).getName())) {
 				companyFound = i;
 				foundLocation = true;
 			}
@@ -73,15 +74,6 @@ public class ModifyLocation extends JPanel {
 		});
 		add(txtLocationName);
 		txtLocationName.setColumns(10);
-
-		txtContinent = new JTextField();
-		txtContinent.setBounds(367, 171, 265, 25);
-		txtContinent.setText(lArray.getIndexElement(companyFound).getContinent());
-		txtContinent.addActionListener(event ->{
-				submit();
-		});
-		add(txtContinent);
-		txtContinent.setColumns(10);
 
 		lblNewLabel = new JLabel("Modify Location");
 		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
@@ -114,7 +106,6 @@ public class ModifyLocation extends JPanel {
 		add(lblType);
 
 		txtState = new JTextField();
-		txtState.setEditable(false);
 		txtState.setBounds(367, 272, 265, 29);
 		txtState.setText(lArray.getIndexElement(companyFound).getState());
 		txtState.addActionListener(event->{
@@ -123,38 +114,6 @@ public class ModifyLocation extends JPanel {
 		add(txtState);
 		txtState.setColumns(10);
 
-		cbCountry = new JComboBox();
-		
-		cbCountry.setModel(new DefaultComboBoxModel(new String[] { "<Choose country>", "Afghanistan", "Albania",
-				"Algeria", "Andorra", "Angola", "Antigua & Deps", "Argentina", "Armenia", "Australia", "Austria",
-				"Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin",
-				"Bhutan", "Bolivia", "Bosnia Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina",
-				"Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Rep", "Chad", "Chile",
-				"China", "Colombia", "Comoros", "Congo", "Congo {Democratic Rep}", "Costa Rica", "Croatia", "Cuba",
-				"Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor",
-				"Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji",
-				"Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala",
-				"Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia",
-				"Iran", "Iraq", "Ireland {Republic}", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan",
-				"Kazakhstan", "Kenya", "Kiribati", "Korea North", "Korea South", "Kosovo", "Kuwait", "Kyrgyzstan",
-				"Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
-				"Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands",
-				"Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro",
-				"Morocco", "Mozambique", "Myanmar, {Burma}", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand",
-				"Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea",
-				"Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russian Federation",
-				"Rwanda", "St Kitts & Nevis", "St Lucia", "Saint Vincent & the Grenadines", "Samoa", "San Marino",
-				"Sao Tome & Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore",
-				"Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain",
-				"Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
-				"Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan",
-				"Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay",
-				"Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe" }));
-		cbCountry.setBounds(367, 220, 163, 26);
-		cbCountry.setSelectedItem(lArray.getIndexElement(companyFound).getCountry());
-		add(cbCountry);
-		
-		
 		cbType = new JComboBox();
 		cbType.setModel(new DefaultComboBoxModel(new String[] {"<Choose Type>", "Small City", "Medium City",
 				"Large City", "Natural formation", "Designated Park/Reserve", "Man-made landmark" }));
@@ -162,6 +121,23 @@ public class ModifyLocation extends JPanel {
 		cbType.setSelectedItem(lArray.getIndexElement(companyFound).getType());
 		add(cbType);
 		
+		cbContinent = new JComboBox();
+		cbContinent.setBounds(367, 171, 265, 22);
+		cbContinent.setModel(new DefaultComboBoxModel(new String[] { "<Choose Continent>", "Asia", "Africa",
+				"South America", "North America", "Europe", "Australia" }));
+		cbContinent.setSelectedItem(lArray.getIndexElement(companyFound).getContinent());
+		cbContinent.addActionListener(event -> {
+			if(cbContinent.getSelectedIndex() !=0)
+				loadC(cbContinent.getSelectedItem().toString(),null);
+			else
+				loadC(null,null);
+		});
+		add(cbContinent);
+		
+		cbCountry = new JComboBox();
+		cbCountry.setBounds(367, 220, 163, 26);
+		add(cbCountry);
+		loadC(lArray.getIndexElement(companyFound).getContinent(),lArray.getIndexElement(companyFound).getCountry());
 		//=============================================== Error Message =====================================================//
 
 		lblErrorLocationName = new Label("");
@@ -190,7 +166,7 @@ public class ModifyLocation extends JPanel {
 
 		lblErrorType = new Label("");
 		lblErrorType.setForeground(Color.RED);
-		lblErrorType.setBackground(Color.WHITE);
+		lblErrorType.setBackground(Color.WHITE); 
 		lblErrorType.setBounds(367, 352, 265, 23);
 		add(lblErrorType);
 		
@@ -210,6 +186,8 @@ public class ModifyLocation extends JPanel {
 		});
 		btnCancel.setBounds(489, 393, 97, 25);
 		add(btnCancel);
+		
+		
 		if(foundLocation == false) {
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
 		}
@@ -218,7 +196,7 @@ public class ModifyLocation extends JPanel {
 		lArray = lFile.readLinkArray();
 		
 		String locationName = txtLocationName.getText();
-		String continent = txtContinent.getText();
+		String continent = cbContinent.getSelectedItem().toString();
 		String state = txtState.getText();
 		String country = cbCountry.getSelectedItem().toString();
 		String type = cbType.getSelectedItem().toString();
@@ -260,6 +238,27 @@ public class ModifyLocation extends JPanel {
 			library.dialogMessage("The location is updated\nThe page will redirect to list location");
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
 			
+		}
+	}
+	public void loadC(String continent,String countrySelected) {
+		cbCountry.removeAllItems();
+		if (continent == null) {
+			String[] checkStrings = library.getCountryArray("AllCountry");
+			if (checkStrings != null) {
+				for (String string : checkStrings) {
+					cbCountry.addItem(string);
+				}
+			}
+		} else {
+
+			String[] checkStrings = library.getCountryArray(continent);
+			if (checkStrings != null)
+				for (String string : checkStrings) {
+					cbCountry.addItem(string);
+				}
+		}
+		if(countrySelected!=null) {
+			cbCountry.setSelectedItem(countrySelected);
 		}
 	}
 }

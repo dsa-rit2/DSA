@@ -11,7 +11,12 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 
 public class ListCompany extends JPanel {
@@ -42,6 +47,7 @@ public class ListCompany extends JPanel {
 		lblConpanyList.setBounds(60, 13, 308, 50);
 		add(lblConpanyList);
 
+		
 		listModel = new DefaultListModel();
 		displayList = new JList(listModel);
 		displayList.setBounds(51, 71, 380, 278);
@@ -50,7 +56,19 @@ public class ListCompany extends JPanel {
 		add(displayList);
 		displayList.setFont(new Font("Calibri", Font.BOLD, 15));
 		displayList.setBorder(new LineBorder(new Color(0, 0, 0)));
-
+		displayList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if (arg0.getClickCount() == 2) {
+					String pString = displayList.getSelectedValue().toString();
+					if (pString != null) {
+//	    			Redirect the thing to modify location
+						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new EditCompany(pString,
+								mainFrame)));
+					}
+				}
+			}
+		});
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(51, 71, 380, 278);
 		add(scrollPane);

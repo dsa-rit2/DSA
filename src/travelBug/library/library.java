@@ -207,7 +207,7 @@ public class library {
 			return null;
 		}
 	}
-<<<<<<< HEAD
+
 	public static boolean isValidPrice(String inPrice) {
 		Pattern p1 = Pattern.compile("\\d+");
 		Pattern p2 = Pattern.compile("[0-9]+([,.][0-9]{1,2})?");
@@ -241,9 +241,6 @@ public class library {
 		}
 	}
 	
-=======
-
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 	public static String getTodayDate() {
 		LocalDate today = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");

@@ -114,16 +114,17 @@ public class Authentication extends JFrame {
 		// ===================== Login Button ========================//
 		Button loginBtn = new Button("Login");
 		loginBtn.setBounds(75, 420, 210, 40);
-		panel.add(loginBtn);
 		loginBtn.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		loginBtn.setForeground(Color.WHITE);
 		loginBtn.setBackground(new Color(139, 69, 19));
+		panel.add(loginBtn);
 
-		JLabel auth_wallpaper = new JLabel("");
-		auth_wallpaper.setBounds(0, 0, 896, 565);
-		getContentPane().add(auth_wallpaper);
+		JLabel auth_wallpaper = new JLabel();
+		auth_wallpaper.setVerticalAlignment(SwingConstants.TOP);
+		auth_wallpaper.setBounds(0, 0, 896, 600);
 		auth_wallpaper.setIcon(new ImageIcon(library.currentDirectoryPath + "\\images\\auth_wallpaper.jpg"));
 		auth_wallpaper.setHorizontalAlignment(SwingConstants.CENTER);
+		getContentPane().add(auth_wallpaper);
 
 		// ============== When user click login button ===============//
 		loginBtn.addActionListener(e -> {

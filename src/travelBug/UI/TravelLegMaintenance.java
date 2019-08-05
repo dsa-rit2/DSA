@@ -75,19 +75,12 @@ public class TravelLegMaintenance extends JPanel {
 					defaultTableModel = (DefaultTableModel) table.getModel();
 
 					int SelectedRowIndex = table.getSelectedRow();
-<<<<<<< HEAD
 					vector = (Vector) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 						String iDString = vector.elementAt(0).toString();
 
 						SwingUtilities.invokeLater(() -> mainFrame
 								.changePanel(new TravelLegModify(vector, vector.elementAt(0).toString(), mainFrame)));
-
-=======
-					vector = (Vector<?>) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
-					if (vector != null) {
-						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new TravelLegModify(vector, vector.elementAt(0).toString(), mainFrame)));
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 					}
 
 				}

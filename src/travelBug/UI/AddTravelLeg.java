@@ -4,6 +4,7 @@ package travelBug.UI;
 //	Import Package
 //=========================
 import travelBug.library.*;
+
 import travelBug.obj.*;
 //=========================
 
@@ -16,19 +17,13 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
-
 import javax.swing.*;
-<<<<<<< HEAD
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.xml.bind.ParseConversionEvent;
-
 import org.junit.Ignore;
-
-=======
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.event.KeyAdapter;
@@ -44,27 +39,18 @@ public class AddTravelLeg extends JPanel {
 	private JTextField tfPrice;
 	private LinkArray<TravelLegInfo> rArray = new LinkArray<TravelLegInfo>();
 	private ReadWriteFile<TravelLegInfo> rFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
-<<<<<<< HEAD
 	private LinkArray<Location> cArray = new LinkArray<Location>();
 	private ReadWriteFile<Location> cFile = new ReadWriteFile<Location>("Location.txt", Location.class);
 	private final UIControl mainframe; // Store main frame
 	private Set<String> s = new TreeSet<String>();
-=======
-	private final UIControl mainframe; // Store main frame
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 
 	public AddTravelLeg(UIControl parent) {
 		super();
 		this.mainframe = parent;
-<<<<<<< HEAD
-		// =========================== Jpanel setting ==========================//
-=======
 		// =========================== Jpanel setting ==========================
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
-<<<<<<< HEAD
 		// =============================Read from textfile==========================//
 		cArray = cFile.readLinkArray();
 		s = new TreeSet<String>();
@@ -75,12 +61,6 @@ public class AddTravelLeg extends JPanel {
 		JLabel lblSourceLocation = new JLabel("Source location  :");
 		lblSourceLocation.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
 		lblSourceLocation.setBounds(37, 44, 207, 16);
-=======
-
-		// ========================= Content component =========================
-		JLabel lblSourceLocation = new JLabel("Source location       :");
-		lblSourceLocation.setBounds(21, 13, 126, 16);
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 		add(lblSourceLocation);
 				
 		tfSourceL = new JTextField();
@@ -160,18 +140,11 @@ public class AddTravelLeg extends JPanel {
 		add(tfDestinationL);
 		tfDestinationL.setColumns(10);
 
-<<<<<<< HEAD
 		String[] selectionString = { "Select The transport type", "Airplane", "Rail/Train", "Bus", "Car", "Ferry",
 				"Boat" };
 		JComboBox cbTransport = new JComboBox(selectionString);
 		cbTransport.setFont(new Font("Source Code Pro Black", Font.BOLD, 15));
 		cbTransport.setBounds(37, 85, 298, 22);
-=======
-		@SuppressWarnings({ "unchecked", "rawtypes" })
-		JComboBox cbTransport = new JComboBox(
-				new String[] { "Select The transport type", "Airplane", "Rail/Train", "Bus", "Car", "Ferry", "Boat" });
-		cbTransport.setBounds(21, 71, 172, 22);
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 		add(cbTransport);
 
 		Date fromToDayDate = new Date();

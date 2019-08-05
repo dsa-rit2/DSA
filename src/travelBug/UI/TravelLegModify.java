@@ -4,11 +4,9 @@ package travelBug.UI;
 //		Import Package
 //=========================
 import travelBug.library.*;
-<<<<<<< HEAD
+
 import travelBug.obj.Location;
-=======
 import travelBug.obj.*;
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 //=========================
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,16 +18,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
-<<<<<<< HEAD
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-=======
 import java.util.Vector;
 import javax.swing.*;
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
@@ -45,7 +40,6 @@ public class TravelLegModify extends JPanel {
 	private JTextField tfPrice;
 	private LinkArray<TravelLegInfo> rArray = new LinkArray<TravelLegInfo>();
 	private ReadWriteFile<TravelLegInfo> rFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
-<<<<<<< HEAD
 	private LinkArray<Location> cArray = new LinkArray<Location>();
 	private ReadWriteFile<Location> cFile = new ReadWriteFile<Location>("Location.txt", Location.class);
 	private Set<String> s = new TreeSet<String>();
@@ -54,11 +48,6 @@ public class TravelLegModify extends JPanel {
 	private String ID;
 	
 		
-=======
-
-	private final UIControl mainframe; // Store main frame
-
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 	public TravelLegModify(Vector vector, String ID, UIControl parent) {
 		super();
 		this.mainframe = parent;

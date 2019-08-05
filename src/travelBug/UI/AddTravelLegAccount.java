@@ -22,12 +22,14 @@ public class AddTravelLegAccount extends JPanel {
 	private ReadWriteFile<Company> cFile = new ReadWriteFile<Company>("Company.txt", Company.class);
 	private JTextField txtUserNameNum;
 	private final UIControl mainFrame;
+	private String anything = null;
 	private String shortFormString = null;
 
 	public AddTravelLegAccount(UIControl parent, String anything) {
 
 		// ====================== Jpanel Setting ========================
 		super();
+		this.anything = anything;
 		this.mainFrame = parent;
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
@@ -43,8 +45,13 @@ public class AddTravelLegAccount extends JPanel {
 			}
 		}
 		tArray = tFile.readLinkArray();
+		createGui();
+	}
 
-		// =================== Content component ========================
+	public void createGui() {
+		removeAll();
+		// ======================================== Content component ==============================================//
+
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		lblUsername.setBounds(163, 166, 107, 19);
@@ -52,7 +59,7 @@ public class AddTravelLegAccount extends JPanel {
 
 		JTextField txtUserFront = new JTextField();
 		txtUserFront.setText(shortFormString);
-//		txtUserFront.setText(anything);
+//				txtUserFront.setText(anything);
 		txtUserFront.setEditable(false);
 		txtUserFront.setBounds(313, 163, 79, 22);
 		add(txtUserFront);
@@ -88,7 +95,8 @@ public class AddTravelLegAccount extends JPanel {
 		lblAddTravellegAccount.setBounds(156, 38, 502, 51);
 		add(lblAddTravellegAccount);
 
-		// ============================================ Error Message ===============================================//
+		// ============================================ Error Message
+		// ===============================================//
 
 		Label lblUsernameError = new Label("");
 		lblUsernameError.setForeground(new Color(255, 0, 0));
@@ -102,7 +110,7 @@ public class AddTravelLegAccount extends JPanel {
 		lblPasswordError.setBounds(312, 233, 416, 16);
 		add(lblPasswordError);
 
-		new JPanel();
+		// ================================================ Button ====================================================//
 		Button btnAdd = new Button("Add");
 		btnAdd.addActionListener(event -> {
 			String username = txtUserFront.getText() + "." + txtUserNameNum.getText();
@@ -144,21 +152,13 @@ public class AddTravelLegAccount extends JPanel {
 						"Add travelleg account successful\n Do you want to add more", "Confirm",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
-					try {
-						SwingUtilities.invokeLater(
-								() -> mainFrame.changePanel(new AddTravelLegAccount(mainFrame, shortFormString)));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					createGui();
 				} else {
-					try {
-						SwingUtilities.invokeLater(
-								() -> mainFrame.changePanel(new ListTravelLegAccount(mainFrame, anything)));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					SwingUtilities
+							.invokeLater(() -> mainFrame.changePanel(new ListTravelLegAccount(mainFrame, anything)));
+
 				}
-//					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
+//							SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 			}
 
 		});
@@ -168,9 +168,9 @@ public class AddTravelLegAccount extends JPanel {
 		add(btnAdd);
 
 		Button btnBack = new Button("Back");
-		btnBack.addActionListener(event->{
-			SwingUtilities.invokeLater(
-					() -> mainFrame.changePanel(new ListTravelLegAccount(mainFrame, anything)));
+		btnBack.addActionListener(event -> {
+			library.dialogMessage("The page will redirect to the company");
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListTravelLegAccount(mainFrame, anything)));
 		});
 		btnBack.setForeground(new Color(0, 0, 0));
 		btnBack.setBounds(490, 319, 79, 24);
@@ -192,7 +192,7 @@ public class AddTravelLegAccount extends JPanel {
 				do {
 					tempPass = library.generatePassword();
 					String t = library.validPassword(tempPass);
-					if( t == null) {
+					if (t == null) {
 						repeat = false;
 					}
 				} while (repeat);
@@ -201,5 +201,7 @@ public class AddTravelLegAccount extends JPanel {
 		});
 		btnNewButton.setBounds(618, 209, 97, 25);
 		add(btnNewButton);
+		revalidate();
+		repaint();
 	}
 }

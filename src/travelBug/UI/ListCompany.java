@@ -12,6 +12,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class ListCompany extends JPanel {
 	private static final long serialVersionUID = 1L; // Serializable purpose
 	private LinkArray<Company> cArray = new LinkArray<Company>();
@@ -45,7 +48,19 @@ public class ListCompany extends JPanel {
 		add(displayList);
 		displayList.setFont(new Font("Calibri", Font.BOLD, 15));
 		displayList.setBorder(new LineBorder(new Color(0, 0, 0)));
-
+		displayList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if (arg0.getClickCount() == 2) {
+					String pString = displayList.getSelectedValue().toString();
+					if (pString != null) {
+//	    			Redirect the thing to modify location
+						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new EditCompany(pString,
+								mainFrame)));
+					}
+				}
+			}
+		});
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(51, 71, 380, 278);
 		add(scrollPane);

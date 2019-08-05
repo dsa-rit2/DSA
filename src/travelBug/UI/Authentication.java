@@ -11,19 +11,21 @@ import java.awt.*;
 
 public class Authentication extends JFrame {
 	private static final long serialVersionUID = 7701272199204927084L; // Serializable purpose
-	
+
 	TextField usernameField;
 	JPasswordField passwordField;
 	Label usernameErrorLabel, passwordErrorLabel;
 
-	private LinkArray<TravelLegAccount> tArray = new LinkArray<TravelLegAccount>();
 	private ReadWriteFile<TravelLegAccount> tFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt",
 			TravelLegAccount.class);
+	private LinkArray<TravelLegAccount> tArray = tFile.readLinkArray();
 
-	private LinkArray<Customer> cArray = new LinkArray<Customer>();
 	private ReadWriteFile<Customer> cFile = new ReadWriteFile<Customer>("Customer.txt", Customer.class);
+	private LinkArray<Customer> cArray = cFile.readLinkArray();
 
-	private LinkArray<Admin> aArray = new LinkArray<Admin>();
+	private ReadWriteFile<Admin> aFile = new ReadWriteFile<Admin>("Admin.txt", Admin.class);
+	private LinkArray<Admin> aArray = aFile.readLinkArray();
+
 	private LinkArray<User> uArray = new LinkArray<User>();
 
 	public Authentication() {
@@ -45,14 +47,22 @@ public class Authentication extends JFrame {
 		tArray = tFile.readLinkArray();
 		for (int i = 0; i < tArray.size(); i++) {
 			uArray.addItem(new User(tArray.getIndexElement(i).getUsername(), tArray.getIndexElement(i).getPassword(),
-					"travelLegAcc"));
+					"TravelLeg"));
 		}
 
 		// ** Read Customer Account and add role to link array **//
 		cArray = cFile.readLinkArray();
 		for (int i = 0; i < cArray.size(); i++) {
-			uArray.addItem(new User(cArray.getIndexElement(i).getUsername(), cArray.getIndexElement(i).getPassword(),
-					"CustomerAcc"));
+			uArray.addItem(
+					new User(cArray.getIndexElement(i).getUsername(), cArray.getIndexElement(i).getPassword(), "User"));
+		}
+
+		aArray = aFile.readLinkArray();
+		if (aArray.size() == 0)
+			aArray.addItem(new Admin("Admin", "admin")); // Initial default admin
+		for (int i = 0; i < aArray.size(); i++) {
+			uArray.addItem(new User(aArray.getIndexElement(i).getUsername(), aArray.getIndexElement(i).getPassword(),
+					"Admin"));
 		}
 
 		JPanel panel = new JPanel();
@@ -62,7 +72,7 @@ public class Authentication extends JFrame {
 		panel.setLayout(null);
 
 		// ======================= Login Content =======================//
-		JLabel logo = new JLabel("");
+		JLabel logo = new JLabel();
 		logo.setBounds(0, 30, 350, 130);
 		panel.add(logo);
 		logo.setFont(new Font("Monospaced", Font.BOLD, 50));
@@ -110,28 +120,29 @@ public class Authentication extends JFrame {
 		passwordErrorLabel.setBackground(new Color(255, 255, 255, 0));
 		passwordErrorLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		passwordErrorLabel.setVisible(false);
-		
+
 		// ===================== Login Button ========================//
 		Button loginBtn = new Button("Login");
 		loginBtn.setBounds(75, 420, 210, 40);
-		panel.add(loginBtn);
 		loginBtn.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		loginBtn.setForeground(Color.WHITE);
 		loginBtn.setBackground(new Color(139, 69, 19));
+		panel.add(loginBtn);
 
-		JLabel auth_wallpaper = new JLabel("");
-		auth_wallpaper.setBounds(0, 0, 896, 565);
-		getContentPane().add(auth_wallpaper);
+		JLabel auth_wallpaper = new JLabel();
+		auth_wallpaper.setVerticalAlignment(SwingConstants.TOP);
+		auth_wallpaper.setBounds(0, 0, 896, 600);
 		auth_wallpaper.setIcon(new ImageIcon(library.currentDirectoryPath + "\\images\\auth_wallpaper.jpg"));
 		auth_wallpaper.setHorizontalAlignment(SwingConstants.CENTER);
+		getContentPane().add(auth_wallpaper);
 
 		// ============== When user click login button ===============//
 		loginBtn.addActionListener(e -> {
 			checkUser();
 		});
 	}
-	
-	private User checkUser() {
+
+	private void checkUser() {
 		String username = usernameField.getText();
 		String password = String.valueOf(passwordField.getPassword());
 
@@ -139,12 +150,12 @@ public class Authentication extends JFrame {
 		passwordErrorLabel.setVisible(false);
 
 		boolean error = false;
-		
+
 		if (username.isEmpty()) {
 			usernameErrorLabel.setText("Username is empty");
 			usernameErrorLabel.setVisible(true);
 			error = true;
-		}			
+		}
 
 		if (password.isEmpty()) {
 			passwordErrorLabel.setText("Password is empty");
@@ -153,17 +164,18 @@ public class Authentication extends JFrame {
 		} else {
 			error = true;
 			for (int i = 0; i < uArray.size(); i++) {
-				if (username.equalsIgnoreCase(uArray.getIndexElement(i).getUsername()) && password.equals(uArray.getIndexElement(i).getPassword())) {
+				if (username.equalsIgnoreCase(uArray.getIndexElement(i).getUsername())
+						&& password.equals(uArray.getIndexElement(i).getPassword())) {
 					error = false;
 					dispose();
-					new UIControl(new User(uArray.getIndexElement(i).getUsername(), uArray.getIndexElement(i).getPassword(), uArray.getIndexElement(i).getRole()));
+					new UIControl(new User(uArray.getIndexElement(i).getUsername(),
+							uArray.getIndexElement(i).getPassword(), uArray.getIndexElement(i).getRole()));
 				}
 			}
 			if (error) {
-				passwordErrorLabel.setText("Password invalid!!!");
+				passwordErrorLabel.setText("Username or password not correct");
 				passwordErrorLabel.setVisible(true);
 			}
 		}
-		return null;
 	}
 }

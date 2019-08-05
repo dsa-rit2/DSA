@@ -25,24 +25,33 @@ public class UIControl extends JFrame {
 		setBounds(new Rectangle(new Dimension(900, 600)));
 		pack();
 		setLocationRelativeTo(null);
+<<<<<<< HEAD
+		getContentPane().setLayout(null);		
+		changePanel(new TravelLegMaintenance(this));
+=======
 		getContentPane().setLayout(null);
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 
 		// ============= Change Panel Section =============
 //		changePanel(new AddLocation(this));
-//		changePanel(new PlanTrip(this));
+		changePanel(new PlanTrip(this));
 //		changePanel(new TravelLegMaintenance(this));
 //		changePanel(new AddCompany(this));
 //		changePanel(new ListCompany(this));
 //		changePanel(new AddCompany(this));
+<<<<<<< HEAD
+//		changePanel(new TravelLegMaintenance(this));
+//		changePanel(new AddCompany(this));
+=======
 //		changePanel(new Authentication(this));
 //		changePanel(new ListLocation(this));
 //		changePanel(new AddTravelLeg(this));
-		changePanel(new MainMenu(this));
+//		changePanel(new MainMenu(this));
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 	}
 
 	public void changePanel(JPanel panelName) {
 		getContentPane().removeAll(); // Remove all component
-
 		// =================== Programe logo and name ==================
 		JLabel logoName = new JLabel("TravelBug");
 		logoName.setFont(new Font("Monospaced", Font.BOLD, 50));

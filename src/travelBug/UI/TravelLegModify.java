@@ -4,18 +4,32 @@ package travelBug.UI;
 //		Import Package
 //=========================
 import travelBug.library.*;
+<<<<<<< HEAD
+import travelBug.obj.Location;
+=======
 import travelBug.obj.*;
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 //=========================
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
+<<<<<<< HEAD
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.Vector;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+=======
+import java.util.Vector;
+import javax.swing.*;
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
@@ -27,11 +41,24 @@ public class TravelLegModify extends JPanel {
 	private JTextField tfToTime;
 	private JDateChooser dcFromDate;
 	private JDateChooser dcToDate;
+	private JTextField tfDistance;
+	private JTextField tfPrice;
 	private LinkArray<TravelLegInfo> rArray = new LinkArray<TravelLegInfo>();
 	private ReadWriteFile<TravelLegInfo> rFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
+<<<<<<< HEAD
+	private LinkArray<Location> cArray = new LinkArray<Location>();
+	private ReadWriteFile<Location> cFile = new ReadWriteFile<Location>("Location.txt", Location.class);
+	private Set<String> s = new TreeSet<String>();
+	private final UIControl mainframe;		// Store main frame
+	private Vector vector;
+	private String ID;
+	
+		
+=======
 
 	private final UIControl mainframe; // Store main frame
 
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 	public TravelLegModify(Vector vector, String ID, UIControl parent) {
 		super();
 		this.mainframe = parent;
@@ -42,75 +69,166 @@ public class TravelLegModify extends JPanel {
 
 		// ====================== Content component =======================//
 		rArray = rFile.readLinkArray();
-		JLabel lblSourceLocation = new JLabel("Source location       :");
-		lblSourceLocation.setBounds(21, 13, 126, 16);
+		cArray = cFile.readLinkArray();
+		s = new TreeSet<String>();
+		for(int i = 0; i < cArray.size(); i++) {
+			s.add(cArray.getIndexElement(i).getCountry());
+		}
+		// ============================ Content component =========================//
+		JLabel lblSourceLocation = new JLabel("Source location  :");
+		lblSourceLocation.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
+		lblSourceLocation.setBounds(37, 44, 207, 16);
 		add(lblSourceLocation);
-
+				
 		tfSourceL = new JTextField();
-		tfSourceL.setBounds(159, 10, 116, 22);
+		tfSourceL.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfSourceL.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent evtEvent) {
+				if(evtEvent.getKeyCode() == KeyEvent.VK_BACK_SPACE || evtEvent.getKeyCode() == KeyEvent.VK_SHIFT)
+				{
+					
+				}
+				else {					
+				String to_checkString = tfSourceL.getText();
+				int to_check_len = to_checkString.length();
+				for(String data:s) {
+					
+					String check_from_dataString = "";
+					for(int i = 0; i < to_check_len;i++) {
+						
+						if(to_check_len <= data.length()) {
+							check_from_dataString = check_from_dataString + data.charAt(i);
+							
+						}
+						if(check_from_dataString.equalsIgnoreCase(to_checkString))
+						{
+							tfSourceL.setText(data);
+							tfSourceL.setSelectionStart(to_check_len);
+							tfSourceL.setSelectionEnd(data.length());
+						}
+					}
+				}
+			}
+			}
+		});
+		tfSourceL.setBounds(253, 40, 143, 32);
 		add(tfSourceL);
 		tfSourceL.setColumns(10);
 
 		JLabel lblDestinationLocation = new JLabel("Destination Location :");
-		lblDestinationLocation.setBounds(21, 42, 135, 16);
+		lblDestinationLocation.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
+		lblDestinationLocation.setBounds(446, 44, 252, 16);
 		add(lblDestinationLocation);
 
 		tfDestinationL = new JTextField();
-		tfDestinationL.setBounds(159, 39, 116, 22);
+		tfDestinationL.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfDestinationL.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent evtEvent) {
+				if(evtEvent.getKeyCode() == KeyEvent.VK_BACK_SPACE || evtEvent.getKeyCode() == KeyEvent.VK_SHIFT)
+				{
+					
+				}
+				else {					
+				String to_checkString = tfDestinationL.getText();
+				int to_check_len = to_checkString.length();
+				for(String data:s) {
+					
+					String check_from_dataString = "";
+					for(int i = 0; i < to_check_len;i++) {
+						
+						if(to_check_len <= data.length()) {
+							check_from_dataString = check_from_dataString + data.charAt(i);
+							
+						}
+						if(check_from_dataString.equalsIgnoreCase(to_checkString))
+						{
+							tfDestinationL.setText(data);
+							tfDestinationL.setSelectionStart(to_check_len);
+							tfDestinationL.setSelectionEnd(data.length());
+						}
+					}
+				}
+			}
+			}
+		});
+		tfDestinationL.setBounds(701, 40, 143, 32);
 		add(tfDestinationL);
 		tfDestinationL.setColumns(10);
 
 		String[] selectionString = { "Select The transport type", "Airplane", "Rail/Train", "Bus", "Car", "Ferry",
 				"Boat" };
 		JComboBox cbTransport = new JComboBox(selectionString);
-		cbTransport.setBounds(21, 71, 172, 22);
+		cbTransport.setFont(new Font("Source Code Pro Black", Font.BOLD, 15));
+		cbTransport.setBounds(37, 85, 298, 22);
 		add(cbTransport);
 
 		Date fromToDayDate = new Date();
-		dcFromDate = new JDateChooser();
+		JDateChooser dcFromDate =   new JDateChooser();
 		dcFromDate.setMinSelectableDate(fromToDayDate);
-		dcFromDate.setBounds(104, 138, 116, 22);
+		dcFromDate.setBounds(175, 223, 154, 46);
 		JTextFieldDateEditor editor1 = (JTextFieldDateEditor) dcFromDate.getDateEditor();
 		editor1.setEditable(false);
 		add(dcFromDate);
 
-		JLabel lblDuration = new JLabel("Duration :");
-		lblDuration.setBounds(21, 109, 83, 16);
-		add(lblDuration);
-
 		tfFromTime = new JTextField();
-		tfFromTime.setBounds(104, 202, 116, 22);
+		tfFromTime.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfFromTime.setBounds(175, 320, 154, 42);
 		add(tfFromTime);
+
 		tfFromTime.setColumns(10);
 
+		Button btnConfirm = new Button("Confirm");
+		btnConfirm.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
+		btnConfirm.setBounds(174, 390, 161, 50);
+		add(btnConfirm);
+
 		JLabel lblFromDate = new JLabel("From Date :");
+		lblFromDate.setFont(new Font("Source Code Pro Black", Font.BOLD, 17));
 		lblFromDate.setHorizontalAlignment(SwingConstants.LEFT);
-		lblFromDate.setBounds(21, 141, 71, 16);
+		lblFromDate.setBounds(37, 223, 126, 31);
 		add(lblFromDate);
 
-		dcToDate = new JDateChooser();
+		JDateChooser dcToDate = new JDateChooser();
 		dcToDate.setMinSelectableDate(fromToDayDate);
-		dcToDate.setBounds(397, 138, 116, 22);
+		dcToDate.setBounds(672, 223, 154, 46);
 		JTextFieldDateEditor editor = (JTextFieldDateEditor) dcToDate.getDateEditor();
 		editor.setEditable(false);
 		add(dcToDate);
 
 		JLabel lblToDate = new JLabel("To Date :");
-		lblToDate.setBounds(330, 138, 56, 16);
+		lblToDate.setFont(new Font("Source Code Pro Black", Font.BOLD, 17));
+		lblToDate.setBounds(524, 223, 135, 31);
 		add(lblToDate);
 
 		JLabel lblFromTime = new JLabel("From Time :");
-		lblFromTime.setBounds(21, 205, 77, 16);
+		lblFromTime.setFont(new Font("Source Code Pro Black", Font.BOLD, 17));
+		lblFromTime.setBounds(37, 320, 126, 39);
 		add(lblFromTime);
 
 		JLabel lblToTime = new JLabel("To Time :");
-		lblToTime.setBounds(330, 205, 64, 16);
+		lblToTime.setFont(new Font("Source Code Pro Black", Font.BOLD, 17));
+		lblToTime.setBounds(524, 320, 136, 39);
 		add(lblToTime);
 
 		tfToTime = new JTextField();
-		tfToTime.setBounds(397, 202, 116, 22);
+		tfToTime.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfToTime.setBounds(672, 320, 154, 42);
 		add(tfToTime);
 		tfToTime.setColumns(10);
+		
+		tfDistance = new JTextField();
+		tfDistance.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfDistance.setBounds(216, 131, 143, 32);
+		add(tfDistance);
+		tfDistance.setColumns(10);
+		
+		tfPrice = new JTextField();
+		tfPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfPrice.setBounds(691, 131, 143, 32);
+		add(tfPrice);
+		tfPrice.setColumns(10);
 
 		tfSourceL.setText(vector.elementAt(1).toString());
 		tfDestinationL.setText(vector.elementAt(2).toString());
@@ -126,61 +244,95 @@ public class TravelLegModify extends JPanel {
 
 		tfFromTime.setText(vector.elementAt(5).toString());
 		tfToTime.setText(vector.elementAt(6).toString());
+		
+		tfPrice.setText(vector.elementAt(8).toString());
+		tfDistance.setText(vector.elementAt(9).toString());
 
 		// ============================ Error message =============================//
 		Label lblsrcError = new Label("");
-		lblsrcError.setForeground(Color.RED);
 		lblsrcError.setBackground(Color.WHITE);
-		lblsrcError.setBounds(293, 13, 279, 16);
+		lblsrcError.setForeground(Color.RED);
+		lblsrcError.setBounds(37, 20, 359, 16);
 		add(lblsrcError);
 
 		Label lbldestError = new Label("");
-		lbldestError.setForeground(Color.RED);
 		lbldestError.setBackground(Color.WHITE);
-		lbldestError.setBounds(293, 42, 314, 16);
+		lbldestError.setForeground(Color.RED);
+		lbldestError.setBounds(446, 20, 398, 16);
 		add(lbldestError);
 
 		Label lblttError = new Label("");
-		lblttError.setForeground(Color.RED);
 		lblttError.setBackground(Color.WHITE);
-		lblttError.setBounds(293, 71, 353, 16);
+		lblttError.setForeground(Color.RED);
+		lblttError.setBounds(352, 85, 353, 16);
 		add(lblttError);
 
 		Label lblFromDateError = new Label("");
-		lblFromDateError.setForeground(Color.RED);
 		lblFromDateError.setBackground(Color.WHITE);
-		lblFromDateError.setBounds(21, 173, 219, 16);
+		lblFromDateError.setForeground(Color.RED);
+		lblFromDateError.setBounds(40, 275, 289, 16);
 		add(lblFromDateError);
 
-		Label lblToDateEror = new Label("");
-		lblToDateEror.setForeground(Color.RED);
-		lblToDateEror.setBackground(Color.WHITE);
-		lblToDateEror.setBounds(330, 173, 219, 16);
-		add(lblToDateEror);
-
 		Label lblToTimeError = new Label("");
-		lblToTimeError.setForeground(Color.RED);
 		lblToTimeError.setBackground(Color.WHITE);
-		lblToTimeError.setBounds(330, 235, 248, 16);
+		lblToTimeError.setForeground(Color.RED);
+		lblToTimeError.setBounds(532, 368, 294, 16);
 		add(lblToTimeError);
 
 		Label lblFromTimeError = new Label("");
-		lblFromTimeError.setForeground(Color.RED);
 		lblFromTimeError.setBackground(Color.WHITE);
-		lblFromTimeError.setBounds(21, 235, 264, 16);
+		lblFromTimeError.setForeground(Color.RED);
+		lblFromTimeError.setBounds(40, 368, 289, 16);
 		add(lblFromTimeError);
 
-		// ================================= Button ================================//
-		Button button = new Button("Confirm");
-		button.setBounds(259, 268, 109, 32);
-		add(button);
+		Label lblToDateEror = new Label("");
+		lblToDateEror.setBackground(Color.WHITE);
+		lblToDateEror.setForeground(Color.RED);
+		lblToDateEror.setBounds(532, 275, 294, 16);
+		add(lblToDateEror);
 		
+		JLabel lblDistance = new JLabel("Distance (km) :");
+		lblDistance.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
+		lblDistance.setBounds(37, 137, 173, 16);
+		add(lblDistance);		
 		
-		button.addActionListener(new ActionListener() {
+		JLabel lblPrice = new JLabel("Price (RM)    :");
+		lblPrice.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
+		lblPrice.setBounds(506, 137, 173, 16);
+		add(lblPrice);
+		
+		Label lblDistanceError = new Label("");
+		lblDistanceError.setForeground(Color.RED);
+		lblDistanceError.setBackground(Color.WHITE);
+		lblDistanceError.setBounds(37, 184, 314, 16);
+		add(lblDistanceError);
+		
+		Label lblPriceError = new Label("");
+		lblPriceError.setForeground(Color.RED);
+		lblPriceError.setBackground(Color.WHITE);
+		lblPriceError.setBounds(506, 184, 320, 16);
+		add(lblPriceError);
+		
+		Button btnCancel = new Button("Cancel");
+		btnCancel.setForeground(Color.RED);
+		btnCancel.addActionListener(event ->  {
+			library.dialogMessage("The page will redirect to list TravelLeg\n");
+			SwingUtilities.invokeLater(() -> mainframe.changePanel(new TravelLegMaintenance(mainframe)));
+		});
+		btnCancel.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
+		btnCancel.setBounds(438, 390, 161, 50);
+		add(btnCancel);
+
+		// ================================= Button ================================//		
+		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int count = 0;
+				boolean error = false;
 				String dstLocationString = tfDestinationL.getText();
 				String srcLocationString = tfSourceL.getText();
+				double price = 0;
+				int distance = 0;
+				String priceString = tfPrice.getText();
+				String distanceString = tfDistance.getText();
 				String transportTypeString = cbTransport.getSelectedItem().toString();
 				String dateString = "";
 				Date checkDate = dcFromDate.getDate();
@@ -193,30 +345,31 @@ public class TravelLegModify extends JPanel {
 				LocalTime fromTime = null;
 				LocalTime toTime = null;
 
-				// Validation
+				// Validation for destination location
 				if (dstLocationString.length() == 0 || dstLocationString.isEmpty()) {
 					lbldestError.setText("[The destination location cannot be empty!]");
-					count++;
+					error = true;
 				} else {
 					lbldestError.setText("");
 				}
 				// validation for source location
 				if (srcLocationString.length() == 0 || srcLocationString.isEmpty()) {
 					lblsrcError.setText("[The source location cannot be empty!]");
-					count++;
+					error = true;
 				} else {
 					lblsrcError.setText("");
 				}
 				// validation for transport type
 				if (transportTypeString == "Select The transport type") {
 					lblttError.setText("[The transport type have to be selected!]");
-					count++;
+					error = true;
 				} else {
 					lblttError.setText("");
 				}
 				// validation for from date
 				if (((JTextField) dcFromDate.getDateEditor().getUiComponent()).getText().isEmpty()) {
 					lblFromDateError.setText("[Date should be filled!]");
+					error = true;
 				} else {
 					lblFromDateError.setText("");
 					dateString = new SimpleDateFormat("yyyy-MM-dd").format(dcFromDate.getDate());
@@ -225,56 +378,55 @@ public class TravelLegModify extends JPanel {
 				// validation for to date
 				if (((JTextField) dcToDate.getDateEditor().getUiComponent()).getText().isEmpty()) {
 					lblToDateEror.setText("[Date should be filled!]");
+					error = true;
 				} else {
-					lblFromDateError.setText("");
+					lblToDateEror .setText("");
 					dateString = new SimpleDateFormat("yyyy-MM-dd").format(dcToDate.getDate());
 					toDate = LocalDate.parse(dateString);
 				}
 				// validation for from time
 				if (fromTimeString.length() == 0 || fromTimeString.isEmpty()) {
 					lblFromTimeError.setText("[The time cannot be empty!]");
-					count++;
+					error = true;
 				} else {
 					lblFromTimeError.setText("");
 					fromTimeString = tfFromTime.getText();
 					try {
 						fromTime = LocalTime.parse(fromTimeString);
 					} catch (Exception e) {
-						count++;
 						// TODO: handle exception
 					}
 				}
 				// validation for to date
 				if (toTimeString.length() == 0 || toTimeString.isEmpty()) {
 					lblToTimeError.setText("[The time cannot be empty!]");
-					count++;
+					error = true;
 				} else {
 					lblToTimeError.setText("");
 					toTimeString = tfToTime.getText();
 					try {
 						toTime = LocalTime.parse(toTimeString);
 					} catch (Exception e) {
-						count++;
 						// TODO: handle exception
 					}
 				}
 				if (fromTimeString.length() > 0) {
 					if (!library.validateTime(fromTimeString)) {
 						lblFromTimeError.setText("[Invalid time or format ]");
-						count++;
+						error = true;
 					}
 				}
 				if (toTimeString.length() > 0) {
 					if (!library.validateTime(toTimeString)) {
 						lblToTimeError.setText("[Invalid time or format ]");
-						count++;
+						error = true;
 					}
 				}
 				if ((fromTimeString.length() > 0 && library.validateTime(fromTimeString))
 						&& (toTimeString.length() > 0 && library.validateTime(toTimeString))) {
 					if (!fromTime.isBefore(toTime)) {
 						lblFromTimeError.setText("[The [From] time must before [To] time");
-						count++;
+						error = true;
 					} else {
 						lblFromTimeError.setText("");
 					}
@@ -283,14 +435,95 @@ public class TravelLegModify extends JPanel {
 						&& !(((JTextField) dcToDate.getDateEditor().getUiComponent()).getText().isEmpty())) {
 					if (!fromDate.isBefore(toDate)) {
 						lblFromDateError.setText("[The [From] date must before [To] date]");
-						count++;
+						error = true;
 					} else {
 						lblFromDateError.setText("");
-						;
+					}
+				}
+				if(srcLocationString.length() > 0) {
+					boolean srcError = true;
+					for(int i = 0 ; i < cArray.size(); i ++) {
+						if(srcLocationString.equals(cArray.getIndexElement(i).getCountry())) {
+							srcError = false;							
+						}
+					}
+					if(srcError) {
+						lblsrcError.setText("[The location is not exist]");
+						error = true;
+					}
+					else {
+						lblsrcError.setText("");
+					}
+				}
+				if(dstLocationString.length() > 0) {
+					boolean dstError = true;
+					for(int i = 0 ; i < cArray.size(); i ++) {
+						if(dstLocationString.equals(cArray.getIndexElement(i).getCountry())) {
+							dstError = false;
+						}
+					}
+					if(dstError) {
+						lbldestError.setText("[The lcoation is not exist]");
+						error = true;
+					}
+					else {
+						lbldestError.setText("");
+					}
+				}
+				if((srcLocationString.length() > 0 && dstLocationString.length() > 0)) {
+					boolean sameExist = false;
+						if(srcLocationString.equals(dstLocationString)) {
+							sameExist = true;
+						}
+						if(sameExist) {
+							lblsrcError.setText("[The location cannot be the same]");
+							lbldestError.setText("[The location cannot be the same]");
+							error = true;
+						}
+						else {
+							lblsrcError.setText("");
+							lbldestError.setText("");
+						}
+					}
+				//=========================Validation for price and distance========================//
+				if(tfPrice.getText().length() == 0 || tfPrice.getText().isEmpty()) {
+					lblPriceError.setText("[The price cannot be empty]");
+					error = true;
+				}
+				else {
+					priceString = tfPrice.getText();
+					lblPriceError.setText("");
+				}
+				if(tfDistance.getText().length() == 0 || tfDistance.getText().isEmpty()) {
+					lblDistanceError.setText("[The distance cannot be empty]");
+					error = true;
+				}
+				else {
+					distanceString = tfDistance.getText();
+					lblDistanceError.setText("");
+				}
+				if(priceString.length() > 0) {
+					if(!(library.isValidPrice(priceString))) {
+						lblPriceError.setText("[The price format is incorrect (xx.xx)]");
+						error = true;
+					}
+					else {
+						lblPriceError.setText("");
+						price = Double.parseDouble(priceString);
+					}
+				}
+				if(distanceString.length() > 0) {
+					if(!(library.isValidDistance(distanceString))) {
+						lblDistanceError.setText("[The distance should be in integer]");
+						error = true;
+					}
+					else {
+						lblDistanceError.setText("");
+						distance = Integer.parseInt(distanceString);
 					}
 				}
 				// Write travel leg info into text file
-				if (count == 0) {
+				if (!error) {
 					for (int i = 0; i < rArray.size(); i++) {
 						if (rArray.getIndexElement(i).getrecordNo().toString().matches(ID)) {
 							rArray.getIndexElement(i).setSource(srcLocationString);
@@ -300,10 +533,14 @@ public class TravelLegModify extends JPanel {
 							rArray.getIndexElement(i).setfromTime(fromTime);
 							rArray.getIndexElement(i).settoTime(toTime);
 							rArray.getIndexElement(i).setMode(transportTypeString);
+							rArray.getIndexElement(i).setPrice(price);
+							rArray.getIndexElement(i).setDistance(distance);
 						}
 					}
 					rFile.writeLinkArray(rArray);
-					library.dialogMessage("Schedule added successful!!!");
+					library.dialogMessage("The travelLeg is updated\nThe page will redirect to list TravelLeg");
+					SwingUtilities.invokeLater(() -> mainframe.changePanel(new TravelLegMaintenance(mainframe)));
+					
 				}
 			}
 		});

@@ -25,21 +25,16 @@ public class UIControl extends JFrame {
 		setBounds(new Rectangle(new Dimension(900, 600)));
 		pack();
 		setLocationRelativeTo(null);
-		getContentPane().setLayout(null);
-<<<<<<< HEAD
-		
+		getContentPane().setLayout(null);		
 		changePanel(new TravelLegMaintenance(this));
-//		changePanel(new ListCompany(this));
-=======
 
 		// ============= Change Panel Section =============
 //		changePanel(new AddLocation(this));
 //		changePanel(new PlanTrip(this));
 //		changePanel(new TravelLegMaintenance(this));
 //		changePanel(new AddCompany(this));
-		changePanel(new ListCompany(this));
+//		changePanel(new TravelLegMaintenance(this));
 //		changePanel(new AddCompany(this));
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 	}
 
 	public void changePanel(JPanel panelName) {

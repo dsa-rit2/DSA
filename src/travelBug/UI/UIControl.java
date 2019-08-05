@@ -42,7 +42,6 @@ public class UIControl extends JFrame {
 
 	public void changePanel(JPanel panelName) {
 		getContentPane().removeAll(); // Remove all component
-
 		// =================== Programe logo and name ==================
 		JLabel logoName = new JLabel("TravelBug");
 		logoName.setFont(new Font("Monospaced", Font.BOLD, 50));

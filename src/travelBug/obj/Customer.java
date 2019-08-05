@@ -1,117 +1,57 @@
 package travelBug.obj;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Serializable;
-import java.util.Scanner;
 
-public class Customer extends Person implements Serializable {
+public class Customer implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int nextCustID = 1001;
-	private String password;
-	private int custID;
+	protected String name;
+	protected String username;
+	protected String password;
+	protected String phoneNumber;
 
-	public Customer(String firstName, String lastName, String username, String password) {
-		super(firstName, lastName, username, password);
+	public Customer(String name, String username, String password, String phoneNumber) {
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.username = username;
+		this.password = password;
 	}
 
-	public Customer(String firstName, String lastName, String username, String password, int custID) {
-		super(firstName, lastName, username, password);
-		this.custID = custID;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public int getNextCustID() {
-		return nextCustID++;
+	public String getUsername() {
+		return username;
 	}
 
-	public boolean checkCustExist(String custID) {
-		String fileName = "User.txt";
-		Scanner sc = new Scanner(System.in);
-		String line = null;
-		boolean exist = false;
-		int choice;
-		try {
-			// read file
-			FileReader fileReader = new FileReader(fileName);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			StringBuffer stringBuffer = new StringBuffer();
-			// read all from the file
-			while ((line = bufferedReader.readLine()) != null) {
-				String[] result = line.split(":");
-
-				if (custID.equals(result[0])) {
-					exist = true;
-					return exist;
-				}
-			}
-			bufferedReader.close();
-		} catch (IOException e) {
-			System.out.println("ERROR!");
-		}
-		return exist;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public String toString() {
-		return custID + ":" + super.toString();
+	public String getPassword() {
+		return password;
 	}
 
-	public void registerCust() {
-		String fileName = "User.txt";
-		Scanner sc = new Scanner(System.in);
-		String line = null;
-		int choice;
-		try {
-			// check file exists, yes append else create new text file
-			FileWriter fw = new FileWriter(fileName, true);
-			PrintWriter pw = new PrintWriter(fw);
-			try {
-				FileReader fileReader = new FileReader(fileName);
-				BufferedReader bufferedReader = new BufferedReader(fileReader);
-				StringBuffer stringBuffer = new StringBuffer();
-				// read all from the file
-				while ((line = bufferedReader.readLine()) != null) {
-					nextCustID++;
-				}
-			} catch (IOException e) {
-				System.out.println("ERROR!");
-			}
-			custID = getNextCustID();
-			pw.println(toString());
-			pw.close();
-			fw.close();
-		} catch (IOException e) {
-			System.out.println("ERROR!");
-		}
+	public String getName() {
+		return name;
 	}
 
-	public boolean checkLogin(String username, String password) {
-		String fileName = "User.txt";
-		Scanner sc = new Scanner(System.in);
-		String line = null;
-		boolean exist = false;
-		int choice;
-		try {
-			// read file
-			FileReader fileReader = new FileReader(fileName);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			StringBuffer stringBuffer = new StringBuffer();
-			// read all from the file
-			while ((line = bufferedReader.readLine()) != null) {
-				String[] result = line.split(":");
-
-				if (username.equals(result[1]) && password.equals(result[2])) {
-					exist = true;
-					return exist;
-				}
-			}
-			bufferedReader.close();
-		} catch (IOException e) {
-			System.out.println("ERROR!");
-		}
-		return exist;
+	public void setName(String name) {
+		this.name = name;
 	}
 
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public void print() {
+		System.out.println("Username:" + username);
+		System.out.println("Password" + password);
+		System.out.println("Name" + name);
+		System.out.println("Phone Number" + phoneNumber);
+	}
 }

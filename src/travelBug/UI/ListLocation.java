@@ -10,9 +10,9 @@ import travelBug.obj.*;
 import java.awt.*;
 import java.util.Vector;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,22 +26,25 @@ public class ListLocation extends JPanel {
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt", Location.class);
 	private DefaultTableModel tableModel;
 	private JScrollPane scrollPane;
-	private Vector vector;
+	private Vector<?> vector;
 	private JButton btnDelete;
 	private JButton btnModify;
 	private final UIControl mainFrame;
+	private JButton btnBack;
+	private JTextField textField;
+	private JLabel lblNewLabel_1;
 
 	public ListLocation(UIControl parent) {
 		super();
 		this.mainFrame = parent;
-		// ======================== Jpanel setting ================================//
-//		UIControl.titleName = "Location List";
+		// ======================== Jpanel setting ==============================
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 
-
 		tableModel = new DefaultTableModel() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				// all cells false
@@ -56,17 +59,14 @@ public class ListLocation extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (arg0.getClickCount() == 2) {
-
 					tableModel = (DefaultTableModel) table.getModel();
-
 					int SelectedRowIndex = table.getSelectedRow();
-					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+					vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,vector.elementAt(0).toString(),
-								vector.elementAt(2).toString())));
+						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,
+								vector.elementAt(0).toString())));
 					}
-
 				}
 			}
 		});
@@ -79,13 +79,13 @@ public class ListLocation extends JPanel {
 		tableModel.addColumn("State");
 		tableModel.addColumn("Country");
 		tableModel.addColumn("Type");
-		load();
+		load(null);
 
 //		table.setShowGrid(false);
 		table.setBounds(34, 31, 537, 167);
 //		contentPane.add(table);
 		scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(12, 60, 876, 330);
+		scrollPane.setBounds(12, 84, 876, 306);
 		scrollPane.setEnabled(false);
 		add(scrollPane);
 
@@ -102,14 +102,41 @@ public class ListLocation extends JPanel {
 		JLabel lblNewLabel = new JLabel("List Location");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel.setBounds(12, 13, 200, 35);
+		lblNewLabel.setBounds(314, 13, 200, 35);
 		add(lblNewLabel);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		textField.setBounds(124, 55, 299, 27);
+		textField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				load(textField.getText());
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				load(textField.getText());
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				load(textField.getText());
+			}
+		});
+		add(textField);
+		textField.setColumns(10);
+
+		lblNewLabel_1 = new JLabel("Search:");
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel_1.setBounds(50, 52, 78, 32);
+		add(lblNewLabel_1);
 
 		// ======================== Button ================================//
 
 		JButton btnNewButton = new JButton("Add Location");
 		btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		btnNewButton.addActionListener(event ->{
+		btnNewButton.addActionListener(event -> {
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddLocation(mainFrame)));
 		});
 		btnNewButton.setBounds(12, 403, 130, 35);
@@ -123,7 +150,7 @@ public class ListLocation extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				tableModel = (DefaultTableModel) table.getModel();
 				int SelectedRowIndex = table.getSelectedRow();
-				if (SelectedRowIndex > 0) {
+				if (SelectedRowIndex >= 0) {
 					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
@@ -138,7 +165,7 @@ public class ListLocation extends JPanel {
 								}
 							}
 							lFile.writeLinkArray(lArray);
-							load();
+							load(null);
 						}
 					}
 				} else {
@@ -148,7 +175,7 @@ public class ListLocation extends JPanel {
 			}
 		});
 
-		btnDelete.setBounds(758, 403, 130, 35);
+		btnDelete.setBounds(568, 403, 130, 35);
 		add(btnDelete);
 
 		btnModify = new JButton("Modify");
@@ -159,11 +186,11 @@ public class ListLocation extends JPanel {
 
 				int SelectedRowIndex = table.getSelectedRow();
 				if (SelectedRowIndex >= 0) {
-					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+					vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,vector.elementAt(0).toString(),
-								vector.elementAt(2).toString())));
+						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,
+								vector.elementAt(0).toString())));
 					}
 				} else {
 					library.dialogMessage("Please choose one location to modify");
@@ -171,21 +198,40 @@ public class ListLocation extends JPanel {
 
 			}
 		});
-		btnModify.setBounds(616, 403, 130, 35);
+		btnModify.setBounds(415, 403, 130, 35);
 		add(btnModify);
+
+		btnBack = new JButton("Back");
+		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		btnBack.setBounds(730, 403, 130, 34);
+		add(btnBack);
+
 	}
 
-	// =============================== Additional function
-	// ============================//
-	public void load() {
+	// =============================== Additional function=======================================//
+	public void load(String anyString) {
 		tableModel.setRowCount(0);
-		for (int i = 0; i < lArray.size(); i++) {
-			String[] dataStrings = { lArray.getIndexElement(i).getName(), lArray.getIndexElement(i).getContinent(),
-					lArray.getIndexElement(i).getState(), lArray.getIndexElement(i).getCountry(),
-					lArray.getIndexElement(i).getType() };
-			tableModel.addRow(dataStrings);
-			lArray.getIndexElement(i).print();
+		if (anyString == null) {
+			for (int i = 0; i < lArray.size(); i++) {
+				String[] dataStrings = { lArray.getIndexElement(i).getName(), lArray.getIndexElement(i).getContinent(),
+						lArray.getIndexElement(i).getState(), lArray.getIndexElement(i).getCountry(),
+						lArray.getIndexElement(i).getType() };
+				tableModel.addRow(dataStrings);
+				lArray.getIndexElement(i).print();
+			}
+		} else {
+			anyString = anyString.toUpperCase();
+			for (int i = 0; i < lArray.size(); i++) {
+				if (lArray.getIndexElement(i).getName().toUpperCase().matches(anyString + ".*")) {
+					String[] dataStrings = { lArray.getIndexElement(i).getName(),
+							lArray.getIndexElement(i).getContinent(), lArray.getIndexElement(i).getState(),
+							lArray.getIndexElement(i).getCountry(), lArray.getIndexElement(i).getType() };
+					tableModel.addRow(dataStrings);
+				}
+
+			}
 		}
+
 	}
 
 }

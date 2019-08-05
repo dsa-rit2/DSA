@@ -1,218 +1,181 @@
 package travelBug.UI;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Label;
-import java.awt.Rectangle;
-import java.awt.TextField;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.lang.reflect.Array;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextPane;
-import javax.swing.border.EmptyBorder;
-
-import travelBug.library.LinkArray;
-import travelBug.library.ReadWriteFile;
-import travelBug.library.library;
-import travelBug.obj.Admin;
-import travelBug.obj.Customer;
-import travelBug.obj.Person;
-import travelBug.obj.TravelLegAccount;
-import travelBug.obj.User;
+//=========================
+//	Import Package
+//=========================
+import travelBug.library.*;
+import travelBug.obj.*;
+//=========================
+import javax.swing.*;
+import java.awt.*;
 
 public class Authentication extends JFrame {
-	private static final long serialVersionUID = 7701272199204927084L;
-	private JPanel contentPane;
+	private static final long serialVersionUID = 7701272199204927084L; // Serializable purpose
 
-	private LinkArray<TravelLegAccount> tArray = new LinkArray<TravelLegAccount>();
+	TextField usernameField;
+	JPasswordField passwordField;
+	Label usernameErrorLabel, passwordErrorLabel;
+
 	private ReadWriteFile<TravelLegAccount> tFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt",
 			TravelLegAccount.class);
-	
-	private LinkArray<Person> cArray = new LinkArray<Person>();
-	private ReadWriteFile<Person> cFile = new ReadWriteFile<Person>("CustomerAccount.txt", Person.class);
-	
-	private LinkArray<Admin> aArray = new LinkArray<Admin>();
-	
-	
+	private LinkArray<TravelLegAccount> tArray = tFile.readLinkArray();
+
+	private ReadWriteFile<Customer> cFile = new ReadWriteFile<Customer>("Customer.txt", Customer.class);
+	private LinkArray<Customer> cArray = cFile.readLinkArray();
+
+	private ReadWriteFile<Admin> aFile = new ReadWriteFile<Admin>("Admin.txt", Admin.class);
+	private LinkArray<Admin> aArray = aFile.readLinkArray();
+
 	private LinkArray<User> uArray = new LinkArray<User>();
 
-	public static void main(String [] args) {
-		Authentication frame = new Authentication();
-		frame.setVisible(true);
-	}
-	
-	
-	//private UIControl fram;
-	
 	public Authentication() {
-		
-		//this.fram = parent;
+		// ===================== JFrame setting ======================
+		setVisible(true);
+		getContentPane().setLayout(null);
+		setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(library.currentDirectoryPath + "\\images\\logo.png"));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("TravelBug - Login");
+		setPreferredSize(new Dimension(900, 600));
+		setBounds(new Rectangle(getPreferredSize()));
+		setLocationRelativeTo(null);
 
-		//=============Read TravelLeg Account and add role to link array==================//
+		// ===================== JPanel setting ======================
+		getContentPane().setBounds(new Rectangle(getPreferredSize()));
+
+		// ** Read TravelLeg Account and add role to link array **//
 		tArray = tFile.readLinkArray();
 		for (int i = 0; i < tArray.size(); i++) {
 			uArray.addItem(new User(tArray.getIndexElement(i).getUsername(), tArray.getIndexElement(i).getPassword(),
-					"travelLegAcc"));
+					"TravelLeg"));
 		}
 
-		//=============Read Customer Account and add role to link array==================//
+		// ** Read Customer Account and add role to link array **//
 		cArray = cFile.readLinkArray();
-		for(int i = 0 ; i < cArray.size(); i++) {
-			uArray.addItem(new User(cArray.getIndexElement(i).getUsername(), cArray.getIndexElement(i).getPassword(),
-					"CustomerAcc"));
+		for (int i = 0; i < cArray.size(); i++) {
+			uArray.addItem(
+					new User(cArray.getIndexElement(i).getUsername(), cArray.getIndexElement(i).getPassword(), "User"));
 		}
-		
 
-		
-		//=============================Login Content===============================//
-		setTitle("TravelBug - Login");
-		setResizable(false);
-		getContentPane().setLayout(null);
-		setBackground(new Color(0, 0, 0, 0));
-		setBounds(new Rectangle(new Dimension(900, 450)));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		aArray = aFile.readLinkArray();
+		if (aArray.size() == 0)
+			aArray.addItem(new Admin("Admin", "admin")); // Initial default admin
+		for (int i = 0; i < aArray.size(); i++) {
+			uArray.addItem(new User(aArray.getIndexElement(i).getUsername(), aArray.getIndexElement(i).getPassword(),
+					"Admin"));
+		}
 
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setBounds(new Rectangle(270, 31, 350, 500));
+		panel.setBackground(new Color(255, 255, 255, 100));
+		getContentPane().add(panel);
 		panel.setLayout(null);
 
-		TextField usernameField = new TextField();
-		usernameField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		usernameField.setBounds(332, 172, 180, 30);
-		panel.add(usernameField);
+		// ======================= Login Content =======================//
+		JLabel logo = new JLabel();
+		logo.setBounds(0, 30, 350, 130);
+		panel.add(logo);
+		logo.setFont(new Font("Monospaced", Font.BOLD, 50));
+		logo.setIcon(new ImageIcon(library.currentDirectoryPath + "\\images\\logo.png"));
+		logo.setHorizontalAlignment(SwingConstants.CENTER);
 
-		Label username_label = new Label("Username :");
-		username_label.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		username_label.setBounds(220, 172, 106, 30);
+		JLabel name = new JLabel("TravelBug");
+		name.setHorizontalAlignment(SwingConstants.CENTER);
+		name.setFont(new Font("Monospaced", Font.BOLD, 30));
+		name.setBounds(0, 132, 350, 77);
+		panel.add(name);
+
+		JLabel username_label = new JLabel("Username :");
+		username_label.setBounds(75, 210, 106, 30);
 		panel.add(username_label);
+		username_label.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 
-		Label password_label = new Label("Password :");
-		password_label.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		password_label.setBounds(223, 226, 103, 30);
+		JLabel password_label = new JLabel("Password :");
+		password_label.setBounds(75, 310, 103, 30);
 		panel.add(password_label);
+		password_label.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 
-		JPasswordField passwordField = new JPasswordField();
-		passwordField.setBounds(332, 226, 180, 30);
+		usernameField = new TextField();
+		usernameField.setBounds(75, 249, 210, 30);
+		panel.add(usernameField);
+		usernameField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+
+		passwordField = new JPasswordField();
+		passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		passwordField.setBounds(75, 345, 210, 30);
 		panel.add(passwordField);
 
-		JTextPane txt_Title = new JTextPane();
-		txt_Title.setFont(new Font("Monospaced", Font.BOLD, 32));
-		txt_Title.setText("TravelBug");
-		txt_Title.setBounds(335, 52, 177, 49);
-		panel.add(txt_Title);
-
-		Label usernameErrorLabel = new Label("");
-		usernameErrorLabel.setForeground(Color.RED);
-		usernameErrorLabel.setBackground(Color.WHITE);
-		usernameErrorLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		usernameErrorLabel.setBounds(257, 105, 180, 16);
+		usernameErrorLabel = new Label("");
+		usernameErrorLabel.setBounds(75, 285, 210, 20);
 		panel.add(usernameErrorLabel);
+		usernameErrorLabel.setForeground(Color.RED);
+		usernameErrorLabel.setBackground(new Color(255, 255, 255, 0));
+		usernameErrorLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		usernameErrorLabel.setVisible(false);
 
-		Label passwordErrorLabel = new Label("");
-		passwordErrorLabel.setForeground(Color.RED);
-		passwordErrorLabel.setBackground(Color.WHITE);
-		passwordErrorLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		passwordErrorLabel.setBounds(257, 162, 180, 16);
+		passwordErrorLabel = new Label("");
+		passwordErrorLabel.setBounds(75, 381, 210, 20);
 		panel.add(passwordErrorLabel);
+		passwordErrorLabel.setForeground(Color.RED);
+		passwordErrorLabel.setBackground(new Color(255, 255, 255, 0));
+		passwordErrorLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		passwordErrorLabel.setVisible(false);
 
-		
-		//================Login Button===========================//
+		// ===================== Login Button ========================//
 		Button loginBtn = new Button("Login");
-		loginBtn.setFont(new Font("Segoe UI", Font.PLAIN, 26));
+		loginBtn.setBounds(75, 420, 210, 40);
+		loginBtn.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		loginBtn.setForeground(Color.WHITE);
-		loginBtn.setBackground(Color.GRAY);
-		loginBtn.setBounds(359, 289, 132, 40);
-		
-		
-		// ============ When user click login button ===============//
-		loginBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-
-				String username = usernameField.getText();
-				String password = String.valueOf(passwordField.getPassword());
-
-				int error = 0;
-
-				boolean u = true;
-				boolean p = true;
-
-				usernameErrorLabel.setText("");
-				passwordErrorLabel.setText("");
-
-				if (username.isEmpty()) {
-					usernameErrorLabel.setText("Username is empty");
-					error++;
-				} else {
-					boolean checkUsername = false;
-					for (int i = 0; i < uArray.size(); i++) {
-						if (username.equalsIgnoreCase(uArray.getIndexElement(i).getUsername())) {
-							checkUsername = true;
-						}
-					}
-					if (checkUsername == true) {
-
-						u = true;
-
-					} else {
-						usernameErrorLabel.setText("Username invalid!!!");
-						error++;
-					}
-				}
-
-				if (password.isEmpty()) {
-					passwordErrorLabel.setText("Password is empty");
-					error++;
-				} else {
-					boolean checkPassword = false;
-					for (int i = 0; i < uArray.size(); i++) {
-
-						if (password.equalsIgnoreCase(uArray.getIndexElement(i).getPassword())) {
-							checkPassword = true;
-						}
-					}
-					if (checkPassword == true) {
-
-						p = true;
-
-					} else {
-						passwordErrorLabel.setText("Password invalid!!!");
-						error++;
-					}
-
-				}
-
-				if (error == 0 && u == true && p == true) {
-					
-					//=======================Redirect======================//
-					
-					//"Heven't done for the menu, UI contrl need to save the user info after login."
-					
-					JFrame frame = new JFrame("JOptionPane showMessageDialog example");
-					JOptionPane.showMessageDialog(frame, "TravelLeg Account login successful!!!");
-
-				} 
-
-				
-			}
-		});
+		loginBtn.setBackground(new Color(139, 69, 19));
 		panel.add(loginBtn);
 
+		JLabel auth_wallpaper = new JLabel();
+		auth_wallpaper.setVerticalAlignment(SwingConstants.TOP);
+		auth_wallpaper.setBounds(0, 0, 896, 600);
+		auth_wallpaper.setIcon(new ImageIcon(library.currentDirectoryPath + "\\images\\auth_wallpaper.jpg"));
+		auth_wallpaper.setHorizontalAlignment(SwingConstants.CENTER);
+		getContentPane().add(auth_wallpaper);
+
+		// ============== When user click login button ===============//
+		loginBtn.addActionListener(e -> {
+			checkUser();
+		});
+	}
+
+	private void checkUser() {
+		String username = usernameField.getText();
+		String password = String.valueOf(passwordField.getPassword());
+
+		usernameErrorLabel.setVisible(false);
+		passwordErrorLabel.setVisible(false);
+
+		boolean error = false;
+
+		if (username.isEmpty()) {
+			usernameErrorLabel.setText("Username is empty");
+			usernameErrorLabel.setVisible(true);
+			error = true;
+		}
+
+		if (password.isEmpty()) {
+			passwordErrorLabel.setText("Password is empty");
+			passwordErrorLabel.setVisible(true);
+			error = true;
+		} else {
+			error = true;
+			for (int i = 0; i < uArray.size(); i++) {
+				if (username.equalsIgnoreCase(uArray.getIndexElement(i).getUsername())
+						&& password.equals(uArray.getIndexElement(i).getPassword())) {
+					error = false;
+					dispose();
+					new UIControl(new User(uArray.getIndexElement(i).getUsername(),
+							uArray.getIndexElement(i).getPassword(), uArray.getIndexElement(i).getRole()));
+				}
+			}
+			if (error) {
+				passwordErrorLabel.setText("Username or password not correct");
+				passwordErrorLabel.setVisible(true);
+			}
+		}
 	}
 }

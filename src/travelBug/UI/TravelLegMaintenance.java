@@ -10,7 +10,6 @@ import travelBug.obj.*;
 import java.awt.*;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -25,21 +24,14 @@ import javax.swing.border.MatteBorder;
 public class TravelLegMaintenance extends JPanel {
 
 	private static final long serialVersionUID = 5629499624569369278L;
-	private JTextField tfUsername;
-	private JTextField txtPassword;
 	private LinkArray<TravelLegInfo> tArray = new LinkArray<TravelLegInfo>();
 	private SortedLinkedList<TravelLeg> sArray = new SortedLinkedList<TravelLeg>();
 	private ReadWriteFile<TravelLegInfo> tFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
-	private JTextField txtUserNameNum;
-	private JTextField textField;
 	private JTextField tfSearch;
-	private DocumentListener dListener;
 	private JLabel lblSearchJLabel;
-	private JList lsitJList;
-	private DefaultListModel model;
 	private DefaultTableModel defaultTableModel;
 	private JTable table;
-	private Vector vector;
+	private Vector<?> vector;
 	private final UIControl mainFrame;
 	private JButton btnDelete;
 
@@ -65,6 +57,8 @@ public class TravelLegMaintenance extends JPanel {
 		add(lblSearchJLabel);
 
 		defaultTableModel = new DefaultTableModel() {
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
@@ -81,6 +75,7 @@ public class TravelLegMaintenance extends JPanel {
 					defaultTableModel = (DefaultTableModel) table.getModel();
 
 					int SelectedRowIndex = table.getSelectedRow();
+<<<<<<< HEAD
 					vector = (Vector) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 						String iDString = vector.elementAt(0).toString();
@@ -88,6 +83,11 @@ public class TravelLegMaintenance extends JPanel {
 						SwingUtilities.invokeLater(() -> mainFrame
 								.changePanel(new TravelLegModify(vector, vector.elementAt(0).toString(), mainFrame)));
 
+=======
+					vector = (Vector<?>) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
+					if (vector != null) {
+						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new TravelLegModify(vector, vector.elementAt(0).toString(), mainFrame)));
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 					}
 
 				}
@@ -108,10 +108,6 @@ public class TravelLegMaintenance extends JPanel {
 		defaultTableModel.addColumn("Distance (km)");
 
 		updateLabel(null);
-
-		String[] strings;
-		// Create the first row
-		// Insert a row at position p
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(8, 59, 837, 323);

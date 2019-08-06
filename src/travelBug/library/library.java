@@ -208,6 +208,39 @@ public class library {
 		}
 	}
 
+	public static boolean isValidPrice(String inPrice) {
+		Pattern p1 = Pattern.compile("\\d+");
+		Pattern p2 = Pattern.compile("[0-9]+([,.][0-9]{1,2})?");
+		Matcher match1 = p1.matcher(inPrice), match2 = p2.matcher(inPrice);
+		
+		try {
+			if(match1.matches())
+				return true;
+			else if(match2.matches())
+				return true;
+			else 
+				return false;
+		}catch (Exception e) {
+			System.out.print(e);
+			return false;
+		}
+		
+	}
+	public static boolean isValidDistance(String inDistance) {
+		Pattern p1 = Pattern.compile("\\d+");
+		Matcher match1 = p1.matcher(inDistance);
+		
+		try {
+			if(match1.matches())
+				return true;
+			else 
+				return false;
+		}catch (Exception e) {
+			System.out.print(e);
+			return false;
+		}
+	}
+	
 	public static String getTodayDate() {
 		LocalDate today = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");

@@ -14,11 +14,15 @@ public class TravelLegInfo implements Serializable{
 	private LocalDate fromDate;
 	private LocalDate toDate;	
 	private String recordNo;
+	private double price;
+	private int distance;
 	
-	public TravelLegInfo(String mode,String source,String dest,LocalDate fromDate,LocalDate toDate, LocalTime fromTime,LocalTime toTime) {
+	public TravelLegInfo(String mode,String source,String dest,double price,int distance,LocalDate fromDate,LocalDate toDate, LocalTime fromTime,LocalTime toTime) {
 		this.mode = mode;
 		this.source = source;
 		this.dest = dest;
+		this.price = price;
+		this.distance = distance;
 		this.fromDate = fromDate;
 		this.fromTime= fromTime;
 		this.toDate = toDate;
@@ -48,6 +52,18 @@ public class TravelLegInfo implements Serializable{
 	}
 	public String getDest() {
 		return dest;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setDistance(int distance) {
+		this.distance = distance;
+	}
+	public int getDistance() {
+		return distance;
 	}
 	public void setfromDate(LocalDate fromDate) {
 		this.fromDate= fromDate;

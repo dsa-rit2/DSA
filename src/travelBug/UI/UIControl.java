@@ -25,7 +25,7 @@ public class UIControl extends JFrame {
 		setBounds(new Rectangle(new Dimension(900, 600)));
 		pack();
 		setLocationRelativeTo(null);
-		getContentPane().setLayout(null);
+		getContentPane().setLayout(null);		
 
 		// ============= Change Panel Section =============
 //		changePanel(new AddLocation(this));
@@ -34,10 +34,12 @@ public class UIControl extends JFrame {
 //		changePanel(new AddCompany(this));
 //		changePanel(new ListCompany(this));
 //		changePanel(new AddCompany(this));
+		changePanel(new TravelLegMaintenance(this));
+//		changePanel(new AddCompany(this));
 //		changePanel(new Authentication(this));
 //		changePanel(new ListLocation(this));
 //		changePanel(new AddTravelLeg(this));
-		changePanel(new MainMenu(this));
+//		changePanel(new MainMenu(this));
 	}
 
 	public void changePanel(JPanel panelName) {

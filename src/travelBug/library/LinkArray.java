@@ -16,7 +16,7 @@ public class LinkArray<T> implements ListInterface<T>, Serializable {
 
 	/*********** Double the array length ***********/
 	@SuppressWarnings("unchecked")
-	public void doubleSize() {
+	private void doubleSize() {
 		T[] oldArr = objArray;
 		objArray = (T[]) new Object[oldArr.length * 2];
 		System.arraycopy(oldArr, 0, objArray, 0, oldArr.length);

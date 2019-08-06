@@ -215,7 +215,7 @@ public class ListLocation extends JPanel {
 			for (int i = 0; i < lArray.size(); i++) {
 				String[] dataStrings = { lArray.getIndexElement(i).getName(), lArray.getIndexElement(i).getContinent(),
 						lArray.getIndexElement(i).getState(), lArray.getIndexElement(i).getCountry(),
-						lArray.getIndexElement(i).getType() };
+						Character.toString(lArray.getIndexElement(i).getType()) };
 				tableModel.addRow(dataStrings);
 				lArray.getIndexElement(i).print();
 			}
@@ -225,7 +225,7 @@ public class ListLocation extends JPanel {
 				if (lArray.getIndexElement(i).getName().toUpperCase().matches(anyString + ".*")) {
 					String[] dataStrings = { lArray.getIndexElement(i).getName(),
 							lArray.getIndexElement(i).getContinent(), lArray.getIndexElement(i).getState(),
-							lArray.getIndexElement(i).getCountry(), lArray.getIndexElement(i).getType() };
+							lArray.getIndexElement(i).getCountry(), Character.toString(lArray.getIndexElement(i).getType()) };
 					tableModel.addRow(dataStrings);
 				}
 

@@ -28,8 +28,8 @@ public class TravelLegMaintenance extends JPanel {
 	private SortedLinkedList<ComparePrice> sArray = new SortedLinkedList<ComparePrice>();
 	private SortedLinkedList<CompareTime> cArray = new SortedLinkedList<CompareTime>();
 	private ReadWriteFile<TravelLegInfo> tFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
-	private singlyLinkedList<ComparePrice> rArray = new singlyLinkedList<ComparePrice>();
-	private singlyLinkedList<CompareTime> oArray = new singlyLinkedList<CompareTime>();
+	private SinglyLinkedList<ComparePrice> rArray = new SinglyLinkedList<ComparePrice>();
+	private SinglyLinkedList<CompareTime> oArray = new SinglyLinkedList<CompareTime>();
 	private JTextField tfSearch;
 	private JLabel lblSearchJLabel;
 	private DefaultTableModel defaultTableModel;

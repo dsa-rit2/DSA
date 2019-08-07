@@ -46,7 +46,7 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 	      }
 	      return currNode;
 	  }
-	  public boolean addAll(singlyLinkedList<T> anEntry) {
+	  public boolean addAll(SinglyLinkedList<T> anEntry) {
 		  for(int i = 1; i <= anEntry.getNumberOfEntries();i++) {
 			  add((T)anEntry.getEntry(i));
 		  }

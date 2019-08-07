@@ -2,13 +2,14 @@ package travelBug.UI;
 
 import static org.junit.Assert.isArray;
 
+
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
+import travelBug.library.SinglyLinkedList;
 import travelBug.library.SortedLinkedList;
-import travelBug.library.singlyLinkedList;
 import travelBug.obj.ComparePrice;
 import travelBug.obj.TravelLegInfo;
 
@@ -17,7 +18,7 @@ public static void main(String[] args) {
 	LinkArray<TravelLegInfo> tArray = new LinkArray<TravelLegInfo>();
 	ReadWriteFile<TravelLegInfo> tFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
 	tArray = tFile.readLinkArray();
-	singlyLinkedList<ComparePrice> rArray = new singlyLinkedList<ComparePrice>();
+	SinglyLinkedList<ComparePrice> rArray = new SinglyLinkedList<ComparePrice>();
 	SortedLinkedList<ComparePrice> sArray = new SortedLinkedList<ComparePrice>();	
 	
 	for(int i = 1; i <= tArray.size(); i ++) {

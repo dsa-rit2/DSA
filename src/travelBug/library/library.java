@@ -15,7 +15,6 @@ import java.time.format.DateTimeFormatter;
 
 public class library {
 	public static final String currentDirectoryPath = System.getProperty("user.dir"); // Get root directory path
-	public static UIControl frame = null;
 	private static final Random RANDOM = new SecureRandom();
 	private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
@@ -36,7 +35,6 @@ public class library {
 			Pattern passPat = Pattern.compile("\\w*");
 			Matcher matchpass = passPat.matcher(in);
 			if (!matchpass.matches()) {
-				System.out.println("[Error] - The username must only contain character and numeric ");
 				return "The username must only contain character and numeric";
 			} else
 				return null;
@@ -140,13 +138,11 @@ public class library {
 
 	public static String validPassword(String password) {
 		if (password.length() < 6) {
-			System.out.println("[Error] - The password length must more or equal to 6");
 			return "The password length must more or equal to 6";
 		} else {
 			Pattern passPat = Pattern.compile("((?=.*\\d)(?=.*[a-zA-Z]).{6,15})");
 			Matcher matchpass = passPat.matcher(password);
 			if (!matchpass.matches()) {
-				System.out.println("[Error] - The password must only contain character and numeric");
 				return "The password must only contain character and numeric";
 			} else
 				return null;
@@ -258,7 +254,7 @@ public class library {
 	}
 
 	public static String getUsernameShortForm(String anyString) {
-		Pattern p1 = Pattern.compile("(\\w*).*"); // 20180505
+		Pattern p1 = Pattern.compile("(\\w*).*"); 
 		Matcher match1 = p1.matcher(anyString);
 		if (match1.matches())
 			return match1.group(1);

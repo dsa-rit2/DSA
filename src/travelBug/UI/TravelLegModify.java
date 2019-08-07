@@ -46,6 +46,7 @@ public class TravelLegModify extends JPanel {
 	private final UIControl mainframe;		// Store main frame
 	private Vector vector;
 	private String ID;
+	private JComboBox cbTransport;
 	
 		
 	public TravelLegModify(Vector vector, String ID, UIControl parent) {
@@ -61,7 +62,7 @@ public class TravelLegModify extends JPanel {
 		cArray = cFile.readLinkArray();
 		s = new TreeSet<String>();
 		for(int i = 0; i < cArray.size(); i++) {
-			s.add(cArray.getIndexElement(i).getCountry());
+			s.add(cArray.getIndexElement(i).getName());
 		}
 		// ============================ Content component =========================//
 		JLabel lblSourceLocation = new JLabel("Source location  :");
@@ -74,9 +75,10 @@ public class TravelLegModify extends JPanel {
 		tfSourceL.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(java.awt.event.KeyEvent evtEvent) {
+				boolean foundSource = false;
+				boolean foundDestination = false;
 				if(evtEvent.getKeyCode() == KeyEvent.VK_BACK_SPACE || evtEvent.getKeyCode() == KeyEvent.VK_SHIFT)
-				{
-					
+				{				
 				}
 				else {					
 				String to_checkString = tfSourceL.getText();
@@ -99,6 +101,24 @@ public class TravelLegModify extends JPanel {
 					}
 				}
 			}
+				for(int i = 0; i < cArray.size(); i++) {
+					if((tfSourceL.getText().toString().equalsIgnoreCase(cArray.getIndexElement(i).getName()))) {
+						foundSource = true;
+					}
+				}
+				for(int i = 0; i < cArray.size(); i++) {
+					if((tfDestinationL.getText().toString().equalsIgnoreCase(cArray.getIndexElement(i).getName()))){
+						foundDestination = true;
+					}
+				}
+				if(foundSource && foundDestination) {
+					cbTransport.setEnabled(true);
+					tfDistance.setText("0.0");
+				}
+				else {
+					cbTransport.setEnabled(false);
+					tfDistance.setText("0.0");
+				}
 			}
 		});
 		tfSourceL.setBounds(253, 40, 143, 32);
@@ -115,9 +135,10 @@ public class TravelLegModify extends JPanel {
 		tfDestinationL.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(java.awt.event.KeyEvent evtEvent) {
+				boolean foundSource = false;
+				boolean foundDestination = false;
 				if(evtEvent.getKeyCode() == KeyEvent.VK_BACK_SPACE || evtEvent.getKeyCode() == KeyEvent.VK_SHIFT)
-				{
-					
+				{					
 				}
 				else {					
 				String to_checkString = tfDestinationL.getText();
@@ -140,6 +161,24 @@ public class TravelLegModify extends JPanel {
 					}
 				}
 			}
+				for(int i = 0; i < cArray.size(); i++) {
+					if((tfSourceL.getText().toString().equalsIgnoreCase(cArray.getIndexElement(i).getName()))) {
+						foundSource = true;
+					}
+				}
+				for(int i = 0; i < cArray.size(); i++) {
+					if((tfDestinationL.getText().toString().equalsIgnoreCase(cArray.getIndexElement(i).getName()))){
+						foundDestination = true;
+					}
+				}
+				if(foundSource && foundDestination) {
+					cbTransport.setEnabled(true);
+					tfDistance.setText("0.0");
+				}
+				else {
+					cbTransport.setEnabled(false);
+					tfDistance.setText("0.0");
+				}
 			}
 		});
 		tfDestinationL.setBounds(701, 40, 143, 32);
@@ -148,7 +187,30 @@ public class TravelLegModify extends JPanel {
 
 		String[] selectionString = { "Select The transport type", "Airplane", "Rail/Train", "Bus", "Car", "Ferry",
 				"Boat" };
-		JComboBox cbTransport = new JComboBox(selectionString);
+		cbTransport = new JComboBox(selectionString);
+		cbTransport.setEnabled(false);
+		cbTransport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				double latitude1 = 0.0;
+				double latitude2 = 0.0;
+				double longtitude1 = 0.0;
+				double longtitude2 = 0.0;
+				if(cbTransport.getSelectedItem().toString() != "Select The transport type" && tfSourceL.getText().toString() != null && tfDestinationL.getText().toString() != null) {
+					for(int i = 0; i < cArray.size(); i++) {
+						if((cArray.getIndexElement(i).getName()).equalsIgnoreCase(tfSourceL.getText().toString())) {
+						latitude1 = cArray.getIndexElement(i).getLatitude();
+						longtitude1 = cArray.getIndexElement(i).getLongitude();
+						}
+						if((cArray.getIndexElement(i).getName()).equalsIgnoreCase(tfDestinationL.getText().toString())) {
+							latitude2 = cArray.getIndexElement(i).getLatitude();
+							longtitude2 = cArray.getIndexElement(i).getLongitude();
+						}
+					
+					tfDistance.setText(String.valueOf(library.CoordinateDistance(longtitude1, latitude1, longtitude2, latitude2)));
+				}
+			}
+			}
+		});
 		cbTransport.setFont(new Font("Source Code Pro Black", Font.BOLD, 15));
 		cbTransport.setBounds(37, 85, 298, 22);
 		add(cbTransport);
@@ -212,6 +274,7 @@ public class TravelLegModify extends JPanel {
 		tfDistance.setBounds(216, 131, 143, 32);
 		add(tfDistance);
 		tfDistance.setColumns(10);
+		tfDistance.setEnabled(false);
 		
 		tfPrice = new JTextField();
 		tfPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -221,7 +284,7 @@ public class TravelLegModify extends JPanel {
 
 		tfSourceL.setText(vector.elementAt(1).toString());
 		tfDestinationL.setText(vector.elementAt(2).toString());
-		cbTransport.setSelectedItem(vector.elementAt(7));
+		cbTransport.setSelectedItem(library.getModeString(vector.elementAt(7).toString().charAt(0)));
 
 		LocalDate date2 = (LocalDate) vector.elementAt(3);
 		Date date = Date.from(date2.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -319,7 +382,7 @@ public class TravelLegModify extends JPanel {
 				String dstLocationString = tfDestinationL.getText();
 				String srcLocationString = tfSourceL.getText();
 				double price = 0;
-				int distance = 0;
+				double distance = 0;
 				String priceString = tfPrice.getText();
 				String distanceString = tfDistance.getText();
 				String transportTypeString = cbTransport.getSelectedItem().toString();
@@ -432,7 +495,7 @@ public class TravelLegModify extends JPanel {
 				if(srcLocationString.length() > 0) {
 					boolean srcError = true;
 					for(int i = 0 ; i < cArray.size(); i ++) {
-						if(srcLocationString.equals(cArray.getIndexElement(i).getCountry())) {
+						if(srcLocationString.equals(cArray.getIndexElement(i).getName())) {
 							srcError = false;							
 						}
 					}
@@ -447,7 +510,7 @@ public class TravelLegModify extends JPanel {
 				if(dstLocationString.length() > 0) {
 					boolean dstError = true;
 					for(int i = 0 ; i < cArray.size(); i ++) {
-						if(dstLocationString.equals(cArray.getIndexElement(i).getCountry())) {
+						if(dstLocationString.equals(cArray.getIndexElement(i).getName())) {
 							dstError = false;
 						}
 					}
@@ -483,12 +546,13 @@ public class TravelLegModify extends JPanel {
 					priceString = tfPrice.getText();
 					lblPriceError.setText("");
 				}
-				if(tfDistance.getText().length() == 0 || tfDistance.getText().isEmpty()) {
+				if(Double.parseDouble(tfDistance.getText()) == 0.0) {
 					lblDistanceError.setText("[The distance cannot be empty]");
 					error = true;
 				}
 				else {
 					distanceString = tfDistance.getText();
+					distance = Double.parseDouble(distanceString);
 					lblDistanceError.setText("");
 				}
 				if(priceString.length() > 0) {
@@ -501,17 +565,8 @@ public class TravelLegModify extends JPanel {
 						price = Double.parseDouble(priceString);
 					}
 				}
-				if(distanceString.length() > 0) {
-					if(!(library.isValidDistance(distanceString))) {
-						lblDistanceError.setText("[The distance should be in integer]");
-						error = true;
-					}
-					else {
-						lblDistanceError.setText("");
-						distance = Integer.parseInt(distanceString);
-					}
-				}
 				// Write travel leg info into text file
+				System.out.print(error);
 				if (!error) {
 					for (int i = 0; i < rArray.size(); i++) {
 						if (rArray.getIndexElement(i).getrecordNo().toString().matches(ID)) {
@@ -521,7 +576,7 @@ public class TravelLegModify extends JPanel {
 							rArray.getIndexElement(i).settoDate(toDate);
 							rArray.getIndexElement(i).setfromTime(fromTime);
 							rArray.getIndexElement(i).settoTime(toTime);
-							rArray.getIndexElement(i).setMode(transportTypeString);
+							rArray.getIndexElement(i).setMode(library.getModeChar(transportTypeString));
 							rArray.getIndexElement(i).setPrice(price);
 							rArray.getIndexElement(i).setDistance(distance);
 						}

@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
 
-import travelBug.obj.TravelLeg;
+import travelBug.obj.ComparePrice;
 
 public class SortedLinkedList<T extends Comparable<? super T>> implements SortedLinkListInterface<T>,Serializable {
 	  private Node firstNode;

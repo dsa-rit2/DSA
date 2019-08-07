@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import travelBug.obj.TravelLeg;
+import travelBug.obj.ComparePrice;
 
 public class singlyLinkedList<T> implements linkListInterface<T> {
 	private Node firstNode; // reference to first node

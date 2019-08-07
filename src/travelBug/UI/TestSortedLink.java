@@ -9,7 +9,7 @@ import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
 import travelBug.library.SortedLinkedList;
 import travelBug.library.singlyLinkedList;
-import travelBug.obj.TravelLeg;
+import travelBug.obj.ComparePrice;
 import travelBug.obj.TravelLegInfo;
 
 public class TestSortedLink {
@@ -17,11 +17,11 @@ public static void main(String[] args) {
 	LinkArray<TravelLegInfo> tArray = new LinkArray<TravelLegInfo>();
 	ReadWriteFile<TravelLegInfo> tFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
 	tArray = tFile.readLinkArray();
-	singlyLinkedList<TravelLeg> rArray = new singlyLinkedList<TravelLeg>();
-	SortedLinkedList<TravelLeg> sArray = new SortedLinkedList<TravelLeg>();	
+	singlyLinkedList<ComparePrice> rArray = new singlyLinkedList<ComparePrice>();
+	SortedLinkedList<ComparePrice> sArray = new SortedLinkedList<ComparePrice>();	
 	
 	for(int i = 1; i <= tArray.size(); i ++) {
-		rArray.add(new TravelLeg(tArray.getIndexElement(i - 1).getMode(), tArray.getIndexElement(i - 1).getSource(), tArray.getIndexElement(i - 1).getDest(), tArray.getIndexElement(i - 1).getPrice(), tArray.getIndexElement(i - 1).getDistance(), tArray.getIndexElement(i - 1).getfromDate(), tArray.getIndexElement(i - 1).gettoDate(), tArray.getIndexElement(i - 1).getfromTime(), tArray.getIndexElement(i - 1).gettoTime()));
+		rArray.add(new ComparePrice(tArray.getIndexElement(i - 1).getMode(), tArray.getIndexElement(i - 1).getSource(), tArray.getIndexElement(i - 1).getDest(), tArray.getIndexElement(i - 1).getPrice(), tArray.getIndexElement(i - 1).getDistance(), tArray.getIndexElement(i - 1).getfromDate(), tArray.getIndexElement(i - 1).gettoDate(), tArray.getIndexElement(i - 1).getfromTime(), tArray.getIndexElement(i - 1).gettoTime()));
 		System.out.println(rArray.getEntry(i).getSource() + " " + rArray.getEntry(i).getPrice());
 	}
 	

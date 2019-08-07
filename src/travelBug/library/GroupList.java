@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 public class GroupList<T> implements GroupListInterface<T> {
 
 	private Node firstNode;
-	public int numberOfEntries;
+	private int numberOfEntries;
 
 	private GroupList() {
 		clear();
@@ -16,24 +16,24 @@ public class GroupList<T> implements GroupListInterface<T> {
 	public GroupList(SinglyLinkedList<T> listNode) {
 		clear();
 		GroupList<T> tempLinkedList = new GroupList<T>();
-		for (T list : listNode) {
-			if (tempLinkedList.isEmpty() || tempLinkedList.firstNode.equals(list)) {
+		listNode.forEach(list -> {
+			if (tempLinkedList.isEmpty() || tempLinkedList.firstNode.equals(list))
 				tempLinkedList.add(list);
-			} else {
+			else {
 				this.add((T) tempLinkedList);
 				tempLinkedList.clear();
 			}
-		}
+		});
 		this.add((T) tempLinkedList);
+		System.out.println("Number of pointer: " + this.toArray());
+		System.out.println("Number of Element: " + numberOfEntries);
 	}
 
 	private boolean add(T newEntry) {
 		Node newNode = new Node(newEntry); // create the new node
 
-		if (isEmpty()) // if empty list
-		{
-			firstNode = newNode;
-		} else { // add to end of nonempty list
+		if (isEmpty()) firstNode = newNode;	// if empty list
+		else { // add to end of nonempty list
 			Node currentNode = firstNode; // traverse linked list with p pointing to the current node
 			while (currentNode.next != null) { // while have not reached the last node
 				currentNode = currentNode.next;
@@ -55,7 +55,18 @@ public class GroupList<T> implements GroupListInterface<T> {
 	}
 
 	public boolean isEmpty() {
-		return numberOfEntries == 0;
+		return numberOfEntries >= 0;
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	public T[] toArray() {
+		T[] arrayObj = (T[]) new Object[this.getNumberOfEntries()];
+		int i = 0;
+		for (T elements : this) {
+			arrayObj[i++] = elements;
+		}
+		return arrayObj;
 	}
 
 	@Override
@@ -107,8 +118,7 @@ public class GroupList<T> implements GroupListInterface<T> {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return this.toArray().toString();
 	}
 
 }

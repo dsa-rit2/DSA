@@ -1,25 +1,22 @@
 package travelBug.library;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class LinkArray<T> implements ListInterface<T>, Serializable {
 	private static final long serialVersionUID = 1L;		// Serializable purpose
 	private static final int MAXSIZE = 1000;				// Initial default array size
-	private int array_size = 0;								// Store actual size of array
+	private int array_size;									// Store actual size of array
 	private T[] objArray;									// The object of the array
 
-	@SuppressWarnings("unchecked")
 	public LinkArray() {
-		objArray = (T[]) new Object[MAXSIZE];
+		makeEmpty();
 	}
 
 	/*********** Double the array length ***********/
-	@SuppressWarnings("unchecked")
 	private void doubleSize() {
-		T[] oldArr = objArray;
-		objArray = (T[]) new Object[oldArr.length * 2];
-		System.arraycopy(oldArr, 0, objArray, 0, oldArr.length);
+		objArray = Arrays.copyOf(objArray, objArray.length * 2);
 	}
 
 	/*********** Add element ***********/
@@ -104,9 +101,12 @@ public class LinkArray<T> implements ListInterface<T>, Serializable {
 		array_size = 0;						// Update node count back to 0
 	}
 
+	public T[] toArray() {
+		return Arrays.copyOf(objArray, this.array_size);
+	}
+	
 	@Override
-	public void print() {
-		// TODO Auto-generated method stub
-
+	public String toString() {
+		return this.toArray().toString();
 	}
 }

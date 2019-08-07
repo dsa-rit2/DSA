@@ -79,13 +79,14 @@ public class ListLocation extends JPanel {
 		tableModel.addColumn("State");
 		tableModel.addColumn("Country");
 		tableModel.addColumn("Type");
+		
 		load(null);
 
 //		table.setShowGrid(false);
 		table.setBounds(34, 31, 537, 167);
 //		contentPane.add(table);
 		scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(12, 84, 876, 306);
+		scrollPane.setBounds(12, 93, 876, 297);
 		scrollPane.setEnabled(false);
 		add(scrollPane);
 

@@ -2,13 +2,9 @@ package travelBug.library;
 
 import java.util.regex.*;
 import javax.swing.JOptionPane;
-
-import travelBug.UI.UIControl;
-
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.ObjectInputStream.GetField;
 import java.security.SecureRandom;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -208,35 +204,36 @@ public class library {
 		Pattern p1 = Pattern.compile("\\d+");
 		Pattern p2 = Pattern.compile("[0-9]+([,.][0-9]{1,2})?");
 		Matcher match1 = p1.matcher(inPrice), match2 = p2.matcher(inPrice);
-		
+
 		try {
-			if(match1.matches())
+			if (match1.matches())
 				return true;
-			else if(match2.matches())
+			else if (match2.matches())
 				return true;
-			else 
+			else
 				return false;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			System.out.print(e);
 			return false;
 		}
-		
+
 	}
+
 	public static boolean isValidDistance(String inDistance) {
 		Pattern p1 = Pattern.compile("\\d+");
 		Matcher match1 = p1.matcher(inDistance);
-		
+
 		try {
-			if(match1.matches())
+			if (match1.matches())
 				return true;
-			else 
+			else
 				return false;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			System.out.print(e);
 			return false;
 		}
 	}
-	
+
 	public static String getTodayDate() {
 		LocalDate today = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -254,7 +251,7 @@ public class library {
 	}
 
 	public static String getUsernameShortForm(String anyString) {
-		Pattern p1 = Pattern.compile("(\\w*).*"); 
+		Pattern p1 = Pattern.compile("(\\w*).*");
 		Matcher match1 = p1.matcher(anyString);
 		if (match1.matches())
 			return match1.group(1);
@@ -264,33 +261,28 @@ public class library {
 
 	public static String[] getCountryArray(String continent) {
 		try {
-			File f = new File("country/" + continent + ".txt");
-			Scanner sc = new Scanner(f);
+			@SuppressWarnings("resource")
+			Scanner sc = new Scanner(new File("country/" + continent + ".txt"));
 			LinkArray<String> pArray = new LinkArray<String>();
-			while (sc.hasNextLine()) {
-				pArray.addItem(sc.nextLine());
-			}
-			String [] returnStrings = new String[pArray.size()];
-			for(int i=0;i<pArray.size();i++) {
-				returnStrings[i] = pArray.getIndexElement(i).toString();
-			}
+			while (sc.hasNextLine()) pArray.addItem(sc.nextLine());
+			String[] returnStrings = new String[pArray.size()];
+			for (int i = 0; i < pArray.size(); i++)	returnStrings[i] = pArray.getIndexElement(i).toString();
 			return returnStrings;
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
-		}catch(NullPointerException e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
+
 	public static String getTypeString(char type) {
-		
 		switch (type) {
-		case 'S':case 's':
+		case 'S': case 's':
 			return "Small City";
-		case 'M':case 'm':
-			return "Medium city";
+		case 'M': case 'm':
+			return "Medium City";
 		case 'L': case 'l':
 			return "Large City";
 		case 'N': case 'n':
@@ -303,17 +295,18 @@ public class library {
 			return null;
 		}
 	}
+
 	public static char getTypeChar(String type) {
 		switch (type) {
 		case "Small City":
 			return 'S';
-		case "Medium city":
+		case "Medium City":
 			return 'M';
 		case "Large City":
 			return 'L';
 		case "Natural formation":
 			return 'N';
-		case "Designated Park/Reserve": 
+		case "Designated Park/Reserve":
 			return 'P';
 		case "Man-made landmark":
 			return 'K';
@@ -321,6 +314,7 @@ public class library {
 			return 0;
 		}
 	}
+<<<<<<< HEAD
 	public static String getModeString(char type) {
 		
 		switch (type) {
@@ -358,6 +352,9 @@ public class library {
 			return 0;
 		}
 	}
+=======
+
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 	public static double CoordinateDistance(double longitude1, double latitude1, double longitude2, double latitude2) {
 		return Math.sqrt(Math.pow(longitude1 - longitude2, 2) + Math.pow(latitude1 - latitude2, 2)) * 111.0;
 	}

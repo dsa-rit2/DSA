@@ -110,13 +110,6 @@ public class ListCustomer extends JPanel {
 		});
 		add(textField);
 		textField.setColumns(10);
-		//========================= Buttons ========================== //
-		JButton btnNewButton = new JButton("Add Customer");
-		btnNewButton.addActionListener(event -> {
-			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddCustomer(mainFrame)));
-		});
-		btnNewButton.setBounds(217, 401, 124, 36);
-		add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("Back");
 		btnNewButton_1.addActionListener(event -> {

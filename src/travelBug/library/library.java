@@ -15,7 +15,6 @@ import java.time.format.DateTimeFormatter;
 
 public class library {
 	public static final String currentDirectoryPath = System.getProperty("user.dir"); // Get root directory path
-	public static UIControl frame = null;
 	private static final Random RANDOM = new SecureRandom();
 	private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
@@ -36,7 +35,6 @@ public class library {
 			Pattern passPat = Pattern.compile("\\w*");
 			Matcher matchpass = passPat.matcher(in);
 			if (!matchpass.matches()) {
-				System.out.println("[Error] - The username must only contain character and numeric ");
 				return "The username must only contain character and numeric";
 			} else
 				return null;
@@ -140,13 +138,11 @@ public class library {
 
 	public static String validPassword(String password) {
 		if (password.length() < 6) {
-			System.out.println("[Error] - The password length must more or equal to 6");
 			return "The password length must more or equal to 6";
 		} else {
 			Pattern passPat = Pattern.compile("((?=.*\\d)(?=.*[a-zA-Z]).{6,15})");
 			Matcher matchpass = passPat.matcher(password);
 			if (!matchpass.matches()) {
-				System.out.println("[Error] - The password must only contain character and numeric");
 				return "The password must only contain character and numeric";
 			} else
 				return null;
@@ -258,7 +254,7 @@ public class library {
 	}
 
 	public static String getUsernameShortForm(String anyString) {
-		Pattern p1 = Pattern.compile("(\\w*).*"); // 20180505
+		Pattern p1 = Pattern.compile("(\\w*).*"); 
 		Matcher match1 = p1.matcher(anyString);
 		if (match1.matches())
 			return match1.group(1);
@@ -287,5 +283,45 @@ public class library {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	public static String getTypeString(char type) {
+		
+		switch (type) {
+		case 'S':case 's':
+			return "Small City";
+		case 'M':case 'm':
+			return "Medium city";
+		case 'L': case 'l':
+			return "Large City";
+		case 'N': case 'n':
+			return "Natural formation";
+		case 'P': case 'p':
+			return "Designated Park/Reserve";
+		case 'k': case 'K':
+			return "Man-made landmark";
+		default:
+			return null;
+		}
+	}
+	public static char getTypeChar(String type) {
+		switch (type) {
+		case "Small City":
+			return 'S';
+		case "Medium city":
+			return 'M';
+		case "Large City":
+			return 'L';
+		case "Natural formation":
+			return 'N';
+		case "Designated Park/Reserve": 
+			return 'P';
+		case "Man-made landmark":
+			return 'K';
+		default:
+			return 0;
+		}
+	}
+	public static double CoordinateDistance(double longitude1, double latitude1, double longitude2, double latitude2) {
+		return Math.sqrt(Math.pow(longitude1 - longitude2, 2) + Math.pow(latitude1 - latitude2, 2)) * 111.0;
 	}
 }

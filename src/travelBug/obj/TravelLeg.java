@@ -1,12 +1,17 @@
 package travelBug.obj;
 
+import static org.junit.Assert.isArray;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.LinkedList;
 
+import travelBug.library.LinkArray;
 import travelBug.library.library;
+import travelBug.library.singlyLinkedList;
 
-public class TravelLeg implements TravelLegInterface,Serializable {
+public class TravelLeg implements Comparable<TravelLeg>,Serializable {
 	private static final long serialVersionUID = 1L;
 	private String mode,source,dest;
 	private LocalTime fromTime;
@@ -90,8 +95,9 @@ public class TravelLeg implements TravelLegInterface,Serializable {
 		return toTime;
 	}
 	@Override
-	public int compareTo(TravelLegInterface o) {
+	public int compareTo(TravelLeg o) {
 		// TODO Auto-generated method stub
+		System.out.println(Double.compare(this.getPrice(), o.getPrice()));
 		return Double.compare(this.getPrice(), o.getPrice());
 	}
 

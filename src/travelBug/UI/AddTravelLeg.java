@@ -62,7 +62,8 @@ public class AddTravelLeg extends JPanel {
 		lblSourceLocation.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
 		lblSourceLocation.setBounds(37, 44, 207, 16);
 		add(lblSourceLocation);
-				
+		
+//================================Auto completer for textfield Source location======================//				
 		tfSourceL = new JTextField();
 		tfSourceL.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		tfSourceL.addKeyListener(new KeyAdapter() {
@@ -103,7 +104,10 @@ public class AddTravelLeg extends JPanel {
 		lblDestinationLocation.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
 		lblDestinationLocation.setBounds(446, 44, 252, 16);
 		add(lblDestinationLocation);
-
+//=========================================================================================================//		
+		
+		
+//========================Auto Completer for textfield Distination location================================//
 		tfDestinationL = new JTextField();
 		tfDestinationL.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		tfDestinationL.addKeyListener(new KeyAdapter() {
@@ -139,7 +143,7 @@ public class AddTravelLeg extends JPanel {
 		tfDestinationL.setBounds(701, 40, 143, 32);
 		add(tfDestinationL);
 		tfDestinationL.setColumns(10);
-
+//========================================================================================================================//
 		String[] selectionString = { "Select The transport type", "Airplane", "Rail/Train", "Bus", "Car", "Ferry",
 				"Boat" };
 		JComboBox cbTransport = new JComboBox(selectionString);
@@ -251,6 +255,7 @@ public class AddTravelLeg extends JPanel {
 		add(lblDistance);
 		
 		tfDistance = new JTextField();
+		tfDistance.setEditable(false);
 		tfDistance.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		tfDistance.setBounds(216, 131, 143, 32);
 		add(tfDistance);

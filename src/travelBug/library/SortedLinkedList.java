@@ -1,42 +1,38 @@
 package travelBug.library;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.Serializable;
+
+import travelBug.obj.TravelLeg;
 
 public class SortedLinkedList<T extends Comparable<? super T>> implements SortedLinkListInterface<T>,Serializable {
 	  private Node firstNode;
+	  private Node lastNode;
 	  private int length;
 
 	  public SortedLinkedList() {
 	    firstNode = null;
+	    lastNode = null;
 	    length = 0;
 	  }
-public T getfirstNode() {
-	return firstNode.data;
-}
+	  public T getfirstNode() {
+		  return firstNode.data;
+	  }
 	  public boolean add(T newEntry) {
-//	    Node newNode = new Node(newEntry);
-	//
-//	    Node nodeBefore = null;							// For linked list traversal: to reference the node before the current node
-//	    Node currentNode = firstNode;				// For linked list traversal: to reference the current node
-//	    while (currentNode != null && newEntry.compareTo(currentNode.data) > 0) {
-//	      nodeBefore = currentNode;
-//	      currentNode = currentNode.next;
-//	    }
-	//
-//	    if (isEmpty() || (nodeBefore == null)) { // CASE 1: add at beginning
-//	      newNode.next = firstNode;
-//	      firstNode = newNode;
-//	    } else {	// CASE 2: add in the middle or at the end, i.e. after nodeBefore
-//	      newNode.next = currentNode;
-//	      nodeBefore.next = newNode;
-//	    }
-//	    length++;
 	    
 	    firstNode = add(newEntry, firstNode);
 	    length++;
 	    return true;  
 	  }
-
+	  public T getLastNode() {
+			 Node currentNode = firstNode;
+		  while(currentNode.next!=null) {
+			 currentNode = currentNode.next;
+		  }
+		  lastNode = currentNode;
+		  return lastNode.data;
+	  }
 	  private Node add(T newEntry, Node currNode)
 	  {
 	      if((currNode == null)||newEntry.compareTo(currNode.data)<=0)
@@ -50,13 +46,11 @@ public T getfirstNode() {
 	      }
 	      return currNode;
 	  }
-	  
-	  public boolean remove(T anEntry) {
-	    throw new UnsupportedOperationException();	// Left as Practical exercise
-	  }
-
-	  public int getPosition(T anEntry) {
-	    throw new UnsupportedOperationException();	// Left as Practical exercise
+	  public boolean addAll(singlyLinkedList<T> anEntry) {
+		  for(int i = 1; i <= anEntry.getNumberOfEntries();i++) {
+			  add((T)anEntry.getEntry(i));
+		  }
+		  return true;
 	  }
 
 	  public T getEntry(int givenPosition) {
@@ -64,7 +58,7 @@ public T getfirstNode() {
 
 	    if ((givenPosition >= 1) && (givenPosition <= length)) {
 	      Node currentNode = firstNode;
-	      for (int i = 0; i < givenPosition - 1; ++i) {
+	      for (int i = 1; i < givenPosition; ++i) {
 	        currentNode = currentNode.next;		// advance currentNode to next node
 	      }
 	      result = currentNode.data;	// currentNode is pointing to the node at givenPosition
@@ -74,20 +68,7 @@ public T getfirstNode() {
 	  }
 
 	  public boolean contains(T anEntry) {
-//	    boolean found = false;
-//	    Node currentNode = firstNode;
-	//
-//	    while (!found && (currentNode != null)) {
-//	      if (anEntry.equals(currentNode.data)) {
-//	        found = true;
-//	      } else {
-//	        currentNode = currentNode.next;
-//	      }
-//	    }
-	//
-//	    return found;
-	    
-	    
+	   	    
 	    boolean found = false;
 	    Node tempNode = firstNode;
 	    int pos = 1;
@@ -171,4 +152,20 @@ public T getfirstNode() {
 	      next = nextNode;
 	    }
 	  }
+
+	@Override
+	public boolean addAll(T anEntry) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean remove(T anEntry) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public int getPosition(T anEntry) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

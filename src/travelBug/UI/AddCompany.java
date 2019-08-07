@@ -16,15 +16,15 @@ public class AddCompany extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtFCompanyName, txtFShortForm;
 	private JTextArea tADescription;
-	private JLabel lblPhoneNumber, lblDescription,lblCompanyName, lblShortForm, lblTitle ;
-	private Label  lblErrorDescription, lblErrorPhoneNum, lblErrorShortForm,lblErrorCompanyName;
+	private JLabel lblPhoneNumber, lblDescription, lblCompanyName, lblShortForm, lblTitle;
+	private Label lblErrorDescription, lblErrorPhoneNum, lblErrorShortForm, lblErrorCompanyName;
 	private JTextField txtFPhoneNum;
 	private LinkArray<Company> cArray = new LinkArray<Company>();
 	private ReadWriteFile<Company> rFile = new ReadWriteFile<Company>("Company.txt", Company.class);
-	private final UIControl mainFrame;		// Store main frame
-	
+	private final UIControl mainFrame; // Store main frame
+
 	public AddCompany(UIControl parent) {
-		//==================== JPanel setting =====================
+		// ==================== JPanel setting =====================
 		super();
 		this.mainFrame = parent;
 //		UIControl.titleName = "Add TravelLeg Company";
@@ -32,7 +32,7 @@ public class AddCompany extends JPanel {
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 
-		//==================== Content component ====================
+		// ==================== Content component ====================
 		lblTitle = new JLabel("Add Company");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 29));
@@ -88,7 +88,7 @@ public class AddCompany extends JPanel {
 		add(txtFPhoneNum);
 		txtFPhoneNum.setColumns(10);
 
-		//====================== Error Message ==========================
+		// ====================== Error Message ==========================
 		lblErrorCompanyName = new Label("");
 		lblErrorCompanyName.setForeground(Color.RED);
 		lblErrorCompanyName.setBackground(new Color(255, 255, 255, 0));
@@ -113,7 +113,12 @@ public class AddCompany extends JPanel {
 		lblErrorDescription.setBounds(277, 369, 426, 16);
 		add(lblErrorDescription);
 
-		//========================= Button ==========================
+		lblErrorCompanyName.setVisible(false);
+		lblErrorDescription.setVisible(false);
+		lblErrorPhoneNum.setVisible(false);
+		lblErrorShortForm.setVisible(false);
+		
+		// ========================= Button ==========================
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -126,9 +131,9 @@ public class AddCompany extends JPanel {
 		add(btnBack);
 
 		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.addActionListener(event ->{
-				submit();
-			
+		btnSubmit.addActionListener(event -> {
+			submit();
+
 		});
 		btnSubmit.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		btnSubmit.setBounds(287, 391, 120, 35);
@@ -144,6 +149,10 @@ public class AddCompany extends JPanel {
 																			// return null
 		String description = this.tADescription.getText();
 
+		lblErrorCompanyName.setVisible(false);
+		lblErrorDescription.setVisible(false);
+		lblErrorPhoneNum.setVisible(false);
+		lblErrorShortForm.setVisible(false);
 		lblErrorCompanyName.setText("");
 		lblErrorPhoneNum.setText("");
 		lblErrorShortForm.setText("");
@@ -151,6 +160,7 @@ public class AddCompany extends JPanel {
 
 		if (companyName.isEmpty()) {
 			lblErrorCompanyName.setText("The company name cannot be empty");
+			lblErrorCompanyName.setVisible(true);
 			error = true;
 		} else {
 			boolean errorCompanyName = false;
@@ -161,12 +171,14 @@ public class AddCompany extends JPanel {
 			}
 			if (errorCompanyName) { // Check the companyName is duplicated
 				lblErrorCompanyName.setText("The company name is duplicated");
+				lblErrorCompanyName.setVisible(true);
 				error = true;
 			}
 		}
 
 		if (shortForm.isEmpty()) { // Check short form is empty
 			lblErrorShortForm.setText("The short form cannot be empty");
+			lblErrorShortForm.setVisible(true);
 			error = true;
 		} else {
 			boolean errorShortForm = false;
@@ -177,30 +189,36 @@ public class AddCompany extends JPanel {
 			}
 			if (!library.isAlpha(shortForm)) { // The short form must in alphabet
 				lblErrorShortForm.setText("The short form must be alphabetic");
+				lblErrorShortForm.setVisible(true);
 				error = true;
 			} else if (shortForm.length() > 10) { // Cannot too long
 				lblErrorShortForm.setText("The short form must not excess 10 letter");
+				lblErrorShortForm.setVisible(true);
 				error = true;
 			} else if (errorShortForm) { // Check the shortForm is duplicated
 				lblErrorShortForm.setText("The short form is duplicated");
+				lblErrorShortForm.setVisible(true);
 				error = true;
 			}
 		}
 
 		if (txtFPhoneNum.getText().isEmpty()) {
 			lblErrorPhoneNum.setText("The phone number cannot be empty");
+			lblErrorPhoneNum.setVisible(true);
 			error = true;
 		} else if (phoneNum == null) { // If phone number which is invalid in terms of format, size
 			lblErrorPhoneNum.setText("The phone number is invalid");
+			lblErrorPhoneNum.setVisible(true);
 			error = true;
 		}
 
 		if (description.isEmpty()) { // If the description is empty
 			lblErrorDescription.setText("The description is empty");
+			lblErrorDescription.setVisible(true);
 			error = true;
 		}
 
-		if (!error) { 			// If no error
+		if (!error) { // If no error
 			Company oCompany = new Company(companyName, shortForm, phoneNum, description);
 			cArray.addItem(oCompany);
 			rFile.writeLinkArray(cArray);
@@ -209,7 +227,8 @@ public class AddCompany extends JPanel {
 					"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (result == JOptionPane.OK_OPTION) {
 				try {
-					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddTravelLegAccount(mainFrame,companyName)));
+					SwingUtilities
+							.invokeLater(() -> mainFrame.changePanel(new AddTravelLegAccount(mainFrame, companyName)));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -8,14 +8,19 @@ public class Location implements Serializable {
 	private String continent;
 	private String country;
 	private String state;
-	private String type;
+	private char type;
+	private double longitude;
+	private double latitude;
 
-	public Location(String name, String continent, String country, String state, String type) {
+
+	public Location(String name, String continent, String country, String state, char type, double longitude, double latitude) {
 		this.name = name;
 		this.continent = continent;
 		this.country = country;
 		this.state = state;
 		this.type = type;
+		this.longitude = longitude;
+		this.latitude = latitude;
 	}
 
 	public String getName() {
@@ -50,12 +55,27 @@ public class Location implements Serializable {
 		this.state = state;
 	}
 
-	public String getType() {
+	public char getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(char type) {
 		this.type = type;
+	}
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
 	}
 	public void print() {
 		System.out.println("Location Name: " + name);
@@ -63,5 +83,6 @@ public class Location implements Serializable {
 		System.out.println("State: " + state);
 		System.out.println("Country: " + country);
 		System.out.println("Type: " + type);
+		System.out.println(longitude + "," + latitude);
 	}
 }

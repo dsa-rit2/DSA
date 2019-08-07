@@ -8,6 +8,8 @@ import travelBug.obj.*;
 //=========================
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Authentication extends JFrame {
 	private static final long serialVersionUID = 7701272199204927084L; // Serializable purpose
@@ -99,12 +101,24 @@ public class Authentication extends JFrame {
 		usernameField.setBounds(75, 249, 210, 30);
 		panel.add(usernameField);
 		usernameField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		usernameField.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkUser();
+			}
+		});
 
 		passwordField = new JPasswordField();
 		passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		passwordField.setBounds(75, 345, 210, 30);
 		panel.add(passwordField);
-
+		passwordField.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkUser();
+			}
+		});
+		// ====================== Error Message ==========================================//
 		usernameErrorLabel = new Label("");
 		usernameErrorLabel.setBounds(75, 285, 210, 20);
 		panel.add(usernameErrorLabel);

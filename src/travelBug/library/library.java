@@ -278,25 +278,18 @@ public class library {
 	}
 
 	public static String getTypeString(char type) {
-
 		switch (type) {
-		case 'S':
-		case 's':
+		case 'S': case 's':
 			return "Small City";
-		case 'M':
-		case 'm':
-			return "Medium city";
-		case 'L':
-		case 'l':
+		case 'M': case 'm':
+			return "Medium City";
+		case 'L': case 'l':
 			return "Large City";
-		case 'N':
-		case 'n':
+		case 'N': case 'n':
 			return "Natural formation";
-		case 'P':
-		case 'p':
+		case 'P': case 'p':
 			return "Designated Park/Reserve";
-		case 'k':
-		case 'K':
+		case 'k': case 'K':
 			return "Man-made landmark";
 		default:
 			return null;
@@ -307,7 +300,7 @@ public class library {
 		switch (type) {
 		case "Small City":
 			return 'S';
-		case "Medium city":
+		case "Medium City":
 			return 'M';
 		case "Large City":
 			return 'L';

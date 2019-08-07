@@ -314,7 +314,6 @@ public class library {
 			return 0;
 		}
 	}
-<<<<<<< HEAD
 	public static String getModeString(char type) {
 		
 		switch (type) {
@@ -352,9 +351,7 @@ public class library {
 			return 0;
 		}
 	}
-=======
 
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 	public static double CoordinateDistance(double longitude1, double latitude1, double longitude2, double latitude2) {
 		return Math.sqrt(Math.pow(longitude1 - longitude2, 2) + Math.pow(latitude1 - latitude2, 2)) * 111.0;
 	}

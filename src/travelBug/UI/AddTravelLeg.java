@@ -554,12 +554,12 @@ public class AddTravelLeg extends JPanel {
 				//========================= Write travel leg info into text file==================//
 				if (!error) {
 					rArray = rFile.readLinkArray();
-					TravelLegInfo travelLegInfo = new TravelLegInfo(mode,dstLocationString,
-							srcLocationString,price,distance, fromDate, toDate, fromTime, toTime);
+					TravelLegInfo travelLegInfo = new TravelLegInfo(mode,srcLocationString,
+							dstLocationString,price,distance, fromDate, toDate, fromTime, toTime);
 					rArray.addItem(travelLegInfo);
 					rFile.writeLinkArray(rArray);
 					int result = JOptionPane.showConfirmDialog(null,
-							"New travel leg info added successful!!!\nDo you want to add new travelleg account",
+							"New travel leg info added successful!!!\nDo you want to add more travel leg info?",
 							"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 					if (result == JOptionPane.OK_OPTION) {
 						try {

@@ -31,6 +31,7 @@ public class TravelLegMaintenance extends JPanel {
 	private SinglyLinkedList<ComparePrice> rArray = new SinglyLinkedList<ComparePrice>();
 	private SinglyLinkedList<CompareTime> oArray = new SinglyLinkedList<CompareTime>();
 	private JTextField tfSearch;
+	private JScrollPane scrollPane;
 	private JLabel lblSearchJLabel;
 	private DefaultTableModel defaultTableModel;
 	private JTable table;
@@ -105,8 +106,10 @@ public class TravelLegMaintenance extends JPanel {
 
 		updateLabel(null);
 
-		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(8, 59, 837, 323);
+		table.setBounds(34, 31, 537, 167);
+		scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(12, 84, 876, 306);
+		scrollPane.setEnabled(false);
 		add(scrollPane);
 
 		for (int i = 0; i < table.getColumnCount(); i++) {
@@ -114,7 +117,7 @@ public class TravelLegMaintenance extends JPanel {
 			TableColumn column = table.getColumnModel().getColumn(i);
 			if (i >= 0) {
 				if (i == j)
-					column.setMinWidth(100);;
+					column.setPreferredWidth(100);
 			}
 			j++;
 		}
@@ -164,7 +167,7 @@ public class TravelLegMaintenance extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				defaultTableModel = (DefaultTableModel) table.getModel();
 				int SelectedRowIndex = table.getSelectedRow();
-				if (SelectedRowIndex > 0) {
+				if (SelectedRowIndex >= 0) {
 					vector = (Vector) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location

@@ -6,17 +6,32 @@ import java.util.NoSuchElementException;
 public class GroupList<T> implements GroupListInterface<T> {
 
 	private Node firstNode;
-	private int numberOfEntries;
+	public int numberOfEntries;
 
-	public GroupList() {
+	private GroupList() {
 		clear();
 	}
 
+	@SuppressWarnings("unchecked")
+	public GroupList(SinglyLinkedList<T> listNode) {
+		clear();
+		GroupList<T> tempLinkedList = new GroupList<T>();
+		for (T list : listNode) {
+			if (tempLinkedList.isEmpty() || tempLinkedList.firstNode.equals(list)) {
+				tempLinkedList.add(list);
+			} else {
+				this.add((T) tempLinkedList);
+				tempLinkedList.clear();
+			}
+		}
+		this.add((T) tempLinkedList);
+	}
 
-	public boolean add(T newEntry) {
-		Node newNode = new Node(newEntry);
+	private boolean add(T newEntry) {
+		Node newNode = new Node(newEntry); // create the new node
 
-		if (isEmpty()) {
+		if (isEmpty()) // if empty list
+		{
 			firstNode = newNode;
 		} else { // add to end of nonempty list
 			Node currentNode = firstNode; // traverse linked list with p pointing to the current node
@@ -30,56 +45,9 @@ public class GroupList<T> implements GroupListInterface<T> {
 		return true;
 	}
 
-	public boolean add(int newPosition, T newEntry) {
-
-	}
-
-	public T remove(int givenPosition) {
-		T result = null;
-
-		if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
-			if (givenPosition == 1) { // case 1: remove first entry
-				result = firstNode.data;
-				firstNode = firstNode.next;
-			} else { // case 2: givenPosition > 1
-				Node nodeBefore = firstNode;
-				for (int i = 1; i < givenPosition - 1; ++i) {
-					nodeBefore = nodeBefore.next; // advance nodeBefore to its next node
-				}
-				result = nodeBefore.next.data;
-				nodeBefore.next = nodeBefore.next.next; // make node before point to node after the
-			} // one to be deleted (to disconnect node from chain)
-
-			numberOfEntries--;
-		}
-
-		return result;
-	}
-
 	public void clear() {
 		firstNode = null;
 		numberOfEntries = 0;
-	}
-
-	public boolean replace(int givenPosition, T newEntry) {
-
-	}
-
-	@SuppressWarnings("unchecked")
-	public T getEntry(int givenPosition) {
-		T data = null;
-		if (givenPosition > 0 && givenPosition < numberOfEntries) {
-			Node currentNode = firstNode;
-			for (int i = 0; i < givenPosition; i++) {
-				currentNode = currentNode.next;
-			}
-			data = currentNode.data;
-		}
-		return data;
-	}
-
-	public boolean contains(T anEntry) {
-
 	}
 
 	public int getNumberOfEntries() {
@@ -92,21 +60,12 @@ public class GroupList<T> implements GroupListInterface<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-		return getIterator();
-	}
-
-	@Override
-	public Iterator<T> getIterator() {
 		return new GroupListIterator();
 	}
 
 	private class GroupListIterator implements Iterator<T> {
 
-		private Node currentNode;
-
-		public GroupListIterator() {
-			currentNode = firstNode;
-		}
+		private Node currentNode = firstNode;
 
 		@Override
 		public boolean hasNext() {
@@ -126,8 +85,7 @@ public class GroupList<T> implements GroupListInterface<T> {
 
 		@Override
 		public void remove() {
-			throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods,
-																			// choose Tools | Templates.
+			throw new UnsupportedOperationException("Not supported yet.");
 		}
 	}
 

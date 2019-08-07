@@ -290,7 +290,7 @@ public class library {
 		case 'S':case 's':
 			return "Small City";
 		case 'M':case 'm':
-			return "Medium city";
+			return "Medium City";
 		case 'L': case 'l':
 			return "Large City";
 		case 'N': case 'n':
@@ -307,7 +307,7 @@ public class library {
 		switch (type) {
 		case "Small City":
 			return 'S';
-		case "Medium city":
+		case "Medium City":
 			return 'M';
 		case "Large City":
 			return 'L';

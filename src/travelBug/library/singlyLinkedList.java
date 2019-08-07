@@ -35,23 +35,23 @@ public class singlyLinkedList<T> implements linkListInterface<T> {
 	  }
 
 	  @Override
-	  public boolean add(int newPosition, T newEntry) { // OutOfMemoryError possible
+	  public boolean add(int newPosition, T newEntry) { 
 	    boolean isSuccessful = true;
 
-	    if ((newPosition >= 1) && (newPosition <= numberOfEntries + 1)) {
+	    if ((newPosition >= 1) && (newPosition <= numberOfEntries + 1)) { // if position get is out of range
 	      Node newNode = new Node(newEntry);
 
 	      if (isEmpty() || (newPosition == 1)) {     // case 1: add to beginning of list
 	        newNode.next = firstNode;
 	        firstNode = newNode;
 	      } else {								                      // case 2: list is not empty and newPosition > 1
-	        Node nodeBefore = firstNode;
+	        Node tempNode = firstNode;
 	        for (int i = 1; i < newPosition - 1; ++i) {
-	          nodeBefore = nodeBefore.next;		// advance nodeBefore to its next node
+	          tempNode = tempNode.next;		// advance nodeBefore to its next node
 	        }
 
-	        newNode.next = nodeBefore.next;	// make new node point to current node at newPosition
-	        nodeBefore.next = newNode;		// make the node before point to the new node
+	        newNode.next = tempNode.next;	// make new node point to current node at newPosition
+	        tempNode.next = newNode;		// make the node before point to the new node
 	      }
 
 	      numberOfEntries++;
@@ -87,7 +87,7 @@ public class singlyLinkedList<T> implements linkListInterface<T> {
 	  }
 
 	  @Override
-	  public boolean replace(int givenPosition, T newEntry) {
+	  public boolean replace(int givenPosition, T newEntry) {//add data on specified location
 	    boolean isSuccessful = true;
 
 	    if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
@@ -105,7 +105,7 @@ public class singlyLinkedList<T> implements linkListInterface<T> {
 	  }
 
 	  @Override
-	  public T getEntry(int givenPosition) {
+	  public T getEntry(int givenPosition) {//get the number of the given location
 	    T result = null;
 
 	    if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {

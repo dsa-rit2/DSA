@@ -308,7 +308,6 @@ public class library {
 		}
 	}
 	public static char getTypeChar(String type) {
-		type = type.toUpperCase();
 		switch (type) {
 		case "Small City":
 			return 'S';
@@ -325,5 +324,8 @@ public class library {
 		default:
 			return 0;
 		}
+	}
+	public static double CoordinateDistance(double longitude1, double latitude1, double longitude2, double latitude2) {
+		return Math.sqrt(Math.pow(longitude1 - longitude2, 2) + Math.pow(latitude1 - latitude2, 2)) * 111.0;
 	}
 }

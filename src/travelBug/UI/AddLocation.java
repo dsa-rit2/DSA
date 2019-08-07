@@ -19,6 +19,7 @@ public class AddLocation extends JPanel {
 	private static final long serialVersionUID = 1L; // Serializable purpose
 	private JTextField txtLocationName, txtState;
 	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblCountry, lblState, lblType;
+	private JLabel lblLongitude, lblLatitude;
 	private Label lblErrorLocationName, lblErrorContinent, lblErrorType, lblErrorState, lblErrorCountry;
 	private Label lblErrorLongitude, lblErrorLatitude;
 	private JComboBox<String> cbCountry, cbType;
@@ -37,7 +38,11 @@ public class AddLocation extends JPanel {
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
+		createGui();
+	}
 
+	public void createGui() {
+		removeAll();
 		// ===================== Content component =====================
 		txtLocationName = new JTextField();
 		txtLocationName.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -99,8 +104,8 @@ public class AddLocation extends JPanel {
 		cbCountry.setBounds(300, 182, 300, 30);
 		add(cbCountry);
 
-		String[] state = { "<Choose Type>", "Small City", "Medium City", "Large City",
-				"Natural formation", "Designated Park/Reserve", "Man-made landmark" };
+		String[] state = { "<Choose Type>", "Small City", "Medium City", "Large City", "Natural formation",
+				"Designated Park/Reserve", "Man-made landmark" };
 		cbType = new JComboBox(state);
 		cbType.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cbType.setBounds(300, 298, 300, 30);
@@ -111,7 +116,7 @@ public class AddLocation extends JPanel {
 		cbContinent.setModel(new DefaultComboBoxModel(new String[] { "<Choose Continent>", "Asia", "Africa",
 				"South America", "North America", "Europe", "Australia" }));
 		cbContinent.addActionListener(event -> {
-			if(cbContinent.getSelectedIndex() !=0)
+			if (cbContinent.getSelectedIndex() != 0)
 				loadC(cbContinent.getSelectedItem().toString());
 			else
 				loadC(null);
@@ -124,24 +129,25 @@ public class AddLocation extends JPanel {
 		txtLongitude.setBounds(300, 346, 197, 22);
 		add(txtLongitude);
 		txtLongitude.setColumns(10);
-		
+
 		txtLatitude = new JTextField();
 		txtLatitude.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		txtLatitude.setBounds(640, 346, 197, 22);
 		add(txtLatitude);
 		txtLatitude.setColumns(10);
-		
-		JLabel lblLongitude = new JLabel("Longitude:");
+
+		lblLongitude = new JLabel("Longitude:");
 		lblLongitude.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lblLongitude.setBounds(196, 341, 94, 30);
 		add(lblLongitude);
-		
+
 		JLabel lblLatitude = new JLabel("Latitude:");
 		lblLatitude.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lblLatitude.setBounds(560, 348, 81, 16);
 		add(lblLatitude);
-		
-		// ==================================== Button ==================================//
+
+		// ==================================== Button
+		// ==================================//
 		JButton btnAdd = new JButton("Add");
 		btnAdd.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		btnAdd.addActionListener(event -> submit());
@@ -187,18 +193,28 @@ public class AddLocation extends JPanel {
 		lblErrorType.setBackground(Color.white);
 		lblErrorType.setBounds(600, 296, 265, 16);
 		add(lblErrorType);
-		
+
 		lblErrorLongitude = new Label("");
 		lblErrorLongitude.setBackground(Color.WHITE);
 		lblErrorLongitude.setForeground(Color.RED);
 		lblErrorLongitude.setBounds(300, 370, 247, 22);
 		add(lblErrorLongitude);
-		
+
 		lblErrorLatitude = new Label("");
 		lblErrorLatitude.setBackground(Color.WHITE);
 		lblErrorLatitude.setForeground(Color.RED);
 		lblErrorLatitude.setBounds(640, 370, 247, 22);
 		add(lblErrorLatitude);
+
+		lblErrorContinent.setVisible(false);
+		lblErrorCountry.setVisible(false);
+		lblErrorLatitude.setVisible(false);
+		lblErrorLocationName.setVisible(false);
+		lblErrorLongitude.setVisible(false);
+		lblErrorState.setVisible(false);
+		lblErrorType.setVisible(false);
+		revalidate();
+		repaint();
 	}
 
 	private void submit() {
@@ -210,12 +226,20 @@ public class AddLocation extends JPanel {
 		String state = txtState.getText();
 		String country = cbCountry.getSelectedItem().toString();
 		String type = cbType.getSelectedItem().toString();
-		double longitude = Double.parseDouble(txtLongitude.getText());
-		double latitude = Double.parseDouble(txtLatitude.getText());
+		double longitude = 0.00;
+		double latitude = 0.00;
 		char typeChar = 0;
 		boolean error = false;
 
 		// =============== Reset error message =============
+		lblErrorContinent.setVisible(false);
+		lblErrorCountry.setVisible(false);
+		lblErrorLatitude.setVisible(false);
+		lblErrorLocationName.setVisible(false);
+		lblErrorLongitude.setVisible(false);
+		lblErrorState.setVisible(false);
+		lblErrorType.setVisible(false);
+
 		lblErrorLocationName.setText("");
 		lblErrorContinent.setText("");
 		lblErrorCountry.setText("");
@@ -227,6 +251,7 @@ public class AddLocation extends JPanel {
 		// =============== Check validation ==============
 		if (locationName.isEmpty()) {
 			lblErrorLocationName.setText("The location name cannot be empty");
+			lblErrorLocationName.setVisible(true);
 			error = true;
 		} else {
 			int nError = 0;
@@ -237,57 +262,77 @@ public class AddLocation extends JPanel {
 			}
 			if (nError != 0) {
 				lblErrorLocationName.setText("The location is duplicated");
+				lblErrorLocationName.setVisible(true);
 				error = true;
 			}
 		}
 
 		if (cbContinent.getSelectedIndex() == 0) {
 			lblErrorContinent.setText("Please select the continent");
+			lblErrorContinent.setVisible(true);
 			error = true;
 		}
 
 		if (state.isEmpty()) {
 			lblErrorState.setText("The state cannot be empty");
+			lblErrorState.setVisible(true);
 			error = true;
 		}
 
 		if (cbCountry.getSelectedIndex() == 0) {
 			lblErrorCountry.setText("Please select country");
+			lblErrorCountry.setVisible(true);
 			error = true;
 		}
 
 		if (cbType.getSelectedIndex() == 0) {
 			lblErrorType.setText("Please select type");
+			lblErrorType.setVisible(true);
 			error = true;
-		}else {
+		} else {
 			typeChar = library.getTypeChar(type);
-			if(typeChar==0) {
+			if (typeChar == 0) {
 				lblErrorType.setText("The type is wrong");
+				lblErrorType.setVisible(true);
 				error = true;
 			}
 		}
-		if(txtLongitude.getText().isEmpty()) {
+		if (txtLongitude.getText().isEmpty()) {
 			lblErrorLongitude.setText("Longitude is empty");
+			lblErrorLongitude.setVisible(true);
 			error = true;
+		} else {
+			try {
+				longitude = Double.parseDouble(txtLongitude.getText());
+			} catch (NumberFormatException e) {
+				lblErrorLongitude.setText("Longitude must in numeric");
+				lblErrorLongitude.setVisible(true);
+				error = true;
+			}
 		}
-		if(txtLatitude.getText().isEmpty()) {
+		if (txtLatitude.getText().isEmpty()) {
 			lblErrorLatitude.setText("Latitude is empty");
+			lblErrorLatitude.setVisible(true);
 			error = true;
+		} else {
+			try {
+				latitude = Double.parseDouble(txtLatitude.getText());
+			} catch (NumberFormatException e) {
+				lblErrorLatitude.setText("Latitude must in numeric");
+				lblErrorLatitude.setVisible(true);
+				error = true;
+			}
 		}
 
 		if (!error) {
-			Location location = new Location(locationName, continent, country, state, typeChar, longitude,latitude);
+			Location location = new Location(locationName, continent, country, state, typeChar, longitude, latitude);
 			lArray.addItem(location);
 			lFile.writeLinkArray(lArray);
 			int result = JOptionPane.showConfirmDialog(null,
 					"Add location successful!!!\nDo you want to add more location??", "Confirm",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (result == JOptionPane.OK_OPTION) {
-				try {
-					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddLocation(mainFrame)));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				createGui();
 			} else {
 				try {
 					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
@@ -303,17 +348,19 @@ public class AddLocation extends JPanel {
 		if (continent == null) {
 			String[] checkStrings = library.getCountryArray("AllCountry");
 			if (checkStrings != null) {
+				cbCountry.setEnabled(false);
 				for (String string : checkStrings) {
 					cbCountry.addItem(string);
 				}
 			}
 		} else {
-
 			String[] checkStrings = library.getCountryArray(continent);
-			if (checkStrings != null)
+			if (checkStrings != null) {
+				cbCountry.setEnabled(true);
 				for (String string : checkStrings) {
 					cbCountry.addItem(string);
 				}
+			}
 		}
 	}
 }

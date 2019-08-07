@@ -109,6 +109,9 @@ public class AddTravelLegAccount extends JPanel {
 		lblPasswordError.setBackground(Color.white);
 		lblPasswordError.setBounds(312, 233, 416, 16);
 		add(lblPasswordError);
+		
+		lblPasswordError.setVisible(false);
+		lblUsernameError.setVisible(false);
 
 		// ================================================ Button ====================================================//
 		Button btnAdd = new Button("Add");
@@ -118,11 +121,14 @@ public class AddTravelLegAccount extends JPanel {
 			String checkPass = library.validPassword(password);
 			int error = 0;
 
+			lblPasswordError.setVisible(false);
+			lblUsernameError.setVisible(false);
 			lblUsernameError.setText("");
 			lblPasswordError.setText("");
 
 			if (txtUserNameNum.getText().isEmpty()) {
 				lblUsernameError.setText("The username code cannot be empty");
+				lblUsernameError.setVisible(true);
 				error++;
 			} else {
 				boolean errorUsername = false;
@@ -133,14 +139,17 @@ public class AddTravelLegAccount extends JPanel {
 				}
 				if (errorUsername) {
 					lblUsernameError.setText("The username is duplicated!!!");
+					lblUsernameError.setVisible(true);
 					error++;
 				}
 			}
 			if (password.isEmpty()) {
 				lblPasswordError.setText("The password cannot be empty");
+				lblPasswordError.setVisible(true);
 				error++;
 			} else if (checkPass != null) {
 				lblPasswordError.setText(checkPass);
+				lblPasswordError.setVisible(true);
 				error++;
 			}
 			if (error == 0) {

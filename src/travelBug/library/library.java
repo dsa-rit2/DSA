@@ -381,4 +381,11 @@ public class library {
 		}
 		return tempLinkedList;
 	}
+	public static <T> LinkArray<T> Converted (SinglyLinkedList<T> linkedlist){
+		LinkArray<T> pArrayList = new LinkArray<T>();
+		for(int i =1; i<=linkedlist.getNumberOfEntries();i++) {
+			pArrayList.addItem(linkedlist.getEntry(i));
+		}
+		return pArrayList;
+	}
 }

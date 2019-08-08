@@ -1,10 +1,15 @@
 package travelBug.obj;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import travelBug.library.library;
 
-public class sourceDest2 {
+public class sourceDest2 implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String l1;
 	String l2;
 	LocalDate localDate;

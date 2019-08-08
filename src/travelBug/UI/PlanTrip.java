@@ -54,18 +54,18 @@ public class PlanTrip extends JPanel {
 
 		GroupList<Location, SinglyLinkedList<Location>> testGroupList = new GroupList<Location, SinglyLinkedList<Location>>(
 				testLinkedList, Comparator.comparing(Location::getState));
-		System.out.println(testGroupList);
 		String[] continents = new String[testGroupList.getNumberOfEntries() + 1];
 		continents[0] = "-Select continent-";
 		int i = 1;
 		for (SinglyLinkedList<Location> element : testGroupList) {
+			System.out.println(element.getNumberOfEntries());
+			System.out.println(element.getFirst().getState());
 			try {
-				continents[i] = element.getFirst().getState();
+				continents[i++] = element.getFirst().getState();
 			} catch (NullPointerException e) {
 				System.out.println("Null occur");
 			}
 		}
-
 //		for (int i = 0; i < locationArray.size(); i++) {
 //			if (continents[i] != locationArray.getIndexElement(i).getContinent())
 //				continents[i + 1] = locationArray.getIndexElement(i).getContinent();

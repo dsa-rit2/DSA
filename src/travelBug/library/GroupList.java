@@ -40,21 +40,28 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 		
 		SortedLinkedList<T> sortedLinkedList = new SortedLinkedList<T>(listNode, c);
 		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
+//		System.out.println(tempLinkedList.getNumberOfEntries());
 		sortedLinkedList.forEach(list -> {
+//			System.out.println(list);
 			if (tempLinkedList.isEmpty() || (c.compare(list, tempLinkedList.getFirst())) == 0) {
 				tempLinkedList.add(list);
+//				System.out.println("1.**" + tempLinkedList.getNumberOfEntries());
 			}
 			else {
 				this.add((E) tempLinkedList);
+//				System.out.println(tempLinkedList.getNumberOfEntries());
 				tempLinkedList.clear();
 				tempLinkedList.add(list);
-				System.out.println("Element: " + firstNode.data);
+//				System.out.println("Element: " + firstNode.data);
 			}
-			
+//			System.out.println(tempLinkedList.getFirst().toString());
+			;
 		});
 		this.add((E) tempLinkedList);
 		
-		System.out.println("Number of Pointer: " + numberOfEntries);
+//		System.out.println(tempLinkedList.getFirst().toString());
+//		System.out.println(tempLinkedList.getFirst());
+//		System.out.println("Number of Pointer: " + numberOfEntries);
 		
 	}
 	

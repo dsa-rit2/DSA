@@ -149,7 +149,7 @@ public class SinglyLinkedList<T> implements linkListInterface<T> {
 
 	@Override
 	public boolean isEmpty() {
-		return numberOfEntries <= 0;
+		return numberOfEntries == 0;
 	}
 
 	@Override

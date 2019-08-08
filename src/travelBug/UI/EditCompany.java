@@ -40,7 +40,8 @@ public class EditCompany extends JPanel {
 		}
 		if (gotCompany == false) {
 			// Redirect to the previous page
-
+			library.dialogMessage("The company not found\nPlease contact our staff");
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 		}
 
 		// ==================== Content component =========================
@@ -118,6 +119,10 @@ public class EditCompany extends JPanel {
 		lblErrorPhoneNum.setBounds(667, 212, 207, 14);
 		add(lblErrorPhoneNum);
 
+		lblErrorCompanyName.setVisible(false);
+		lblErrorDescription.setVisible(false);
+		lblErrorPhoneNum.setVisible(false);
+		lblErrorShortForm.setVisible(false);
 		// =========================== Buttons =============================
 		JButton btnModify = new JButton("Modify");
 		btnModify.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -128,6 +133,10 @@ public class EditCompany extends JPanel {
 			String editP = phoneN.getText();
 			String descriptionString = Descriptiontxt.getText();
 
+			lblErrorCompanyName.setVisible(false);
+			lblErrorDescription.setVisible(false);
+			lblErrorPhoneNum.setVisible(false);
+			lblErrorShortForm.setVisible(false);
 			lblErrorCompanyName.setText("");
 			lblErrorPhoneNum.setText("");
 			lblErrorShortForm.setText("");
@@ -135,39 +144,47 @@ public class EditCompany extends JPanel {
 
 			if (companyName.isEmpty()) {
 				lblErrorCompanyName.setText("The company name cannot be empty");
+				lblErrorCompanyName.setVisible(true);
 				error++;
-			} else {
-				for (int i = 0; i < cArray.size(); i++) {
-					if (cArray.getIndexElement(i).getShortForm().equalsIgnoreCase(sFormString)) {
-					}
-				}
 			}
 			if (sFormString.isEmpty()) {
 				lblErrorShortForm.setText("The short form cannot be empty");
+				lblErrorShortForm.setVisible(true);
 				error++;
 			} else {
+				boolean shortFormErr = false;
 				for (int i = 0; i < cArray.size(); i++) {
-					if (cArray.getIndexElement(i).getShortForm().equalsIgnoreCase(sFormString)) {
-					}
-//						System.out.println(cArray.indexGetElement(i).getCompanyName());
+					if (cArray.getIndexElement(i).getShortForm().equalsIgnoreCase(sFormString))
+						shortFormErr = true;
+
+					
 				}
 				if (!library.isAlpha(sFormString)) {
 					lblErrorShortForm.setText("The short form must be alphabetic");
+					lblErrorShortForm.setVisible(true);
 					error++;
 				} else if (sFormString.length() > 10) {
 					lblErrorShortForm.setText("The short form must not excess 10 letter");
+					lblErrorShortForm.setVisible(true);
+					error++;
+				}else if(shortFormErr) {
+					lblErrorShortForm.setText("The short form is duplicated");
+					lblErrorShortForm.setVisible(true);
 					error++;
 				}
 			}
 			if (phoneN.getText().isEmpty()) {
 				lblErrorPhoneNum.setText("The phone number cannot be empty");
+				lblErrorPhoneNum.setVisible(true);
 				error++;
 			} else if (editP == null) {
 				lblErrorPhoneNum.setText("The phone number is invalid");
+				lblErrorPhoneNum.setVisible(true);
 				error++;
 			}
 			if (descriptionString.isEmpty()) {
 				lblErrorDescription.setText("The description is empty");
+				lblErrorDescription.setVisible(true);
 				error++;
 			}
 			if (error == 0) {

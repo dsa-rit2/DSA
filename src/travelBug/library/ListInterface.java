@@ -13,7 +13,9 @@ public interface ListInterface<T> {
 
 	public T removeFirst();
 
-	public void print();
-
 	public void makeEmpty();
+	
+	public T[] toArray();
+
+	public String toString();
 }

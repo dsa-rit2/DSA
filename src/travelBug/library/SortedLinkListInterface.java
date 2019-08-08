@@ -1,8 +1,12 @@
 package travelBug.library;
 
-public interface SortedLinkListInterface<T extends Comparable<? super T>> {
+import java.util.Iterator;
+
+public interface SortedLinkListInterface<T> extends Iterable<T> {
 	  public boolean add(T newEntry);
 
+	  public boolean addAll(T anEntry);
+	  
 	  public boolean remove(T anEntry);
 
 	  public int getPosition(T anEntry);
@@ -19,6 +23,7 @@ public interface SortedLinkListInterface<T extends Comparable<? super T>> {
 
 	  public boolean isEmpty();
 
-	  public boolean isFull();  
-
+	  public boolean isFull();
+	  
+	  public Iterator<T> iterator();
 }

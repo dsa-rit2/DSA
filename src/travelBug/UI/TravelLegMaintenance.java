@@ -25,9 +25,13 @@ public class TravelLegMaintenance extends JPanel {
 
 	private static final long serialVersionUID = 5629499624569369278L;
 	private LinkArray<TravelLegInfo> tArray = new LinkArray<TravelLegInfo>();
-	private SortedLinkedList<TravelLeg> sArray = new SortedLinkedList<TravelLeg>();
+	private SortedLinkedList<ComparePrice> sArray = new SortedLinkedList<ComparePrice>();
+	private SortedLinkedList<CompareTime> cArray = new SortedLinkedList<CompareTime>();
 	private ReadWriteFile<TravelLegInfo> tFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
+	private SinglyLinkedList<ComparePrice> rArray = new SinglyLinkedList<ComparePrice>();
+	private SinglyLinkedList<CompareTime> oArray = new SinglyLinkedList<CompareTime>();
 	private JTextField tfSearch;
+	private JScrollPane scrollPane;
 	private JLabel lblSearchJLabel;
 	private DefaultTableModel defaultTableModel;
 	private JTable table;
@@ -102,8 +106,10 @@ public class TravelLegMaintenance extends JPanel {
 
 		updateLabel(null);
 
-		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(8, 59, 837, 323);
+		table.setBounds(34, 31, 537, 167);
+		scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(12, 84, 876, 306);
+		scrollPane.setEnabled(false);
 		add(scrollPane);
 
 		for (int i = 0; i < table.getColumnCount(); i++) {
@@ -111,7 +117,7 @@ public class TravelLegMaintenance extends JPanel {
 			TableColumn column = table.getColumnModel().getColumn(i);
 			if (i >= 0) {
 				if (i == j)
-					column.setMinWidth(100);;
+					column.setPreferredWidth(100);
 			}
 			j++;
 		}
@@ -161,7 +167,7 @@ public class TravelLegMaintenance extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				defaultTableModel = (DefaultTableModel) table.getModel();
 				int SelectedRowIndex = table.getSelectedRow();
-				if (SelectedRowIndex > 0) {
+				if (SelectedRowIndex >= 0) {
 					vector = (Vector) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
@@ -189,37 +195,50 @@ public class TravelLegMaintenance extends JPanel {
 		btnDelete.setBounds(513, 395, 157, 42);
 		add(btnDelete);
 		
-		JButton btnSortPrice = new JButton("Cheapest");
+		JButton btnSortPrice = new JButton("Fastest");
 		btnSortPrice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				defaultTableModel = (DefaultTableModel) table.getModel();
 				defaultTableModel.setNumRows(0);
-				sArray.clear();
+				cArray.clear();
+				oArray.clear();
 				
-				for (int j = 1; j <= tArray.size(); j++) {
-//					System.out.println(tArray.getIndexElement(j - 1).getrecordNo());
-//					System.out.println(tArray.getIndexElement(j - 1).getSource());
-//					System.out.println(tArray.getIndexElement(j - 1).getDest());
-//					System.out.println(tArray.getIndexElement(j - 1).getMode());
-//					System.out.println(tArray.getIndexElement(j - 1).getfromDate());
-//					System.out.println(tArray.getIndexElement(j - 1).gettoDate());
-//					System.out.println(tArray.getIndexElement(j - 1).getfromTime());
-//					System.out.println(tArray.getIndexElement(j - 1).gettoTime());
-//					System.out.println(tArray.getIndexElement(j - 1).getDistance());
-//					System.out.println(tArray.getIndexElement(j - 1).getPrice());
+				for(int i = 1; i <= tArray.size();i++) {
+					oArray.add(new CompareTime(tArray.getIndexElement(i -1).getMode(), tArray.getIndexElement(i-1).getSource(), tArray.getIndexElement(i-1).getDest(), tArray.getIndexElement(i-1).getPrice(), tArray.getIndexElement(i-1).getDistance(), tArray.getIndexElement(i-1).getfromDate(), tArray.getIndexElement(i-1).gettoDate(), tArray.getIndexElement(i-1).getfromTime(), tArray.getIndexElement(i-1).gettoTime()));
+					oArray.getEntry(i).setrecordNo(tArray.getIndexElement(i - 1).getrecordNo());
+				}			
+					cArray.addAll(oArray);		
+				for(int i = 1; i <= cArray.getLength(); i++) {
 					
-					sArray.add(new TravelLeg(tArray.getIndexElement(j - 1).getMode(),
-											tArray.getIndexElement(j - 1).getSource(),
-											tArray.getIndexElement(j - 1).getDest(),
-											tArray.getIndexElement(j - 1).getPrice(),
-											tArray.getIndexElement(j - 1).getDistance(),
-											tArray.getIndexElement(j - 1).getfromDate(),
-											tArray.getIndexElement(j - 1).gettoDate(),
-											tArray.getIndexElement(j - 1).getfromTime(),
-											tArray.getIndexElement(j - 1).gettoTime()));				
-					}
+					defaultTableModel.insertRow(defaultTableModel.getRowCount(),
+							new Object[] { cArray.getEntry(i).getrecordNo(),
+									cArray.getEntry(i).getSource(), cArray.getEntry(i).getDest(),
+									cArray.getEntry(i).getfromDate(), cArray.getEntry(i).gettoDate(),
+									cArray.getEntry(i).getfromTime(), cArray.getEntry(i).gettoTime(),
+									cArray.getEntry(i).getMode(), cArray.getEntry(i).getPrice(),
+									cArray.getEntry(i).getDistance()});
+				}
+				}
+				
+		});
+		btnSortPrice.setBounds(641, 23, 97, 25);
+		add(btnSortPrice);
+		
+		JButton btnSortDistance = new JButton("Cheapest");
+		btnSortDistance.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				defaultTableModel = (DefaultTableModel) table.getModel();
+				defaultTableModel.setNumRows(0);
+				sArray.clear();
+				rArray.clear();
+				
+				for(int i = 1; i <= tArray.size();i++) {
+					rArray.add(new ComparePrice(tArray.getIndexElement(i -1).getMode(), tArray.getIndexElement(i-1).getSource(), tArray.getIndexElement(i-1).getDest(), tArray.getIndexElement(i-1).getPrice(), tArray.getIndexElement(i-1).getDistance(), tArray.getIndexElement(i-1).getfromDate(), tArray.getIndexElement(i-1).gettoDate(), tArray.getIndexElement(i-1).getfromTime(), tArray.getIndexElement(i-1).gettoTime()));
+					rArray.getEntry(i).setrecordNo(tArray.getIndexElement(i - 1).getrecordNo());
+				}			
+					sArray.addAll(rArray);				
 				for(int i = 1; i <= sArray.getLength(); i++) {
-					sArray.getEntry(i).setrecordNo(tArray.getIndexElement(i - 1).getrecordNo());	
+					
 					defaultTableModel.insertRow(defaultTableModel.getRowCount(),
 							new Object[] { sArray.getEntry(i).getrecordNo(),
 									sArray.getEntry(i).getSource(), sArray.getEntry(i).getDest(),
@@ -228,15 +247,7 @@ public class TravelLegMaintenance extends JPanel {
 									sArray.getEntry(i).getMode(), sArray.getEntry(i).getPrice(),
 									sArray.getEntry(i).getDistance()});
 				}
-				}
 				
-		});
-		btnSortPrice.setBounds(641, 23, 97, 25);
-		add(btnSortPrice);
-		
-		JButton btnSortDistance = new JButton("Fastest");
-		btnSortDistance.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		btnSortDistance.setBounds(736, 23, 97, 25);
@@ -266,7 +277,7 @@ public class TravelLegMaintenance extends JPanel {
 						|| tArray.getIndexElement(j).gettoDate().toString().toLowerCase().contains(searchItem)
 						|| tArray.getIndexElement(j).getfromTime().toString().toLowerCase().contains(searchItem)
 						|| tArray.getIndexElement(j).gettoTime().toString().toLowerCase().contains(searchItem)
-						|| tArray.getIndexElement(j).getMode().toLowerCase().contains(searchItem)) {
+						|| String.valueOf(tArray.getIndexElement(j).getMode()).toLowerCase().contains(searchItem)) {
 					defaultTableModel.insertRow(defaultTableModel.getRowCount(),
 							new Object[] { tArray.getIndexElement(j).getrecordNo(),
 									tArray.getIndexElement(j).getSource(), tArray.getIndexElement(j).getDest(),

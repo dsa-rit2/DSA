@@ -10,6 +10,7 @@ import travelBug.obj.*;
 import java.awt.*;
 import java.util.Vector;
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -55,6 +56,7 @@ public class ListLocation extends JPanel {
 
 		table = new JTable(tableModel);
 		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		table.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -73,7 +75,6 @@ public class ListLocation extends JPanel {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
-//		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tableModel.addColumn("Location");
 		tableModel.addColumn("Continent");
 		tableModel.addColumn("State");
@@ -216,7 +217,7 @@ public class ListLocation extends JPanel {
 			for (int i = 0; i < lArray.size(); i++) {
 				String[] dataStrings = { lArray.getIndexElement(i).getName(), lArray.getIndexElement(i).getContinent(),
 						lArray.getIndexElement(i).getState(), lArray.getIndexElement(i).getCountry(),
-						lArray.getIndexElement(i).getType() };
+						Character.toString(lArray.getIndexElement(i).getType()) };
 				tableModel.addRow(dataStrings);
 				lArray.getIndexElement(i).print();
 			}
@@ -226,7 +227,7 @@ public class ListLocation extends JPanel {
 				if (lArray.getIndexElement(i).getName().toUpperCase().matches(anyString + ".*")) {
 					String[] dataStrings = { lArray.getIndexElement(i).getName(),
 							lArray.getIndexElement(i).getContinent(), lArray.getIndexElement(i).getState(),
-							lArray.getIndexElement(i).getCountry(), lArray.getIndexElement(i).getType() };
+							lArray.getIndexElement(i).getCountry(), Character.toString(lArray.getIndexElement(i).getType()) };
 					tableModel.addRow(dataStrings);
 				}
 

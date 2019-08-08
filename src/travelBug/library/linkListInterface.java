@@ -1,35 +1,28 @@
 package travelBug.library;
 
-public interface linkListInterface<T> {
+import java.util.Iterator;
 
-	
+public interface linkListInterface<T> extends Iterable<T> {
 
-	
-		  public boolean add(T newEntry);
+	public Iterator<T> iterator();
 
-		  public boolean add(int newPosition, T newEntry);
+	public boolean add(T newEntry);
 
-		
-		  public T remove(int givenPosition);
+	public boolean add(int newPosition, T newEntry);
 
-		  public void clear();
+	public T remove(int givenPosition);
 
-		 
-		  public boolean replace(int givenPosition, T newEntry);
+	public void clear();
 
-		
-		  public T getEntry(int givenPosition);
+	public boolean replace(int givenPosition, T newEntry);
 
-		
-		  public boolean contains(T anEntry);
+	public T getEntry(int givenPosition);
 
-		  
-		  public int getNumberOfEntries();
+	public boolean contains(T anEntry);
 
-		
-		  public boolean isEmpty();
+	public int getNumberOfEntries();
 
-		
-		  public boolean isFull();
+	public boolean isEmpty();
+
+	public boolean isFull();
 }
-

@@ -361,4 +361,12 @@ public class library {
 	public static double CoordinateDistance(double longitude1, double latitude1, double longitude2, double latitude2) {
 		return Math.sqrt(Math.pow(longitude1 - longitude2, 2) + Math.pow(latitude1 - latitude2, 2)) * 111.0;
 	}
+	
+	public static <T> SinglyLinkedList<T> Convertion (LinkArray<T> arraylist) {
+		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
+		for (int i = 0; i < arraylist.size(); i++) {
+			tempLinkedList.add(arraylist.getIndexElement(i));
+		}
+		return tempLinkedList;
+	}
 }

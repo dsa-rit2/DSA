@@ -13,14 +13,14 @@ public class SinglyLinkedList<T> implements linkListInterface<T> {
 
 	@Override
 	public final void clear() {
-		firstNode = null;
-		numberOfEntries = 0;
+		this.firstNode = null;
+		this.numberOfEntries = 0;
 	}
 
 	@Override
 	public boolean add(T newEntry) {
 		Node newNode = new Node(newEntry); // create the new node
-
+		
 		if (isEmpty()) // if empty list
 		{
 			firstNode = newNode;
@@ -62,6 +62,10 @@ public class SinglyLinkedList<T> implements linkListInterface<T> {
 		}
 
 		return isSuccessful;
+	}
+	
+	public T getFirst() {
+		return firstNode.data;
 	}
 
 	@Override
@@ -145,11 +149,7 @@ public class SinglyLinkedList<T> implements linkListInterface<T> {
 
 	@Override
 	public boolean isEmpty() {
-		boolean result;
-
-		result = numberOfEntries == 0;
-
-		return result;
+		return numberOfEntries <= 0;
 	}
 
 	@Override

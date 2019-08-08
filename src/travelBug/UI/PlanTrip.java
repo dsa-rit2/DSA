@@ -13,8 +13,11 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
+import java.util.Comparator;
 import java.util.Date;
+import java.util.function.Function;
 import java.awt.event.ItemListener;
+import java.security.cert.TrustAnchor;
 import java.time.LocalDate;
 import java.awt.event.ItemEvent;
 
@@ -47,11 +50,30 @@ public class PlanTrip extends JPanel {
 		lblFindTheBest.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// ========================== Continent ============================
-		String[] continents = new String[locationArray.size() + 1];
+		SinglyLinkedList<Location> testLinkedList = library.Convertion(locationArray);
+
+		GroupList<Location, SinglyLinkedList<Location>> testGroupList = new GroupList<Location, SinglyLinkedList<Location>>(
+				testLinkedList, Comparator.comparing(Location::getState));
+		System.out.println(testGroupList);
+		String[] continents = new String[testGroupList.getNumberOfEntries() + 1];
 		continents[0] = "-Select continent-";
-		for (int i = 1; i < continents.length; i++) {
-			continents[i] = locationArray.getIndexElement(i - 1).getContinent();
+		int i = 1;
+		for (SinglyLinkedList<Location> element : testGroupList) {
+			try {
+				continents[i] = element.getFirst().getState();
+			} catch (NullPointerException e) {
+				System.out.println("Null occur");
+			}
 		}
+
+//		for (int i = 0; i < locationArray.size(); i++) {
+//			if (continents[i] != locationArray.getIndexElement(i).getContinent())
+//				continents[i + 1] = locationArray.getIndexElement(i).getContinent();
+//		}
+
+//		for (Location item : testGroupList.findChild(testLinkedList.getEntry(1))) {
+//			System.out.println(item);
+//		}
 
 		JComboBox continent1 = new JComboBox(continents);
 		continent1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -245,6 +267,7 @@ public class PlanTrip extends JPanel {
 				countries[0] = "-Select country-";
 				if (continent1.getSelectedIndex() > 0) {
 					for (int i = 0; i < countries.length; i++) {
+						System.out.println(continent1.getSelectedItem());
 						if (locationArray.getIndexElement(i).getCountry()
 								.equalsIgnoreCase((String) continent1.getSelectedItem()))
 							countries[i + 1] = locationArray.getIndexElement(i).getCountry();
@@ -254,8 +277,8 @@ public class PlanTrip extends JPanel {
 				}
 			}
 		});
-		
+
 		// ======================= Algorithms =========================
-		
+
 	}
 }

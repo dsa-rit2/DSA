@@ -93,7 +93,7 @@ public class CompareTime implements Comparable<CompareTime>,Serializable{
 		@Override
 		public int compareTo(CompareTime o) {
 			// TODO Auto-generated method stub
-			return (Integer.compare(this.gettoTime().compareTo(this.getfromTime()), (o.gettoTime().compareTo(o.getfromTime()))));
+			return (Integer.compare((this.getfromTime().compareTo(this.gettoTime())), (o.getfromTime().compareTo(o.gettoTime()))));
 		}
 
 	}

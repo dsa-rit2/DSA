@@ -60,8 +60,8 @@ public class PlanTrip extends JPanel {
 		int i = 1;
 		for (SinglyLinkedList<Location> element : testGroupList) {
 			try {
-				continents[i++] = element.getFirst().getState();
-			} catch (Exception e) {
+				continents[i] = element.getFirst().getState();
+			} catch (NullPointerException e) {
 				System.out.println("Null occur");
 			}
 		}

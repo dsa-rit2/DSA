@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+
 public class GroupList<T, E> implements GroupListInterface<T, E> {
 
 	private Node firstNode;
@@ -46,7 +47,10 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 			else {
 				this.add((E) tempLinkedList);
 				tempLinkedList.clear();
+				tempLinkedList.add(list);
+				System.out.println("Element: " + firstNode.data);
 			}
+			
 		});
 		this.add((E) tempLinkedList);
 		
@@ -110,7 +114,7 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 	}
 
 	public boolean isEmpty() {
-		return numberOfEntries >= 0;
+		return numberOfEntries <= 0;
 	}
 
 	@Override

@@ -206,7 +206,9 @@ public class TravelLegModify extends JPanel {
 							longtitude2 = cArray.getIndexElement(i).getLongitude();
 						}
 					
-					tfDistance.setText(String.valueOf(library.CoordinateDistance(longtitude1, latitude1, longtitude2, latitude2)));
+						double distance1 = library.CoordinateDistance(longtitude1, latitude1, longtitude2, latitude2);
+						String distanceString = String.format ("%.2f", distance1);
+						tfDistance.setText(distanceString);
 				}
 			}
 			}
@@ -391,7 +393,7 @@ public class TravelLegModify extends JPanel {
 				Date checkDate1 = dcToDate.getDate();
 				String fromTimeString = tfFromTime.getText();
 				String toTimeString = tfToTime.getText();
-				float duration = 0;
+				int duration = 0;
 				LocalDate fromDate = null;
 				LocalDate toDate = null;
 				LocalTime fromTime = null;
@@ -480,6 +482,7 @@ public class TravelLegModify extends JPanel {
 						lblFromTimeError.setText("[The [From] time must before [To] time");
 						error = true;
 					} else {
+						duration = library.convertDuration(fromTime, toTime);
 						lblFromTimeError.setText("");
 					}
 				}
@@ -579,6 +582,7 @@ public class TravelLegModify extends JPanel {
 							rArray.getIndexElement(i).setMode(library.getModeChar(transportTypeString));
 							rArray.getIndexElement(i).setPrice(price);
 							rArray.getIndexElement(i).setDistance(distance);
+							rArray.getIndexElement(i).setDuration(duration);
 						}
 					}
 					rFile.writeLinkArray(rArray);

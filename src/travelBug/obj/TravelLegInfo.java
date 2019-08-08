@@ -2,6 +2,7 @@ package travelBug.obj;
 
 import travelBug.library.*;
 
+import java.awt.font.TextHitInfo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,8 +18,9 @@ public class TravelLegInfo implements Serializable{
 	private String recordNo;
 	private double price;
 	private double distance;
+	private int duration;
 	
-	public TravelLegInfo(char mode,String source,String dest,double price,double distance,LocalDate fromDate,LocalDate toDate, LocalTime fromTime,LocalTime toTime) {
+	public TravelLegInfo(char mode,String source,String dest,double price,double distance,LocalDate fromDate,LocalDate toDate, LocalTime fromTime,LocalTime toTime,int duration) {
 		this.mode = mode;
 		this.source = source;
 		this.dest = dest;
@@ -28,6 +30,7 @@ public class TravelLegInfo implements Serializable{
 		this.fromTime= fromTime;
 		this.toDate = toDate;
 		this.toTime = toTime;
+		this.duration = duration;
 		recordNo = library.randomID(1000, 2000);
 	}
 	public void setrecordNo(String recordNo) {
@@ -89,6 +92,12 @@ public class TravelLegInfo implements Serializable{
 	}
 	public LocalTime gettoTime() {
 		return toTime;
+	}
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+	public int getDuration() {
+		return duration;
 	}
 
 }

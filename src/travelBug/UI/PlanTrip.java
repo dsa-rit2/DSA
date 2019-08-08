@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.function.Function;
 import java.awt.event.ItemListener;
+import java.security.cert.TrustAnchor;
 import java.time.LocalDate;
 import java.awt.event.ItemEvent;
 
@@ -51,18 +52,25 @@ public class PlanTrip extends JPanel {
 		// ========================== Continent ============================
 		SinglyLinkedList<Location> testLinkedList = library.Convertion(locationArray);
 
-		System.out.println(testLinkedList);
-		System.out.println("");
-		
-		GroupList<Location> testGroupList = new GroupList<Location>(testLinkedList, Comparator.comparing(Location::getState));
-		
-		String[] continents = new String[locationArray.size() + 1];
+		GroupList<Location, SinglyLinkedList<Location>> testGroupList = new GroupList<Location, SinglyLinkedList<Location>>(
+				testLinkedList, Comparator.comparing(Location::getState));
+		System.out.println(testGroupList);
+		String[] continents = new String[testGroupList.getNumberOfEntries() + 1];
 		continents[0] = "-Select continent-";
-		for (int i = 0; i < locationArray.size(); i++) {
-			if (continents[i] != locationArray.getIndexElement(i).getContinent())
-				continents[i + 1] = locationArray.getIndexElement(i).getContinent();
+		int i = 1;
+		for (SinglyLinkedList<Location> element : testGroupList) {
+			try {
+				continents[i++] = element.getFirst().getState();
+			} catch (Exception e) {
+				System.out.println("Null occur");
+			}
 		}
-		
+
+//		for (int i = 0; i < locationArray.size(); i++) {
+//			if (continents[i] != locationArray.getIndexElement(i).getContinent())
+//				continents[i + 1] = locationArray.getIndexElement(i).getContinent();
+//		}
+
 //		for (Location item : testGroupList.findChild(testLinkedList.getEntry(1))) {
 //			System.out.println(item);
 //		}
@@ -252,7 +260,7 @@ public class PlanTrip extends JPanel {
 		add(lblTo);
 
 		// ===================== Event Handler =======================
-		
+
 		continent1.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				String[] countries = new String[locationArray.size() + 1];
@@ -269,8 +277,8 @@ public class PlanTrip extends JPanel {
 				}
 			}
 		});
-		
+
 		// ======================= Algorithms =========================
-		
+
 	}
 }

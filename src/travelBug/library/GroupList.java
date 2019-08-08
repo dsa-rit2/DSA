@@ -1,11 +1,11 @@
 package travelBug.library;
 
+import java.awt.event.ItemEvent;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-
-public class GroupList<T> implements GroupListInterface<T> {
+public class GroupList<T, E> implements GroupListInterface<T, E> {
 
 	private Node firstNode;
 	private int numberOfEntries;
@@ -39,33 +39,32 @@ public class GroupList<T> implements GroupListInterface<T> {
 		
 		SortedLinkedList<T> sortedLinkedList = new SortedLinkedList<T>(listNode, c);
 		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
-		
 		sortedLinkedList.forEach(list -> {
 			if (tempLinkedList.isEmpty() || (c.compare(list, tempLinkedList.getFirst())) == 0) {
 				tempLinkedList.add(list);
-				System.out.println(list);
 			}
 			else {
-				this.add((T) tempLinkedList);
+				this.add((E) tempLinkedList);
 				tempLinkedList.clear();
 			}
 		});
-		this.add((T) tempLinkedList);
-		System.out.println("Number of pointer: " + this.toArray());
-		System.out.println("Number of Element: " + numberOfEntries);
+		this.add((E) tempLinkedList);
+		
+		System.out.println("Number of Pointer: " + numberOfEntries);
+		
 	}
 	
 	public SinglyLinkedList<T> findChild(T data) {
 		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
-		this.forEach(item -> {
-			if (c.compare(data, item) == 0) {
-				tempLinkedList.add(item);
-			}
-		});
+//		this.forEach(item -> {
+//			if (c.compare(data, item) == 0) {
+//				tempLinkedList.add(item);
+//			}
+//		});
 		return tempLinkedList;
 	}
 
-	private boolean add(T newEntry) {
+	private boolean add(E newEntry) {
 		Node newNode = new Node(newEntry); // create the new node
 
 		if (isEmpty())
@@ -114,30 +113,12 @@ public class GroupList<T> implements GroupListInterface<T> {
 		return numberOfEntries >= 0;
 	}
 
-	@SuppressWarnings("unchecked")
-	public T[] toArray() {
-		T[] arrayObj = (T[]) new Object[this.numberOfEntries];
-		int i = 0;
-		
-		Node currentNode = firstNode;
-		
-		while (currentNode != null) {
-			SinglyLinkedList<T> childLinkedList = (SinglyLinkedList<T>) currentNode.data;
-			for (T item : childLinkedList) {
-				System.out.println(item);
-			}
-			currentNode = currentNode.next;
-		}
-		
-		return arrayObj;
-	}
-
 	@Override
-	public Iterator<T> iterator() {
+	public Iterator<E> iterator() {
 		return new GroupListIterator();
 	}
 
-	private class GroupListIterator implements Iterator<T> {
+	private class GroupListIterator implements Iterator<E> {
 
 		private Node currentNode = firstNode;
 
@@ -147,9 +128,9 @@ public class GroupList<T> implements GroupListInterface<T> {
 		}
 
 		@Override
-		public T next() {
+		public E next() {
 			if (hasNext()) {
-				T returnData = currentNode.data;
+				E returnData = currentNode.data;
 				currentNode = currentNode.next;
 				return returnData;
 			} else {
@@ -165,23 +146,17 @@ public class GroupList<T> implements GroupListInterface<T> {
 
 	private class Node {
 
-		private T data;
+		private E data;
 		private Node next;
 
-		private Node(T data) {
+		private Node(E data) {
 			this.data = data;
 			this.next = null;
 		}
 
-		private Node(T data, Node next) {
+		private Node(E data, Node next) {
 			this.data = data;
 			this.next = next;
 		}
 	}
-
-	@Override
-	public String toString() {
-		return this.toArray().toString();
-	}
-
 }

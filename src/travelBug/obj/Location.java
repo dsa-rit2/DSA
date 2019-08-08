@@ -3,7 +3,7 @@ package travelBug.obj;
 import java.io.Serializable;
 import java.util.Comparator;
 
-public class Location implements Serializable, Comparator<Location> {
+public class Location implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private String continent;
@@ -103,11 +103,5 @@ public class Location implements Serializable, Comparator<Location> {
 		output = "State: " + state;
 		
 		return output;
-	}
-
-	@Override
-	public int compare(Location o1, Location o2) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 }

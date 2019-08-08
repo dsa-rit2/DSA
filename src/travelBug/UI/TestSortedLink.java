@@ -10,6 +10,7 @@ import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
 import travelBug.library.SinglyLinkedList;
 import travelBug.library.SortedLinkedList;
+import travelBug.library.library;
 import travelBug.obj.ComparePrice;
 import travelBug.obj.TravelLegInfo;
 
@@ -31,7 +32,9 @@ public static void main(String[] args) {
 		for(int i = 1;i <= sArray.getLength();i++) {
 			System.out.println(sArray.getEntry(i).getSource() + " " + sArray.getEntry(i).getPrice());
 		}
-		System.out.print(sArray.getLastNode().getPrice());
+		double num = 15.236586521;
+		String hellpString = library.round(num);
 
+		System.out.print(hellpString);
 }
 }

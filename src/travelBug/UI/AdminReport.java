@@ -1,6 +1,7 @@
 package travelBug.UI;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -19,7 +20,7 @@ import javax.swing.table.TableColumn;
 import org.omg.CORBA.portable.ValueBase;
 
 import travelBug.library.ReadWriteFile;
-import travelBug.library.singlyLinkedList;
+import travelBug.library.SinglyLinkedList;
 import travelBug.obj.Location;
 import travelBug.obj.SourceDest;
 import travelBug.obj.sourceDest2;
@@ -39,7 +40,7 @@ public class AdminReport extends JPanel {
 	private JScrollPane scrollPane;
 //	private singlyLinkedList<SourceDest> hahalLinkedList = new singlyLinkedList<SourceDest>();
 //	private ReadWriteFile<SourceDest> lFile = new ReadWriteFile<SourceDest>("SourceDes.txt", SourceDest.class);
-	private singlyLinkedList<sourceDest2> hahalLinkedList2 = new singlyLinkedList<sourceDest2>();
+	private SinglyLinkedList<sourceDest2> hahalLinkedList2 = new SinglyLinkedList<sourceDest2>();
 	private ReadWriteFile<sourceDest2> lFile2 = new ReadWriteFile<sourceDest2>("sourceDes.txt2", sourceDest2.class);
 	
 	public AdminReport(UIControl parent) {
@@ -113,7 +114,7 @@ public class AdminReport extends JPanel {
 		tableModel.addColumn("Destionation");
 		tableModel.addColumn("Number of Visit");
 
-		load(null);
+//		load(null);
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			int j = 0;
 			TableColumn column = table.getColumnModel().getColumn(i);
@@ -126,29 +127,29 @@ public class AdminReport extends JPanel {
 		}
 	}
 
-	public void load(int month , int year,String Tdestination,String Tsource) {
-		int count = 1;
-		String [] location = new String[1000];
-		String []destination = new String[1000];
+//	public void load(int month , int year,String Tdestination,String Tsource) {
+//		int count = 1;
+//		String [] location = new String[1000];
+//		String []destination = new String[1000];
+//		
+//		tableModel.setRowCount(0);
+//		
+//		for(int j=1; j <= hahalLinkedList2.getNumberOfEntries() ; j++) {
+//			 location [j]=hahalLinkedList2.getEntry(j).getL1();
+//			 destination[j] = hahalLinkedList2.getEntry(j).getL2();
+//		}
+//		
 		
-		tableModel.setRowCount(0);
-		
-		for(int j=1; j <= hahalLinkedList2.getNumberOfEntries() ; j++) {
-			 location [j]=hahalLinkedList2.getEntry(j).getL1();
-			 destination[j] = hahalLinkedList2.getEntry(j).getL2();
-		}
-		
-		
-		for(int i =1; i<= hahalLinkedList2.getNumberOfEntries() ; i++) {
-			          
-			if(month == hahalLinkedList2.getEntry(i).getLocalDate().getMonth() && year == hahalLinkedList2.getEntry(i).getLocalDate().getYear() ) {
-				if(location[i]= Tsource && destionation[i] = Tdestination) {
-					location[i] = null;
-					destionation[i]= null;
-					count++;
-				}
-			}
-		}
+//		for(int i =1; i<= hahalLinkedList2.getNumberOfEntries() ; i++) {
+//			          
+//			if(month == hahalLinkedList2.getEntry(i).getLocalDate().getMonth() && year == hahalLinkedList2.getEntry(i).getLocalDate().getYear() ) {
+//				if(location[i]= Tsource && destionation[i] = Tdestination) {
+//					location[i] = null;
+//					destionation[i]= null;
+//					count++;
+//				}
+//			}
+//		}
 //		if (anyString == null) {
 //			for (int i = 0; i < hahalLinkedList.getNumberOfEntries(); i++) {
 //				String[] dataStrings = {hahalLinkedList.getEntry(i).getL1(),hahalLinkedList.getEntry(i).getL2(),Integer.toString(hahalLinkedList.getEntry(i).getCount())
@@ -167,13 +168,13 @@ public class AdminReport extends JPanel {
 //			}
 //		}
 		//
-		for (int i = 1; i <= hahalLinkedList.getNumberOfEntries(); i++) {
-			String[] dataStrings = { hahalLinkedList.getEntry(i).getL1(), hahalLinkedList.getEntry(i).getL2(),
-					Integer.toString(hahalLinkedList.getEntry(i).getCount()) };
-			tableModel.addRow(dataStrings);
-		}
-	}
-	
+//		for (int i = 1; i <= hahalLinkedList.getNumberOfEntries(); i++) {
+//			String[] dataStrings = { hahalLinkedList.getEntry(i).getL1(), hahalLinkedList.getEntry(i).getL2(),
+//					Integer.toString(hahalLinkedList.getEntry(i).getCount()) };
+//			tableModel.addRow(dataStrings);
+//		}
+//	}
+//	
 	// put the function below to the search button
 	public void compare(String source,String destionation) {
 		//read data from txt file

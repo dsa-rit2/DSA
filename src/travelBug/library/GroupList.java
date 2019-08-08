@@ -1,6 +1,5 @@
 package travelBug.library;
 
-import java.awt.event.ItemEvent;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -8,7 +7,7 @@ import java.util.NoSuchElementException;
 
 public class GroupList<T, E> implements GroupListInterface<T, E> {
 
-	private Node firstNode;
+	private Node headNode;
 	private int numberOfEntries;
 	private Comparator<? super T> c;
 
@@ -46,15 +45,16 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 			}
 			else {
 				this.add((E) tempLinkedList);
+//				System.out.println(firstNode.data);
 				tempLinkedList.clear();
 				tempLinkedList.add(list);
-				System.out.println("Element: " + firstNode.data);
+//				System.out.println(headNode.data);
+//				System.out.println(firstNode.next.data);
 			}
 			
 		});
-		this.add((E) tempLinkedList);
-		
-		System.out.println("Number of Pointer: " + numberOfEntries);
+		System.out.print(headNode.data);
+//		System.out.println("Number of Pointer: " + numberOfEntries);
 		
 	}
 	
@@ -71,10 +71,11 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 	private boolean add(E newEntry) {
 		Node newNode = new Node(newEntry); // create the new node
 
-		if (isEmpty())
-			firstNode = newNode; // if empty list
+		if (isEmpty()) {
+			headNode = newNode; // if empty list
+		}
 		else { // add to end of nonempty list
-			Node currentNode = firstNode; // traverse linked list with p pointing to the current node
+			Node currentNode = headNode; // traverse linked list with p pointing to the current node
 			while (currentNode.next != null) { // while have not reached the last node
 				currentNode = currentNode.next;
 			}
@@ -105,7 +106,7 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 //	}
 
 	public void clear() {
-		firstNode = null;
+		headNode = null;
 		numberOfEntries = 0;
 	}
 
@@ -114,7 +115,7 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 	}
 
 	public boolean isEmpty() {
-		return numberOfEntries <= 0;
+		return numberOfEntries == 0;
 	}
 
 	@Override
@@ -124,7 +125,7 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 
 	private class GroupListIterator implements Iterator<E> {
 
-		private Node currentNode = firstNode;
+		private Node currentNode = headNode;
 
 		@Override
 		public boolean hasNext() {

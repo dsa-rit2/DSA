@@ -21,25 +21,6 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 
 		SortedLinkedList<T> sortedLinkedList = new SortedLinkedList<T>(listNode, c);
 		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
-<<<<<<< HEAD
-		sortedLinkedList.forEach(list -> {
-			if (tempLinkedList.isEmpty() || (c.compare(list, tempLinkedList.getFirst())) == 0) {
-				tempLinkedList.add(list);
-			}
-			else {
-				this.add((E) tempLinkedList);
-//				System.out.println(firstNode.data);
-				tempLinkedList.clear();
-				tempLinkedList.add(list);
-//				System.out.println(headNode.data);
-//				System.out.println(firstNode.next.data);
-			}
-			
-		});
-		System.out.print(headNode.data);
-//		System.out.println("Number of Pointer: " + numberOfEntries);
-		
-=======
 		
 		for (T list : sortedLinkedList) {
 			if (!tempLinkedList.isEmpty() && (c.compare(list, tempLinkedList.getFirst())) != 0) {
@@ -49,7 +30,6 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 			tempLinkedList.add(list);
 		}
 		this.addGroup((E) tempLinkedList);
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 	}
 
 	public SinglyLinkedList<T> findChild(T data) {
@@ -65,20 +45,10 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 	private boolean addGroup(E newEntry) {
 		Node newNode = new Node(newEntry); // create the new node
 
-<<<<<<< HEAD
-		if (isEmpty()) {
-			headNode = newNode; // if empty list
-		}
-=======
 		if (this.isEmpty())
-			firstNode = newNode; // if empty list
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
+			headNode = newNode; // if empty list
 		else { // add to end of nonempty list
-<<<<<<< HEAD
-			Node currentNode = headNode; // traverse linked list with p pointing to the current node
-=======
-			Node currentNode = firstNode;
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
+			Node currentNode = headNode;
 			while (currentNode.next != null) { // while have not reached the last node
 				currentNode = currentNode.next;
 			}
@@ -108,12 +78,7 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 	}
 
 	private class GroupListIterator implements Iterator<E> {
-<<<<<<< HEAD
-
 		private Node currentNode = headNode;
-=======
-		private Node currentNode = firstNode;
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 
 		@Override
 		public boolean hasNext() {

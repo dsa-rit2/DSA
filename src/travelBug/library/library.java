@@ -314,6 +314,43 @@ public class library {
 			return 0;
 		}
 	}
+	public static String getModeString(char type) {
+		
+		switch (type) {
+		case 'A':case 'a':
+			return "Airplane";
+		case 'R':case 'r':
+			return "Rail/Train";
+		case 'B': case 'b':
+			return "Bus";
+		case 'C': case 'c':
+			return "Car";
+		case 'F': case 'f':
+			return "Ferry";
+		case 'T': case 't':
+			return "Boat";
+		default:
+			return null;
+		}
+	}
+	public static char getModeChar(String type) {
+		switch (type) {
+		case "Airplane":
+			return 'A';
+		case "Rail/Train":
+			return 'R';
+		case "Bus":
+			return 'B';
+		case "Car":
+			return 'C';
+		case "Ferry": 
+			return 'F';
+		case "Boat":
+			return 'T';
+		default:
+			return 0;
+		}
+	}
 
 	public static double CoordinateDistance(double longitude1, double latitude1, double longitude2, double latitude2) {
 		return Math.sqrt(Math.pow(longitude1 - longitude2, 2) + Math.pow(latitude1 - latitude2, 2)) * 111.0;

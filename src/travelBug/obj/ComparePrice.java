@@ -1,23 +1,27 @@
 package travelBug.obj;
 
+import static org.junit.Assert.isArray;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+import java.util.LinkedList;
+import travelBug.library.LinkArray;
 import travelBug.library.library;
+import travelBug.library.SinglyLinkedList;
 
-public class TravelLeg implements TravelLegInterface,Serializable {
+public class ComparePrice implements Comparable<ComparePrice>,Serializable {
 	private static final long serialVersionUID = 1L;
-	private String mode,source,dest;
+	private String source,dest;
+	private char mode;
 	private LocalTime fromTime;
 	private LocalTime toTime;
 	private LocalDate fromDate;
 	private LocalDate toDate;	
 	private String recordNo;
 	private double price;
-	private int distance;
+	private double distance;
 	
-	public TravelLeg(String mode,String source,String dest,double price,int distance,LocalDate fromDate,LocalDate toDate, LocalTime fromTime,LocalTime toTime) {
+	public ComparePrice(char mode,String source,String dest,double price,double distance,LocalDate fromDate,LocalDate toDate, LocalTime fromTime,LocalTime toTime) {
 		this.mode = mode;
 		this.source = source;
 		this.dest = dest;
@@ -35,10 +39,10 @@ public class TravelLeg implements TravelLegInterface,Serializable {
 	public String getrecordNo() {
 		return recordNo;
 	}
-	public void setMode(String mode) {
+	public void setMode(char mode) {
 		this.mode = mode;
 	}
-	public String getMode() {
+	public char getMode() {
 		return mode;
 	}
 	public void setSource(String source) {
@@ -62,7 +66,7 @@ public class TravelLeg implements TravelLegInterface,Serializable {
 	public void setDistance(int distance) {
 		this.distance = distance;
 	}
-	public int getDistance() {
+	public double getDistance() {
 		return distance;
 	}
 	public void setfromDate(LocalDate fromDate) {
@@ -90,7 +94,7 @@ public class TravelLeg implements TravelLegInterface,Serializable {
 		return toTime;
 	}
 	@Override
-	public int compareTo(TravelLegInterface o) {
+	public int compareTo(ComparePrice o) {
 		// TODO Auto-generated method stub
 		return Double.compare(this.getPrice(), o.getPrice());
 	}

@@ -37,12 +37,14 @@ public class AddTravelLeg extends JPanel {
 	private JTextField tfToTime;
 	private JTextField tfDistance;
 	private JTextField tfPrice;
+	private JComboBox  cbTransport;
 	private LinkArray<TravelLegInfo> rArray = new LinkArray<TravelLegInfo>();
 	private ReadWriteFile<TravelLegInfo> rFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
 	private LinkArray<Location> cArray = new LinkArray<Location>();
 	private ReadWriteFile<Location> cFile = new ReadWriteFile<Location>("Location.txt", Location.class);
 	private final UIControl mainframe; // Store main frame
 	private Set<String> s = new TreeSet<String>();
+	private char mode;
 
 	public AddTravelLeg(UIControl parent) {
 		super();
@@ -55,22 +57,23 @@ public class AddTravelLeg extends JPanel {
 		cArray = cFile.readLinkArray();
 		s = new TreeSet<String>();
 		for(int i = 0; i < cArray.size(); i++) {
-			s.add(cArray.getIndexElement(i).getCountry());
+			s.add(cArray.getIndexElement(i).getName());
 		}
 		// ============================ Content component =========================//
 		JLabel lblSourceLocation = new JLabel("Source location  :");
 		lblSourceLocation.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
 		lblSourceLocation.setBounds(37, 44, 207, 16);
 		add(lblSourceLocation);
-				
+//================================Auto completer for textfield Source location======================//				
 		tfSourceL = new JTextField();
 		tfSourceL.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		tfSourceL.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(java.awt.event.KeyEvent evtEvent) {
+				boolean foundSource = false;
+				boolean foundDestination = false;
 				if(evtEvent.getKeyCode() == KeyEvent.VK_BACK_SPACE || evtEvent.getKeyCode() == KeyEvent.VK_SHIFT)
-				{
-					
+				{					
 				}
 				else {					
 				String to_checkString = tfSourceL.getText();
@@ -93,6 +96,24 @@ public class AddTravelLeg extends JPanel {
 					}
 				}
 			}
+				for(int i = 0; i < cArray.size(); i++) {
+					if((tfSourceL.getText().toString().equalsIgnoreCase(cArray.getIndexElement(i).getName()))) {
+						foundSource = true;
+					}
+				}
+				for(int i = 0; i < cArray.size(); i++) {
+					if((tfDestinationL.getText().toString().equalsIgnoreCase(cArray.getIndexElement(i).getName()))){
+						foundDestination = true;
+					}
+				}
+				if(foundSource && foundDestination) {
+					cbTransport.setEnabled(true);
+					tfDistance.setText("0.0");
+				}
+				else {
+					cbTransport.setEnabled(false);
+					tfDistance.setText("0.0");
+				}
 			}
 		});
 		tfSourceL.setBounds(253, 40, 143, 32);
@@ -103,12 +124,17 @@ public class AddTravelLeg extends JPanel {
 		lblDestinationLocation.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
 		lblDestinationLocation.setBounds(446, 44, 252, 16);
 		add(lblDestinationLocation);
-
+//=========================================================================================================//		
+		
+		
+//========================Auto Completer for textfield Distination location================================//
 		tfDestinationL = new JTextField();
 		tfDestinationL.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		tfDestinationL.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(java.awt.event.KeyEvent evtEvent) {
+				boolean foundSource = false;
+				boolean foundDestination = false;
 				if(evtEvent.getKeyCode() == KeyEvent.VK_BACK_SPACE || evtEvent.getKeyCode() == KeyEvent.VK_SHIFT)
 				{
 					
@@ -134,15 +160,56 @@ public class AddTravelLeg extends JPanel {
 					}
 				}
 			}
+				for(int i = 0; i < cArray.size(); i++) {
+					if((tfSourceL.getText().toString().equalsIgnoreCase(cArray.getIndexElement(i).getName()))) {
+						foundSource = true;
+					}
+				}
+				for(int i = 0; i < cArray.size(); i++) {
+					if((tfDestinationL.getText().toString().equalsIgnoreCase(cArray.getIndexElement(i).getName()))){
+						foundDestination = true;
+					}
+				}
+				if(foundSource && foundDestination) {
+					cbTransport.setEnabled(true);
+					tfDistance.setText("0.0");
+				}
+				else {
+					cbTransport.setEnabled(false);
+					tfDistance.setText("0.0");
+				}
 			}
 		});
 		tfDestinationL.setBounds(701, 40, 143, 32);
 		add(tfDestinationL);
 		tfDestinationL.setColumns(10);
-
+//========================================================================================================================//
 		String[] selectionString = { "Select The transport type", "Airplane", "Rail/Train", "Bus", "Car", "Ferry",
 				"Boat" };
-		JComboBox cbTransport = new JComboBox(selectionString);
+		cbTransport = new JComboBox(selectionString);
+		cbTransport.setEnabled(false);
+		cbTransport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				double latitude1 = 0.0;
+				double latitude2 = 0.0;
+				double longtitude1 = 0.0;
+				double longtitude2 = 0.0;
+				if(cbTransport.getSelectedItem().toString() != "Select The transport type" && tfSourceL.getText().toString() != null && tfDestinationL.getText().toString() != null) {
+					for(int i = 0; i < cArray.size(); i++) {
+						if((cArray.getIndexElement(i).getName()).equalsIgnoreCase(tfSourceL.getText().toString())) {
+						latitude1 = cArray.getIndexElement(i).getLatitude();
+						longtitude1 = cArray.getIndexElement(i).getLongitude();
+						}
+						if((cArray.getIndexElement(i).getName()).equalsIgnoreCase(tfDestinationL.getText().toString())) {
+							latitude2 = cArray.getIndexElement(i).getLatitude();
+							longtitude2 = cArray.getIndexElement(i).getLongitude();
+						}
+					
+					tfDistance.setText(String.valueOf(library.CoordinateDistance(longtitude1, latitude1, longtitude2, latitude2)));
+				}
+			}
+			}
+		});
 		cbTransport.setFont(new Font("Source Code Pro Black", Font.BOLD, 15));
 		cbTransport.setBounds(37, 85, 298, 22);
 		add(cbTransport);
@@ -251,10 +318,12 @@ public class AddTravelLeg extends JPanel {
 		add(lblDistance);
 		
 		tfDistance = new JTextField();
+		tfDistance.setEditable(false);
 		tfDistance.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		tfDistance.setBounds(216, 131, 143, 32);
 		add(tfDistance);
 		tfDistance.setColumns(10);
+		tfDistance.setText("0.0");
 		
 		JLabel lblPrice = new JLabel("Price (RM)    :");
 		lblPrice.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
@@ -297,7 +366,7 @@ public class AddTravelLeg extends JPanel {
 				String dstLocationString = tfDestinationL.getText();
 				String srcLocationString = tfSourceL.getText();
 				double price = 0;
-				int distance = 0;
+				double distance = 0;
 				String priceString = tfPrice.getText();
 				String distanceString = tfDistance.getText();
 				String transportTypeString = cbTransport.getSelectedItem().toString();
@@ -332,6 +401,8 @@ public class AddTravelLeg extends JPanel {
 					error = true;
 				} else {
 					lblttError.setText("");
+					mode = library.getModeChar(transportTypeString);
+					
 				}
 				// validation for from date
 				if (((JTextField) dcFromDate.getDateEditor().getUiComponent()).getText().isEmpty()) {
@@ -410,7 +481,7 @@ public class AddTravelLeg extends JPanel {
 				if(srcLocationString.length() > 0) {
 					boolean srcError = true;
 					for(int i = 0 ; i < cArray.size(); i ++) {
-						if(srcLocationString.equals(cArray.getIndexElement(i).getCountry())) {
+						if(srcLocationString.equals(cArray.getIndexElement(i).getName())) {
 							srcError = false;							
 						}
 					}
@@ -425,7 +496,7 @@ public class AddTravelLeg extends JPanel {
 				if(dstLocationString.length() > 0) {
 					boolean dstError = true;
 					for(int i = 0 ; i < cArray.size(); i ++) {
-						if(dstLocationString.equals(cArray.getIndexElement(i).getCountry())) {
+						if(dstLocationString.equals(cArray.getIndexElement(i).getName())) {
 							dstError = false;
 						}
 					}
@@ -461,12 +532,13 @@ public class AddTravelLeg extends JPanel {
 					priceString = tfPrice.getText();
 					lblPriceError.setText("");
 				}
-				if(tfDistance.getText().length() == 0 || tfDistance.getText().isEmpty()) {
+				if(Double.parseDouble(tfDistance.getText()) == 0.0) {
 					lblDistanceError.setText("[The distance cannot be empty]");
 					error = true;
 				}
 				else {
 					distanceString = tfDistance.getText();
+					distance = Double.parseDouble(distanceString);
 					lblDistanceError.setText("");
 				}
 				if(priceString.length() > 0) {
@@ -479,25 +551,15 @@ public class AddTravelLeg extends JPanel {
 						price = Double.parseDouble(priceString);
 					}
 				}
-				if(distanceString.length() > 0) {
-					if(!(library.isValidDistance(distanceString))) {
-						lblDistanceError.setText("[The distance should be in integer]");
-						error = true;
-					}
-					else {
-						lblDistanceError.setText("");
-						distance = Integer.parseInt(distanceString);
-					}
-				}
 				//========================= Write travel leg info into text file==================//
 				if (!error) {
 					rArray = rFile.readLinkArray();
-					TravelLegInfo travelLegInfo = new TravelLegInfo(transportTypeString,dstLocationString,
-							srcLocationString,price,distance, fromDate, toDate, fromTime, toTime);
+					TravelLegInfo travelLegInfo = new TravelLegInfo(mode,srcLocationString,
+							dstLocationString,price,distance, fromDate, toDate, fromTime, toTime);
 					rArray.addItem(travelLegInfo);
 					rFile.writeLinkArray(rArray);
 					int result = JOptionPane.showConfirmDialog(null,
-							"New travel leg info added successful!!!\nDo you want to add new travelleg account",
+							"New travel leg info added successful!!!\nDo you want to add more travel leg info?",
 							"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 					if (result == JOptionPane.OK_OPTION) {
 						try {

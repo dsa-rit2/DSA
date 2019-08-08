@@ -2,14 +2,22 @@ package travelBug.library;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class SortedLinkedList<T extends Comparable<? super T>> implements SortedLinkListInterface<T>, Serializable {
+public class SortedLinkedList<T> implements SortedLinkListInterface<T>, Serializable {
+	private static final long serialVersionUID = 1L;
 	private Node firstNode;
+	private Node lastNode;
 	private int length;
+	private Comparator<? super T> comparator;
 
-	public SortedLinkedList() {
-		firstNode = null;
-		length = 0;
+	public SortedLinkedList(SinglyLinkedList<T> list, Comparator<? super T> c) {
+		this.clear();
+		comparator = c;
+		list.forEach(item -> {
+			add(item);
+		});
 	}
 
 	public T getfirstNode() {
@@ -17,31 +25,23 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 	}
 
 	public boolean add(T newEntry) {
-//	    Node newNode = new Node(newEntry);
-		//
-//	    Node nodeBefore = null;							// For linked list traversal: to reference the node before the current node
-//	    Node currentNode = firstNode;				// For linked list traversal: to reference the current node
-//	    while (currentNode != null && newEntry.compareTo(currentNode.data) > 0) {
-//	      nodeBefore = currentNode;
-//	      currentNode = currentNode.next;
-//	    }
-		//
-//	    if (isEmpty() || (nodeBefore == null)) { // CASE 1: add at beginning
-//	      newNode.next = firstNode;
-//	      firstNode = newNode;
-//	    } else {	// CASE 2: add in the middle or at the end, i.e. after nodeBefore
-//	      newNode.next = currentNode;
-//	      nodeBefore.next = newNode;
-//	    }
-//	    length++;
 
 		firstNode = add(newEntry, firstNode);
 		length++;
 		return true;
 	}
 
+	public T getLastNode() {
+		Node currentNode = firstNode;
+		while (currentNode.next != null) {
+			currentNode = currentNode.next;
+		}
+		lastNode = currentNode;
+		return lastNode.data;
+	}
+
 	private Node add(T newEntry, Node currNode) {
-		if ((currNode == null) || newEntry.compareTo(currNode.data) <= 0) {
+		if ((currNode == null) || comparator.compare(newEntry, currNode.data) <= 0) {
 			currNode = new Node(newEntry, currNode);
 		} else {
 			Node nodeAfter = add(newEntry, currNode.next);
@@ -50,11 +50,14 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 		return currNode;
 	}
 
-	public boolean remove(T anEntry) {
-		throw new UnsupportedOperationException(); // Left as Practical exercise
+	public boolean addAll(SinglyLinkedList<T> anEntry) {
+		for (int i = 1; i <= anEntry.getNumberOfEntries(); i++) {
+			add((T) anEntry.getEntry(i));
+		}
+		return true;
 	}
 
-	public int getPosition(T anEntry) {
+	public boolean remove(T anEntry) {
 		throw new UnsupportedOperationException(); // Left as Practical exercise
 	}
 
@@ -73,25 +76,12 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 	}
 
 	public boolean contains(T anEntry) {
-//	    boolean found = false;
-//	    Node currentNode = firstNode;
-		//
-//	    while (!found && (currentNode != null)) {
-//	      if (anEntry.equals(currentNode.data)) {
-//	        found = true;
-//	      } else {
-//	        currentNode = currentNode.next;
-//	      }
-//	    }
-		//
-//	    return found;
-
 		boolean found = false;
 		Node tempNode = firstNode;
 		int pos = 1;
 
 		while (!found && (tempNode != null)) {
-			if (anEntry.compareTo(tempNode.data) <= 0) {
+			if (comparator.compare(anEntry, tempNode.data) <= 0) {
 				found = true;
 			} else {
 				tempNode = tempNode.next;
@@ -129,6 +119,7 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 
 	public final void clear() {
 		firstNode = null;
+		lastNode = null;
 		length = 0;
 	}
 
@@ -170,4 +161,46 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 			next = nextNode;
 		}
 	}
+
+	@Override
+	public boolean addAll(T anEntry) {
+		return false;
+	}
+
+	@Override
+	public int getPosition(T anEntry) {
+		return 0;
+	}
+	
+	@Override
+	public Iterator<T> iterator() {
+		return new SinglyListIterator();
+	}
+
+	private class SinglyListIterator implements Iterator<T> {
+
+		private Node currentNode = firstNode;
+
+		@Override
+		public boolean hasNext() {
+			return currentNode != null;
+		}
+
+		@Override
+		public T next() {
+			if (hasNext()) {
+				T returnData = currentNode.data;
+				currentNode = currentNode.next;
+				return returnData;
+			} else {
+				throw new NoSuchElementException("Illegal call to next(); iterator is after end of list.");
+			}
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException("Not supported yet.");
+		}
+	}
 }
+

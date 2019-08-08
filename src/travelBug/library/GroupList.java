@@ -20,27 +20,27 @@ public class GroupList<T> implements GroupListInterface<T> {
 		this();
 		this.c = c;
 	
+//		listNode.forEach(item -> {
+//			Node currentNode = this.firstNode;
+//			Node previousNode = null;
+//
+//			while ((currentNode != null) && (c.compare(item, currentNode.data)) > 0) {
+//				previousNode = currentNode;
+//				currentNode = currentNode.next;
+//			}
+//
+//			if (previousNode != null) {
+//				previousNode.next = new Node(item, currentNode);
+//			}
+//			else {
+//				this.firstNode = new Node(item, firstNode);
+//			}
+//		});
 		
-		listNode.forEach(item -> {
-			Node currentNode = this.firstNode;
-			Node previousNode = null;
-
-			while ((currentNode != null) && (c.compare(item, currentNode.data)) > 0) {
-				previousNode = currentNode;
-				currentNode = currentNode.next;
-			}
-
-			if (previousNode != null) {
-				previousNode.next = new Node(item, currentNode);
-			}
-			else {
-				this.firstNode = new Node(item, firstNode);
-			}
-		});
-		
+		SortedLinkedList<T> sortedLinkedList = new SortedLinkedList<T>(listNode, c);
 		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
 		
-		listNode.forEach(list -> {
+		sortedLinkedList.forEach(list -> {
 			if (tempLinkedList.isEmpty() || (c.compare(list, tempLinkedList.getFirst())) == 0) {
 				tempLinkedList.add(list);
 				System.out.println(list);

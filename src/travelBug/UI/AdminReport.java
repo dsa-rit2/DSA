@@ -1,6 +1,7 @@
 package travelBug.UI;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -24,7 +25,10 @@ import org.omg.CORBA.portable.ValueBase;
 import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
 import travelBug.library.SinglyLinkedList;
+<<<<<<< HEAD
 import travelBug.library.library;
+=======
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 import travelBug.obj.Location;
 import travelBug.obj.SourceDest;
 import travelBug.obj.sourceDest2;
@@ -48,12 +52,17 @@ public class AdminReport extends JPanel {
 //	private singlyLinkedList<SourceDest> hahalLinkedList = new singlyLinkedList<SourceDest>();
 //	private ReadWriteFile<SourceDest> lFile = new ReadWriteFile<SourceDest>("SourceDes.txt", SourceDest.class);
 	private SinglyLinkedList<sourceDest2> hahalLinkedList2 = new SinglyLinkedList<sourceDest2>();
+<<<<<<< HEAD
 	private ReadWriteFile<sourceDest2> lFile2 = new ReadWriteFile<sourceDest2>("sourceDes.txt", sourceDest2.class);
 	private LinkArray<sourceDest2> linkArray = new LinkArray<sourceDest2>();
 	private JComboBox comboBox;
 	private JComboBox comboBox_1;
 	private JButton btnBack;
 
+=======
+	private ReadWriteFile<sourceDest2> lFile2 = new ReadWriteFile<sourceDest2>("sourceDes.txt2", sourceDest2.class);
+	
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 	public AdminReport(UIControl parent) {
 		super();
 		this.mainFrame = parent;
@@ -176,7 +185,11 @@ public class AdminReport extends JPanel {
 		tableModel.addColumn("Destionation");
 		tableModel.addColumn("Number of Visit");
 
+<<<<<<< HEAD
 		load(0, 0);
+=======
+//		load(null);
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			int j = 0;
 			TableColumn column = table.getColumnModel().getColumn(i);
@@ -188,6 +201,7 @@ public class AdminReport extends JPanel {
 		}
 	}
 
+<<<<<<< HEAD
 	public void load(int month, int year) {
 		String[] location = new String[1000];
 		String[] destination = new String[1000];
@@ -228,11 +242,77 @@ public class AdminReport extends JPanel {
 //			if(hahalLinkedList2.getEntry(i).getL1()== source && hahalLinkedList2.getEntry(i).getL2() == destionation) {
 ////				hahalLinkedList2.getEntry(i).addCount();
 ////				found = true;
+=======
+//	public void load(int month , int year,String Tdestination,String Tsource) {
+//		int count = 1;
+//		String [] location = new String[1000];
+//		String []destination = new String[1000];
+//		
+//		tableModel.setRowCount(0);
+//		
+//		for(int j=1; j <= hahalLinkedList2.getNumberOfEntries() ; j++) {
+//			 location [j]=hahalLinkedList2.getEntry(j).getL1();
+//			 destination[j] = hahalLinkedList2.getEntry(j).getL2();
+//		}
+//		
+		
+//		for(int i =1; i<= hahalLinkedList2.getNumberOfEntries() ; i++) {
+//			          
+//			if(month == hahalLinkedList2.getEntry(i).getLocalDate().getMonth() && year == hahalLinkedList2.getEntry(i).getLocalDate().getYear() ) {
+//				if(location[i]= Tsource && destionation[i] = Tdestination) {
+//					location[i] = null;
+//					destionation[i]= null;
+//					count++;
+//				}
 //			}
 //		}
+//		if (anyString == null) {
+//			for (int i = 0; i < hahalLinkedList.getNumberOfEntries(); i++) {
+//				String[] dataStrings = {hahalLinkedList.getEntry(i).getL1(),hahalLinkedList.getEntry(i).getL2(),Integer.toString(hahalLinkedList.getEntry(i).getCount())
+//						};
+//				tableModel.addRow(dataStrings);
+//			}
+//		} else {
+//			anyString = anyString.toUpperCase();
+//			for (int i = 0; i < hahalLinkedList.getNumberOfEntries(); i++) {
+//				if (hahalLinkedList.getEntry(i).getL1().toUpperCase().matches(anyString + ".*")) {
+//					String[] dataStrings = {hahalLinkedList.getEntry(i).getL1(),
+//							hahalLinkedList.getEntry(i).getL2(),Integer.toString(hahalLinkedList.getEntry(i).getCount())};
+//					tableModel.addRow(dataStrings);
+//				}
+//
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
+//			}
+//		}
+<<<<<<< HEAD
 //		if(!found) {
 //			hahalLinkedList2.add(new sourceDest2(source,destionation));
 //		}
 //		// write into text field
 //	}
+=======
+		//
+//		for (int i = 1; i <= hahalLinkedList.getNumberOfEntries(); i++) {
+//			String[] dataStrings = { hahalLinkedList.getEntry(i).getL1(), hahalLinkedList.getEntry(i).getL2(),
+//					Integer.toString(hahalLinkedList.getEntry(i).getCount()) };
+//			tableModel.addRow(dataStrings);
+//		}
+//	}
+//	
+	// put the function below to the search button
+	public void compare(String source,String destionation) {
+		//read data from txt file
+		boolean found = false;
+		for(int i =1 ; i<= hahalLinkedList2.getNumberOfEntries(); i ++) {
+			if(hahalLinkedList2.getEntry(i).getL1()== source && hahalLinkedList2.getEntry(i).getL2() == destionation) {
+//				hahalLinkedList2.getEntry(i).addCount();
+//				found = true;
+			}
+		}
+		if(!found) {
+			hahalLinkedList2.add(new sourceDest2(source,destionation));
+		}
+		// write into text field
+	}
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 }

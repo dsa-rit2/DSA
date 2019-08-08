@@ -19,6 +19,10 @@ public class SortedLinkedList<T> implements SortedLinkListInterface<T>, Serializ
 			add(item);
 		});
 	}
+	
+	public SortedLinkedList () {
+		this.clear();
+	}
 
 	public T getfirstNode() {
 		return firstNode.data;

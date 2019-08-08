@@ -1,8 +1,9 @@
 package travelBug.obj;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
-public class Location implements Serializable {
+public class Location implements Serializable, Comparator<Location> {
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private String continent;
@@ -12,8 +13,8 @@ public class Location implements Serializable {
 	private double longitude;
 	private double latitude;
 
-
-	public Location(String name, String continent, String country, String state, char type, double longitude, double latitude) {
+	public Location(String name, String continent, String country, String state, char type, double longitude,
+			double latitude) {
 		this.name = name;
 		this.continent = continent;
 		this.country = country;
@@ -62,6 +63,7 @@ public class Location implements Serializable {
 	public void setType(char type) {
 		this.type = type;
 	}
+
 	public double getLongitude() {
 		return longitude;
 	}
@@ -77,6 +79,7 @@ public class Location implements Serializable {
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
+
 	public void print() {
 		System.out.println("Location Name: " + name);
 		System.out.println("Continent: " + continent);
@@ -84,5 +87,27 @@ public class Location implements Serializable {
 		System.out.println("Country: " + country);
 		System.out.println("Type: " + type);
 		System.out.println(longitude + "," + latitude);
+	}
+	
+	@Override
+	public String toString() {
+		String output = new String();
+		
+//		output = 	"Location Name: " + name + 
+//					"\nContinent: " + continent + 
+//					"\nState: " + state + 
+//					"\nCountry: " + country + 
+//					"\nType: " + type + 
+//					"\n" + longitude + "," + latitude;
+
+		output = "State: " + state;
+		
+		return output;
+	}
+
+	@Override
+	public int compare(Location o1, Location o2) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

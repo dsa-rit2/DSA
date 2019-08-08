@@ -63,6 +63,10 @@ public class SinglyLinkedList<T> implements linkListInterface<T> {
 
 		return isSuccessful;
 	}
+	
+	public T getFirst() {
+		return firstNode.data;
+	}
 
 	@Override
 	public T remove(int givenPosition) {

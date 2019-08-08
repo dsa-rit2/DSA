@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-
 public class GroupList<T, E> implements GroupListInterface<T, E> {
 
 	private Node headNode;
@@ -19,26 +18,10 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 	public GroupList(SinglyLinkedList<T> listNode, Comparator<? super T> c) {
 		this();
 		this.c = c;
-	
-//		listNode.forEach(item -> {
-//			Node currentNode = this.firstNode;
-//			Node previousNode = null;
-//
-//			while ((currentNode != null) && (c.compare(item, currentNode.data)) > 0) {
-//				previousNode = currentNode;
-//				currentNode = currentNode.next;
-//			}
-//
-//			if (previousNode != null) {
-//				previousNode.next = new Node(item, currentNode);
-//			}
-//			else {
-//				this.firstNode = new Node(item, firstNode);
-//			}
-//		});
-		
+
 		SortedLinkedList<T> sortedLinkedList = new SortedLinkedList<T>(listNode, c);
 		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
+<<<<<<< HEAD
 		sortedLinkedList.forEach(list -> {
 			if (tempLinkedList.isEmpty() || (c.compare(list, tempLinkedList.getFirst())) == 0) {
 				tempLinkedList.add(list);
@@ -56,8 +39,19 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 		System.out.print(headNode.data);
 //		System.out.println("Number of Pointer: " + numberOfEntries);
 		
+=======
+		
+		for (T list : sortedLinkedList) {
+			if (!tempLinkedList.isEmpty() && (c.compare(list, tempLinkedList.getFirst())) != 0) {
+				this.addGroup((E) tempLinkedList);
+				tempLinkedList = new SinglyLinkedList<T>();
+			}
+			tempLinkedList.add(list);
+		}
+		this.addGroup((E) tempLinkedList);
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 	}
-	
+
 	public SinglyLinkedList<T> findChild(T data) {
 		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
 //		this.forEach(item -> {
@@ -68,14 +62,23 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 		return tempLinkedList;
 	}
 
-	private boolean add(E newEntry) {
+	private boolean addGroup(E newEntry) {
 		Node newNode = new Node(newEntry); // create the new node
 
+<<<<<<< HEAD
 		if (isEmpty()) {
 			headNode = newNode; // if empty list
 		}
+=======
+		if (this.isEmpty())
+			firstNode = newNode; // if empty list
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 		else { // add to end of nonempty list
+<<<<<<< HEAD
 			Node currentNode = headNode; // traverse linked list with p pointing to the current node
+=======
+			Node currentNode = firstNode;
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 			while (currentNode.next != null) { // while have not reached the last node
 				currentNode = currentNode.next;
 			}
@@ -85,25 +88,6 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 		numberOfEntries++;
 		return true;
 	}
-
-//	public void sort(SinglyLinkedList<T> list, Comparator<? super T> c) {
-//		list.forEach(item -> {
-//			Node currentNode = this.firstNode;
-//			Node previousNode = null;
-//
-//			while ((currentNode != null) && (c.compare(item, currentNode.data) > 0)) {
-//				previousNode = currentNode;
-//				currentNode = currentNode.next;
-//			}
-//
-//			if (previousNode != null) {
-//				previousNode.next = new Node(item, currentNode);
-//			}
-//			else {
-//				firstNode = new Node(item, firstNode);
-//			}
-//		});
-//	}
 
 	public void clear() {
 		headNode = null;
@@ -124,8 +108,12 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 	}
 
 	private class GroupListIterator implements Iterator<E> {
+<<<<<<< HEAD
 
 		private Node currentNode = headNode;
+=======
+		private Node currentNode = firstNode;
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 
 		@Override
 		public boolean hasNext() {

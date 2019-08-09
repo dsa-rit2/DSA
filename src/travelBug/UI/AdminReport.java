@@ -231,10 +231,6 @@ public class AdminReport extends JPanel {
 	}
 
 	// put the function below to the search button
-	public void addRecord(String source, String destination) {
-//		Get the thing from the database into link list
-		hahalLinkedList2.add(new SourceDest(source, destination));
-		// write the thing to the database
-	}
+	
 
 }

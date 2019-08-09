@@ -25,9 +25,8 @@ import org.omg.CORBA.portable.ValueBase;
 import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
 import travelBug.library.SinglyLinkedList;
-
 import travelBug.library.library;
-
+import travelBug.library.SinglyLinkedList;
 import travelBug.obj.Location;
 import travelBug.obj.SourceDest;
 import travelBug.obj.sourceDest2;
@@ -182,6 +181,7 @@ public class AdminReport extends JPanel {
 		tableModel.addColumn("Number of Visit");
 
 
+
 		load(0, 0);
 
 //		load(null);
@@ -196,7 +196,6 @@ public class AdminReport extends JPanel {
 			j++;
 		}
 	}
-
 
 	public void load(int month, int year) {
 		String[] location = new String[1000];
@@ -237,7 +236,9 @@ public class AdminReport extends JPanel {
 //		for(int i =1 ; i<= hahalLinkedList2.getNumberOfEntries(); i ++) {
 //			if(hahalLinkedList2.getEntry(i).getL1()== source && hahalLinkedList2.getEntry(i).getL2() == destionation) {
 ////				hahalLinkedList2.getEntry(i).addCount();
+
 ////				found = true;
+
 
 //	public void load(int month , int year,String Tdestination,String Tsource) {
 //		int count = 1;
@@ -276,15 +277,15 @@ public class AdminReport extends JPanel {
 //							hahalLinkedList.getEntry(i).getL2(),Integer.toString(hahalLinkedList.getEntry(i).getCount())};
 //					tableModel.addRow(dataStrings);
 //				}
-//
 
 //			}
-//		}
+
 
 //		if(!found) {
 //			hahalLinkedList2.add(new sourceDest2(source,destionation));
 //		}
 //		// write into text field
+
 //	}
 
 		//
@@ -309,6 +310,6 @@ public class AdminReport extends JPanel {
 			hahalLinkedList2.add(new sourceDest2(source,destionation));
 		}
 		// write into text field
-	}
 
+}
 }

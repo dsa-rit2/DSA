@@ -59,6 +59,7 @@ public class DisplayTrip extends JPanel {
 
 		
 		
+
 		for(int i = 1; i <= tempCircularLinkedList.getNumberOfEntries(); i++) {
 			
 			source   = tempCircularLinkedList.getEntry(i).getSource();
@@ -68,6 +69,17 @@ public class DisplayTrip extends JPanel {
 			price    = tempCircularLinkedList.getEntry(i).getPrice();
 
 		}
+
+//		for(int i = 1; i <= tempCircularLinkedList.getSize(); i++) {
+//			
+//			source   = tempCircularLinkedList.getEntry(i).getSource();
+//			dest     = tempCircularLinkedList.getEntry(i).getDest();
+//			distance = tempCircularLinkedList.getEntry(i).getDistance();
+//			duration = tempCircularLinkedList.getEntry(i).getDuration();
+//			price    = tempCircularLinkedList.getEntry(i).getPrice();
+//
+//		}
+
 		
 		
 		

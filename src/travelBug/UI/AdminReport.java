@@ -94,7 +94,7 @@ public class AdminReport extends JPanel {
 		Color ivory = new Color(255, 255, 208);
 		table.setBackground(ivory);
 		table.getTableHeader().setOpaque(false);
-		table.getTableHeader().setBackground(Color.MAGENTA);
+		table.getTableHeader().setBackground(Color.white);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setSize(1000, 500);
 		table.setBounds(34, 31, 537, 167);

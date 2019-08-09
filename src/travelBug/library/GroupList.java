@@ -19,7 +19,6 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 		this();
 		this.c = c;
 
-
 		if (!listNode.isEmpty()) {
 			SortedLinkedList<T> sortedLinkedList = new SortedLinkedList<T>(listNode, c);
 			SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();

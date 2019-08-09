@@ -452,27 +452,56 @@ public class PlanTrip extends JPanel {
 					}
 					
 					for (SinglyLinkedList<TravelLegInfo> destinationItem : desLocation) {
-						if(destinationItem.getFirst().getSource().equalsIgnoreCase(srcTravel)) {
-							srcFoundList = destinationItem;
+						if(destinationItem.getFirst().getDest().equalsIgnoreCase(desTravel)) {
+							desFoundList = destinationItem;
 						}
 					}
 					
 					if (!srcFoundList.isEmpty() && !desFoundList.isEmpty()) {
 						boolean travelPlanFound = false;
-						// Phase 1 (1 intercept) ------------------------------------------------------------
+						// Phase 1 (1 interception) ------------------------------------------------------------						
 						for (TravelLegInfo srcElement : srcFoundList) {
 							for (TravelLegInfo desElement : desFoundList) {
 								if (srcElement.getDest().equalsIgnoreCase(desElement.getSource())) {
 									travelPlanFound = true;
-									travelPlan = "Source: " + srcElement.getSource() + " TravelLeg1: " + srcElement.getMode() + " to " + srcElement.getDest() + " TravelLeg2: " + desElement.getSource() + " to " + desElement.getDest() + " mode: " + desElement.getMode();
+									travelPlan = "Source: " + srcElement.getSource() + " to " + srcElement.getDest() + " | Interchange | " + desElement.getSource() + " to " + desElement.getDest();
 								}
 							}
 						}
+						
+						// Phase 2 (2 interception) ------------------------------------------------------------
+						if (!travelPlanFound) {
+							GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> groupListSrcList = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(srcFoundList, Comparator.comparing(TravelLegInfo::getDest));
+							GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> groupListDesList = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(desFoundList, Comparator.comparing(TravelLegInfo::getSource));
+							
+							SinglyLinkedList<TravelLegInfo> tempSrcList = new SinglyLinkedList<TravelLegInfo>();
+							SinglyLinkedList<TravelLegInfo> tempDesList = new SinglyLinkedList<TravelLegInfo>();
+							
+							for (SinglyLinkedList<TravelLegInfo> tempSrc : groupListSrcList) {
+								for (TravelLegInfo itemSrc : tempSrc) {
+									for (SinglyLinkedList<TravelLegInfo> tempDes : groupListDesList) {
+										for (TravelLegInfo itemDes : tempDes) {
+											if (itemSrc.getDest().equalsIgnoreCase(itemDes.getSource())) {
+												travelPlanFound = true;
+												travelPlan = "Source: " + srcTravel  + " | Interchange | " + itemSrc.getSource() + " to " + itemSrc.getDest() + " | Interchange | " + itemDes.getSource() + " to " + itemDes.getDest() + " | Interchange | " + " Destination: " + desTravel;
+											}
+										}
+									}
+								}
+							}
+						}
+						
+						// Phase 3 (3 interception) ------------------------------------------------------------
+						if (!travelPlanFound) {
+							
+						}
 					}
 					else {
-						System.out.println("No travel found");
+						travelPlan = "No travel found";
 					}
 				}
+				
+				System.out.println(travelPlan);
 			}
 		});
 	}

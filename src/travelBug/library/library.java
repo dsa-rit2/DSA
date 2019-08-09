@@ -15,6 +15,7 @@ public class library {
 	public static final String currentDirectoryPath = System.getProperty("user.dir"); // Get root directory path
 	private static final Random RANDOM = new SecureRandom();
 	private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	private static final int Hours = 0;
 
 	public static boolean validateTime(String time) {
 		Pattern pattern;
@@ -53,6 +54,17 @@ public class library {
 			returnValue.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
 		}
 		return returnValue.toString();
+	}
+	public static int convertDuration(LocalTime fromLocalTime, LocalTime tolocaLocalTime) {
+		Duration duration = Duration.between(fromLocalTime, tolocaLocalTime);
+		int durations = (int) duration.toMinutes();
+		return durations;
+	}
+	public static String convertString(int duration) {
+		String hourString = String.valueOf((duration / 60));
+		String minuteString = String.valueOf((duration % 60));
+		
+		return hourString + "Hrs" +" "+ minuteString + "Mins";
 	}
 	public static String round(double d) {
 	    DecimalFormat df = new DecimalFormat("0.00");
@@ -368,5 +380,12 @@ public class library {
 			tempLinkedList.add(arraylist.getIndexElement(i));
 		}
 		return tempLinkedList;
+	}
+	public static <T> LinkArray<T> Converted (SinglyLinkedList<T> linkedlist){
+		LinkArray<T> pArrayList = new LinkArray<T>();
+		for(int i =1; i<=linkedlist.getNumberOfEntries();i++) {
+			pArrayList.addItem(linkedlist.getEntry(i));
+		}
+		return pArrayList;
 	}
 }

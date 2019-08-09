@@ -11,6 +11,7 @@ import travelBug.obj.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -204,8 +205,9 @@ public class AddTravelLeg extends JPanel {
 							latitude2 = cArray.getIndexElement(i).getLatitude();
 							longtitude2 = cArray.getIndexElement(i).getLongitude();
 						}
-					
-					tfDistance.setText(String.valueOf(library.CoordinateDistance(longtitude1, latitude1, longtitude2, latitude2)));
+					double distance1 = library.CoordinateDistance(longtitude1, latitude1, longtitude2, latitude2);
+					String distanceString = String.format ("%.2f", distance1);
+					tfDistance.setText(distanceString);
 				}
 			}
 			}
@@ -375,7 +377,7 @@ public class AddTravelLeg extends JPanel {
 				Date checkDate1 = dcToDate.getDate();
 				String fromTimeString = tfFromTime.getText();
 				String toTimeString = tfToTime.getText();
-				float duration = 0;
+				int duration = 0;
 				LocalDate fromDate = null;
 				LocalDate toDate = null;
 				LocalTime fromTime = null;
@@ -466,6 +468,7 @@ public class AddTravelLeg extends JPanel {
 						lblFromTimeError.setText("[The [From] time must before [To] time");
 						error = true;
 					} else {
+						duration = library.convertDuration(fromTime, toTime);
 						lblFromTimeError.setText("");
 					}
 				}
@@ -555,7 +558,7 @@ public class AddTravelLeg extends JPanel {
 				if (!error) {
 					rArray = rFile.readLinkArray();
 					TravelLegInfo travelLegInfo = new TravelLegInfo(mode,srcLocationString,
-							dstLocationString,price,distance, fromDate, toDate, fromTime, toTime);
+							dstLocationString,price,distance, fromDate, toDate, fromTime, toTime, duration);
 					rArray.addItem(travelLegInfo);
 					rFile.writeLinkArray(rArray);
 					int result = JOptionPane.showConfirmDialog(null,

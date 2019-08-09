@@ -9,6 +9,9 @@ import travelBug.obj.*;
 
 import java.awt.*;
 import javax.swing.*;
+
+import org.junit.runners.ParentRunner;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -26,7 +29,6 @@ public class AddTravelLegAccount extends JPanel {
 	private String shortFormString = null;
 
 	public AddTravelLegAccount(UIControl parent, String anything) {
-
 		// ====================== Jpanel Setting ========================
 		super();
 		this.anything = anything;
@@ -47,7 +49,7 @@ public class AddTravelLegAccount extends JPanel {
 		tArray = tFile.readLinkArray();
 		createGui();
 	}
-
+	
 	public void createGui() {
 		removeAll();
 		// ======================================== Content component ==============================================//
@@ -113,6 +115,7 @@ public class AddTravelLegAccount extends JPanel {
 		lblPasswordError.setVisible(false);
 		lblUsernameError.setVisible(false);
 
+		
 		// ================================================ Button ====================================================//
 		Button btnAdd = new Button("Add");
 		btnAdd.addActionListener(event -> {
@@ -120,7 +123,7 @@ public class AddTravelLegAccount extends JPanel {
 			String password = String.valueOf(txtPassword.getText());
 			String checkPass = library.validPassword(password);
 			int error = 0;
-
+		
 			lblPasswordError.setVisible(false);
 			lblUsernameError.setVisible(false);
 			lblUsernameError.setText("");
@@ -171,7 +174,6 @@ public class AddTravelLegAccount extends JPanel {
 			}
 
 		});
-
 		btnAdd.setForeground(new Color(0, 0, 0));
 		btnAdd.setBounds(313, 319, 79, 24);
 		add(btnAdd);

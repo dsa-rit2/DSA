@@ -14,7 +14,14 @@ import java.awt.event.ActionEvent;
 public class MainMenu extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private final UIControl mainFrame; // Store main frame
-	
+
+	private JLabel lblCustomerList;
+	private JLabel lblLocation;
+	private JLabel lblCustomer;
+	private JLabel lblReport;
+	private JLabel lblCompany;
+
+
 	public MainMenu(UIControl parent) {
 		super();
 		this.mainFrame = parent;
@@ -79,6 +86,7 @@ public class MainMenu extends JPanel {
 //		button_2.setBounds(331, 114, 124, 48);
 //		add(button_2);
 		
+
 //		Button button = new Button("Customer List");
 //		button.setFont(new Font("Times New Roman", Font.BOLD, 14));
 //		button.setBackground(Color.lightGray);
@@ -130,6 +138,66 @@ public class MainMenu extends JPanel {
 //		button_4.setFont(new Font("Times New Roman", Font.BOLD, 12));
 //		button_4.setBounds(690, 383, 70, 22);
 //		add(button_4);
+
+		JLabel lblWelcomeBack = new JLabel("Welcome Back:");
+		lblWelcomeBack.setBounds(693, 25, 92, 14);
+		add(lblWelcomeBack);
+		
+		JLabel lblCustomer = new JLabel("");
+		lblCustomer.setBounds(93, 89, 204, 142);
+		lblCustomer.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCustomer(mainFrame)));
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCustomer(mainFrame)));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCustomer(mainFrame)));
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCustomer(mainFrame)));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCustomer(mainFrame)));
+			}
+		});
+		lblCustomer.setIcon(new ImageIcon(library.currentDirectoryPath + "\\images\\output-onlinepngtools.png"));
+		
+		add(lblCustomer);
+		
+		lblCustomerList = new JLabel("");
+		lblCustomerList.setBounds(157, 275, 92, 14);
+		add(lblCustomerList);
+		
+		lblLocation = new JLabel("");
+		lblLocation.setIcon(new ImageIcon(library.currentDirectoryPath + "\\images\\location.png"));
+		lblLocation.setBounds(483, 89, 204, 142);
+		add(lblLocation);
+		
+		lblReport = new JLabel("");
+		lblReport.setBounds(93, 275, 204, 142);
+		add(lblReport);
+		
+		lblCompany = new JLabel("");
+		lblCompany.setBounds(483, 295, 204, 142);
+		add(lblCompany);
+
 		
 		
 		// ----------------------- Check Role ------------------------
@@ -146,6 +214,7 @@ public class MainMenu extends JPanel {
 	}
 	
 	private void adminGUI() {
+
 		Button button = new Button("Customer List");
 		button.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		button.setBackground(Color.lightGray);
@@ -197,6 +266,12 @@ public class MainMenu extends JPanel {
 		button_4.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		button_4.setBounds(690, 383, 70, 22);
 		add(button_4);
+
+		lblCustomer.setVisible(true);
+		lblLocation.setVisible(true);
+		lblReport.setVisible(true);
+		lblCompany.setVisible(true);
+
 	}
 	
 	private void travelLegGUI() {

@@ -8,7 +8,6 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 
 	private Node firstnNode;
 	private int numberOfEntries;
-	private Comparator<? super T> c;
 
 	private GroupList() {
 		this.clear();
@@ -17,7 +16,6 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 	@SuppressWarnings("unchecked")
 	public GroupList(SinglyLinkedList<T> listNode, Comparator<? super T> c) {
 		this();
-		this.c = c;
 
 		if (!listNode.isEmpty()) {
 			SortedLinkedList<T> sortedLinkedList = new SortedLinkedList<T>(listNode, c);
@@ -33,20 +31,6 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 			this.addGroup((E) tempLinkedList);
 		}
 
-	}
-
-	@SuppressWarnings("unchecked")
-	public SinglyLinkedList<T> findChild(T data) {
-		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
-
-		for (E list : this) {
-			SinglyLinkedList<T> item = (SinglyLinkedList<T>) list;
-			if (c.compare(data, item.getFirst()) == 0) {
-				tempLinkedList = item;
-			}
-		}
-
-		return tempLinkedList;
 	}
 
 	private boolean addGroup(E newEntry) {

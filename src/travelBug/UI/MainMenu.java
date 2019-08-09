@@ -13,6 +13,11 @@ import java.awt.event.ActionEvent;
 public class MainMenu extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private final UIControl mainFrame; // Store main frame
+	private JLabel lblCustomerList;
+	private JLabel lblLocation;
+	private JLabel lblCustomer;
+	private JLabel lblReport;
+	private JLabel lblCompany;
 
 	public MainMenu(UIControl parent) {
 		super();
@@ -36,31 +41,31 @@ public class MainMenu extends JPanel {
 		add(lblWelcomeBack);
 		
 		JLabel lblCustomer = new JLabel("");
-		lblCustomer.setBounds(93, 89, 229, 179);
+		lblCustomer.setBounds(93, 89, 204, 142);
 		lblCustomer.addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCustomer(mainFrame)));
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCustomer(mainFrame)));
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCustomer(mainFrame)));
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCustomer(mainFrame)));
 			}
 			
 			@Override
@@ -73,18 +78,22 @@ public class MainMenu extends JPanel {
 		
 		add(lblCustomer);
 		
-		JLabel lblCustomerList = new JLabel("Customer List");
+		lblCustomerList = new JLabel("");
 		lblCustomerList.setBounds(157, 275, 92, 14);
 		add(lblCustomerList);
 		
-		JLabel lblLocation = new JLabel("");
+		lblLocation = new JLabel("");
 		lblLocation.setIcon(new ImageIcon(library.currentDirectoryPath + "\\images\\location.png"));
-		lblLocation.setBounds(462, 44, 269, 220);
+		lblLocation.setBounds(483, 89, 204, 142);
 		add(lblLocation);
 		
-		JLabel label = new JLabel("Customer List");
-		label.setBounds(548, 275, 92, 14);
-		add(label);
+		lblReport = new JLabel("");
+		lblReport.setBounds(93, 275, 204, 142);
+		add(lblReport);
+		
+		lblCompany = new JLabel("");
+		lblCompany.setBounds(483, 295, 204, 142);
+		add(lblCompany);
 		
 		
 		// ----------------------- Check Role ------------------------
@@ -94,7 +103,10 @@ public class MainMenu extends JPanel {
 	}
 	
 	private void adminGUI() {
-		
+		lblCustomer.setVisible(true);
+		lblLocation.setVisible(true);
+		lblReport.setVisible(true);
+		lblCompany.setVisible(true);
 	}
 	
 	private void travelLegGUI() {

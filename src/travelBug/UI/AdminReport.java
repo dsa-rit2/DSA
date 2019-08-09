@@ -1,37 +1,17 @@
 package travelBug.UI;
 
-import java.awt.BorderLayout;
+//=========================
+//	Import Package
+//=========================
+import travelBug.library.*;
+import travelBug.obj.*;
+//=========================
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Rectangle;
-import java.awt.color.ICC_ColorSpace;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Vector;
-
-import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-
-
-import travelBug.library.LinkArray;
-import travelBug.library.ReadWriteFile;
-import travelBug.library.SinglyLinkedList;
-import travelBug.library.library;
-import travelBug.obj.SourceDest;
-
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -107,9 +87,7 @@ public class AdminReport extends JPanel {
 		scrollPane.setEnabled(false);
 		add(scrollPane);
 
-		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(
-				new String[] { "<Month>", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+		comboBox = new JComboBox(new String[] { "<Month>", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" });
 		comboBox.setBounds(12, 58, 130, 22);
 		comboBox.addActionListener(event -> {
 			if (comboBox.getSelectedIndex() != 0) {
@@ -120,14 +98,11 @@ public class AdminReport extends JPanel {
 			} else {
 				comboBox_1.setEnabled(false);
 			}
-
 		});
 		add(comboBox);
 
-		comboBox_1 = new JComboBox();
+		comboBox_1 = new JComboBox(new String[] { "<Year>", "2018", "2019", "2020", "2021", "2022" });
 		comboBox_1.setEnabled(false);
-		comboBox_1
-				.setModel(new DefaultComboBoxModel(new String[] { "<Year>", "2018", "2019", "2020", "2021", "2022" }));
 		comboBox_1.setBounds(169, 58, 195, 22);
 		comboBox_1.addActionListener(event -> {
 			if (comboBox_1.getSelectedIndex() != 0) {

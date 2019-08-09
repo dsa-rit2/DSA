@@ -43,7 +43,7 @@ public class UIControl extends JFrame {
 //		changePanel(new AddTravelLeg(this));
 //		changePanel(new AdminReport(this));
 //		changePanel(new ViewTrip(this));
-//		changePanel(new PlanTrip(this));
+		changePanel(new PlanTrip(this));
 	}
 
 	public void changePanel(JPanel panelName) {

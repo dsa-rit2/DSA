@@ -42,7 +42,9 @@ public class LinkArray<T> implements ListInterface<T>, Serializable {
 
 	/*********** Get specific element using index ***********/
 	public T getIndexElement(int index) {
-		return objArray[index];
+		if(index >=0 || index < size())
+			return objArray[index];
+		else return null;
 	}
 
 	/*********** Check if list is empty ***********/

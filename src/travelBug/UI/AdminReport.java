@@ -27,6 +27,7 @@ import travelBug.obj.SourceDest;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;

@@ -313,10 +313,10 @@ public class TravelLegMaintenance extends JPanel {
 						Comparator.comparing(TravelLegInfo::getSource));
 
 				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-					if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-							|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
-									&& (tArrayLinkedList.getEntry(j).getfromDate()
-											.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+//					if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+//							|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
+//									&& (tArrayLinkedList.getEntry(j).getfromDate()
+//											.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
 						defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
 								tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
 								tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
@@ -324,7 +324,7 @@ public class TravelLegMaintenance extends JPanel {
 								tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
 								tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
 								library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
-					}
+//					}
 				}
 			} else if (searchItem != null && searchString == null) {
 				searchItem = searchItem.toLowerCase();

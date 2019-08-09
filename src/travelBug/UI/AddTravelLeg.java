@@ -477,18 +477,18 @@ public class AddTravelLeg extends JPanel {
 				}
 				if (!(((JTextField) dcFromDate.getDateEditor().getUiComponent()).getText().isEmpty())
 						&& !(((JTextField) dcToDate.getDateEditor().getUiComponent()).getText().isEmpty())) {
-					if (!(fromDate.isBefore(toDate))) {
+					if (!(fromDate.isBefore(toDate)) && !(fromDate.equals(toDate)) && fromDate.isAfter(toDate)) {
 						lblFromDateError.setText("[The [From] date must before [To] date] or Qeual");
 						error = true;
 					}
-					if(!(fromDate.equals(toDate))){
-						lblFromDateError.setText("[The [From] date must before [To] date] or Equal");
-						error = true;
-					}
-					if(fromDate.isAfter(toDate)) {
-						lblFromDateError.setText("[The [From] date must before [To] date] or Equal");
-						error = true;
-					}
+//					if(!(fromDate.equals(toDate))){
+//						lblFromDateError.setText("[The [From] date must before [To] date] or Equal");
+//						error = true;
+//					}
+//					if(fromDate.isAfter(toDate)) {
+//						lblFromDateError.setText("[The [From] date must before [To] date] or Equal");
+//						error = true;
+//					}
 					else {
 						lblFromDateError.setText("");
 					}

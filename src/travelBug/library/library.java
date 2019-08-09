@@ -26,7 +26,6 @@ public class library {
 		matcher = pattern.matcher(time);
 		return matcher.matches();
 	}
-
 	public static String checkUsername(String in) { // return null means the username is valid
 		if (in.isEmpty())
 			return "Username is empty";

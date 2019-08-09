@@ -30,7 +30,6 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 			}
 			this.addGroup((E) tempLinkedList);
 		}
-
 	}
 
 	private boolean addGroup(E newEntry) {

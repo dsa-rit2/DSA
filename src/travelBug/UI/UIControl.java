@@ -28,7 +28,7 @@ public class UIControl extends JFrame {
 		getContentPane().setLayout(null);
 
 		// ============= Change Panel Section =============
-		changePanel(new ListLocation(this));
+	//	changePanel(new ListLocation(this));
 //		changePanel(new AddLocation(this));
 //		changePanel(new TravelLegMaintenance(this));
 //		changePanel(new PlanTrip(this));
@@ -50,7 +50,7 @@ public class UIControl extends JFrame {
 
 //		changePanel(new AdminReport(this));
 //		changePanel(new ViewTrip(this));
-		changePanel(new PlanTrip(this));
+//		changePanel(new PlanTrip(this));
 	}
 
 	public void changePanel(JPanel panelName) {

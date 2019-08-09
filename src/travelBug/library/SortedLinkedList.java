@@ -43,8 +43,7 @@ public class SortedLinkedList<T> implements SortedLinkListInterface<T>, Serializ
 		lastNode = currentNode;
 		return lastNode.data;
 	}
-
-	private Node add(T newEntry, Node currNode) {
+	Node add(T newEntry, Node currNode) {
 		if ((currNode == null) || comparator.compare(newEntry, currNode.data) <= 0) {
 			currNode = new Node(newEntry, currNode);
 		} else {

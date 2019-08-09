@@ -386,22 +386,6 @@ public class TravelLegMaintenance extends JPanel {
 						
 					}
 
-//				for (int j = 0; j < tArray.size(); j++) {
-//					if (tArray.getIndexElement(j).getSource().toLowerCase().contains(searchItem)
-//							|| tArray.getIndexElement(j).getDest().toLowerCase().contains(searchItem)
-//							|| tArray.getIndexElement(j).getfromDate().toString().toLowerCase().contains(searchItem)
-//							|| tArray.getIndexElement(j).gettoDate().toString().toLowerCase().contains(searchItem)
-//							|| tArray.getIndexElement(j).getfromTime().toString().toLowerCase().contains(searchItem)
-//							|| tArray.getIndexElement(j).gettoTime().toString().toLowerCase().contains(searchItem)
-//							|| String.valueOf(tArray.getIndexElement(j).getMode()).toLowerCase().contains(searchItem)) {
-//						defaultTableModel.insertRow(defaultTableModel.getRowCount(),
-//								new Object[] { tArray.getIndexElement(j).getrecordNo(),
-//										tArray.getIndexElement(j).getSource(), tArray.getIndexElement(j).getDest(),
-//										tArray.getIndexElement(j).getfromDate(), tArray.getIndexElement(j).gettoDate(),
-//										tArray.getIndexElement(j).getfromTime(), tArray.getIndexElement(j).gettoTime(),
-//										tArray.getIndexElement(j).getMode(), tArray.getIndexElement(j).getPrice(),
-//										tArray.getIndexElement(j).getDistance(),
-//										library.convertString((tArray.getIndexElement(j).getDuration()))});
 				}
 			}
 		}
@@ -416,7 +400,7 @@ public class TravelLegMaintenance extends JPanel {
 
 			for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
 				if(tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
-				defaultTableModel.insertRow(j - 1,
+				defaultTableModel.insertRow(defaultTableModel.getRowCount(),
 						new Object[] { tArrayLinkedList.getEntry(j).getrecordNo(),
 								tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
 								tArrayLinkedList.getEntry(j).getfromDate(), tArrayLinkedList.getEntry(j).gettoDate(),
@@ -490,22 +474,6 @@ public class TravelLegMaintenance extends JPanel {
 					
 				}
 
-//			for (int j = 0; j < tArray.size(); j++) {
-//				if (tArray.getIndexElement(j).getSource().toLowerCase().contains(searchItem)
-//						|| tArray.getIndexElement(j).getDest().toLowerCase().contains(searchItem)
-//						|| tArray.getIndexElement(j).getfromDate().toString().toLowerCase().contains(searchItem)
-//						|| tArray.getIndexElement(j).gettoDate().toString().toLowerCase().contains(searchItem)
-//						|| tArray.getIndexElement(j).getfromTime().toString().toLowerCase().contains(searchItem)
-//						|| tArray.getIndexElement(j).gettoTime().toString().toLowerCase().contains(searchItem)
-//						|| String.valueOf(tArray.getIndexElement(j).getMode()).toLowerCase().contains(searchItem)) {
-//					defaultTableModel.insertRow(defaultTableModel.getRowCount(),
-//							new Object[] { tArray.getIndexElement(j).getrecordNo(),
-//									tArray.getIndexElement(j).getSource(), tArray.getIndexElement(j).getDest(),
-//									tArray.getIndexElement(j).getfromDate(), tArray.getIndexElement(j).gettoDate(),
-//									tArray.getIndexElement(j).getfromTime(), tArray.getIndexElement(j).gettoTime(),
-//									tArray.getIndexElement(j).getMode(), tArray.getIndexElement(j).getPrice(),
-//									tArray.getIndexElement(j).getDistance(),
-//									library.convertString((tArray.getIndexElement(j).getDuration()))});
 			}
 		}
 	}

@@ -105,7 +105,7 @@ public class AddLocation extends JPanel {
 		add(cbCountry);
 
 		String[] state = { "<Choose Type>", "Small City", "Medium City", "Large City", "Natural formation",
-				"Designated Park/Reserve", "Man-made landmark" };
+				"Designated Park/Reserve", "Man-made landmark", "Station" };
 		cbType = new JComboBox(state);
 		cbType.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cbType.setBounds(300, 298, 300, 30);

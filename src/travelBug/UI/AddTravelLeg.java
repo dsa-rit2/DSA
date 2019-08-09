@@ -466,20 +466,22 @@ public class AddTravelLeg extends JPanel {
 				}
 				if ((fromTimeString.length() > 0 && library.validateTime(fromTimeString))
 						&& (toTimeString.length() > 0 && library.validateTime(toTimeString))) {
-					if (!fromTime.isBefore(toTime)) {
+					if (!fromTime.isBefore(toTime) && !fromTime.equals(toTime)) {
 						lblFromTimeError.setText("[The [From] time must before [To] time");
 						error = true;
-					} else {
+					}
+						else {
+					}
 						duration = library.convertDuration(fromTime, toTime);
 						lblFromTimeError.setText("");
 					}
-				}
 				if (!(((JTextField) dcFromDate.getDateEditor().getUiComponent()).getText().isEmpty())
 						&& !(((JTextField) dcToDate.getDateEditor().getUiComponent()).getText().isEmpty())) {
 					if (!fromDate.isBefore(toDate)) {
 						lblFromDateError.setText("[The [From] date must before [To] date]");
 						error = true;
-					} else {
+					}
+					else {
 						lblFromDateError.setText("");
 					}
 				}

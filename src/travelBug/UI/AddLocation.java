@@ -221,9 +221,9 @@ public class AddLocation extends JPanel {
 		lArray = lFile.readLinkArray();
 
 		// ===================== Get data =======================
-		String locationName = txtLocationName.getText();
+		String locationName = library.makeUpper(txtLocationName.getText());
 		String continent = cbContinent.getSelectedItem().toString();
-		String state = txtState.getText();
+		String state = library.makeUpper(txtState.getText());
 		String country = cbCountry.getSelectedItem().toString();
 		String type = cbType.getSelectedItem().toString();
 		double longitude = 0.00;

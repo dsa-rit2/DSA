@@ -10,18 +10,13 @@ import travelBug.obj.*;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import org.omg.CosNaming._BindingIteratorImplBase;
-
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
-
 import java.util.Comparator;
 import java.util.Date;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.awt.event.ItemListener;
-import java.security.cert.TrustAnchor;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.awt.event.ItemEvent;
 
@@ -382,9 +377,51 @@ public class PlanTrip extends JPanel {
 			}
 		});
 		
+		// ----------------- Submit button trigger -----------------
 		confirmBtn.addActionListener(event -> {
-			adultCount = Integer.parseInt(adultSpinner.getValue().toString());
-			childCount = Integer.parseInt(childSpinner.getValue().toString());
+			boolean error = false;
+			
+			if (continent1.getSelectedIndex() <= 0) {
+				error = true;
+			}
+			else if (country1.getSelectedIndex() <= 0) {
+				error = true;
+			}
+			else if (place1.getSelectedIndex() <= 0) {
+				error = true;
+			}
+			else if (locationName1.getSelectedIndex() <= 0) {
+				error = true;
+			}
+			
+			if (continent2.getSelectedIndex() <= 0) {
+				error = true;
+			}			
+			else if (country2.getSelectedIndex() <= 0) {
+				error = true;
+			}
+			else if (place2.getSelectedIndex() <= 0) {
+				error = true;
+			}
+			else if (locationName2.getSelectedIndex() <= 0) {
+				error = true;
+			}
+			
+			if (editor1.getText().isEmpty()) {
+				error = true;
+			}
+			if (editor2.getText().isEmpty()) {
+				error = true;
+			}
+			
+			
+			if (!error) {
+				adultCount = Integer.parseInt(adultSpinner.getValue().toString());
+				childCount = Integer.parseInt(childSpinner.getValue().toString());
+			}
+			else {
+				System.out.println("Error occur !");
+			}
 		});
 		
 		// ======================= Algorithms =========================

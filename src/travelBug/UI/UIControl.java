@@ -27,9 +27,19 @@ public class UIControl extends JFrame {
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 
+<<<<<<< HEAD
 		// ============= Change Panel Section =============
-		changePanel(new ListLocation(this));
+		changePanel(new TravelLegMaintenance(this));
+//		changePanel(new PlanTrip(this));
+=======
+		// ============= Change Panel Section =============
+	//	changePanel(new ListLocation(this));
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 //		changePanel(new AddLocation(this));
+<<<<<<< HEAD
+//		changePanel(new AddTravelLeg(this));
+=======
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 //		changePanel(new TravelLegMaintenance(this));
 //		changePanel(new PlanTrip(this));
 //		changePanel(new AddLocation(this));
@@ -40,12 +50,17 @@ public class UIControl extends JFrame {
 //		changePanel(new Authentication(this));
 //		changePanel(new ListLocation(this));
 //		changePanel(new AddTravelLeg(this));
+
 //	changePanel(new AddTravelLeg(this));
+
+//		changePanel(new AdminReport(this));
+		changePanel(new MainMenu(this));
 
 //		changePanel(new AdminReport(this));
 
 //		changePanel(new AdminReport(this));
 //		changePanel(new ViewTrip(this));
+//		changePanel(new PlanTrip(this));
 	}
 
 	public void changePanel(JPanel panelName) {

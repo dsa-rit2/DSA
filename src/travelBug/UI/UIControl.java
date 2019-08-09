@@ -29,7 +29,7 @@ public class UIControl extends JFrame {
 
 		// ============= Change Panel Section =============
 //		changePanel(new TravelLegMaintenance(this));
-//		changePanel(new PlanTrip(this));
+		changePanel(new PlanTrip(this));
 //		changePanel(new ListLocation(this));
 //		changePanel(new AddLocation(this));
 //		changePanel(new AddTravelLeg(this));
@@ -47,7 +47,7 @@ public class UIControl extends JFrame {
 //		changePanel(new AddTravelLeg(this));
 //		changePanel(new AdminReport(this));
 //		changePanel(new TravelLegMaintenance(this));
-		changePanel(new MainMenu(this));
+//		changePanel(new MainMenu(this));
 //		changePanel(new AdminReport(this));
 //		changePanel(new AdminReport(this));
 //		changePanel(new ViewTrip(this));

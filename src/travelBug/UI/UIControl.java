@@ -31,7 +31,7 @@ public class UIControl extends JFrame {
 
 		// ============= Change Panel Section =============
 
-		changePanel(new MainMenu(this));
+		changePanel(new ViewTrip(this));
 
 	}
 

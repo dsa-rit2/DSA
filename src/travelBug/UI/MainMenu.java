@@ -20,6 +20,7 @@ public class MainMenu extends JPanel {
 	private JLabel lblCustomer;
 	private JLabel lblReport;
 	private JLabel lblCompany;
+	private JLabel lblUsernameJLabel;
 
 
 	public MainMenu(UIControl parent) {
@@ -33,13 +34,18 @@ public class MainMenu extends JPanel {
 //--------------------------Component-----------------------------------
 
 		JLabel lblWelcomeBack = new JLabel("Welcome Back:");
-		lblWelcomeBack.setBounds(693, 25, 92, 14);
+		lblWelcomeBack.setBounds(624, 35, 92, 14);
 		add(lblWelcomeBack);
 		
 		JLabel lblMainMenu = new JLabel("Main Menu");
 		lblMainMenu.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		lblMainMenu.setBounds(339, 65, 112, 29);
 		add(lblMainMenu);
+		
+		lblUsernameJLabel = new JLabel("");
+		lblUsernameJLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblUsernameJLabel.setBounds(703, 25, 112, 29);
+		add(lblUsernameJLabel);
 	
 //		add(lblCustomer);
 		
@@ -60,7 +66,7 @@ public class MainMenu extends JPanel {
 //		lblCompany.setBounds(483, 295, 204, 142);
 //		add(lblCompany);
 
-		
+		lblUsernameJLabel.setText(mainFrame.authUser.getUsername());
 		
 		// ----------------------- Check Role ------------------------
 		if (parent.authUser.getRole().equalsIgnoreCase("Admin")){
@@ -72,7 +78,6 @@ public class MainMenu extends JPanel {
 		else if (parent.authUser.getRole().equalsIgnoreCase("User")) {
 		userGUI();
 		}
-		
 	}
 	//--------------------------Admin Content----------------------
 	private void adminGUI() {

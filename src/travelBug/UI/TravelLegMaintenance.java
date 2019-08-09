@@ -36,6 +36,7 @@ public class TravelLegMaintenance extends JPanel {
 	private Vector<?> vector;
 	private final UIControl mainFrame;
 	private JButton btnDelete;
+	private JTextField tfSearch1;
 
 	public TravelLegMaintenance(UIControl parent) {
 		super();
@@ -49,13 +50,21 @@ public class TravelLegMaintenance extends JPanel {
 		tArray = tFile.readLinkArray();
 		tfSearch = new JTextField();
 		tfSearch.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		tfSearch.setBounds(88, 15, 177, 36);
+		tfSearch.setBounds(210, 0, 177, 36);
 		add(tfSearch);
 		tfSearch.setColumns(10);
+		tfSearch.setText(null);
 
-		lblSearchJLabel = new JLabel("Search :");
+		tfSearch1 = new JTextField();
+		tfSearch1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfSearch1.setColumns(10);
+		tfSearch1.setBounds(210, 35, 177, 36);
+		add(tfSearch1);
+		tfSearch1.setText(null);
+
+		lblSearchJLabel = new JLabel("Source Location       :");
 		lblSearchJLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblSearchJLabel.setBounds(12, 13, 76, 36);
+		lblSearchJLabel.setBounds(12, 0, 177, 36);
 		add(lblSearchJLabel);
 
 		defaultTableModel = new DefaultTableModel() {
@@ -103,7 +112,7 @@ public class TravelLegMaintenance extends JPanel {
 		defaultTableModel.addColumn("Distance (km)");
 		defaultTableModel.addColumn("Duration");
 
-		updateLabel(null);
+		updateLabel(null, null);
 
 		table.setBounds(34, 31, 537, 167);
 		scrollPane = new JScrollPane(table);
@@ -120,22 +129,41 @@ public class TravelLegMaintenance extends JPanel {
 			}
 			j++;
 		}
-
+//========================Search by Source Location===========================//
 		tfSearch.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				updateLabel(tfSearch.getText());
+				updateLabel(tfSearch.getText(), tfSearch1.getText());
 			}
 
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				updateLabel(tfSearch.getText());
+				updateLabel(tfSearch.getText(), tfSearch1.getText());
 			}
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				updateLabel(tfSearch.getText());
+				updateLabel(tfSearch.getText(), tfSearch1.getText());
+			}
+		});
+
+//========================Search by Destination Location=========================//		
+		tfSearch1.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateLabel(tfSearch.getText(), tfSearch1.getText());
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateLabel(tfSearch.getText(), tfSearch1.getText());
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateLabel(tfSearch.getText(), tfSearch1.getText());
 			}
 		});
 
@@ -146,10 +174,10 @@ public class TravelLegMaintenance extends JPanel {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				tfSearch.setText("");
-				updateLabel(null);
+				updateLabel(null, null);
 			}
 		});
-		btnNewButton.setBounds(373, 15, 109, 38);
+		btnNewButton.setBounds(520, 14, 109, 38);
 		add(btnNewButton);
 
 		JButton btnAddTravelleg = new JButton("Add TravelLeg");
@@ -214,7 +242,7 @@ public class TravelLegMaintenance extends JPanel {
 							tArrayLinkedList.getEntry(i).gettoDate(), tArrayLinkedList.getEntry(i).getfromTime(),
 							tArrayLinkedList.getEntry(i).gettoTime(), tArrayLinkedList.getEntry(i).getMode(),
 							tArrayLinkedList.getEntry(i).getPrice(), tArrayLinkedList.getEntry(i).getDistance(),
-							library.convertString((tArrayLinkedList.getEntry(i).getDuration()))});
+							library.convertString((tArrayLinkedList.getEntry(i).getDuration())) });
 				}
 			}
 
@@ -241,50 +269,119 @@ public class TravelLegMaintenance extends JPanel {
 							tArrayLinkedList.getEntry(i).gettoDate(), tArrayLinkedList.getEntry(i).getfromTime(),
 							tArrayLinkedList.getEntry(i).gettoTime(), tArrayLinkedList.getEntry(i).getMode(),
 							tArrayLinkedList.getEntry(i).getPrice(), tArrayLinkedList.getEntry(i).getDistance(),
-							library.convertString((tArrayLinkedList.getEntry(i).getDuration()))});
+							library.convertString((tArrayLinkedList.getEntry(i).getDuration())) });
 				}
 
 			}
 		});
 		btnSortDistance.setBounds(736, 23, 97, 25);
 		add(btnSortDistance);
+
+		JLabel lblDestinationLocation = new JLabel("Destination Location :");
+		lblDestinationLocation.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblDestinationLocation.setBounds(12, 35, 177, 36);
+		add(lblDestinationLocation);
+
 	}
 
-	public void updateLabel(String searchItem) {
-		if (searchItem == null) {
+	public void updateLabel(String searchItem, String searchString) {
+		if (searchItem == null && searchString == null) {			
 			defaultTableModel = (DefaultTableModel) table.getModel();
 			defaultTableModel.setNumRows(0);
-			for (int j = 0; j < tArray.size(); j++) {
-				defaultTableModel.insertRow(j,
-						new Object[] { tArray.getIndexElement(j).getrecordNo(), tArray.getIndexElement(j).getSource(),
-								tArray.getIndexElement(j).getDest(), tArray.getIndexElement(j).getfromDate(),
-								tArray.getIndexElement(j).gettoDate(), tArray.getIndexElement(j).getfromTime(),
-								tArray.getIndexElement(j).gettoTime(), tArray.getIndexElement(j).getMode(),
-								tArray.getIndexElement(j).getPrice(), tArray.getIndexElement(j).getDistance(),
-								library.convertString((tArray.getIndexElement(j).getDuration()))});
-			}
-		} else {
-			searchItem = searchItem.toLowerCase();
-			defaultTableModel = (DefaultTableModel) table.getModel();
-			defaultTableModel.setNumRows(0);
-			for (int j = 0; j < tArray.size(); j++) {
-				if (tArray.getIndexElement(j).getSource().toLowerCase().contains(searchItem)
-						|| tArray.getIndexElement(j).getDest().toLowerCase().contains(searchItem)
-						|| tArray.getIndexElement(j).getfromDate().toString().toLowerCase().contains(searchItem)
-						|| tArray.getIndexElement(j).gettoDate().toString().toLowerCase().contains(searchItem)
-						|| tArray.getIndexElement(j).getfromTime().toString().toLowerCase().contains(searchItem)
-						|| tArray.getIndexElement(j).gettoTime().toString().toLowerCase().contains(searchItem)
-						|| String.valueOf(tArray.getIndexElement(j).getMode()).toLowerCase().contains(searchItem)) {
-					defaultTableModel.insertRow(defaultTableModel.getRowCount(),
-							new Object[] { tArray.getIndexElement(j).getrecordNo(),
-									tArray.getIndexElement(j).getSource(), tArray.getIndexElement(j).getDest(),
-									tArray.getIndexElement(j).getfromDate(), tArray.getIndexElement(j).gettoDate(),
-									tArray.getIndexElement(j).getfromTime(), tArray.getIndexElement(j).gettoTime(),
-									tArray.getIndexElement(j).getMode(), tArray.getIndexElement(j).getPrice(),
-									tArray.getIndexElement(j).getDistance(),
-									library.convertString((tArray.getIndexElement(j).getDuration()))});
+			SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
+			SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
+					Comparator.comparing(TravelLegInfo::getSource));
 
+			for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
+				defaultTableModel.insertRow(j - 1,
+						new Object[] { tArrayLinkedList.getEntry(j).getrecordNo(),
+								tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
+								tArrayLinkedList.getEntry(j).getfromDate(), tArrayLinkedList.getEntry(j).gettoDate(),
+								tArrayLinkedList.getEntry(j).getfromTime(), tArrayLinkedList.getEntry(j).gettoTime(),
+								tArrayLinkedList.getEntry(j).getMode(), tArrayLinkedList.getEntry(j).getPrice(),
+								tArrayLinkedList.getEntry(j).getDistance(),
+								library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+			}
+		} else if (searchItem != null && searchString == null) {
+			searchItem = searchItem.toLowerCase();
+			SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
+			SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
+					Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
+
+			defaultTableModel = (DefaultTableModel) table.getModel();
+			defaultTableModel.setNumRows(0);
+
+			for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
+				if (tArrayLinkedList.getEntry(j).getSource().contains(searchItem)) {
+					defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
+							tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
+							tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
+							tArrayLinkedList.getEntry(j).gettoDate(), tArrayLinkedList.getEntry(j).getfromTime(),
+							tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
+							tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
+							library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
 				}
+			}
+		} else if (searchItem == null && searchString != null) {
+			searchString = searchString.toLowerCase();
+			SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
+			SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
+					Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
+
+			defaultTableModel = (DefaultTableModel) table.getModel();
+			defaultTableModel.setNumRows(0);
+
+			for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
+				if (tArrayLinkedList.getEntry(j).getDest().contains(searchString)) {
+					defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
+							tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
+							tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
+							tArrayLinkedList.getEntry(j).gettoDate(), tArrayLinkedList.getEntry(j).getfromTime(),
+							tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
+							tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
+							library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+				}
+			}
+		}
+				else {
+					searchItem = searchItem.toLowerCase();
+					searchString = searchString.toLowerCase();
+					SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
+					SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
+							Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
+
+					defaultTableModel = (DefaultTableModel) table.getModel();
+					defaultTableModel.setNumRows(0);
+
+					for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
+						if (tArrayLinkedList.getEntry(j).getDest().toLowerCase().contains(searchString)
+								&& tArrayLinkedList.getEntry(j).getSource().toLowerCase().contains(searchItem)) {
+							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
+									tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
+									tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
+									tArrayLinkedList.getEntry(j).gettoDate(), tArrayLinkedList.getEntry(j).getfromTime(),
+									tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
+									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
+									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+					
+				}
+
+//			for (int j = 0; j < tArray.size(); j++) {
+//				if (tArray.getIndexElement(j).getSource().toLowerCase().contains(searchItem)
+//						|| tArray.getIndexElement(j).getDest().toLowerCase().contains(searchItem)
+//						|| tArray.getIndexElement(j).getfromDate().toString().toLowerCase().contains(searchItem)
+//						|| tArray.getIndexElement(j).gettoDate().toString().toLowerCase().contains(searchItem)
+//						|| tArray.getIndexElement(j).getfromTime().toString().toLowerCase().contains(searchItem)
+//						|| tArray.getIndexElement(j).gettoTime().toString().toLowerCase().contains(searchItem)
+//						|| String.valueOf(tArray.getIndexElement(j).getMode()).toLowerCase().contains(searchItem)) {
+//					defaultTableModel.insertRow(defaultTableModel.getRowCount(),
+//							new Object[] { tArray.getIndexElement(j).getrecordNo(),
+//									tArray.getIndexElement(j).getSource(), tArray.getIndexElement(j).getDest(),
+//									tArray.getIndexElement(j).getfromDate(), tArray.getIndexElement(j).gettoDate(),
+//									tArray.getIndexElement(j).getfromTime(), tArray.getIndexElement(j).gettoTime(),
+//									tArray.getIndexElement(j).getMode(), tArray.getIndexElement(j).getPrice(),
+//									tArray.getIndexElement(j).getDistance(),
+//									library.convertString((tArray.getIndexElement(j).getDuration()))});
 			}
 		}
 	}

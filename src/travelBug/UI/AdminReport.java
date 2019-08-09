@@ -14,25 +14,19 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import org.omg.CORBA.portable.ValueBase;
 
 import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
 import travelBug.library.SinglyLinkedList;
 import travelBug.library.library;
-
-import travelBug.obj.Location;
 import travelBug.obj.SourceDest;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
@@ -51,6 +45,7 @@ public class AdminReport extends JPanel {
 	private SinglyLinkedList<SourceDest> hahalLinkedList2 = new SinglyLinkedList<SourceDest>();
 	private ReadWriteFile<SourceDest> lFile2 = new ReadWriteFile<SourceDest>("sourceDes.txt", SourceDest.class);
 	private LinkArray<SourceDest> linkArray = new LinkArray<SourceDest>();
+
 	private JComboBox comboBox;
 	private JComboBox comboBox_1;
 	private JButton btnBack;
@@ -60,7 +55,6 @@ public class AdminReport extends JPanel {
 		this.mainFrame = parent;
 		// read txtile
 
-//
 //		hahalLinkedList2.add(new SourceDest("aaa", "ppqqq"));
 //		hahalLinkedList2.add(new SourceDest("wwwww", "ppqqq"));
 //		hahalLinkedList2.add(new SourceDest("qqqq", "ppqqq"));
@@ -100,15 +94,12 @@ public class AdminReport extends JPanel {
 		table.getTableHeader().setOpaque(false);
 		table.getTableHeader().setBackground(Color.MAGENTA);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		table.getTableHeader().setReorderingAllowed(false);
-//		table.getTableHeader().setResizingAllowed(false);
 		table.getTableHeader().setSize(1000, 500);
 		table.setBounds(34, 31, 537, 167);
 		table.setRowHeight(100);
 		table.getTableHeader().setPreferredSize(new Dimension(100, 40));
 		Font f = new Font("Arial", Font.BOLD, 25);
 		table.getTableHeader().setFont(f);
-//		contentPane.add(table);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(12, 93, 876, 297);
 		scrollPane.setEnabled(false);
@@ -228,7 +219,6 @@ public class AdminReport extends JPanel {
 						tableModel.addRow(new String[] { currVal, currVal2, Integer.toString(count2) });
 					}
 				}
-//					System.out.print("Source : " + currVal + " Dest: " + currVal2 + " Count : " + count2 + "\n");
 			}
 
 		}
@@ -241,22 +231,5 @@ public class AdminReport extends JPanel {
 		hahalLinkedList2.add(new SourceDest(source, destination));
 		// write the thing to the database
 	}
-
-//	public void compare(String source,String destionation) {
-//		//read data from txt file
-//		boolean found = false;
-//		for(int i =1 ; i<= hahalLinkedList2.getNumberOfEntries(); i ++) {
-//			if(hahalLinkedList2.getEntry(i).getL1()== source && hahalLinkedList2.getEntry(i).getL2() == destionation) {
-////				hahalLinkedList2.getEntry(i).addCount();
-////				found = true;
-
-//			}
-//		}
-
-//		if(!found) {
-//			hahalLinkedList2.add(new sourceDest2(source,destionation));
-//		}
-//		// write into text field
-//	}
 
 }

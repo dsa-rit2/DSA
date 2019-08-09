@@ -40,6 +40,7 @@ public class TravelLegMaintenance extends JPanel {
 	public String companyString;
 	private JLabel lblNewLabel;
 	public JLabel lblUsername;
+	private JButton btnNewButton_1;
 
 	public TravelLegMaintenance(UIControl parent) {
 		super();
@@ -361,6 +362,14 @@ public class TravelLegMaintenance extends JPanel {
 		lblUsername.setBounds(587, 12, 91, 16);
 		add(lblUsername);
 		lblUsername.setText(mainFrame.authUser.getUsername());
+		
+		btnNewButton_1 = new JButton("Back");
+		btnNewButton_1.addActionListener(event->{
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new MainMenu(mainFrame)));
+		});
+		btnNewButton_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		btnNewButton_1.setBounds(694, 395, 157, 40);
+		add(btnNewButton_1);
 
 		updateLabel(null, null);
 

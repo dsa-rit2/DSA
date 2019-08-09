@@ -28,7 +28,31 @@ public class UIControl extends JFrame {
 		getContentPane().setLayout(null);
 
 		// ============= Change Panel Section =============
+//		changePanel(new TravelLegMaintenance(this));
 		changePanel(new PlanTrip(this));
+//		changePanel(new ListLocation(this));
+//		changePanel(new AddLocation(this));
+//		changePanel(new AddTravelLeg(this));
+//		changePanel(new AddLocation(this));
+//		changePanel(new TravelLegMaintenance(this));
+//		changePanel(new PlanTrip(this));
+//		changePanel(new AddLocation(this));
+//		changePanel(new TravelLegMaintenance(this));
+//		changePanel(new AddCompany(this));
+//		changePanel(new ListCompany(this));
+//		changePanel(new AddTravelLeg(this));
+//		changePanel(new Authentication(this));
+//		changePanel(new ListLocation(this));
+//		changePanel(new AddTravelLeg(this));
+//		changePanel(new AddTravelLeg(this));
+//		changePanel(new AdminReport(this));
+//		changePanel(new TravelLegMaintenance(this));
+//		changePanel(new MainMenu(this));
+//		changePanel(new AdminReport(this));
+//		changePanel(new AdminReport(this));
+//		changePanel(new ViewTrip(this));
+//		changePanel(new PlanTrip(this));
+//		changePanel(new PlanTrip(this));
 	}
 
 	public void changePanel(JPanel panelName) {

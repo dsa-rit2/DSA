@@ -30,7 +30,6 @@ public class library {
 		matcher = pattern.matcher(time);
 		return matcher.matches();
 	}
-
 	public static String checkUsername(String in) { // return null means the username is valid
 		if (in.isEmpty())
 			return "Username is empty";
@@ -399,20 +398,20 @@ public class library {
 	public static int CompareTime(String l1, String l2) {
 		LocalTime time1 = LocalTime.parse(l1);
 		LocalTime time2 = LocalTime.parse(l2);
-		if(time1.isBefore(time2))
-			return 1;
-		else if(time1.isAfter(time2))
+		if(!(time1.isBefore(time2)))
 			return -1;
+		else if(time1.isAfter(time2))
+			return 1;
 		else 
 			return 0;
 	}
 	public static int CompareDate(String d1, String d2) {
 		LocalDate date1 = LocalDate.parse(d1);
 		LocalDate date2 = LocalDate.parse(d2);
-		if(date1.isBefore(date2))
-			return 1;
-		else if(date1.isAfter(date2))
+		if(!(date1.isBefore(date2)))
 			return -1;
+		else if(date1.isAfter(date2))
+			return 1;
 		else 
 			return 0;
 	}

@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Vector;
 import javax.swing.border.MatteBorder;
@@ -166,9 +167,9 @@ public class TravelLegMaintenance extends JPanel {
 				updateLabel(tfSearch.getText(), tfSearch1.getText());
 			}
 		});
-		//=============================================================================//
-			companyString = parent.authUser.getUsername().toString();
-			companyString = library.getUsernameShortForm(companyString);
+		// =============================================================================//
+		companyString = parent.authUser.getUsername().toString();
+		companyString = library.getUsernameShortForm(companyString);
 		// =============================== Button ===================================//
 		JButton btnNewButton = new JButton("Reset");
 		btnNewButton.setForeground(Color.RED);
@@ -283,12 +284,12 @@ public class TravelLegMaintenance extends JPanel {
 		lblDestinationLocation.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblDestinationLocation.setBounds(12, 35, 177, 36);
 		add(lblDestinationLocation);
-		
+
 		lblNewLabel = new JLabel("Hello :");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblNewLabel.setBounds(513, 12, 62, 16);
 		add(lblNewLabel);
-		
+
 		lblUsername = new JLabel("");
 		lblUsername.setForeground(Color.BLUE);
 		lblUsername.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -296,32 +297,35 @@ public class TravelLegMaintenance extends JPanel {
 		lblUsername.setBounds(587, 12, 91, 16);
 		add(lblUsername);
 		lblUsername.setText(mainFrame.authUser.getUsername());
-		
+
 		updateLabel(null, null);
 
 	}
 
 	public void updateLabel(String searchItem, String searchString) {
-		if(lblUsername.getText().equalsIgnoreCase("Admin")) {
+		if (lblUsername.getText().equalsIgnoreCase("Admin")) {
 			btnAddTravelleg.setEnabled(false);
-			if (searchItem == null && searchString == null) {			
+			if (searchItem == null && searchString == null) {
 				defaultTableModel = (DefaultTableModel) table.getModel();
 				defaultTableModel.setNumRows(0);
 				SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
 				SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
 						Comparator.comparing(TravelLegInfo::getSource));
-				
 
 				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-					defaultTableModel.insertRow(j - 1,
-							new Object[] { tArrayLinkedList.getEntry(j).getrecordNo(),
-									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
-									tArrayLinkedList.getEntry(j).getfromDate(), tArrayLinkedList.getEntry(j).gettoDate(),
-									tArrayLinkedList.getEntry(j).getfromTime(), tArrayLinkedList.getEntry(j).gettoTime(),
-									tArrayLinkedList.getEntry(j).getMode(), tArrayLinkedList.getEntry(j).getPrice(),
-									tArrayLinkedList.getEntry(j).getDistance(),
-									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
-			}
+					if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+							|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
+									&& (tArrayLinkedList.getEntry(j).getfromDate()
+											.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+						defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
+								tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
+								tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
+								tArrayLinkedList.getEntry(j).gettoDate(), tArrayLinkedList.getEntry(j).getfromTime(),
+								tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
+								tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
+								library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+					}
+				}
 			} else if (searchItem != null && searchString == null) {
 				searchItem = searchItem.toLowerCase();
 				SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
@@ -333,13 +337,20 @@ public class TravelLegMaintenance extends JPanel {
 
 				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
 					if (tArrayLinkedList.getEntry(j).getSource().contains(searchItem)) {
-						defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
-								tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
-								tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
-								tArrayLinkedList.getEntry(j).gettoDate(), tArrayLinkedList.getEntry(j).getfromTime(),
-								tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
-								tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
-								library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
+										&& (tArrayLinkedList.getEntry(j).getfromDate()
+												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
+									tArrayLinkedList.getEntry(j).getrecordNo(),
+									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
+									tArrayLinkedList.getEntry(j).getfromDate(),
+									tArrayLinkedList.getEntry(j).gettoDate(),
+									tArrayLinkedList.getEntry(j).getfromTime(),
+									tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
+									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
+									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+						}
 					}
 				}
 			} else if (searchItem == null && searchString != null) {
@@ -353,129 +364,169 @@ public class TravelLegMaintenance extends JPanel {
 
 				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
 					if (tArrayLinkedList.getEntry(j).getDest().contains(searchString)) {
-						defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
-								tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
-								tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
-								tArrayLinkedList.getEntry(j).gettoDate(), tArrayLinkedList.getEntry(j).getfromTime(),
-								tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
-								tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
-								library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
-					}
-				}
-			}
-					else {
-						searchItem = searchItem.toLowerCase();
-						searchString = searchString.toLowerCase();
-						SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
-						SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
-								Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
-
-						defaultTableModel = (DefaultTableModel) table.getModel();
-						defaultTableModel.setNumRows(0);
-
-						for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-							if (tArrayLinkedList.getEntry(j).getDest().toLowerCase().contains(searchString)
-									&& tArrayLinkedList.getEntry(j).getSource().toLowerCase().contains(searchItem)) {
-								defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
-										tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
-										tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
-										tArrayLinkedList.getEntry(j).gettoDate(), tArrayLinkedList.getEntry(j).getfromTime(),
-										tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
-										tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
-										library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
-						
-					}
-
-				}
-			}
-		}
-		else {
-		if (searchItem == null && searchString == null) {			
-			defaultTableModel = (DefaultTableModel) table.getModel();
-			defaultTableModel.setNumRows(0);
-			SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
-			SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
-					Comparator.comparing(TravelLegInfo::getSource));
-			
-
-			for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-				if(tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
-				defaultTableModel.insertRow(defaultTableModel.getRowCount(),
-						new Object[] { tArrayLinkedList.getEntry(j).getrecordNo(),
-								tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
-								tArrayLinkedList.getEntry(j).getfromDate(), tArrayLinkedList.getEntry(j).gettoDate(),
-								tArrayLinkedList.getEntry(j).getfromTime(), tArrayLinkedList.getEntry(j).gettoTime(),
-								tArrayLinkedList.getEntry(j).getMode(), tArrayLinkedList.getEntry(j).getPrice(),
-								tArrayLinkedList.getEntry(j).getDistance(),
-								library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
-			}
-		}
-		} else if (searchItem != null && searchString == null) {
-			searchItem = searchItem.toLowerCase();
-			SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
-			SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
-					Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
-
-			defaultTableModel = (DefaultTableModel) table.getModel();
-			defaultTableModel.setNumRows(0);
-
-			for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-				if (tArrayLinkedList.getEntry(j).getSource().contains(searchItem) && tArrayLinkedList.getEntry(j).getCompany().toString().equalsIgnoreCase(companyString)) {
-					defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
-							tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
-							tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
-							tArrayLinkedList.getEntry(j).gettoDate(), tArrayLinkedList.getEntry(j).getfromTime(),
-							tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
-							tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
-							library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
-				}
-			}
-		} else if (searchItem == null && searchString != null) {
-			searchString = searchString.toLowerCase();
-			SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
-			SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
-					Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
-
-			defaultTableModel = (DefaultTableModel) table.getModel();
-			defaultTableModel.setNumRows(0);
-
-			for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-				if (tArrayLinkedList.getEntry(j).getDest().contains(searchString) && tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
-					defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
-							tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
-							tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
-							tArrayLinkedList.getEntry(j).gettoDate(), tArrayLinkedList.getEntry(j).getfromTime(),
-							tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
-							tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
-							library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
-				}
-			}
-		}
-				else {
-					searchItem = searchItem.toLowerCase();
-					searchString = searchString.toLowerCase();
-					SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
-					SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
-							Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
-
-					defaultTableModel = (DefaultTableModel) table.getModel();
-					defaultTableModel.setNumRows(0);
-
-					for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-						if (tArrayLinkedList.getEntry(j).getDest().toLowerCase().contains(searchString)
-								&& tArrayLinkedList.getEntry(j).getSource().toLowerCase().contains(searchItem) && tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
+						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
+										&& (tArrayLinkedList.getEntry(j).getfromDate()
+												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
 							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
-									tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
-									tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
-									tArrayLinkedList.getEntry(j).gettoDate(), tArrayLinkedList.getEntry(j).getfromTime(),
+									tArrayLinkedList.getEntry(j).getrecordNo(),
+									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
+									tArrayLinkedList.getEntry(j).getfromDate(),
+									tArrayLinkedList.getEntry(j).gettoDate(),
+									tArrayLinkedList.getEntry(j).getfromTime(),
 									tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
 									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
 									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
-					
+						}
+					}
 				}
+			} else {
+				searchItem = searchItem.toLowerCase();
+				searchString = searchString.toLowerCase();
+				SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
+				SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
+						Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
 
+				defaultTableModel = (DefaultTableModel) table.getModel();
+				defaultTableModel.setNumRows(0);
+
+				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
+					if (tArrayLinkedList.getEntry(j).getDest().toLowerCase().contains(searchString)
+							&& tArrayLinkedList.getEntry(j).getSource().toLowerCase().contains(searchItem)) {
+						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
+										&& (tArrayLinkedList.getEntry(j).getfromDate()
+												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
+									tArrayLinkedList.getEntry(j).getrecordNo(),
+									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
+									tArrayLinkedList.getEntry(j).getfromDate(),
+									tArrayLinkedList.getEntry(j).gettoDate(),
+									tArrayLinkedList.getEntry(j).getfromTime(),
+									tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
+									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
+									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+
+						}
+					}
+
+				}
+			}
+		} else {
+			if (searchItem == null && searchString == null) {
+				defaultTableModel = (DefaultTableModel) table.getModel();
+				defaultTableModel.setNumRows(0);
+				SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
+				SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
+						Comparator.comparing(TravelLegInfo::getSource));
+
+				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
+					if (tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
+						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
+										&& (tArrayLinkedList.getEntry(j).getfromDate()
+												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
+									tArrayLinkedList.getEntry(j).getrecordNo(),
+									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
+									tArrayLinkedList.getEntry(j).getfromDate(),
+									tArrayLinkedList.getEntry(j).gettoDate(),
+									tArrayLinkedList.getEntry(j).getfromTime(),
+									tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
+									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
+									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+						}
+					}
+				}
+			} else if (searchItem != null && searchString == null) {
+				searchItem = searchItem.toLowerCase();
+				SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
+				SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
+						Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
+
+				defaultTableModel = (DefaultTableModel) table.getModel();
+				defaultTableModel.setNumRows(0);
+
+				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
+					if (tArrayLinkedList.getEntry(j).getSource().contains(searchItem)
+							&& tArrayLinkedList.getEntry(j).getCompany().toString().equalsIgnoreCase(companyString)) {
+						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
+										&& (tArrayLinkedList.getEntry(j).getfromDate()
+												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
+									tArrayLinkedList.getEntry(j).getrecordNo(),
+									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
+									tArrayLinkedList.getEntry(j).getfromDate(),
+									tArrayLinkedList.getEntry(j).gettoDate(),
+									tArrayLinkedList.getEntry(j).getfromTime(),
+									tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
+									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
+									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+						}
+					}
+				}
+			} else if (searchItem == null && searchString != null) {
+				searchString = searchString.toLowerCase();
+				SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
+				SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
+						Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
+
+				defaultTableModel = (DefaultTableModel) table.getModel();
+				defaultTableModel.setNumRows(0);
+
+				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
+					if (tArrayLinkedList.getEntry(j).getDest().contains(searchString)
+							&& tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
+						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
+										&& (tArrayLinkedList.getEntry(j).getfromDate()
+												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
+									tArrayLinkedList.getEntry(j).getrecordNo(),
+									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
+									tArrayLinkedList.getEntry(j).getfromDate(),
+									tArrayLinkedList.getEntry(j).gettoDate(),
+									tArrayLinkedList.getEntry(j).getfromTime(),
+									tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
+									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
+									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+						}
+					}
+				}
+			} else {
+				searchItem = searchItem.toLowerCase();
+				searchString = searchString.toLowerCase();
+				SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
+				SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
+						Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
+
+				defaultTableModel = (DefaultTableModel) table.getModel();
+				defaultTableModel.setNumRows(0);
+
+				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
+					if (tArrayLinkedList.getEntry(j).getDest().toLowerCase().contains(searchString)
+							&& tArrayLinkedList.getEntry(j).getSource().toLowerCase().contains(searchItem)
+							&& tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
+						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
+										&& (tArrayLinkedList.getEntry(j).getfromDate()
+												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
+									tArrayLinkedList.getEntry(j).getrecordNo(),
+									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
+									tArrayLinkedList.getEntry(j).getfromDate(),
+									tArrayLinkedList.getEntry(j).gettoDate(),
+									tArrayLinkedList.getEntry(j).getfromTime(),
+									tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
+									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
+									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+
+						}
+					}
+
+				}
 			}
 		}
-	}
 	}
 }

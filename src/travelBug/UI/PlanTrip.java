@@ -554,7 +554,7 @@ public class PlanTrip extends JPanel {
 										for (TravelLegInfo tempItemDes : tempListDes) {
 											if (tempItemSrc.getDest().equalsIgnoreCase(tempItemDes.getSource())) {
 												travelPlanFound = true;
-												travelPlan = "Source: " + srcTravel + " | Interchange | " + interSrc + " -> " + tempItemSrc.getSource() + " -> " + tempItemSrc.getDest() + " -> " + tempItemDes.getSource() + " -> " + tempItemDes.getDest() + " -> " + interDes + " | Interchange | " + desTravel + " :Destination";
+												travelPlan = "Source: " + srcTravel + " | Interchange | " + interSrc + " -> " + tempItemSrc.getSource() + " -> " + tempItemDes.getSource() + " -> " + tempItemDes.getDest() + " -> " + interDes + " | Interchange | " + desTravel + " :Destination";
 											}
 										}
 									}

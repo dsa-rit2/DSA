@@ -30,7 +30,7 @@ public class PlanTrip extends JPanel {
 
 	String[] locationType = { "-Select type-", "Small City", "Medium City", "Large City", "Natural formation",
 			"Designated Park/Reserve", "Man-made landmark" };
-	
+
 	public PlanTrip(UIControl parent) {
 		super();
 		this.mainFrame = parent;
@@ -250,7 +250,7 @@ public class PlanTrip extends JPanel {
 			public void itemStateChanged(ItemEvent arg0) {
 				GroupList<Location, SinglyLinkedList<Location>> countryGroupList = new GroupList<Location, SinglyLinkedList<Location>>(
 						locationList, Comparator.comparing(Location::getCountry));
-				
+
 				country1.removeAllItems();
 				country1.addItem("-Select country-");
 				if (continent1.getSelectedIndex() > 0) {
@@ -260,25 +260,26 @@ public class PlanTrip extends JPanel {
 						}
 					}
 				}
-				
+
 				if (continent1.getSelectedIndex() == 0) {
 					country1.setEnabled(false);
 					place1.setEnabled(false);
 					locationName1.setEnabled(false);
-				}
-				else {
+				} else {
 					country1.setEnabled(true);
 					place1.setEnabled(false);
 					locationName1.setEnabled(false);
 				}
+
+				place1.setSelectedIndex(0);
 			}
 		});
-		
+
 		continent2.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				GroupList<Location, SinglyLinkedList<Location>> countryGroupList = new GroupList<Location, SinglyLinkedList<Location>>(
 						locationList, Comparator.comparing(Location::getCountry));
-				
+
 				country2.removeAllItems();
 				country2.addItem("-Select country-");
 				if (continent2.getSelectedIndex() > 0) {
@@ -288,18 +289,18 @@ public class PlanTrip extends JPanel {
 						}
 					}
 				}
-				
-				
-				if (continent2.getSelectedIndex() == 0) { 
+
+				if (continent2.getSelectedIndex() == 0) {
 					country2.setEnabled(false);
 					place2.setEnabled(false);
 					locationName2.setEnabled(false);
-				}
-				else {
+				} else {
 					country2.setEnabled(true);
 					place2.setEnabled(false);
 					locationName2.setEnabled(false);
 				}
+
+				place2.setSelectedIndex(0);
 			}
 		});
 
@@ -308,123 +309,171 @@ public class PlanTrip extends JPanel {
 				if (country1.getSelectedIndex() == 0) {
 					place1.setEnabled(false);
 					locationName1.setEnabled(false);
-				}
-				else {
+				} else {
 					place1.setEnabled(true);
 					locationName1.setEnabled(false);
 				}
+
+				place1.setSelectedIndex(0);
 			}
 		});
-		
+
 		country2.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				if (country2.getSelectedIndex() == 0) {
 					place2.setEnabled(false);
 					locationName2.setEnabled(false);
-				}
-				else {
+				} else {
 					place2.setEnabled(true);
 					locationName2.setEnabled(false);
 				}
+
+				place2.setSelectedIndex(0);
 			}
 		});
-		
+
 		place1.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				GroupList<Location, SinglyLinkedList<Location>> placeGroupList = new GroupList<Location, SinglyLinkedList<Location>>(
 						locationList, Comparator.comparing(Location::getName));
-				
+
 				locationName1.removeAllItems();
 				locationName1.addItem("-Select location-");
 				if (place1.getSelectedIndex() > 0) {
 					for (SinglyLinkedList<Location> item : placeGroupList) {
-						if (item.getFirst().getType() == library.getTypeChar(place1.getSelectedItem().toString())) {
+						if (item.getFirst().getType() == library.getTypeChar(place1.getSelectedItem().toString())
+								&& item.getFirst().getCountry().compareTo(country1.getSelectedItem().toString()) == 0) {
 							locationName1.addItem(item.getFirst().getName());
 						}
 					}
 				}
-				
+
 				if (place1.getSelectedIndex() == 0) {
 					locationName1.setEnabled(false);
-				}
-				else {
+				} else {
 					locationName1.setEnabled(true);
 				}
 			}
 		});
-		
+
 		place2.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				GroupList<Location, SinglyLinkedList<Location>> placeGroupList = new GroupList<Location, SinglyLinkedList<Location>>(
 						locationList, Comparator.comparing(Location::getName));
-				
+
 				locationName2.removeAllItems();
 				locationName2.addItem("-Select location-");
 				if (place2.getSelectedIndex() > 0) {
 					for (SinglyLinkedList<Location> item : placeGroupList) {
-						if (item.getFirst().getType() == library.getTypeChar(place2.getSelectedItem().toString())) {
+						if (item.getFirst().getType() == library.getTypeChar(place2.getSelectedItem().toString())
+								&& item.getFirst().getCountry().compareTo(country2.getSelectedItem().toString()) == 0) {
 							locationName2.addItem(item.getFirst().getName());
 						}
 					}
 				}
-				
+
 				if (place2.getSelectedIndex() == 0) {
 					locationName2.setEnabled(false);
-				}
-				else {
+				} else {
 					locationName2.setEnabled(true);
 				}
 			}
 		});
-		
+
 		// ----------------- Submit button trigger -----------------
 		confirmBtn.addActionListener(event -> {
 			boolean error = false;
-			
+			adultCount = Integer.parseInt(adultSpinner.getValue().toString());
+			childCount = Integer.parseInt(childSpinner.getValue().toString());
+
 			if (continent1.getSelectedIndex() <= 0) {
 				error = true;
-			}
-			else if (country1.getSelectedIndex() <= 0) {
+			} else if (country1.getSelectedIndex() <= 0) {
+				error = true;
+			} else if (place1.getSelectedIndex() <= 0) {
+				error = true;
+			} else if (locationName1.getSelectedIndex() <= 0) {
 				error = true;
 			}
-			else if (place1.getSelectedIndex() <= 0) {
-				error = true;
-			}
-			else if (locationName1.getSelectedIndex() <= 0) {
-				error = true;
-			}
-			
+
 			if (continent2.getSelectedIndex() <= 0) {
 				error = true;
-			}			
-			else if (country2.getSelectedIndex() <= 0) {
+			} else if (country2.getSelectedIndex() <= 0) {
+				error = true;
+			} else if (place2.getSelectedIndex() <= 0) {
+				error = true;
+			} else if (locationName2.getSelectedIndex() <= 0) {
 				error = true;
 			}
-			else if (place2.getSelectedIndex() <= 0) {
-				error = true;
-			}
-			else if (locationName2.getSelectedIndex() <= 0) {
-				error = true;
-			}
-			
+
 			if (editor1.getText().isEmpty()) {
 				error = true;
 			}
 			if (editor2.getText().isEmpty()) {
 				error = true;
 			}
-			
-			
-			if (!error) {
-				adultCount = Integer.parseInt(adultSpinner.getValue().toString());
-				childCount = Integer.parseInt(childSpinner.getValue().toString());
+
+			if (adultCount == 0) {
+				error = true;
 			}
-			else {
-				System.out.println("Error occur !");
+
+			if (!error) {
+				ReadWriteFile<TravelLegInfo> readLocationFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt",
+						TravelLegInfo.class);
+				SinglyLinkedList<TravelLegInfo> travelLocationList = library
+						.Convertion(readLocationFile.readLinkArray());
+				GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> srcLocation = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(
+						travelLocationList, Comparator.comparing(TravelLegInfo::getSource));
+				GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> desLocation = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(
+						travelLocationList, Comparator.comparing(TravelLegInfo::getDest));
+
+				String srcTravel = locationName1.getSelectedItem().toString();
+				String desTravel = locationName2.getSelectedItem().toString();
+
+				String travelPlan = new String();
+				boolean directFound = false;
+
+				// Direct Travel -------------------------------------------------------------
+				for (TravelLegInfo location : travelLocationList) {
+					if (location.getSource().equalsIgnoreCase(srcTravel) && location.getDest().equalsIgnoreCase(desTravel)) {
+						directFound = true;
+						travelPlan = "Source: " + location.getSource() + "Mode: " + location.getMode() + "Destination: " + location.getDest();
+					}
+				}
+				
+				if (!directFound) {
+					SinglyLinkedList<TravelLegInfo> srcFoundList = new SinglyLinkedList<TravelLegInfo>();
+					SinglyLinkedList<TravelLegInfo> desFoundList = new SinglyLinkedList<TravelLegInfo>();
+					
+					for (SinglyLinkedList<TravelLegInfo> sourceItem : srcLocation) {
+						if(sourceItem.getFirst().getSource().equalsIgnoreCase(srcTravel)) {
+							srcFoundList = sourceItem;
+						}
+					}
+					
+					for (SinglyLinkedList<TravelLegInfo> destinationItem : desLocation) {
+						if(destinationItem.getFirst().getSource().equalsIgnoreCase(srcTravel)) {
+							srcFoundList = destinationItem;
+						}
+					}
+					
+					if (!srcFoundList.isEmpty() && !desFoundList.isEmpty()) {
+						boolean travelPlanFound = false;
+						// Phase 1 (1 intercept) ------------------------------------------------------------
+						for (TravelLegInfo srcElement : srcFoundList) {
+							for (TravelLegInfo desElement : desFoundList) {
+								if (srcElement.getDest().equalsIgnoreCase(desElement.getSource())) {
+									travelPlanFound = true;
+									travelPlan = "Source: " + srcElement.getSource() + " TravelLeg1: " + srcElement.getMode() + " to " + srcElement.getDest() + " TravelLeg2: " + desElement.getSource() + " to " + desElement.getDest() + " mode: " + desElement.getMode();
+								}
+							}
+						}
+					}
+					else {
+						System.out.println("No travel found");
+					}
+				}
 			}
 		});
-		
-		// ======================= Algorithms =========================
-
 	}
 }

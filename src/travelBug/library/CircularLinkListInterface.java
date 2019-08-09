@@ -1,14 +1,19 @@
 package travelBug.library;
 
-public interface CircularLinkListInterface <T> {
+import java.util.Iterator;
+import java.lang.Iterable;
+
+public interface CircularLinkListInterface <T> extends AllList<T>, Iterable<T>{
 	
-    void add(T newEntry);
-    //boolean remove(T anEntry);
-    T getEntry(int index);
-    boolean removeEntry(int index);
-    boolean contains(T anEntry);
-    int getSize();
-    boolean isEmpty();
-    String toString();
+	public Iterator<T> iterator();
+    public void add(T newEntry);
+    public T getEntry(int index);
+    public boolean removeEntry(int index);
+    public boolean contains(T anEntry);
+    public boolean isEmpty();
+    public String toString();
+    public void clear();
+	public int getNumberOfEntries();
+
 	
 }

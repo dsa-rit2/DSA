@@ -311,7 +311,7 @@ public class ViewTrip extends JPanel {
 			int adult = 4;
 			int kiddo = 5;
 
-			for (int j = 1; j <= pCircularLinkedList.getSize(); j++) {
+			for (int j = 1; j <= pCircularLinkedList.getNumberOfEntries(); j++) {
 
 				double kids = pCircularLinkedList.getEntry(j).getPrice() * 0.5 * kiddo;
 				double adults = pCircularLinkedList.getEntry(j).getPrice() * adult;

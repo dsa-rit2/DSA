@@ -10,6 +10,7 @@ import java.time.LocalTime;
 public class TravelLegInfo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String source,dest;
+	private String company;
 	private char mode;
 	private LocalTime fromTime;
 	private LocalTime toTime;
@@ -20,7 +21,8 @@ public class TravelLegInfo implements Serializable{
 	private double distance;
 	private int duration;
 	
-	public TravelLegInfo(char mode,String source,String dest,double price,double distance,LocalDate fromDate,LocalDate toDate, LocalTime fromTime,LocalTime toTime,int duration) {
+	public TravelLegInfo(String company, char mode,String source,String dest,double price,double distance,LocalDate fromDate,LocalDate toDate, LocalTime fromTime,LocalTime toTime,int duration) {
+		this.company = company;
 		this.mode = mode;
 		this.source = source;
 		this.dest = dest;
@@ -38,6 +40,12 @@ public class TravelLegInfo implements Serializable{
 	}
 	public String getrecordNo() {
 		return recordNo;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public String getCompany() {
+		return company;
 	}
 	public void setMode(char mode) {
 		this.mode = mode;

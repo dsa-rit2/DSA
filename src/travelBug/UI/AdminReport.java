@@ -29,7 +29,6 @@ import travelBug.library.library;
 
 import travelBug.obj.Location;
 import travelBug.obj.SourceDest;
-import travelBug.obj.sourceDest2;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -49,37 +48,33 @@ public class AdminReport extends JPanel {
 	private JScrollPane scrollPane;
 //	private singlyLinkedList<SourceDest> hahalLinkedList = new singlyLinkedList<SourceDest>();
 //	private ReadWriteFile<SourceDest> lFile = new ReadWriteFile<SourceDest>("SourceDes.txt", SourceDest.class);
-	private SinglyLinkedList<sourceDest2> hahalLinkedList2 = new SinglyLinkedList<sourceDest2>();
-	private ReadWriteFile<sourceDest2> lFile2 = new ReadWriteFile<sourceDest2>("sourceDes.txt", sourceDest2.class);
-	private LinkArray<sourceDest2> linkArray = new LinkArray<sourceDest2>();
+	private SinglyLinkedList<SourceDest> hahalLinkedList2 = new SinglyLinkedList<SourceDest>();
+	private ReadWriteFile<SourceDest> lFile2 = new ReadWriteFile<SourceDest>("sourceDes.txt", SourceDest.class);
+	private LinkArray<SourceDest> linkArray = new LinkArray<SourceDest>();
 	private JComboBox comboBox;
 	private JComboBox comboBox_1;
 	private JButton btnBack;
 
-
 	public AdminReport(UIControl parent) {
 		super();
 		this.mainFrame = parent;
-		SourceDest dest = new SourceDest("asd", "pp");
-		dest.addCount();
 		// read txtile
-		linkArray = lFile2.readLinkArray();
-		hahalLinkedList2 = library.Convertion(linkArray);
 
-//		hahalLinkedList2.add(new sourceDest2("aaa", "ppqqq"));
-//		hahalLinkedList2.add(new sourceDest2("wwwww", "ppqqq"));
-//		hahalLinkedList2.add(new sourceDest2("qqqq", "ppqqq"));
-//		hahalLinkedList2.add(new sourceDest2("rrrrr", "ppqqq"));
-//		hahalLinkedList2.add(new sourceDest2("qqqq", "ppqqq"));
-//		hahalLinkedList2.add(new sourceDest2("qqqq", "ppqqq"));
-//		hahalLinkedList2.add(new sourceDest2("qqqq", "ppqqq"));
-//		hahalLinkedList2.add(new sourceDest2("qqqq", "ppqqq"));
-//		hahalLinkedList2.add(new sourceDest2("qqqq", "ppqqq"));
+//
+//		hahalLinkedList2.add(new SourceDest("aaa", "ppqqq"));
+//		hahalLinkedList2.add(new SourceDest("wwwww", "ppqqq"));
+//		hahalLinkedList2.add(new SourceDest("qqqq", "ppqqq"));
+//		hahalLinkedList2.add(new SourceDest("rrrrr", "ppqqq"));
+//		hahalLinkedList2.add(new SourceDest("qqqq", "ppqqq"));
+//		hahalLinkedList2.add(new SourceDest("qqqq", "ppqqq"));
+//		hahalLinkedList2.add(new SourceDest("qqqq", "ppqqq"));
+//		hahalLinkedList2.add(new SourceDest("qqqq", "ppqqq"));
+//		hahalLinkedList2.add(new SourceDest("qqqq", "ppqqq"));
 //		linkArray = library.Converted(hahalLinkedList2);
-//	    lFile2.writeLinkArray(linkArray);
-		for (sourceDest2 s : hahalLinkedList2) {
-			System.out.println(s.getL1() + " " + s.getL2() + " " + s.getLocalDate());
-		}
+//		lFile2.writeLinkArray(linkArray);
+//		for (SourceDest s : hahalLinkedList2) {
+//			System.out.println(s.getL1() + " " + s.getL2() + " " + s.getLocalDate());
+//		}
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 		setLayout(null);
@@ -104,28 +99,13 @@ public class AdminReport extends JPanel {
 		table.setBackground(ivory);
 		table.getTableHeader().setOpaque(false);
 		table.getTableHeader().setBackground(Color.MAGENTA);
-		table.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent arg0) {
-//				if (arg0.getClickCount() == 2) {
-//					tableModel = (DefaultTableModel) table.getModel();
-//					int SelectedRowIndex = table.getSelectedRow();
-//					vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
-//					if (vector != null) {
-////	    			Redirect the thing to modify location
-//						SwingUtilities.invokeLater(() -> mainFrame
-//								.changePanel(new ModifyLocation(mainFrame, vector.elementAt(0).toString())));
-//					}
-//				}
-//			}
-		});
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 //		table.getTableHeader().setReorderingAllowed(false);
 //		table.getTableHeader().setResizingAllowed(false);
 		table.getTableHeader().setSize(1000, 500);
 		table.setBounds(34, 31, 537, 167);
 		table.setRowHeight(100);
-		table.getTableHeader().setPreferredSize(new Dimension(100,40));
+		table.getTableHeader().setPreferredSize(new Dimension(100, 40));
 		Font f = new Font("Arial", Font.BOLD, 25);
 		table.getTableHeader().setFont(f);
 //		contentPane.add(table);
@@ -135,30 +115,37 @@ public class AdminReport extends JPanel {
 		add(scrollPane);
 
 		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"<Month>", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
+		comboBox.setModel(new DefaultComboBoxModel(
+				new String[] { "<Month>", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
 		comboBox.setBounds(12, 58, 130, 22);
-		comboBox.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("44");
+		comboBox.addActionListener(event -> {
+			if (comboBox.getSelectedIndex() != 0) {
+				comboBox_1.setEnabled(true);
+				if (comboBox_1.getSelectedIndex() != 0)
+					load(Integer.parseInt(comboBox.getSelectedItem().toString()),
+							Integer.parseInt(comboBox_1.getSelectedItem().toString()));
+			} else {
+				comboBox_1.setEnabled(false);
 			}
+
 		});
 		add(comboBox);
 
 		comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"<Year>", "2018", "2019", "2020", "2021", "2022"}));
+		comboBox_1.setEnabled(false);
+		comboBox_1
+				.setModel(new DefaultComboBoxModel(new String[] { "<Year>", "2018", "2019", "2020", "2021", "2022" }));
 		comboBox_1.setBounds(169, 58, 195, 22);
-		comboBox_1.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("7774");
+		comboBox_1.addActionListener(event -> {
+			if (comboBox_1.getSelectedIndex() != 0) {
+				load(Integer.parseInt(comboBox.getSelectedItem().toString()),
+						Integer.parseInt(comboBox_1.getSelectedItem().toString()));
+			} else {
+				load(0, 0);
 			}
 		});
 		add(comboBox_1);
-		
+
 		btnBack = new JButton("Back");
 		btnBack.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnBack.setBounds(771, 397, 97, 25);
@@ -174,7 +161,7 @@ public class AdminReport extends JPanel {
 			}
 			j++;
 		}
-	
+
 		tableModel.addColumn("Source");
 		tableModel.addColumn("Destionation");
 		tableModel.addColumn("Number of Visit");
@@ -195,36 +182,66 @@ public class AdminReport extends JPanel {
 	public void load(int month, int year) {
 		String[] location = new String[1000];
 		String[] destination = new String[1000];
-
+		linkArray = lFile2.readLinkArray();
+		hahalLinkedList2 = library.Convertion(linkArray);
 		tableModel.setRowCount(0);
-
-		int size = hahalLinkedList2.getNumberOfEntries();
-		for (int i = 1; i <= size; i++) { // for entire array
-			String currVal = hahalLinkedList2.getEntry(i).getL1();
-			String currVal2 = hahalLinkedList2.getEntry(i).getL2();// select current value
-			int count2 = 1; // and set count to 1
-			if (currVal != null) { // if value not seen
-				for (int j = i + 1; j <= size; j++) { // for rest of array
-					if (hahalLinkedList2.getEntry(j).getL1().equalsIgnoreCase(currVal)
-							&& hahalLinkedList2.getEntry(j).getL2().equalsIgnoreCase(currVal2)) { // if same as
-																									// current Value
-						hahalLinkedList2.remove(j);// mark as seen
-						count2++; // and count it
-						size--;
+		if (month == 0 && year == 0) {
+			int size = hahalLinkedList2.getNumberOfEntries();
+			for (int i = 1; i <= size; i++) { // for entire array
+				String currVal = hahalLinkedList2.getEntry(i).getL1();
+				String currVal2 = hahalLinkedList2.getEntry(i).getL2();// select current value
+				int count2 = 1; // and set count to 1
+				if (currVal != null) { // if value not seen
+					for (int j = i + 1; j <= size; j++) { // for rest of array
+						if (hahalLinkedList2.getEntry(j).getL1().equalsIgnoreCase(currVal)
+								&& hahalLinkedList2.getEntry(j).getL2().equalsIgnoreCase(currVal2)) { // if same as
+																										// current Value
+							hahalLinkedList2.remove(j);// mark as seen
+							count2++; // and count it
+							size--;
+						}
+					}
+					System.out.println(currVal + currVal2 + count2);
+					tableModel.addRow(new String[] { currVal, currVal2, Integer.toString(count2) });
+//					System.out.print("Source : " + currVal + " Dest: " + currVal2 + " Count : " + count2 + "\n");
+				}
+			}
+		} else {
+			int size = hahalLinkedList2.getNumberOfEntries();
+			for (int i = 1; i <= size; i++) { // for entire array
+				if (hahalLinkedList2.getEntry(i).getLocalDate().getMonthValue() == month
+						&& hahalLinkedList2.getEntry(i).getLocalDate().getYear() == year) {
+					String currVal = hahalLinkedList2.getEntry(i).getL1();
+					String currVal2 = hahalLinkedList2.getEntry(i).getL2();// select current value
+					int count2 = 1; // and set count to 1
+					if (currVal != null) { // if value not seen
+						for (int j = i + 1; j <= size; j++) { // for rest of array
+							if (hahalLinkedList2.getEntry(j).getL1().equalsIgnoreCase(currVal)
+									&& hahalLinkedList2.getEntry(j).getL2().equalsIgnoreCase(currVal2)) { // if
+								// current Value
+								hahalLinkedList2.remove(j);// mark as seen
+								count2++; // and count it
+								size--;
+							}
+						}
+						System.out.println(currVal + currVal2 + count2);
+						tableModel.addRow(new String[] { currVal, currVal2, Integer.toString(count2) });
 					}
 				}
-				tableModel.addRow(new String[] { currVal, currVal2, Integer.toString(count2) });
-//				System.out.print("Source : " + currVal + " Dest: " + currVal2 + " Count : " + count2 + "\n");
+//					System.out.print("Source : " + currVal + " Dest: " + currVal2 + " Count : " + count2 + "\n");
 			}
+
 		}
+
 	}
 
 	// put the function below to the search button
 	public void addRecord(String source, String destination) {
 //		Get the thing from the database into link list
-		hahalLinkedList2.add(new sourceDest2(source, destination));
+		hahalLinkedList2.add(new SourceDest(source, destination));
 		// write the thing to the database
 	}
+
 //	public void compare(String source,String destionation) {
 //		//read data from txt file
 //		boolean found = false;

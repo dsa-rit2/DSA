@@ -25,19 +25,20 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 //		System.out.println(tempLinkedList.getNumberOfEntries());
 		sortedLinkedList.forEach(list -> {
 //			System.out.println(list);
-			if (tempLinkedList.isEmpty() || (c.compare(list, tempLinkedList.getFirst())) == 0) {
-				tempLinkedList.add(list);
-//				System.out.println("1.**" + tempLinkedList.getNumberOfEntries());
-			}
-			else {
-				this.addGroup((E) tempLinkedList);
-//				System.out.println(tempLinkedList.getNumberOfEntries());
-				tempLinkedList.clear();
-				tempLinkedList.add(list);
-//				System.out.println("Element: " + firstNode.data);
-			}
-//			System.out.println(tempLinkedList.getFirst().toString());
-			;
+//			
+//			if (tempLinkedList.isEmpty() || (c.compare(list, tempLinkedList.getFirst())) == 0) {
+//				tempLinkedList.add(list);
+////				System.out.println("1.**" + tempLinkedList.getNumberOfEntries());
+//			}
+//			else {
+//				this.addGroup((E) tempLinkedList);
+////				System.out.println(tempLinkedList.getNumberOfEntries());
+//				tempLinkedList.clear();
+//				tempLinkedList.add(list);
+////				System.out.println("Element: " + firstNode.data);
+//			}
+////			System.out.println(tempLinkedList.getFirst().toString());
+//			
 		});
 		this.addGroup((E) tempLinkedList);
 

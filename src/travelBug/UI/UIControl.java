@@ -29,11 +29,7 @@ public class UIControl extends JFrame {
 
 		// ============= Change Panel Section =============
 //		changePanel(new AddLocation(this));
-<<<<<<< HEAD
-		changePanel(new AddTravelLeg(this));
-=======
-//		changePanel(new PlanTrip(this));
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
+//		changePanel(new AddTravelLeg(this));
 //		changePanel(new TravelLegMaintenance(this));
 //		changePanel(new AddCompany(this));
 //		changePanel(new ListCompany(this));
@@ -47,7 +43,8 @@ public class UIControl extends JFrame {
 //		changePanel(new AddTravelLeg(this));
 //		changePanel(new MainMenu(this));
 //		changePanel(new AdminReport(this));
-		changePanel(new ViewTrip(this));
+//		changePanel(new ViewTrip(this));
+		changePanel(new AdminReport(this));
 	}
 
 	public void changePanel(JPanel panelName) {

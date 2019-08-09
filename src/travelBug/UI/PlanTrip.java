@@ -22,6 +22,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.awt.event.ItemEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PlanTrip extends JPanel {
 	private static final long serialVersionUID = 1L; // Serializable purpose
@@ -198,6 +200,9 @@ public class PlanTrip extends JPanel {
 		add(confirmBtn);
 
 		Button backBtn = new Button("Back");
+		backBtn.addActionListener(event ->{
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new MainMenu(mainFrame)));
+		});
 		backBtn.setBounds(310, 410, 120, 40);
 		backBtn.setForeground(Color.WHITE);
 		backBtn.setBackground(Color.GRAY);

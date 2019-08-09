@@ -14,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 
 import javax.swing.table.TableColumn;
 
-
 import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
 import travelBug.library.SinglyLinkedList;
@@ -55,22 +54,7 @@ public class AdminReport extends JPanel {
 	public AdminReport(UIControl parent) {
 		super();
 		this.mainFrame = parent;
-		// read txtile
 
-//		hahalLinkedList2.add(new SourceDest("aaa", "ppqqq"));
-//		hahalLinkedList2.add(new SourceDest("wwwww", "ppqqq"));
-//		hahalLinkedList2.add(new SourceDest("qqqq", "ppqqq"));
-//		hahalLinkedList2.add(new SourceDest("rrrrr", "ppqqq"));
-//		hahalLinkedList2.add(new SourceDest("qqqq", "ppqqq"));
-//		hahalLinkedList2.add(new SourceDest("qqqq", "ppqqq"));
-//		hahalLinkedList2.add(new SourceDest("qqqq", "ppqqq"));
-//		hahalLinkedList2.add(new SourceDest("qqqq", "ppqqq"));
-//		hahalLinkedList2.add(new SourceDest("qqqq", "ppqqq"));
-//		linkArray = library.Converted(hahalLinkedList2);
-//		lFile2.writeLinkArray(linkArray);
-//		for (SourceDest s : hahalLinkedList2) {
-//			System.out.println(s.getL1() + " " + s.getL2() + " " + s.getLocalDate());
-//		}
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 		setLayout(null);
@@ -107,9 +91,9 @@ public class AdminReport extends JPanel {
 		scrollPane.setEnabled(false);
 		add(scrollPane);
 
-		
-		//Month dropdownlist
-		comboBox = new JComboBox(new String[] { "<Month>", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" });
+		// Month dropdownlist
+		comboBox = new JComboBox(
+				new String[] { "<Month>", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" });
 		comboBox.setBounds(12, 58, 130, 22);
 		comboBox.addActionListener(event -> {
 			if (comboBox.getSelectedIndex() != 0) {
@@ -123,7 +107,7 @@ public class AdminReport extends JPanel {
 		});
 		add(comboBox);
 
-		//Year dropdown List
+		// Year dropdown List
 		comboBox_1 = new JComboBox(new String[] { "<Year>", "2018", "2019", "2020", "2021", "2022" });
 		comboBox_1.setEnabled(false);
 		comboBox_1.setBounds(169, 58, 195, 22);
@@ -174,6 +158,7 @@ public class AdminReport extends JPanel {
 			j++;
 		}
 	}
+
 //load the table 
 	public void load(int month, int year) {
 		String[] location = new String[1000];
@@ -181,7 +166,7 @@ public class AdminReport extends JPanel {
 		linkArray = lFile2.readLinkArray();
 		hahalLinkedList2 = library.Convertion(linkArray);
 		tableModel.setRowCount(0);
-		if (month == 0 && year == 0) {//if the month and year = 0
+		if (month == 0 && year == 0) {// if the month and year = 0
 			int size = hahalLinkedList2.getNumberOfEntries();
 			for (int i = 1; i <= size; i++) { // for entire array
 				String currVal = hahalLinkedList2.getEntry(i).getL1();
@@ -229,8 +214,5 @@ public class AdminReport extends JPanel {
 		}
 
 	}
-
-	// put the function below to the search button
-	
 
 }

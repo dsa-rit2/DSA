@@ -81,7 +81,7 @@ public class library {
 		return Character.toUpperCase(type) + Integer.toString(random.nextInt(randMax) + randMin);
 	}
 
-	public static String convert(String str) {
+	public static String makeUpper(String str) {
 		// Here validate the name and make the first character is Upper Case
 		str = str.trim();
 		Pattern p1 = Pattern.compile("[a-z A-Z/. ]*");

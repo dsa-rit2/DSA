@@ -132,7 +132,7 @@ public class ModifyLocation extends JPanel {
 
 		cbType = new JComboBox();
 		cbType.setModel(new DefaultComboBoxModel(new String[] { "<Choose Type>", "Small City", "Medium City",
-				"Large City", "Natural formation", "Designated Park/Reserve", "Man-made landmark" }));
+				"Large City", "Natural formation", "Designated Park/Reserve", "Man-made landmark", "Station" }));
 		cbType.setBounds(300, 304, 282, 26);
 		cbType.setSelectedItem(library.getTypeString(lArray.getIndexElement(locationFound).getType()));
 		add(cbType);

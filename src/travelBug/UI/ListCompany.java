@@ -104,6 +104,8 @@ public class ListCompany extends JPanel {
 		add(btnAdd);
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(event -> {
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new MainMenu(mainFrame)));
+
 			// redirect to mainmenu //
 
 		});

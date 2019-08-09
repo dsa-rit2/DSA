@@ -309,6 +309,8 @@ public class library {
 			return "Designated Park/Reserve";
 		case 'k': case 'K':
 			return "Man-made landmark";
+		case 'A': case 'a':
+			return "Station";
 		default:
 			return null;
 		}
@@ -328,6 +330,8 @@ public class library {
 			return 'P';
 		case "Man-made landmark":
 			return 'K';
+		case "Station":
+			return 'A';
 		default:
 			return 0;
 		}

@@ -204,6 +204,10 @@ public class ListLocation extends JPanel {
 		add(btnModify);
 
 		btnBack = new JButton("Back");
+		btnBack.addActionListener(event ->{
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new MainMenu(mainFrame)));
+
+		});
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnBack.setBounds(730, 403, 130, 34);
 		add(btnBack);

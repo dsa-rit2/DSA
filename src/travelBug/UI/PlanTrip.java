@@ -10,6 +10,9 @@ import travelBug.obj.*;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import org.omg.CosNaming._BindingIteratorImplBase;
+
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.util.Comparator;
@@ -474,16 +477,39 @@ public class PlanTrip extends JPanel {
 							GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> groupListSrcList = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(srcFoundList, Comparator.comparing(TravelLegInfo::getDest));
 							GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> groupListDesList = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(desFoundList, Comparator.comparing(TravelLegInfo::getSource));
 							
-							SinglyLinkedList<TravelLegInfo> tempSrcList = new SinglyLinkedList<TravelLegInfo>();
-							SinglyLinkedList<TravelLegInfo> tempDesList = new SinglyLinkedList<TravelLegInfo>();
+							SinglyLinkedList<SinglyLinkedList<TravelLegInfo>> tempSrcList = new SinglyLinkedList<SinglyLinkedList<TravelLegInfo>>();
+							SinglyLinkedList<SinglyLinkedList<TravelLegInfo>> tempDesList = new SinglyLinkedList<SinglyLinkedList<TravelLegInfo>>();
+							
+							String interSrc = "";
+							String interDes = "";
 							
 							for (SinglyLinkedList<TravelLegInfo> tempSrc : groupListSrcList) {
-								for (TravelLegInfo itemSrc : tempSrc) {
-									for (SinglyLinkedList<TravelLegInfo> tempDes : groupListDesList) {
-										for (TravelLegInfo itemDes : tempDes) {
-											if (itemSrc.getDest().equalsIgnoreCase(itemDes.getSource())) {
+								for (SinglyLinkedList<TravelLegInfo> srcLoc : srcLocation) {
+									if (tempSrc.getFirst().getDest().equalsIgnoreCase(srcLoc.getFirst().getSource())) {
+										interSrc = tempSrc.getFirst().getSource();
+										System.out.println("FirstTravelLeg: " + srcLoc.getFirst().getSource() + " -> " + srcLoc.getFirst().getDest());
+										tempSrcList.add(srcLoc);
+									}
+								}
+							}
+							
+							for (SinglyLinkedList<TravelLegInfo> tempDes : groupListDesList) {
+								for (SinglyLinkedList<TravelLegInfo> desLoc : desLocation) {
+									if (tempDes.getFirst().getSource().equalsIgnoreCase(desLoc.getFirst().getDest())) {
+										interDes = tempDes.getFirst().getDest();
+										System.out.println("SecondTravelLeg: " + desLoc.getFirst().getSource() + " -> " + desLoc.getFirst().getDest());
+										tempDesList.add(desLoc);
+									}
+								}
+							}
+							
+							for (SinglyLinkedList<TravelLegInfo> tempListSrc : tempSrcList) {
+								for (TravelLegInfo tempItemSrc : tempListSrc) {
+									for (SinglyLinkedList<TravelLegInfo> tempListDes : tempDesList) {
+										for (TravelLegInfo tempItemDes : tempListDes) {
+											if (tempItemSrc.getSource().equalsIgnoreCase(tempItemDes.getSource()) && tempItemSrc.getDest().equalsIgnoreCase(tempItemDes.getDest())) {
 												travelPlanFound = true;
-												travelPlan = "Source: " + srcTravel  + " | Interchange | " + itemSrc.getSource() + " to " + itemSrc.getDest() + " | Interchange | " + itemDes.getSource() + " to " + itemDes.getDest() + " | Interchange | " + " Destination: " + desTravel;
+												travelPlan = "Source: " + srcTravel + " | Interchange | " + interSrc + " -> " + tempItemSrc.getSource() + " -> " + tempItemDes.getDest() + " -> " + interDes + " | Interchange | " + desTravel + " :Destination";
 											}
 										}
 									}
@@ -493,7 +519,47 @@ public class PlanTrip extends JPanel {
 						
 						// Phase 3 (3 interception) ------------------------------------------------------------
 						if (!travelPlanFound) {
+							GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> groupListSrcList = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(srcFoundList, Comparator.comparing(TravelLegInfo::getDest));
+							GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> groupListDesList = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(desFoundList, Comparator.comparing(TravelLegInfo::getSource));
 							
+							SinglyLinkedList<SinglyLinkedList<TravelLegInfo>> tempSrcList = new SinglyLinkedList<SinglyLinkedList<TravelLegInfo>>();
+							SinglyLinkedList<SinglyLinkedList<TravelLegInfo>> tempDesList = new SinglyLinkedList<SinglyLinkedList<TravelLegInfo>>();
+							
+							String interSrc = "";
+							String interDes = "";
+							
+							for (SinglyLinkedList<TravelLegInfo> tempSrc : groupListSrcList) {
+								for (SinglyLinkedList<TravelLegInfo> srcLoc : srcLocation) {
+									if (tempSrc.getFirst().getDest().equalsIgnoreCase(srcLoc.getFirst().getSource())) {
+										interSrc = tempSrc.getFirst().getSource();
+										System.out.println("FirstTravelLeg: " + srcLoc.getFirst().getSource() + " -> " + srcLoc.getFirst().getDest());
+										tempSrcList.add(srcLoc);
+									}
+								}
+							}
+							
+							for (SinglyLinkedList<TravelLegInfo> tempDes : groupListDesList) {
+								for (SinglyLinkedList<TravelLegInfo> desLoc : desLocation) {
+									if (tempDes.getFirst().getSource().equalsIgnoreCase(desLoc.getFirst().getDest())) {
+										interDes = tempDes.getFirst().getDest();
+										System.out.println("SecondTravelLeg: " + desLoc.getFirst().getSource() + " -> " + desLoc.getFirst().getDest());
+										tempDesList.add(desLoc);
+									}
+								}
+							}
+							
+							for (SinglyLinkedList<TravelLegInfo> tempListSrc : tempSrcList) {
+								for (TravelLegInfo tempItemSrc : tempListSrc) {
+									for (SinglyLinkedList<TravelLegInfo> tempListDes : tempDesList) {
+										for (TravelLegInfo tempItemDes : tempListDes) {
+											if (tempItemSrc.getDest().equalsIgnoreCase(tempItemDes.getSource())) {
+												travelPlanFound = true;
+												travelPlan = "Source: " + srcTravel + " | Interchange | " + interSrc + " -> " + tempItemSrc.getSource() + " -> " + tempItemSrc.getDest() + " -> " + tempItemDes.getSource() + " -> " + tempItemDes.getDest() + " -> " + interDes + " | Interchange | " + desTravel + " :Destination";
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 					else {

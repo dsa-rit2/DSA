@@ -39,6 +39,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AdminReport extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -161,6 +163,11 @@ public class AdminReport extends JPanel {
 		add(comboBox_1);
 		
 		btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new MainMenu(mainFrame)));
+			}
+		});
 		btnBack.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnBack.setBounds(771, 397, 97, 25);
 		add(btnBack);

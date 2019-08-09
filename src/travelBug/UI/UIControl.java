@@ -9,7 +9,7 @@ import travelBug.obj.User;
 public class UIControl extends JFrame {
 	private static final long serialVersionUID = 1L; // Serializable purpose
 	public User authUser;
-	
+
 	public UIControl(User user) {
 		super("TravelBug");
 		this.authUser = user;
@@ -25,27 +25,17 @@ public class UIControl extends JFrame {
 		setBounds(new Rectangle(new Dimension(900, 600)));
 		pack();
 		setLocationRelativeTo(null);
-		getContentPane().setLayout(null);		
+		getContentPane().setLayout(null);
 
 		// ============= Change Panel Section =============
 //		changePanel(new AddLocation(this));
-	//	changePanel(new TravelLegMaintenance(this));
+//		changePanel(new TravelLegMaintenance(this));
 //		changePanel(new PlanTrip(this));
-
 //		changePanel(new AddLocation(this));
-
-//		changePanel(new AddTravelLeg(this));
-
-		//changePanel(new AddTravelLeg(this));
-
 //		changePanel(new TravelLegMaintenance(this));
 //		changePanel(new AddCompany(this));
 //		changePanel(new ListCompany(this));
-//		changePanel(new AddCompany(this));
 //		changePanel(new AddTravelLeg(this));
-//		changePanel(new TravelLegMaintenance(this));
-//		changePanel(new ListLocation(this));
-//		changePanel(new AddCompany(this));
 //		changePanel(new Authentication(this));
 //		changePanel(new ListLocation(this));
 //		changePanel(new AddTravelLeg(this));

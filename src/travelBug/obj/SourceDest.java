@@ -1,14 +1,23 @@
 package travelBug.obj;
 
-public class SourceDest {
+import java.io.Serializable;
+import java.time.LocalDate;
+
+import travelBug.library.library;
+
+public class SourceDest implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String l1;
 	String l2;
-	int count = 0;
+	LocalDate localDate;
 	
 	public SourceDest(String source, String dest) {
 		this.l1 = source;
 		this.l2 = dest;
-		this.count = 1;
+		this.localDate = LocalDate.now();
 	}
 	public String getL1() {
 		return l1;
@@ -26,14 +35,11 @@ public class SourceDest {
 		this.l2 = l2;
 	}
 
-	public int getCount() {
-		return count;
+	public LocalDate getLocalDate() {
+		return localDate;
+	}
+	public void setLocalDate(LocalDate localDate) {
+		this.localDate = localDate;
 	}
 
-	public void setCount(int count) {
-		this.count = count;
-	}
-	public void addCount() {
-		this.count++;
-	}
 }

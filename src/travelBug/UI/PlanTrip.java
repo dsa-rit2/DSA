@@ -10,14 +10,16 @@ import travelBug.obj.*;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import org.omg.CosNaming._BindingIteratorImplBase;
+
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
-
 import java.util.Comparator;
 import java.util.Date;
-import java.util.function.Function;
 import java.awt.event.ItemListener;
-import java.security.cert.TrustAnchor;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.awt.event.ItemEvent;
 
@@ -28,6 +30,9 @@ public class PlanTrip extends JPanel {
 
 	ReadWriteFile<Location> readWriteFile = new ReadWriteFile<Location>("Location.txt", Location.class);
 	LinkArray<Location> locationArray = readWriteFile.readLinkArray();
+
+	String[] locationType = { "-Select type-", "Small City", "Medium City", "Large City", "Natural formation",
+			"Designated Park/Reserve", "Man-made landmark" };
 
 	public PlanTrip(UIControl parent) {
 		super();
@@ -50,30 +55,17 @@ public class PlanTrip extends JPanel {
 		lblFindTheBest.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// ========================== Continent ============================
-		SinglyLinkedList<Location> testLinkedList = library.Convertion(locationArray);
+		SinglyLinkedList<Location> locationList = library.Convertion(locationArray);
 
 		GroupList<Location, SinglyLinkedList<Location>> testGroupList = new GroupList<Location, SinglyLinkedList<Location>>(
-				testLinkedList, Comparator.comparing(Location::getState));
+				locationList, Comparator.comparing(Location::getContinent));
+
 		String[] continents = new String[testGroupList.getNumberOfEntries() + 1];
 		continents[0] = "-Select continent-";
 		int i = 1;
 		for (SinglyLinkedList<Location> element : testGroupList) {
-			System.out.println(element.getNumberOfEntries());
-			System.out.println(element.getFirst().getState());
-			try {
-				continents[i++] = element.getFirst().getState();
-			} catch (NullPointerException e) {
-				System.out.println("Null occur");
-			}
+			continents[i++] = element.getFirst().getContinent();
 		}
-//		for (int i = 0; i < locationArray.size(); i++) {
-//			if (continents[i] != locationArray.getIndexElement(i).getContinent())
-//				continents[i + 1] = locationArray.getIndexElement(i).getContinent();
-//		}
-
-//		for (Location item : testGroupList.findChild(testLinkedList.getEntry(1))) {
-//			System.out.println(item);
-//		}
 
 		JComboBox continent1 = new JComboBox(continents);
 		continent1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -99,13 +91,13 @@ public class PlanTrip extends JPanel {
 		add(country2);
 
 		// ======================= Place =======================
-		JComboBox place1 = new JComboBox();
+		JComboBox place1 = new JComboBox(locationType);
 		place1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		place1.setBounds(388, 133, 149, 30);
 		place1.setEnabled(false);
 		add(place1);
 
-		JComboBox place2 = new JComboBox();
+		JComboBox place2 = new JComboBox(locationType);
 		place2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		place2.setBounds(390, 293, 149, 30);
 		place2.setEnabled(false);
@@ -203,10 +195,6 @@ public class PlanTrip extends JPanel {
 		confirmBtn.setForeground(Color.WHITE);
 		confirmBtn.setBackground(Color.GRAY);
 		confirmBtn.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		confirmBtn.addActionListener(event -> {
-			adultCount = Integer.parseInt(adultSpinner.getValue().toString());
-			childCount = Integer.parseInt(childSpinner.getValue().toString());
-		});
 		add(confirmBtn);
 
 		Button backBtn = new Button("Back");
@@ -263,22 +251,324 @@ public class PlanTrip extends JPanel {
 
 		continent1.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				String[] countries = new String[locationArray.size() + 1];
-				countries[0] = "-Select country-";
+				GroupList<Location, SinglyLinkedList<Location>> countryGroupList = new GroupList<Location, SinglyLinkedList<Location>>(
+						locationList, Comparator.comparing(Location::getCountry));
+
+				country1.removeAllItems();
+				country1.addItem("-Select country-");
 				if (continent1.getSelectedIndex() > 0) {
-					for (int i = 0; i < countries.length; i++) {
-						System.out.println(continent1.getSelectedItem());
-						if (locationArray.getIndexElement(i).getCountry()
-								.equalsIgnoreCase((String) continent1.getSelectedItem()))
-							countries[i + 1] = locationArray.getIndexElement(i).getCountry();
+					for (SinglyLinkedList<Location> item : countryGroupList) {
+						if (item.getFirst().getContinent().compareTo(continent1.getSelectedItem().toString()) == 0) {
+							country1.addItem(item.getFirst().getCountry());
+						}
 					}
-					country1.addItem(countries);
+				}
+
+				if (continent1.getSelectedIndex() == 0) {
+					country1.setEnabled(false);
+					place1.setEnabled(false);
+					locationName1.setEnabled(false);
+				} else {
 					country1.setEnabled(true);
+					place1.setEnabled(false);
+					locationName1.setEnabled(false);
+				}
+
+				place1.setSelectedIndex(0);
+			}
+		});
+
+		continent2.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				GroupList<Location, SinglyLinkedList<Location>> countryGroupList = new GroupList<Location, SinglyLinkedList<Location>>(
+						locationList, Comparator.comparing(Location::getCountry));
+
+				country2.removeAllItems();
+				country2.addItem("-Select country-");
+				if (continent2.getSelectedIndex() > 0) {
+					for (SinglyLinkedList<Location> item : countryGroupList) {
+						if (item.getFirst().getContinent().compareTo(continent2.getSelectedItem().toString()) == 0) {
+							country2.addItem(item.getFirst().getCountry());
+						}
+					}
+				}
+
+				if (continent2.getSelectedIndex() == 0) {
+					country2.setEnabled(false);
+					place2.setEnabled(false);
+					locationName2.setEnabled(false);
+				} else {
+					country2.setEnabled(true);
+					place2.setEnabled(false);
+					locationName2.setEnabled(false);
+				}
+
+				place2.setSelectedIndex(0);
+			}
+		});
+
+		country1.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if (country1.getSelectedIndex() == 0) {
+					place1.setEnabled(false);
+					locationName1.setEnabled(false);
+				} else {
+					place1.setEnabled(true);
+					locationName1.setEnabled(false);
+				}
+
+				place1.setSelectedIndex(0);
+			}
+		});
+
+		country2.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if (country2.getSelectedIndex() == 0) {
+					place2.setEnabled(false);
+					locationName2.setEnabled(false);
+				} else {
+					place2.setEnabled(true);
+					locationName2.setEnabled(false);
+				}
+
+				place2.setSelectedIndex(0);
+			}
+		});
+
+		place1.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				GroupList<Location, SinglyLinkedList<Location>> placeGroupList = new GroupList<Location, SinglyLinkedList<Location>>(
+						locationList, Comparator.comparing(Location::getName));
+
+				locationName1.removeAllItems();
+				locationName1.addItem("-Select location-");
+				if (place1.getSelectedIndex() > 0) {
+					for (SinglyLinkedList<Location> item : placeGroupList) {
+						if (item.getFirst().getType() == library.getTypeChar(place1.getSelectedItem().toString())
+								&& item.getFirst().getCountry().compareTo(country1.getSelectedItem().toString()) == 0) {
+							locationName1.addItem(item.getFirst().getName());
+						}
+					}
+				}
+
+				if (place1.getSelectedIndex() == 0) {
+					locationName1.setEnabled(false);
+				} else {
+					locationName1.setEnabled(true);
 				}
 			}
 		});
 
-		// ======================= Algorithms =========================
+		place2.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				GroupList<Location, SinglyLinkedList<Location>> placeGroupList = new GroupList<Location, SinglyLinkedList<Location>>(
+						locationList, Comparator.comparing(Location::getName));
 
+				locationName2.removeAllItems();
+				locationName2.addItem("-Select location-");
+				if (place2.getSelectedIndex() > 0) {
+					for (SinglyLinkedList<Location> item : placeGroupList) {
+						if (item.getFirst().getType() == library.getTypeChar(place2.getSelectedItem().toString())
+								&& item.getFirst().getCountry().compareTo(country2.getSelectedItem().toString()) == 0) {
+							locationName2.addItem(item.getFirst().getName());
+						}
+					}
+				}
+
+				if (place2.getSelectedIndex() == 0) {
+					locationName2.setEnabled(false);
+				} else {
+					locationName2.setEnabled(true);
+				}
+			}
+		});
+
+		// ----------------- Submit button trigger -----------------
+		confirmBtn.addActionListener(event -> {
+			boolean error = false;
+			adultCount = Integer.parseInt(adultSpinner.getValue().toString());
+			childCount = Integer.parseInt(childSpinner.getValue().toString());
+
+			if (continent1.getSelectedIndex() <= 0) {
+				error = true;
+			} else if (country1.getSelectedIndex() <= 0) {
+				error = true;
+			} else if (place1.getSelectedIndex() <= 0) {
+				error = true;
+			} else if (locationName1.getSelectedIndex() <= 0) {
+				error = true;
+			}
+
+			if (continent2.getSelectedIndex() <= 0) {
+				error = true;
+			} else if (country2.getSelectedIndex() <= 0) {
+				error = true;
+			} else if (place2.getSelectedIndex() <= 0) {
+				error = true;
+			} else if (locationName2.getSelectedIndex() <= 0) {
+				error = true;
+			}
+
+			if (editor1.getText().isEmpty()) {
+				error = true;
+			}
+			if (editor2.getText().isEmpty()) {
+				error = true;
+			}
+
+			if (adultCount == 0) {
+				error = true;
+			}
+
+			if (!error) {
+				ReadWriteFile<TravelLegInfo> readLocationFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt",
+						TravelLegInfo.class);
+				SinglyLinkedList<TravelLegInfo> travelLocationList = library
+						.Convertion(readLocationFile.readLinkArray());
+				GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> srcLocation = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(
+						travelLocationList, Comparator.comparing(TravelLegInfo::getSource));
+				GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> desLocation = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(
+						travelLocationList, Comparator.comparing(TravelLegInfo::getDest));
+
+				String srcTravel = locationName1.getSelectedItem().toString();
+				String desTravel = locationName2.getSelectedItem().toString();
+
+				String travelPlan = new String();
+				boolean directFound = false;
+
+				// Direct Travel -------------------------------------------------------------
+				for (TravelLegInfo location : travelLocationList) {
+					if (location.getSource().equalsIgnoreCase(srcTravel) && location.getDest().equalsIgnoreCase(desTravel)) {
+						directFound = true;
+						travelPlan = "Source: " + location.getSource() + "Mode: " + location.getMode() + "Destination: " + location.getDest();
+					}
+				}
+				
+				if (!directFound) {
+					SinglyLinkedList<TravelLegInfo> srcFoundList = new SinglyLinkedList<TravelLegInfo>();
+					SinglyLinkedList<TravelLegInfo> desFoundList = new SinglyLinkedList<TravelLegInfo>();
+					
+					for (SinglyLinkedList<TravelLegInfo> sourceItem : srcLocation) {
+						if(sourceItem.getFirst().getSource().equalsIgnoreCase(srcTravel)) {
+							srcFoundList = sourceItem;
+						}
+					}
+					
+					for (SinglyLinkedList<TravelLegInfo> destinationItem : desLocation) {
+						if(destinationItem.getFirst().getDest().equalsIgnoreCase(desTravel)) {
+							desFoundList = destinationItem;
+						}
+					}
+					
+					if (!srcFoundList.isEmpty() && !desFoundList.isEmpty()) {
+						boolean travelPlanFound = false;
+						// Phase 1 (1 interception) ------------------------------------------------------------						
+						for (TravelLegInfo srcElement : srcFoundList) {
+							for (TravelLegInfo desElement : desFoundList) {
+								if (srcElement.getDest().equalsIgnoreCase(desElement.getSource())) {
+									travelPlanFound = true;
+									travelPlan = "Source: " + srcElement.getSource() + " to " + srcElement.getDest() + " | Interchange | " + desElement.getSource() + " to " + desElement.getDest();
+								}
+							}
+						}
+						
+						// Phase 2 (2 interception) ------------------------------------------------------------
+						if (!travelPlanFound) {
+							GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> groupListSrcList = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(srcFoundList, Comparator.comparing(TravelLegInfo::getDest));
+							GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> groupListDesList = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(desFoundList, Comparator.comparing(TravelLegInfo::getSource));
+							
+							SinglyLinkedList<SinglyLinkedList<TravelLegInfo>> tempSrcList = new SinglyLinkedList<SinglyLinkedList<TravelLegInfo>>();
+							SinglyLinkedList<SinglyLinkedList<TravelLegInfo>> tempDesList = new SinglyLinkedList<SinglyLinkedList<TravelLegInfo>>();
+							
+							String interSrc = "";
+							String interDes = "";
+							
+							for (SinglyLinkedList<TravelLegInfo> tempSrc : groupListSrcList) {
+								for (SinglyLinkedList<TravelLegInfo> srcLoc : srcLocation) {
+									if (tempSrc.getFirst().getDest().equalsIgnoreCase(srcLoc.getFirst().getSource())) {
+										interSrc = tempSrc.getFirst().getSource();
+										System.out.println("FirstTravelLeg: " + srcLoc.getFirst().getSource() + " -> " + srcLoc.getFirst().getDest());
+										tempSrcList.add(srcLoc);
+									}
+								}
+							}
+							
+							for (SinglyLinkedList<TravelLegInfo> tempDes : groupListDesList) {
+								for (SinglyLinkedList<TravelLegInfo> desLoc : desLocation) {
+									if (tempDes.getFirst().getSource().equalsIgnoreCase(desLoc.getFirst().getDest())) {
+										interDes = tempDes.getFirst().getDest();
+										System.out.println("SecondTravelLeg: " + desLoc.getFirst().getSource() + " -> " + desLoc.getFirst().getDest());
+										tempDesList.add(desLoc);
+									}
+								}
+							}
+							
+							for (SinglyLinkedList<TravelLegInfo> tempListSrc : tempSrcList) {
+								for (TravelLegInfo tempItemSrc : tempListSrc) {
+									for (SinglyLinkedList<TravelLegInfo> tempListDes : tempDesList) {
+										for (TravelLegInfo tempItemDes : tempListDes) {
+											if (tempItemSrc.getSource().equalsIgnoreCase(tempItemDes.getSource()) && tempItemSrc.getDest().equalsIgnoreCase(tempItemDes.getDest())) {
+												travelPlanFound = true;
+												travelPlan = "Source: " + srcTravel + " | Interchange | " + interSrc + " -> " + tempItemSrc.getSource() + " -> " + tempItemDes.getDest() + " -> " + interDes + " | Interchange | " + desTravel + " :Destination";
+											}
+										}
+									}
+								}
+							}
+						}
+						
+						// Phase 3 (3 interception) ------------------------------------------------------------
+						if (!travelPlanFound) {
+							GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> groupListSrcList = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(srcFoundList, Comparator.comparing(TravelLegInfo::getDest));
+							GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> groupListDesList = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(desFoundList, Comparator.comparing(TravelLegInfo::getSource));
+							
+							SinglyLinkedList<SinglyLinkedList<TravelLegInfo>> tempSrcList = new SinglyLinkedList<SinglyLinkedList<TravelLegInfo>>();
+							SinglyLinkedList<SinglyLinkedList<TravelLegInfo>> tempDesList = new SinglyLinkedList<SinglyLinkedList<TravelLegInfo>>();
+							
+							String interSrc = "";
+							String interDes = "";
+							
+							for (SinglyLinkedList<TravelLegInfo> tempSrc : groupListSrcList) {
+								for (SinglyLinkedList<TravelLegInfo> srcLoc : srcLocation) {
+									if (tempSrc.getFirst().getDest().equalsIgnoreCase(srcLoc.getFirst().getSource())) {
+										interSrc = tempSrc.getFirst().getSource();
+										System.out.println("FirstTravelLeg: " + srcLoc.getFirst().getSource() + " -> " + srcLoc.getFirst().getDest());
+										tempSrcList.add(srcLoc);
+									}
+								}
+							}
+							
+							for (SinglyLinkedList<TravelLegInfo> tempDes : groupListDesList) {
+								for (SinglyLinkedList<TravelLegInfo> desLoc : desLocation) {
+									if (tempDes.getFirst().getSource().equalsIgnoreCase(desLoc.getFirst().getDest())) {
+										interDes = tempDes.getFirst().getDest();
+										System.out.println("SecondTravelLeg: " + desLoc.getFirst().getSource() + " -> " + desLoc.getFirst().getDest());
+										tempDesList.add(desLoc);
+									}
+								}
+							}
+							
+							for (SinglyLinkedList<TravelLegInfo> tempListSrc : tempSrcList) {
+								for (TravelLegInfo tempItemSrc : tempListSrc) {
+									for (SinglyLinkedList<TravelLegInfo> tempListDes : tempDesList) {
+										for (TravelLegInfo tempItemDes : tempListDes) {
+											if (tempItemSrc.getDest().equalsIgnoreCase(tempItemDes.getSource())) {
+												travelPlanFound = true;
+												travelPlan = "Source: " + srcTravel + " | Interchange | " + interSrc + " -> " + tempItemSrc.getSource() + " -> " + tempItemDes.getSource() + " -> " + tempItemDes.getDest() + " -> " + interDes + " | Interchange | " + desTravel + " :Destination";
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					else {
+						travelPlan = "No travel found";
+					}
+				}
+				
+				System.out.println(travelPlan);
+			}
+		});
 	}
 }

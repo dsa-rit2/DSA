@@ -114,6 +114,8 @@ public class ListCustomer extends JPanel {
 		JButton btnNewButton_1 = new JButton("Back");
 		btnNewButton_1.addActionListener(event -> {
 			// redirect to the main menu
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new MainMenu(mainFrame)));
+
 		});
 		btnNewButton_1.setBounds(457, 401, 127, 36);
 		add(btnNewButton_1);

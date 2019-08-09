@@ -105,7 +105,7 @@ public class AddLocation extends JPanel {
 		add(cbCountry);
 
 		String[] state = { "<Choose Type>", "Small City", "Medium City", "Large City", "Natural formation",
-				"Designated Park/Reserve", "Man-made landmark" };
+				"Designated Park/Reserve", "Man-made landmark", "Station" };
 		cbType = new JComboBox(state);
 		cbType.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cbType.setBounds(300, 298, 300, 30);
@@ -221,9 +221,9 @@ public class AddLocation extends JPanel {
 		lArray = lFile.readLinkArray();
 
 		// ===================== Get data =======================
-		String locationName = txtLocationName.getText();
+		String locationName = library.makeUpper(txtLocationName.getText());
 		String continent = cbContinent.getSelectedItem().toString();
-		String state = txtState.getText();
+		String state = library.makeUpper(txtState.getText());
 		String country = cbCountry.getSelectedItem().toString();
 		String type = cbType.getSelectedItem().toString();
 		double longitude = 0.00;

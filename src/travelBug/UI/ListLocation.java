@@ -8,6 +8,7 @@ import travelBug.obj.*;
 //=========================
 
 import java.awt.*;
+import java.util.Comparator;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
@@ -28,7 +29,7 @@ public class ListLocation extends JPanel {
 	private DefaultTableModel tableModel;
 	private JScrollPane scrollPane;
 	private Vector<?> vector;
-	private JButton btnDelete;
+	private JButton btnDelete, btnContinent, btnCountry, btnState, btnReset;
 	private JButton btnModify;
 	private final UIControl mainFrame;
 	private JButton btnBack;
@@ -42,6 +43,7 @@ public class ListLocation extends JPanel {
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
+		// ==========================Get the data==================================
 
 		tableModel = new DefaultTableModel() {
 			private static final long serialVersionUID = 1L;
@@ -52,7 +54,6 @@ public class ListLocation extends JPanel {
 				return false;
 			}
 		};
-		lArray = lFile.readLinkArray();
 
 		table = new JTable(tableModel);
 		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -66,8 +67,8 @@ public class ListLocation extends JPanel {
 					vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,
-								vector.elementAt(0).toString())));
+						SwingUtilities.invokeLater(() -> mainFrame
+								.changePanel(new ModifyLocation(mainFrame, vector.elementAt(0).toString())));
 					}
 				}
 			}
@@ -81,6 +82,16 @@ public class ListLocation extends JPanel {
 		tableModel.addColumn("Country");
 		tableModel.addColumn("Type");
 		
+		lArray = lFile.readLinkArray();
+		LinkArray<Location> pArray = lFile.readLinkArray();
+		SinglyLinkedList<Location> oArray = library.Convertion(lArray);
+		SortedLinkedList<Location> tArrayLinkedList = new SortedLinkedList<Location>(oArray,
+				Comparator.comparing(Location::getName));
+		lArray.makeEmpty();
+		for (Location location : tArrayLinkedList) {
+			lArray.addItem(location);
+		}
+
 		load(null);
 
 //		table.setShowGrid(false);
@@ -106,7 +117,7 @@ public class ListLocation extends JPanel {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblNewLabel.setBounds(314, 13, 200, 35);
 		add(lblNewLabel);
-		
+
 		textField = new JTextField();
 		textField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		textField.setBounds(124, 55, 299, 27);
@@ -143,6 +154,39 @@ public class ListLocation extends JPanel {
 		});
 		btnNewButton.setBounds(12, 403, 130, 35);
 		add(btnNewButton);
+
+		btnContinent = new JButton("Continent");
+		btnContinent.addActionListener(event -> {
+			btnCountry.setEnabled(true);
+			btnState.setEnabled(true);
+			btnContinent.setEnabled(false);
+			load(textField.getText());
+			textField.requestFocus();
+		});
+		btnContinent.setBounds(494, 55, 97, 25);
+		add(btnContinent);
+
+		btnCountry = new JButton("Country");
+		btnCountry.addActionListener(event -> {
+			btnCountry.setEnabled(false);
+			btnState.setEnabled(true);
+			btnContinent.setEnabled(true);
+			load(textField.getText());
+			textField.requestFocus();
+		});
+		btnCountry.setBounds(590, 55, 97, 25);
+		add(btnCountry);
+
+		btnState = new JButton("State");
+		btnState.addActionListener(event -> {
+			btnCountry.setEnabled(true);
+			btnState.setEnabled(false);
+			btnContinent.setEnabled(true);
+			load(textField.getText());
+			textField.requestFocus();
+		});
+		btnState.setBounds(687, 55, 97, 25);
+		add(btnState);
 
 		btnDelete = new JButton("Delete");
 		btnDelete.setForeground(Color.RED);
@@ -191,8 +235,8 @@ public class ListLocation extends JPanel {
 					vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame,
-								vector.elementAt(0).toString())));
+						SwingUtilities.invokeLater(() -> mainFrame
+								.changePanel(new ModifyLocation(mainFrame, vector.elementAt(0).toString())));
 					}
 				} else {
 					library.dialogMessage("Please choose one location to modify");
@@ -204,36 +248,85 @@ public class ListLocation extends JPanel {
 		add(btnModify);
 
 		btnBack = new JButton("Back");
+		btnBack.addActionListener(event -> {
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new MainMenu(mainFrame)));
+
+		});
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnBack.setBounds(730, 403, 130, 34);
 		add(btnBack);
 
+		btnReset = new JButton("Reset");
+		btnReset.addActionListener(event -> {
+			btnContinent.setEnabled(true);
+			btnCountry.setEnabled(true);
+			btnState.setEnabled(true);
+			load(null);
+			textField.requestFocus();
+		});
+		btnReset.setForeground(new Color(0, 0, 255));
+		btnReset.setBounds(787, 55, 85, 25);
+		add(btnReset);
+
 	}
 
-	// =============================== Additional function=======================================//
+	// =============================== Additional
+	// function=======================================//
 	public void load(String anyString) {
 		tableModel.setRowCount(0);
 		if (anyString == null) {
 			for (int i = 0; i < lArray.size(); i++) {
 				String[] dataStrings = { lArray.getIndexElement(i).getName(), lArray.getIndexElement(i).getContinent(),
 						lArray.getIndexElement(i).getState(), lArray.getIndexElement(i).getCountry(),
-						Character.toString(lArray.getIndexElement(i).getType()) };
+						library.getTypeString(lArray.getIndexElement(i).getType()) };
 				tableModel.addRow(dataStrings);
 				lArray.getIndexElement(i).print();
 			}
 		} else {
 			anyString = anyString.toUpperCase();
-			for (int i = 0; i < lArray.size(); i++) {
-				if (lArray.getIndexElement(i).getName().toUpperCase().matches(anyString + ".*")) {
-					String[] dataStrings = { lArray.getIndexElement(i).getName(),
-							lArray.getIndexElement(i).getContinent(), lArray.getIndexElement(i).getState(),
-							lArray.getIndexElement(i).getCountry(), Character.toString(lArray.getIndexElement(i).getType()) };
-					tableModel.addRow(dataStrings);
+			if (!btnContinent.isEnabled()) {
+				for (int i = 0; i < lArray.size(); i++) {
+					if (lArray.getIndexElement(i).getContinent().toUpperCase().matches(anyString + ".*")) {
+						String[] dataStrings = { lArray.getIndexElement(i).getName(),
+								lArray.getIndexElement(i).getContinent(), lArray.getIndexElement(i).getState(),
+								lArray.getIndexElement(i).getCountry(),
+								library.getTypeString(lArray.getIndexElement(i).getType()) };
+						tableModel.addRow(dataStrings);
+					}
 				}
-
+			} else if (!btnCountry.isEnabled()) {
+				for (int i = 0; i < lArray.size(); i++) {
+					if (lArray.getIndexElement(i).getCountry().toUpperCase().matches(anyString + ".*")) {
+						String[] dataStrings = { lArray.getIndexElement(i).getName(),
+								lArray.getIndexElement(i).getContinent(), lArray.getIndexElement(i).getState(),
+								lArray.getIndexElement(i).getCountry(),
+								library.getTypeString(lArray.getIndexElement(i).getType()) };
+						tableModel.addRow(dataStrings);
+					}
+				}
+			} else if (!btnState.isEnabled()) {
+				for (int i = 0; i < lArray.size(); i++) {
+					if (lArray.getIndexElement(i).getState().toUpperCase().matches(anyString + ".*")) {
+						String[] dataStrings = { lArray.getIndexElement(i).getName(),
+								lArray.getIndexElement(i).getContinent(), lArray.getIndexElement(i).getState(),
+								lArray.getIndexElement(i).getCountry(),
+								library.getTypeString(lArray.getIndexElement(i).getType()) };
+						tableModel.addRow(dataStrings);
+					}
+				}
+			} else {
+				for (int i = 0; i < lArray.size(); i++) {
+					if (lArray.getIndexElement(i).getName().toUpperCase().matches(anyString + ".*")) {
+						String[] dataStrings = { lArray.getIndexElement(i).getName(),
+								lArray.getIndexElement(i).getContinent(), lArray.getIndexElement(i).getState(),
+								lArray.getIndexElement(i).getCountry(),
+								library.getTypeString(lArray.getIndexElement(i).getType()) };
+						tableModel.addRow(dataStrings);
+					}
+				}
 			}
+
 		}
 
 	}
-
 }

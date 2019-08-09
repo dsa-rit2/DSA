@@ -46,6 +46,8 @@ public class AddTravelLeg extends JPanel {
 	private final UIControl mainframe; // Store main frame
 	private Set<String> s = new TreeSet<String>();
 	private char mode;
+	private String companyString;
+	
 
 	public AddTravelLeg(UIControl parent) {
 		super();
@@ -125,8 +127,10 @@ public class AddTravelLeg extends JPanel {
 		lblDestinationLocation.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
 		lblDestinationLocation.setBounds(446, 44, 252, 16);
 		add(lblDestinationLocation);
-//=========================================================================================================//		
-		
+//==============================================================================================================//		
+//====================================//Get company name to get the list of the travelleg//=======================//
+		companyString = parent.authUser.getUsername().toString();
+		companyString = library.getUsernameShortForm(companyString);
 		
 //========================Auto Completer for textfield Distination location================================//
 		tfDestinationL = new JTextField();
@@ -137,8 +141,7 @@ public class AddTravelLeg extends JPanel {
 				boolean foundSource = false;
 				boolean foundDestination = false;
 				if(evtEvent.getKeyCode() == KeyEvent.VK_BACK_SPACE || evtEvent.getKeyCode() == KeyEvent.VK_SHIFT)
-				{
-					
+				{				
 				}
 				else {					
 				String to_checkString = tfDestinationL.getText();
@@ -360,7 +363,6 @@ public class AddTravelLeg extends JPanel {
 		btnCancel.setBounds(471, 390, 161, 50);
 		add(btnCancel);
 		
-
 		// ================================ Button =================================//
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -467,17 +469,27 @@ public class AddTravelLeg extends JPanel {
 					if (!fromTime.isBefore(toTime)) {
 						lblFromTimeError.setText("[The [From] time must before [To] time");
 						error = true;
-					} else {
+					}
+						else {
+					}
 						duration = library.convertDuration(fromTime, toTime);
 						lblFromTimeError.setText("");
-					}
 				}
 				if (!(((JTextField) dcFromDate.getDateEditor().getUiComponent()).getText().isEmpty())
 						&& !(((JTextField) dcToDate.getDateEditor().getUiComponent()).getText().isEmpty())) {
-					if (!fromDate.isBefore(toDate)) {
-						lblFromDateError.setText("[The [From] date must before [To] date]");
+					if (!(fromDate.isBefore(toDate)) && !(fromDate.equals(toDate)) && fromDate.isAfter(toDate)) {
+						lblFromDateError.setText("[The [From] date must before [To] date] or Qeual");
 						error = true;
-					} else {
+					}
+//					if(!(fromDate.equals(toDate))){
+//						lblFromDateError.setText("[The [From] date must before [To] date] or Equal");
+//						error = true;
+//					}
+//					if(fromDate.isAfter(toDate)) {
+//						lblFromDateError.setText("[The [From] date must before [To] date] or Equal");
+//						error = true;
+//					}
+					else {
 						lblFromDateError.setText("");
 					}
 				}
@@ -557,7 +569,7 @@ public class AddTravelLeg extends JPanel {
 				//========================= Write travel leg info into text file==================//
 				if (!error) {
 					rArray = rFile.readLinkArray();
-					TravelLegInfo travelLegInfo = new TravelLegInfo(mode,srcLocationString,
+					TravelLegInfo travelLegInfo = new TravelLegInfo(companyString,mode,srcLocationString,
 							dstLocationString,price,distance, fromDate, toDate, fromTime, toTime, duration);
 					rArray.addItem(travelLegInfo);
 					rFile.writeLinkArray(rArray);

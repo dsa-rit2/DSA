@@ -21,34 +21,31 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 
 		SortedLinkedList<T> sortedLinkedList = new SortedLinkedList<T>(listNode, c);
 		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
-<<<<<<< HEAD
+
 //		System.out.println(tempLinkedList.getNumberOfEntries());
 		sortedLinkedList.forEach(list -> {
 //			System.out.println(list);
-			if (tempLinkedList.isEmpty() || (c.compare(list, tempLinkedList.getFirst())) == 0) {
-				tempLinkedList.add(list);
+		//	if (tempLinkedList.isEmpty() || (c.compare(list, tempLinkedList.getFirst())) == 0) {
+			//	tempLinkedList.add(list);
 //				System.out.println("1.**" + tempLinkedList.getNumberOfEntries());
-			}
-			else {
-				this.add((E) tempLinkedList);
+		//	}
+		//	else {
+				//this.add((E) tempLinkedList);
 //				System.out.println(tempLinkedList.getNumberOfEntries());
-				tempLinkedList.clear();
-				tempLinkedList.add(list);
+			//	tempLinkedList.clear();
+				//tempLinkedList.add(list);
 //				System.out.println("Element: " + firstNode.data);
-			}
+		//	}
 //			System.out.println(tempLinkedList.getFirst().toString());
 			;
 		});
-		this.add((E) tempLinkedList);
-=======
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
-		
-<<<<<<< HEAD
+		//this.add((E) tempLinkedList);
+
 //		System.out.println(tempLinkedList.getFirst().toString());
 //		System.out.println(tempLinkedList.getFirst());
 //		System.out.println("Number of Pointer: " + numberOfEntries);
 		
-=======
+
 		for (T list : sortedLinkedList) {
 			if (!tempLinkedList.isEmpty() && (c.compare(list, tempLinkedList.getFirst())) != 0) {
 				this.addGroup((E) tempLinkedList);
@@ -57,7 +54,7 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 			tempLinkedList.add(list);
 		}
 		this.addGroup((E) tempLinkedList);
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
+
 	}
 
 	public SinglyLinkedList<T> findChild(T data) {

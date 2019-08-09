@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 public class GroupList<T, E> implements GroupListInterface<T, E> {
 
-	private Node headNode;
+	private Node firstnNode;
 	private int numberOfEntries;
 	private Comparator<? super T> c;
 
@@ -18,55 +18,44 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 	public GroupList(SinglyLinkedList<T> listNode, Comparator<? super T> c) {
 		this();
 		this.c = c;
+
+
+		if (!listNode.isEmpty()) {
+			SortedLinkedList<T> sortedLinkedList = new SortedLinkedList<T>(listNode, c);
+			SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
+
+			for (T list : sortedLinkedList) {
+				if (!tempLinkedList.isEmpty() && (c.compare(list, tempLinkedList.getFirst())) != 0) {
+					this.addGroup((E) tempLinkedList);
+					tempLinkedList = new SinglyLinkedList<T>();
+				}
+				tempLinkedList.add(list);
+			}
+			this.addGroup((E) tempLinkedList);
+		}
 	}
-//		SortedLinkedList<T> sortedLinkedList = new SortedLinkedList<T>(listNode, c);
-//		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
-//		System.out.println(tempLinkedList.getNumberOfEntries());
-//		sortedLinkedList.forEach(list -> {
-//			System.out.println(list);
-//			if (tempLinkedList.isEmpty() || (c.compare(list, tempLinkedList.getFirst())) == 0) {
-//				tempLinkedList.add(list);
-////				System.out.println("1.**" + tempLinkedList.getNumberOfEntries());
-//			}
-//			else {
-//				this.addGroup((E) tempLinkedList);
-////				System.out.println(tempLinkedList.getNumberOfEntries());
-//				tempLinkedList.clear();
-//				tempLinkedList.add(list);
-////				System.out.println("Element: " + firstNode.data);
-//			}
-////			System.out.println(tempLinkedList.getFirst().toString());
-//			;
-//		});
-//		this.addGroup((E) tempLinkedList);
-//		
-//		for (T list : sortedLinkedList) {
-//			if (!tempLinkedList.isEmpty() && (c.compare(list, tempLinkedList.getFirst())) != 0) {
-//				this.addGroup((E) tempLinkedList);
-//				tempLinkedList = new SinglyLinkedList<T>();
-//			}
-//			tempLinkedList.add(list);
-//		}
-//		this.addGroup((E) tempLinkedList);
-//	}
-//
-//	public SinglyLinkedList<T> findChild(T data) {
-//		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
-////		this.forEach(item -> {
-////			if (c.compare(data, item) == 0) {
-////				tempLinkedList.add(item);
-////			}
-////		});
-//		return tempLinkedList;
-//	}
+
+	@SuppressWarnings("unchecked")
+	public SinglyLinkedList<T> findChild(T data) {
+		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
+
+		for (E list : this) {
+			SinglyLinkedList<T> item = (SinglyLinkedList<T>) list;
+			if (c.compare(data, item.getFirst()) == 0) {
+				tempLinkedList = item;
+			}
+		}
+
+		return tempLinkedList;
+	}
 
 	private boolean addGroup(E newEntry) {
 		Node newNode = new Node(newEntry); // create the new node
 
 		if (this.isEmpty())
-			headNode = newNode; // if empty list
+			firstnNode = newNode; // if empty list
 		else { // add to end of nonempty list
-			Node currentNode = headNode;
+			Node currentNode = firstnNode;
 			while (currentNode.next != null) { // while have not reached the last node
 				currentNode = currentNode.next;
 			}
@@ -78,7 +67,7 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 	}
 
 	public void clear() {
-		headNode = null;
+		firstnNode = null;
 		numberOfEntries = 0;
 	}
 
@@ -96,7 +85,7 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 	}
 
 	private class GroupListIterator implements Iterator<E> {
-		private Node currentNode = headNode;
+		private Node currentNode = firstnNode;
 
 		@Override
 		public boolean hasNext() {

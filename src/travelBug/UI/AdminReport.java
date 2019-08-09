@@ -26,6 +26,7 @@ import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
 import travelBug.library.SinglyLinkedList;
 import travelBug.library.library;
+import travelBug.library.SinglyLinkedList;
 import travelBug.obj.Location;
 import travelBug.obj.SourceDest;
 import travelBug.obj.sourceDest2;
@@ -54,7 +55,9 @@ public class AdminReport extends JPanel {
 	private JComboBox comboBox;
 	private JComboBox comboBox_1;
 	private JButton btnBack;
-	
+
+
+
 	public AdminReport(UIControl parent) {
 		super();
 		this.mainFrame = parent;
@@ -177,7 +180,12 @@ public class AdminReport extends JPanel {
 		tableModel.addColumn("Destionation");
 		tableModel.addColumn("Number of Visit");
 
+
+
 		load(0, 0);
+
+//		load(null);
+
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			int j = 0;
 			TableColumn column = table.getColumnModel().getColumn(i);
@@ -228,7 +236,10 @@ public class AdminReport extends JPanel {
 //		for(int i =1 ; i<= hahalLinkedList2.getNumberOfEntries(); i ++) {
 //			if(hahalLinkedList2.getEntry(i).getL1()== source && hahalLinkedList2.getEntry(i).getL2() == destionation) {
 ////				hahalLinkedList2.getEntry(i).addCount();
+
 ////				found = true;
+
+
 //	public void load(int month , int year,String Tdestination,String Tsource) {
 //		int count = 1;
 //		String [] location = new String[1000];
@@ -266,14 +277,17 @@ public class AdminReport extends JPanel {
 //							hahalLinkedList.getEntry(i).getL2(),Integer.toString(hahalLinkedList.getEntry(i).getCount())};
 //					tableModel.addRow(dataStrings);
 //				}
-//
+
 //			}
-//		}
+
+
 //		if(!found) {
 //			hahalLinkedList2.add(new sourceDest2(source,destionation));
 //		}
 //		// write into text field
+
 //	}
+
 		//
 //		for (int i = 1; i <= hahalLinkedList.getNumberOfEntries(); i++) {
 //			String[] dataStrings = { hahalLinkedList.getEntry(i).getL1(), hahalLinkedList.getEntry(i).getL2(),
@@ -296,5 +310,6 @@ public class AdminReport extends JPanel {
 			hahalLinkedList2.add(new sourceDest2(source,destionation));
 		}
 		// write into text field
-	}
+
+}
 }

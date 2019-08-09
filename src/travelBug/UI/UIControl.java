@@ -3,7 +3,9 @@ package travelBug.UI;
 import java.awt.*;
 import javax.swing.*;
 
+import travelBug.library.CircularLinkedList;
 import travelBug.library.library;
+import travelBug.obj.TravelLegInfo;
 import travelBug.obj.User;
 
 public class UIControl extends JFrame {
@@ -25,26 +27,12 @@ public class UIControl extends JFrame {
 		setBounds(new Rectangle(new Dimension(900, 600)));
 		pack();
 		setLocationRelativeTo(null);
-		getContentPane().setLayout(null);
+		getContentPane().setLayout(null);		
 
 		// ============= Change Panel Section =============
-//		changePanel(new TravelLegMaintenance(this));
-//		changePanel(new PlanTrip(this));
-//		// ============= Change Panel Section =============
-//	//	changePanel(new ListLocation(this));
-//		changePanel(new AddLocation(this));
-//		changePanel(new AddTravelLeg(this));
-//		changePanel(new AddLocation(this));
-//		changePanel(new TravelLegMaintenance(this));
-//		changePanel(new PlanTrip(this));
-//		changePanel(new AddLocation(this));
-		changePanel(new TravelLegMaintenance(this));
-//		changePanel(new AddCompany(this));
-//		changePanel(new ListCompany(this));
-//		changePanel(new AddTravelLeg(this));
-//		changePanel(new Authentication(this));
-//		changePanel(new ListLocation(this));
-//		changePanel(new AddTravelLeg(this));
+
+
+		changePanel(new MainMenu(this));
 
 //	changePanel(new AddTravelLeg(this));
 
@@ -57,6 +45,7 @@ public class UIControl extends JFrame {
 //		changePanel(new AdminReport(this));
 //		changePanel(new ViewTrip(this));
 //		changePanel(new PlanTrip(this));
+
 
 	}
 

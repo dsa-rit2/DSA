@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 public class GroupList<T, E> implements GroupListInterface<T, E> {
 
-	private Node headNode;
+	private Node firstnNode;
 	private int numberOfEntries;
 	private Comparator<? super T> c;
 
@@ -34,11 +34,11 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 
 	public SinglyLinkedList<T> findChild(T data) {
 		SinglyLinkedList<T> tempLinkedList = new SinglyLinkedList<T>();
-//		this.forEach(item -> {
-//			if (c.compare(data, item) == 0) {
-//				tempLinkedList.add(item);
-//			}
-//		});
+		
+		for (SinglyLinkedList<T> list : this) {
+			
+		}
+		
 		return tempLinkedList;
 	}
 
@@ -46,9 +46,9 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 		Node newNode = new Node(newEntry); // create the new node
 
 		if (this.isEmpty())
-			headNode = newNode; // if empty list
+			firstnNode = newNode; // if empty list
 		else { // add to end of nonempty list
-			Node currentNode = headNode;
+			Node currentNode = firstnNode;
 			while (currentNode.next != null) { // while have not reached the last node
 				currentNode = currentNode.next;
 			}
@@ -60,7 +60,7 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 	}
 
 	public void clear() {
-		headNode = null;
+		firstnNode = null;
 		numberOfEntries = 0;
 	}
 
@@ -78,7 +78,7 @@ public class GroupList<T, E> implements GroupListInterface<T, E> {
 	}
 
 	private class GroupListIterator implements Iterator<E> {
-		private Node currentNode = headNode;
+		private Node currentNode = firstnNode;
 
 		@Override
 		public boolean hasNext() {

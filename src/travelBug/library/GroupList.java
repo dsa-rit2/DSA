@@ -1,3 +1,9 @@
+/*******************************
+ * 							   *
+ * Developed by: Chen Yew Seng *
+ * 							   *
+ *******************************/
+
 package travelBug.library;
 
 import java.util.Comparator;

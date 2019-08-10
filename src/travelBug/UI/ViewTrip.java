@@ -41,7 +41,7 @@ public class ViewTrip extends JPanel {
 	private JScrollPane scrollPane;
 	private JButton btnBack;
 	private JButton btnSelect;
-	private JTextField[] txtArray = new JTextField[5];
+	private JTextField[] txtArray ;
 	private String callFrontArrow = "---";
 	private String callBackArrow = "-->";
 
@@ -128,9 +128,14 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 		callPanel.setBorder(lineBorder);
 		callPanel.setBounds(40, 58, 811, 334);
 		
-		
+		int txtNum = 0;
+		if(temp.getNumberOfEntries()>5)
+			txtNum = 5;
+		else
+			txtNum = temp.getNumberOfEntries();
+		txtArray = new JTextField[txtNum];
 		//====================On Click=========================//
-		for (int i = 0; i < 5; ++i) {
+		for (int i = 0; i < txtNum; ++i) {
 			txtArray[i] = new JTextField(80);
 			txtArray[i].setFont(callFont);
 			txtArray[i].setEditable(false);

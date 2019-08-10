@@ -10,17 +10,11 @@ import travelBug.obj.*;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import org.omg.CosNaming._BindingIteratorImplBase;
-
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.util.Comparator;
 import java.util.Date;
 import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.time.LocalDate;
 import java.awt.event.ItemEvent;
 
 public class PlanTrip extends JPanel {
@@ -574,7 +568,7 @@ public class PlanTrip extends JPanel {
 					}
 
 				}
-				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ViewTrip(mainFrame, searchedTravelPlan)));
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ViewTrip(mainFrame, searchedTravelPlan, adultCount, childCount)));
 			}
 		});
 	}

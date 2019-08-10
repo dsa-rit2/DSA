@@ -44,7 +44,7 @@ public class ViewTrip extends JPanel {
 	private JTextField[] txtArray ;
 	private String callFrontArrow = "---";
 	private String callBackArrow = "-->";
-
+	private int adult=0,child=0;
 	private final UIControl mainFrame;
 
 	// Test//
@@ -64,7 +64,7 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 	
 	
 
-	public ViewTrip(UIControl parent, SinglyLinkedList<CircularLinkedList<TravelLegInfo>> t) {
+	public ViewTrip(UIControl parent, SinglyLinkedList<CircularLinkedList<TravelLegInfo>> t, int a, int c) {
 
 		super();
 		this.mainFrame = parent;
@@ -72,6 +72,8 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
 		temp = t;
+		adult = a;
+		child = c;
 		createGUI();
 	}
 
@@ -225,7 +227,8 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
-							
+							SwingUtilities.invokeLater(() -> mainFrame
+									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(1),temp,adult,child)));
 
 						}
 					}
@@ -237,7 +240,7 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
 							SwingUtilities.invokeLater(() -> mainFrame
-									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(1))));
+									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(2),temp,adult,child)));
 							
 						}
 					}
@@ -248,7 +251,8 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
-							
+							SwingUtilities.invokeLater(() -> mainFrame
+									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(3),temp,adult,child)));
 
 						}
 					}
@@ -259,7 +263,8 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
-							
+							SwingUtilities.invokeLater(() -> mainFrame
+									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(4),temp,adult,child)));
 
 						}
 					}
@@ -270,7 +275,8 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
-							
+							SwingUtilities.invokeLater(() -> mainFrame
+									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(5),temp,adult,child)));
 
 						}
 					}
@@ -326,8 +332,8 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 			String pStrings = new String();
 			double totalPrice = 0;
 
-			int adult = 1;
-			int kiddo = 1;
+			int adult = this.adult;
+			int kiddo = this.child;
 			for (int j = 1; j <= temp.getEntry(i+1).getNumberOfEntries(); j++) {
 
 
@@ -370,6 +376,7 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 		}
 		add(callPanel);// display panel
 		
+		
 		SortedLinkedList<TravelPlane> tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
 				Comparator.comparing(TravelPlane::getPrice));
 		
@@ -380,27 +387,21 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 
 		// =====================Button======================//
 		btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				SwingUtilities.invokeLater(() -> mainFrame
+						.changePanel(new PlanTrip(mainFrame)));
+				
+			}
+		});
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnBack.setForeground(Color.BLACK);
 		btnBack.setBackground(Color.GRAY);
 		btnBack.setActionCommand("");
-		btnBack.setBounds(340, 410, 120, 40);
+		btnBack.setBounds(394, 403, 120, 40);
 		add(btnBack);
 
-		btnSelect = new JButton("Select");
-		btnSelect.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				SwingUtilities.invokeLater(() -> mainFrame
-//						.changePanel(new DisplayTrip(mainFrame, pCircularLinkedList)));
-			}
-		});
-		btnSelect.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		btnSelect.setForeground(Color.BLACK);
-		btnSelect.setBackground(Color.GRAY);
-		btnSelect.setActionCommand("");
-		btnSelect.setBounds(470, 410, 120, 40);
-		add(btnSelect);
 
 	}
-
 }

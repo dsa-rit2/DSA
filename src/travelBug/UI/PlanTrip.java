@@ -570,7 +570,7 @@ public class PlanTrip extends JPanel {
 					}
 
 				}
-//				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ViewTrip(mainFrame, searchedTravelPlan, adultCount, childCount)));
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ViewTrip(mainFrame, searchedTravelPlan, adultCount, childCount)));
 			}
 		});
 	}

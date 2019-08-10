@@ -2,7 +2,6 @@ package travelBug.obj;
 
 import travelBug.library.*;
 
-import java.awt.font.TextHitInfo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;

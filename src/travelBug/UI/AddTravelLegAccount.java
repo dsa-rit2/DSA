@@ -10,11 +10,6 @@ import travelBug.obj.*;
 import java.awt.*;
 import javax.swing.*;
 
-import org.junit.runners.ParentRunner;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 public class AddTravelLegAccount extends JPanel {
 	private static final long serialVersionUID = 5629499624569369278L;
 	private JTextField txtPassword;
@@ -196,8 +191,7 @@ public class AddTravelLegAccount extends JPanel {
 		add(btnGenerate);
 
 		JButton btnNewButton = new JButton("Generate");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnNewButton.addActionListener(event->{
 				boolean repeat = true;
 				String tempPass = null;
 				do {
@@ -208,7 +202,6 @@ public class AddTravelLegAccount extends JPanel {
 					}
 				} while (repeat);
 				txtPassword.setText(tempPass);
-			}
 		});
 		btnNewButton.setBounds(618, 209, 97, 25);
 		add(btnNewButton);

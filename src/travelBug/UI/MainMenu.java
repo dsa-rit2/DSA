@@ -3,23 +3,11 @@ package travelBug.UI;
 import java.awt.*;
 import javax.swing.*;
 
-import travelBug.library.library;
-
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.awt.event.ActionEvent;
 
 public class MainMenu extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private final UIControl mainFrame; // Store main frame
 
-	private JLabel lblCustomerList;
-	private JLabel lblLocation;
-	private JLabel lblCustomer;
-	private JLabel lblReport;
-	private JLabel lblCompany;
 	private JLabel lblUsernameJLabel;
 
 	public MainMenu(UIControl parent) {
@@ -179,16 +167,5 @@ public class MainMenu extends JPanel {
 	private void logout() {
 		mainFrame.dispose();
 		new Authentication();
-	}
-
-	private Image getScaledImage(Image srcImg, int w, int h) {
-		BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2 = resizedImg.createGraphics();
-
-		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-		g2.drawImage(srcImg, 0, 0, w, h, null);
-		g2.dispose();
-
-		return resizedImg;
 	}
 }

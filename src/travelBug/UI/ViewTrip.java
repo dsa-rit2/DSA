@@ -1,34 +1,15 @@
 package travelBug.UI;
 
 import java.awt.*;
-import java.awt.Window.Type;
-
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-
-import com.toedter.calendar.JDateChooser;
-
 import travelBug.library.CircularLinkedList;
-import travelBug.library.GroupList;
-import travelBug.library.LinkArray;
-import travelBug.library.ReadWriteFile;
 import travelBug.library.SinglyLinkedList;
 import travelBug.library.SortedLinkedList;
-import travelBug.obj.TravelLegAccount;
 import travelBug.obj.TravelLegInfo;
 import travelBug.obj.TravelPlane;
-import travelBug.obj.User;
 
 import java.util.Comparator;
-import java.util.Date;
-import java.util.Vector;
-import java.text.SimpleDateFormat;
-import java.awt.event.ItemListener;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.awt.event.ItemEvent;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -36,9 +17,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ViewTrip extends JPanel {
-
+	private static final long serialVersionUID = 1L;
 	private JPanel callPanel;
-	private JScrollPane scrollPane;
 	private JButton btnBack;
 	private JButton btnSelect;
 	private JTextField[] txtArray ;
@@ -59,7 +39,6 @@ public class ViewTrip extends JPanel {
 	
 	
 private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLinkedList<CircularLinkedList<TravelLegInfo>>();
-private SortedLinkedList<TravelPlane> sortedLinkedList = new SortedLinkedList<TravelPlane>();
 private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPlane>();
 	
 	
@@ -118,12 +97,6 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 
 		// ==========================Containers=============//
 
-		
-		LocalDate pDate = LocalDate.now();
-		LocalTime pLocalTime = LocalTime.now();
-
-		
-		
 		Font callFont = new Font("Segoe UI", Font.PLAIN, 16);
 		LineBorder lineBorder = new LineBorder(Color.GRAY, 2, true);
 		callPanel = new JPanel(new GridLayout(5, 5));
@@ -282,50 +255,6 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 					}
 				});
 			}
-			//=============================================================//
-			
-			
-			///////////////////////// For readwrite file display///////////////////////////
-
-//			for (int j = 1; j <= tCircular.getSize(); j++) {
-//				pStrings += tCircular.getEntry(j).getDest();
-//				
-//				if(tCircular.getEntry(j+1) !=null) {
-//					pStrings +=  callArrow;
-//				}
-//			}
-			///////////////////////////
-
-			////////////////////////////////////////// Time
-			////////////////////////////////////////// calculation////////////////////////////////////////////
-			String dateStart = "01/14/2012 09:29:58";
-			String dateStop = "01/15/2012 10:31:48";
-
-			String tString = new String();
-
-			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-
-			Date d1 = null;
-			Date d2 = null;
-
-			try {
-				d1 = format.parse(dateStart);
-				d2 = format.parse(dateStop);
-
-				// in milliseconds
-				long diff = d2.getTime() - d1.getTime();
-
-				// long diffSeconds = diff / 1000 % 60; //define seconds
-				long diffMinutes = diff / (60 * 1000) % 60;
-				long diffHours = diff / (60 * 60 * 1000) % 24;
-				long diffDays = diff / (24 * 60 * 60 * 1000);
-
-				tString += diffDays + "D " + diffHours + "h " + diffMinutes + "m ";
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			/////////////////////////// For hard code display/////////////////////////////
 

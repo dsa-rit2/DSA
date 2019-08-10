@@ -1,13 +1,9 @@
 package travelBug.obj;
 
-import static org.junit.Assert.isArray;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.LinkedList;
-import travelBug.library.LinkArray;
 import travelBug.library.library;
-import travelBug.library.SinglyLinkedList;
 
 public class ComparePrice implements Comparable<ComparePrice>,Serializable {
 	private static final long serialVersionUID = 1L;

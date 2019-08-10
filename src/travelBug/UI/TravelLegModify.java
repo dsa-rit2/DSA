@@ -22,9 +22,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.util.Vector;
-import javax.swing.*;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
@@ -34,8 +31,6 @@ public class TravelLegModify extends JPanel {
 	private JTextField tfDestinationL;
 	private JTextField tfFromTime;
 	private JTextField tfToTime;
-	private JDateChooser dcFromDate;
-	private JDateChooser dcToDate;
 	private JTextField tfDistance;
 	private JTextField tfPrice;
 	private LinkArray<TravelLegInfo> rArray = new LinkArray<TravelLegInfo>();
@@ -44,12 +39,10 @@ public class TravelLegModify extends JPanel {
 	private ReadWriteFile<Location> cFile = new ReadWriteFile<Location>("Location.txt", Location.class);
 	private Set<String> s = new TreeSet<String>();
 	private final UIControl mainframe;		// Store main frame
-	private Vector vector;
-	private String ID;
-	private JComboBox cbTransport;
+	private JComboBox<String> cbTransport;
 	
 		
-	public TravelLegModify(Vector vector, String ID, UIControl parent) {
+	public TravelLegModify(Vector<?> vector, String ID, UIControl parent) {
 		super();
 		this.mainframe = parent;
 		// ======================= Jpanel setting ========================//
@@ -185,9 +178,7 @@ public class TravelLegModify extends JPanel {
 		add(tfDestinationL);
 		tfDestinationL.setColumns(10);
 
-		String[] selectionString = { "Select The transport type", "Airplane", "Rail/Train", "Bus", "Car", "Ferry",
-				"Boat" };
-		cbTransport = new JComboBox(selectionString);
+		cbTransport = new JComboBox<String>(new String[]{ "Select The transport type", "Airplane", "Rail/Train", "Bus", "Car", "Ferry", "Boat" });
 		cbTransport.setEnabled(false);
 		cbTransport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -389,8 +380,6 @@ public class TravelLegModify extends JPanel {
 				String distanceString = tfDistance.getText();
 				String transportTypeString = cbTransport.getSelectedItem().toString();
 				String dateString = "";
-				Date checkDate = dcFromDate.getDate();
-				Date checkDate1 = dcToDate.getDate();
 				String fromTimeString = tfFromTime.getText();
 				String toTimeString = tfToTime.getText();
 				int duration = 0;
@@ -448,7 +437,7 @@ public class TravelLegModify extends JPanel {
 					try {
 						fromTime = LocalTime.parse(fromTimeString);
 					} catch (Exception e) {
-						// TODO: handle exception
+						e.printStackTrace();
 					}
 				}
 				// validation for to date
@@ -461,7 +450,7 @@ public class TravelLegModify extends JPanel {
 					try {
 						toTime = LocalTime.parse(toTimeString);
 					} catch (Exception e) {
-						// TODO: handle exception
+						e.printStackTrace();
 					}
 				}
 				if (fromTimeString.length() > 0) {

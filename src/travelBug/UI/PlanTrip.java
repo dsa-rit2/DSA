@@ -195,7 +195,9 @@ public class PlanTrip extends JPanel {
 		backBtn.setBounds(310, 410, 120, 40);
 		backBtn.setForeground(Color.WHITE);
 		backBtn.setBackground(Color.GRAY);
-		backBtn.setActionCommand("");
+		backBtn.addActionListener(event->{
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new MainMenu(mainFrame)));
+		});
 		backBtn.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		add(backBtn);
 
@@ -568,7 +570,7 @@ public class PlanTrip extends JPanel {
 					}
 
 				}
-				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ViewTrip(mainFrame, searchedTravelPlan, adultCount, childCount)));
+//				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ViewTrip(mainFrame, searchedTravelPlan, adultCount, childCount)));
 			}
 		});
 	}

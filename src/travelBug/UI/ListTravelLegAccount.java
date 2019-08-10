@@ -3,8 +3,6 @@ package travelBug.UI;
 //=========================
 //	Import Package
 //=========================
-import travelBug.library.*;
-import travelBug.obj.*;
 //=========================
 
 import java.awt.*;
@@ -16,8 +14,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-
 import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
 import travelBug.library.library;
@@ -27,8 +23,6 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class ListTravelLegAccount extends JPanel {
 	private static final long serialVersionUID = 1L;	// Serializable purpose
@@ -44,7 +38,7 @@ public class ListTravelLegAccount extends JPanel {
 	private JTextField textField;
 	private JButton btnNewButton, btnNewButton_1, btnNewButton_2, btnNewButton_3;
 	private int indexCompany = 0;
-	private Vector vector;
+	private Vector<?> vector;
 
 
 	public ListTravelLegAccount(UIControl parent, String companyName) {
@@ -84,7 +78,7 @@ public class ListTravelLegAccount extends JPanel {
 					tableModel = (DefaultTableModel) table.getModel();
 
 					int SelectedRowIndex = table.getSelectedRow();
-					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+					vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    				//redirect to the modify travellegaccount
 					}
@@ -169,7 +163,7 @@ public class ListTravelLegAccount extends JPanel {
 			tableModel = (DefaultTableModel) table.getModel();
 			int SelectedRowIndex = table.getSelectedRow();
 			if (SelectedRowIndex >= 0) {
-				vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+				vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 				if (vector != null) {
 					library.dialogMessage("The page will redirect to modify travelleg account");
 					SwingUtilities.invokeLater(() -> mainFrame.changePanel(new EditTravelLegAccount(mainFrame,companyName,vector.elementAt(0).toString())));
@@ -186,7 +180,7 @@ public class ListTravelLegAccount extends JPanel {
 			tableModel = (DefaultTableModel) table.getModel();
 			int SelectedRowIndex = table.getSelectedRow();
 			if (SelectedRowIndex >= 0) {
-				vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+				vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 				if (vector != null) {
 //    			Redirect the thing to modify location
 					int choice = JOptionPane.showConfirmDialog(null, "Do you want to delete it?", "Confirm",

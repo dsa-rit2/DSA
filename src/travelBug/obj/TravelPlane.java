@@ -10,7 +10,7 @@ public class TravelPlane {
 	public TravelPlane(String sourString,String destString,double price,int duration) {
 		this.duration = duration;
 		this.price = price;
-		this.sourceString = sourceString;
+		this.sourceString = sourString;
 		this.destString = destString;
 		
 	

@@ -5,13 +5,9 @@ package travelBug.UI;
 //=========================
 import travelBug.library.*;
 import travelBug.obj.*;
-//=========================
 
 import java.awt.*;
 import javax.swing.*;
-
-import org.junit.Ignore;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -25,7 +21,7 @@ public class AddLocation extends JPanel {
 	private JComboBox<String> cbCountry, cbType;
 	private LinkArray<Location> lArray = new LinkArray<Location>();
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt", Location.class);
-	private JComboBox cbContinent;
+	private JComboBox<String> cbContinent;
 	private final UIControl mainFrame; // Store main frame
 	private JTextField txtLongitude;
 	private JTextField txtLatitude;
@@ -106,15 +102,14 @@ public class AddLocation extends JPanel {
 
 		String[] state = { "<Choose Type>", "Small City", "Medium City", "Large City", "Natural formation",
 				"Designated Park/Reserve", "Man-made landmark", "Station" };
-		cbType = new JComboBox(state);
+		cbType = new JComboBox<String>(state);
 		cbType.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cbType.setBounds(300, 298, 300, 30);
 		add(cbType);
 
-		cbContinent = new JComboBox();
+		cbContinent = new JComboBox<String>(new String[] { "<Choose Continent>", "Asia", "Africa",
+				"South America", "North America", "Europe", "Australia" });
 		cbContinent.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		cbContinent.setModel(new DefaultComboBoxModel(new String[] { "<Choose Continent>", "Asia", "Africa",
-				"South America", "North America", "Europe", "Australia" }));
 		cbContinent.addActionListener(event -> {
 			if (cbContinent.getSelectedIndex() != 0)
 				loadC(cbContinent.getSelectedItem().toString());
@@ -141,7 +136,7 @@ public class AddLocation extends JPanel {
 		lblLongitude.setBounds(196, 341, 94, 30);
 		add(lblLongitude);
 
-		JLabel lblLatitude = new JLabel("Latitude:");
+		lblLatitude = new JLabel("Latitude:");
 		lblLatitude.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lblLatitude.setBounds(560, 348, 81, 16);
 		add(lblLatitude);

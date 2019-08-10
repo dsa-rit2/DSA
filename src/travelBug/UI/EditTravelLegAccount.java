@@ -1,44 +1,27 @@
 package travelBug.UI;
 
-import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Label;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
-
 import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
 import travelBug.library.library;
-import travelBug.obj.Company;
 import travelBug.obj.TravelLegAccount;
 
 public class EditTravelLegAccount extends JPanel {
 
 	private static final long serialVersionUID = 5629499624569369278L;
-	private JPanel contentPane;
-	private JTextField tfUsername;
 	private JTextField txtPassword;
-	private ReadWriteFile<TravelLegAccount> readWriteFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt",
-			TravelLegAccount.class);
 	private LinkArray<TravelLegAccount> tArray = new LinkArray<TravelLegAccount>();
 	private ReadWriteFile<TravelLegAccount> tFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt",
 			TravelLegAccount.class);
-	private JTextField txtUserNameNum;
-	private JTextField textField;
 	private final UIControl mainFrame;
 	private int indexT = -1;
 	
@@ -104,8 +87,7 @@ public class EditTravelLegAccount extends JPanel {
 				lblPasswordError.setBounds(312, 233, 416, 16);
 				add(lblPasswordError);
 
-				// ================================================ Button ====================================================//
-				contentPane = new JPanel();
+				new JPanel();
 				Button btnModify = new Button("Modify");
 				btnModify.setActionCommand("Modify");
 				btnModify.addActionListener(event -> {

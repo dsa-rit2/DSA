@@ -3,13 +3,10 @@ package travelBug.UI;
 //=========================
 //	Import Package
 //=========================
-import travelBug.library.*;
-import travelBug.obj.*;
 //=========================
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 import javax.swing.table.TableColumn;
@@ -26,11 +23,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-
-import javax.swing.table.TableColumn;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -39,7 +32,6 @@ public class AdminReport extends JPanel {
 	private final UIControl mainFrame;
 	private JTable table;
 	private DefaultTableModel tableModel;
-	private Vector<?> vector;
 	private JScrollPane scrollPane;
 //	private singlyLinkedList<SourceDest> hahalLinkedList = new singlyLinkedList<SourceDest>();
 //	private ReadWriteFile<SourceDest> lFile = new ReadWriteFile<SourceDest>("SourceDes.txt", SourceDest.class);
@@ -47,8 +39,8 @@ public class AdminReport extends JPanel {
 	private ReadWriteFile<SourceDest> lFile2 = new ReadWriteFile<SourceDest>("sourceDes.txt", SourceDest.class);
 	private LinkArray<SourceDest> linkArray = new LinkArray<SourceDest>();
 
-	private JComboBox comboBox;
-	private JComboBox comboBox_1;
+	private JComboBox<String> comboBox;
+	private JComboBox<String> comboBox_1;
 	private JButton btnBack;
 
 	public AdminReport(UIControl parent) {
@@ -92,7 +84,7 @@ public class AdminReport extends JPanel {
 		add(scrollPane);
 
 		// Month dropdownlist
-		comboBox = new JComboBox(
+		comboBox = new JComboBox<String>(
 				new String[] { "<Month>", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" });
 		comboBox.setBounds(12, 58, 130, 22);
 		comboBox.addActionListener(event -> {
@@ -108,7 +100,7 @@ public class AdminReport extends JPanel {
 		add(comboBox);
 
 		// Year dropdown List
-		comboBox_1 = new JComboBox(new String[] { "<Year>", "2018", "2019", "2020", "2021", "2022" });
+		comboBox_1 = new JComboBox<String>(new String[] { "<Year>", "2018", "2019", "2020", "2021", "2022" });
 		comboBox_1.setEnabled(false);
 		comboBox_1.setBounds(169, 58, 195, 22);
 		comboBox_1.addActionListener(event -> {
@@ -161,8 +153,6 @@ public class AdminReport extends JPanel {
 
 //load the table 
 	public void load(int month, int year) {
-		String[] location = new String[1000];
-		String[] destination = new String[1000];
 		linkArray = lFile2.readLinkArray();
 		hahalLinkedList2 = library.Convertion(linkArray);
 		tableModel.setRowCount(0);

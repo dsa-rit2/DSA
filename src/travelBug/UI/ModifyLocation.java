@@ -14,18 +14,18 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class ModifyLocation extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JTextField txtLocationName, txtState, txtLongitude, txtLatitude;
 	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblCountry, lblState, lblType;
 	private Label lblErrorLocationName, lblErrorContinent, lblErrorType, lblErrorState, lblErrorCountry;
 	private Label lblErrorLongitude, lblErrorLatitude;
-	private JComboBox<Object> cbCountry, cbType;
+	private JComboBox<String> cbCountry, cbType;
 	private LinkArray<Location> lArray = new LinkArray<Location>();
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt", Location.class);
 	private int locationFound;
-	private JComboBox cbContinent;
+	private JComboBox<String> cbContinent;
 	private final UIControl mainFrame;
 
-	@SuppressWarnings("unchecked")
 	public ModifyLocation(UIControl parent, String inputName) {
 
 		// ==================== JPanel setting =====================
@@ -130,17 +130,15 @@ public class ModifyLocation extends JPanel {
 		lblLatitude.setBounds(560, 348, 81, 16);
 		add(lblLatitude);
 
-		cbType = new JComboBox();
-		cbType.setModel(new DefaultComboBoxModel(new String[] { "<Choose Type>", "Small City", "Medium City",
-				"Large City", "Natural formation", "Designated Park/Reserve", "Man-made landmark", "Station" }));
+		cbType = new JComboBox<String>(new String[] { "<Choose Type>", "Small City", "Medium City",
+				"Large City", "Natural formation", "Designated Park/Reserve", "Man-made landmark", "Station" });
 		cbType.setBounds(300, 304, 282, 26);
 		cbType.setSelectedItem(library.getTypeString(lArray.getIndexElement(locationFound).getType()));
 		add(cbType);
 
-		cbContinent = new JComboBox();
+		cbContinent = new JComboBox<String>(new String[] { "<Choose Continent>", "Asia", "Africa",
+				"South America", "North America", "Europe", "Australia" });
 		cbContinent.setBounds(300, 123, 282, 30);
-		cbContinent.setModel(new DefaultComboBoxModel(new String[] { "<Choose Continent>", "Asia", "Africa",
-				"South America", "North America", "Europe", "Australia" }));
 		cbContinent.setSelectedItem(lArray.getIndexElement(locationFound).getContinent());
 		cbContinent.addActionListener(event -> {
 			if (cbContinent.getSelectedIndex() != 0)
@@ -150,7 +148,8 @@ public class ModifyLocation extends JPanel {
 		});
 		add(cbContinent);
 
-		cbCountry = new JComboBox();
+		cbCountry = new JComboBox<String>(new String[] { "<Choose Continent>", "Asia", "Africa",
+				"South America", "North America", "Europe", "Australia" });
 		cbCountry.setBounds(300, 182, 300, 30);
 		add(cbCountry);
 		loadC(lArray.getIndexElement(locationFound).getContinent(), lArray.getIndexElement(locationFound).getCountry());

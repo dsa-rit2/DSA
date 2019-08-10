@@ -4,6 +4,22 @@ import java.awt.*;
 import javax.swing.*;
 import travelBug.library.CircularLinkedList;
 import travelBug.obj.TravelLegInfo;
+<<<<<<< HEAD
+=======
+import travelBug.obj.User;
+
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.awt.event.ItemListener;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.awt.event.ItemEvent;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+>>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 
 public class DisplayTrip extends JPanel {
 	
@@ -38,12 +54,12 @@ public class DisplayTrip extends JPanel {
 		double distance = 0.00;
 		double duration = 0.00;
 		double price = 0.00;
-
 		
+		source   = tempCircularLinkedList.getEntry(1).getSource();
+		dest = tempCircularLinkedList.getEntry(tempCircularLinkedList.getNumberOfEntries()).getDest();
 		for(int i = 1; i <= tempCircularLinkedList.getNumberOfEntries(); i++) {
 			
-			source   = tempCircularLinkedList.getEntry(i).getSource();
-			dest     = tempCircularLinkedList.getEntry(i).getDest();
+			
 			distance = tempCircularLinkedList.getEntry(i).getDistance();
 			duration = tempCircularLinkedList.getEntry(i).getDuration();
 			price    = tempCircularLinkedList.getEntry(i).getPrice();
@@ -223,6 +239,13 @@ public class DisplayTrip extends JPanel {
 		
 		//Button
 		btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+			}
+		});
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnBack.setForeground(Color.BLACK);
 		btnBack.setBackground(Color.GRAY);

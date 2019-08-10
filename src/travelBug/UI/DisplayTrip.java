@@ -60,8 +60,6 @@ public class DisplayTrip extends JPanel {
 		double price = 0.00;
 
 		
-		
-
 		for(int i = 1; i <= tempCircularLinkedList.getNumberOfEntries(); i++) {
 			
 			source   = tempCircularLinkedList.getEntry(i).getSource();

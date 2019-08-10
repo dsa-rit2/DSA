@@ -31,7 +31,21 @@ public class UIControl extends JFrame {
 
 		// ============= Change Panel Section =============
 
+
 		changePanel(new MainMenu(this));
+
+//	changePanel(new AddTravelLeg(this));
+
+//		changePanel(new AdminReport(this));
+//		changePanel(new TravelLegMaintenance(this));
+//		changePanel(new MainMenu(this));
+
+//		changePanel(new AdminReport(this));
+
+//		changePanel(new AdminReport(this));
+//		changePanel(new ViewTrip(this));
+//		changePanel(new PlanTrip(this));
+
 
 	}
 

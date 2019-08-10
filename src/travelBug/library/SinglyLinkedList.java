@@ -20,7 +20,7 @@ public class SinglyLinkedList<T> implements linkListInterface<T> {
 	@Override
 	public boolean add(T newEntry) {
 		Node newNode = new Node(newEntry); // create the new node
-		
+
 		if (isEmpty()) // if empty list
 		{
 			firstNode = newNode;
@@ -63,7 +63,7 @@ public class SinglyLinkedList<T> implements linkListInterface<T> {
 
 		return isSuccessful;
 	}
-	
+
 	public T getFirst() {
 		return firstNode.data;
 	}
@@ -183,7 +183,7 @@ public class SinglyLinkedList<T> implements linkListInterface<T> {
 			this.next = next;
 		}
 	}
-	
+
 	@Override
 	public Iterator<T> iterator() {
 		return new SinglyListIterator();

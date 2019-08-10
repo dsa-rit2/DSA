@@ -22,7 +22,6 @@ public class MainMenu extends JPanel {
 	private JLabel lblCompany;
 	private JLabel lblUsernameJLabel;
 
-
 	public MainMenu(UIControl parent) {
 		super();
 		this.mainFrame = parent;
@@ -30,61 +29,43 @@ public class MainMenu extends JPanel {
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
-		
+
 //--------------------------Component-----------------------------------
 
+	
 		JLabel lblWelcomeBack = new JLabel("Welcome Back:");
-		lblWelcomeBack.setBounds(624, 35, 92, 14);
+		lblWelcomeBack.setBounds(683, 35, 92, 14);
 		add(lblWelcomeBack);
-		
-		JLabel lblMainMenu = new JLabel("Main Menu");
-		lblMainMenu.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblMainMenu.setBounds(339, 65, 112, 29);
-		add(lblMainMenu);
-		
+
 		lblUsernameJLabel = new JLabel("");
 		lblUsernameJLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblUsernameJLabel.setBounds(703, 25, 112, 29);
+		lblUsernameJLabel.setBounds(759, 25, 112, 29);
 		add(lblUsernameJLabel);
-	
-//		add(lblCustomer);
-		
-//		lblCustomerList = new JLabel("");
-//		lblCustomerList.setBounds(157, 275, 92, 14);
-//		add(lblCustomerList);
-//		
-//		lblLocation = new JLabel("");
-//		lblLocation.setIcon(new ImageIcon(library.currentDirectoryPath + "\\images\\location.png"));
-//		lblLocation.setBounds(483, 89, 204, 142);
-//		add(lblLocation);
-//		
-//		lblReport = new JLabel("");
-//		lblReport.setBounds(93, 275, 204, 142);
-//		add(lblReport);
-//		
-//		lblCompany = new JLabel("");
-//		lblCompany.setBounds(483, 295, 204, 142);
-//		add(lblCompany);
 
 		lblUsernameJLabel.setText(mainFrame.authUser.getUsername());
-		
+
+		JLabel lblMainMenu = new JLabel("Main Menu");
+		lblMainMenu.setBounds(345, 35, 112, 29);
+		add(lblMainMenu);
+		lblMainMenu.setFont(new Font("Times New Roman", Font.BOLD, 20));
+
 		// ----------------------- Check Role ------------------------
-		if (parent.authUser.getRole().equalsIgnoreCase("Admin")){
+		if (parent.authUser.getRole().equalsIgnoreCase("Admin")) {
 			adminGUI();
-		}
-		else if (parent.authUser.getRole().equalsIgnoreCase("TravelLeg")){
+		} else if (parent.authUser.getRole().equalsIgnoreCase("TravelLeg")) {
 			travelLegGUI();
-		}
-		else if (parent.authUser.getRole().equalsIgnoreCase("User")) {
-		userGUI();
+		} else if (parent.authUser.getRole().equalsIgnoreCase("User")) {
+			userGUI();
 		}
 	}
-	//--------------------------Admin Content----------------------
+
+	// --------------------------Admin Content----------------------
 	private void adminGUI() {
 
 		Button button = new Button("Customer List");
-		button.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		button.setBackground(Color.lightGray);
+		button.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		button.setForeground(Color.WHITE);
+		button.setBackground(new Color(139, 69, 19));
 		button.addActionListener(event ->{
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCustomer(mainFrame)));
 
@@ -93,8 +74,9 @@ public class MainMenu extends JPanel {
 		add(button);
 		
 		Button button_1 = new Button("Company List");
-		button_1.setBackground(Color.LIGHT_GRAY);
-		button_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		button_1.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		button_1.setForeground(Color.WHITE);
+		button_1.setBackground(new Color(139, 69, 19));
 		button_1.addActionListener(event ->{
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 
@@ -103,9 +85,9 @@ public class MainMenu extends JPanel {
 		add(button_1);
 		
 		Button button_2 = new Button("Location List");
-		button_2.setBackground(Color.LIGHT_GRAY);
-		button_2.setForeground(Color.BLACK);
-		button_2.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		button_2.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		button_2.setForeground(Color.WHITE);
+		button_2.setBackground(new Color(139, 69, 19));
 		button_2.addActionListener(event-> {
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
 
@@ -114,8 +96,9 @@ public class MainMenu extends JPanel {
 		add(button_2);
 		
 		Button button_3 = new Button("Report List");
-		button_3.setBackground(Color.LIGHT_GRAY);
-		button_3.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		button_3.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		button_3.setForeground(Color.WHITE);
+		button_3.setBackground(new Color(139, 69, 19));
 		button_3.addActionListener(event ->{
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AdminReport(mainFrame)));
 
@@ -127,78 +110,85 @@ public class MainMenu extends JPanel {
 		button_4.addActionListener(event ->{
 			logout();
 		});
-		button_4.setBackground(Color.LIGHT_GRAY);
+		button_4.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		button_4.setForeground(Color.RED);
-		button_4.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		button_4.setBounds(690, 383, 70, 22);
+		button_4.setBackground(new Color(139, 69, 19));
+		button_4.setBounds(690, 383, 189, 61);
 		add(button_4);
 
-	
 	}
-	
-	
-	//------------Travel Leg Content----------------------------
+
+	// ------------Travel Leg Content----------------------------
 	private void travelLegGUI() {
 		Button button = new Button("Plan Trip");
 		button.addActionListener(event -> {
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new PlanTrip(mainFrame)));
 		});
-		button.setForeground(Color.BLACK);
-		button.setBackground(Color.LIGHT_GRAY);
-		button.setBounds(178, 114, 100, 48);
+		button.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		button.setForeground(Color.WHITE);
+		button.setBackground(new Color(139, 69, 19));
+		button.setBounds(123, 124, 189, 61);
 		add(button);
-		
+
 		Button button_1 = new Button("Log Out");
-		button_1.addActionListener(event ->{
+		button_1.addActionListener(event -> {
 			logout();
 		});
-		button_1.setBackground(Color.LIGHT_GRAY);
-		button_1.setForeground(Color.BLACK);
-		button_1.setBounds(440, 284, 92, 48);
+		button_1.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		button_1.setForeground(Color.WHITE);
+		button_1.setBackground(new Color(139, 69, 19));
+		button_1.setBounds(648, 379, 189, 61);
+
 		add(button_1);
-		
+
 		Button button_2 = new Button("Travel Leg Maintanance");
-		button_2.addActionListener(event->{
+		button_2.addActionListener(event -> {
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new TravelLegMaintenance(mainFrame)));
 		});
-		button_2.setBackground(Color.LIGHT_GRAY);
-		button_2.setBounds(331, 114, 124, 48);
+		button_2.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		button_2.setForeground(Color.WHITE);
+		button_2.setBackground(new Color(139, 69, 19));
+		button_2.setBounds(378, 124, 298, 61);
+
 		add(button_2);
 	}
-	
-	
-	//-------------------User Content----------------------------------
+
+	// -------------------User Content----------------------------------
 	private void userGUI() {
 		Button button = new Button("Plan Trip");
 		button.addActionListener(event -> {
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new PlanTrip(mainFrame)));
 		});
-		button.setBackground(Color.LIGHT_GRAY);
-		button.setBounds(178, 127, 84, 57);
+		button.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		button.setForeground(Color.WHITE);
+		button.setBackground(new Color(139, 69, 19));
+		button.setBounds(178, 127, 189, 61);
 		add(button);
-		
+
 		Button button_1 = new Button("Log Out");
-		button_1.addActionListener(event ->{
+		button_1.addActionListener(event -> {
 			logout();
 		});
-		button_1.setBackground(Color.LIGHT_GRAY);
-		button_1.setBounds(435, 127, 92, 57);
+		button_1.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		button_1.setForeground(Color.WHITE);
+		button_1.setBackground(new Color(139, 69, 19));
+		button_1.setBounds(435, 127, 189, 61);
 		add(button_1);
 	}
-	
+
 	private void logout() {
 		mainFrame.dispose();
 		new Authentication();
 	}
-	
-	private Image getScaledImage(Image srcImg, int w, int h){
-	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-	    Graphics2D g2 = resizedImg.createGraphics();
 
-	    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	    g2.drawImage(srcImg, 0, 0, w, h, null);
-	    g2.dispose();
+	private Image getScaledImage(Image srcImg, int w, int h) {
+		BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = resizedImg.createGraphics();
 
-	    return resizedImg;
+		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2.drawImage(srcImg, 0, 0, w, h, null);
+		g2.dispose();
+
+		return resizedImg;
 	}
 }

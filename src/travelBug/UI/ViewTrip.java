@@ -100,14 +100,14 @@ public class ViewTrip extends JPanel {
 		CircularLinkedList<TravelLegInfo> pCircularLinkedList = new CircularLinkedList<TravelLegInfo>();
 		LocalDate pDate = LocalDate.now();
 		LocalTime pLocalTime = LocalTime.now();
-		pCircularLinkedList
-				.add(new TravelLegInfo('T', "A", "B", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-		pCircularLinkedList
-				.add(new TravelLegInfo('T', "B", "C", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-		pCircularLinkedList
-				.add(new TravelLegInfo('T', "C", "D", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-		pCircularLinkedList
-				.add(new TravelLegInfo('T', "D", "E", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
+//		pCircularLinkedList
+//	//			.add(new TravelLegInfo('T', "A", "B", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
+//		pCircularLinkedList
+//				.add(new TravelLegInfo('T', "B", "C", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
+//		pCircularLinkedList
+//				.add(new TravelLegInfo('T', "C", "D", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
+//		pCircularLinkedList
+//				.add(new TravelLegInfo('T', "D", "E", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
 
 		Font callFont = new Font("Segoe UI", Font.PLAIN, 16);
 		LineBorder lineBorder = new LineBorder(Color.GRAY, 2, true);
@@ -311,7 +311,7 @@ public class ViewTrip extends JPanel {
 			int adult = 4;
 			int kiddo = 5;
 
-			for (int j = 1; j <= pCircularLinkedList.getSize(); j++) {
+			for (int j = 1; j <= pCircularLinkedList.getNumberOfEntries(); j++) {
 
 				double kids = pCircularLinkedList.getEntry(j).getPrice() * 0.5 * kiddo;
 				double adults = pCircularLinkedList.getEntry(j).getPrice() * adult;

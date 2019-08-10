@@ -58,12 +58,12 @@ public class DisplayTrip extends JPanel {
 		double distance = 0.00;
 		double duration = 0.00;
 		double price = 0.00;
-
 		
+		source   = tempCircularLinkedList.getEntry(1).getSource();
+		dest = tempCircularLinkedList.getEntry(tempCircularLinkedList.getNumberOfEntries()).getDest();
 		for(int i = 1; i <= tempCircularLinkedList.getNumberOfEntries(); i++) {
 			
-			source   = tempCircularLinkedList.getEntry(i).getSource();
-			dest     = tempCircularLinkedList.getEntry(i).getDest();
+			
 			distance = tempCircularLinkedList.getEntry(i).getDistance();
 			duration = tempCircularLinkedList.getEntry(i).getDuration();
 			price    = tempCircularLinkedList.getEntry(i).getPrice();

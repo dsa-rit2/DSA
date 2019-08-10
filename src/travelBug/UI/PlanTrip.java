@@ -574,6 +574,7 @@ public class PlanTrip extends JPanel {
 					}
 
 				}
+				System.out.println(searchedTravelPlan);
 				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ViewTrip(mainFrame, searchedTravelPlan)));
 			}
 		});

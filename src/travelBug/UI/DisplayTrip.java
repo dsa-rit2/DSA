@@ -58,11 +58,6 @@ public class DisplayTrip extends JPanel {
 		double price = 0.00;
 
 		
-		
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 		for(int i = 1; i <= tempCircularLinkedList.getNumberOfEntries(); i++) {
 			
 			source   = tempCircularLinkedList.getEntry(i).getSource();

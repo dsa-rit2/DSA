@@ -61,7 +61,8 @@ public class DisplayTrip extends JPanel {
 
 		
 		
-		for(int i = 1; i <= tempCircularLinkedList.getSize(); i++) {
+
+		for(int i = 1; i <= tempCircularLinkedList.getNumberOfEntries(); i++) {
 			
 			source   = tempCircularLinkedList.getEntry(i).getSource();
 			dest     = tempCircularLinkedList.getEntry(i).getDest();
@@ -70,6 +71,17 @@ public class DisplayTrip extends JPanel {
 			price    = tempCircularLinkedList.getEntry(i).getPrice();
 
 		}
+
+//		for(int i = 1; i <= tempCircularLinkedList.getSize(); i++) {
+//			
+//			source   = tempCircularLinkedList.getEntry(i).getSource();
+//			dest     = tempCircularLinkedList.getEntry(i).getDest();
+//			distance = tempCircularLinkedList.getEntry(i).getDistance();
+//			duration = tempCircularLinkedList.getEntry(i).getDuration();
+//			price    = tempCircularLinkedList.getEntry(i).getPrice();
+//
+//		}
+
 		
 		
 		
@@ -252,12 +264,12 @@ public class DisplayTrip extends JPanel {
 		lblToData.setText(dest);
 		lblDistanceData.setText(Double.toString(distance));
 		lblTotalTimeData.setText(Double.toString(duration));
-		lblAdultData.setText("");
-		lblChildData.setText("");
+		lblAdultData.setText("4");
+		lblChildData.setText("5");
 		lblTravelCostData.setText(Double.toString(price));
-		lblAdultCostData.setText("");
-		lblChildCostData.setText("");
-		lblTotalTravelCostData.setText("");
+		lblAdultCostData.setText("RM400");
+		lblChildCostData.setText("RM250");
+		lblTotalTravelCostData.setText("RM650");
 		
 
 

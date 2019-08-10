@@ -1,31 +1,14 @@
 package travelBug.UI;
 
 import java.awt.*;
-import java.awt.Window.Type;
-
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-
-import com.toedter.calendar.JDateChooser;
-
 import travelBug.library.CircularLinkedList;
-import travelBug.library.GroupList;
-import travelBug.library.LinkArray;
-import travelBug.library.ReadWriteFile;
 import travelBug.library.SinglyLinkedList;
-import travelBug.obj.TravelLegAccount;
 import travelBug.obj.TravelLegInfo;
-import travelBug.obj.User;
 
 import java.util.Date;
-import java.util.Vector;
 import java.text.SimpleDateFormat;
-import java.awt.event.ItemListener;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.awt.event.ItemEvent;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -33,9 +16,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ViewTrip extends JPanel {
-
+	private static final long serialVersionUID = 1L;
 	private JPanel callPanel;
-	private JScrollPane scrollPane;
 	private JButton btnBack;
 	private JButton btnSelect;
 	private JTextField[] txtArray ;
@@ -100,12 +82,6 @@ private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLin
 
 		// ==========================Containers=============//
 
-		
-		LocalDate pDate = LocalDate.now();
-		LocalTime pLocalTime = LocalTime.now();
-
-		
-		
 		Font callFont = new Font("Segoe UI", Font.PLAIN, 16);
 		LineBorder lineBorder = new LineBorder(Color.GRAY, 2, true);
 		callPanel = new JPanel(new GridLayout(5, 5));

@@ -3,9 +3,7 @@ package travelBug.UI;
 import java.awt.*;
 import javax.swing.*;
 
-import travelBug.library.CircularLinkedList;
 import travelBug.library.library;
-import travelBug.obj.TravelLegInfo;
 import travelBug.obj.User;
 
 public class UIControl extends JFrame {
@@ -38,13 +36,13 @@ public class UIControl extends JFrame {
 
 //		changePanel(new AdminReport(this));
 //		changePanel(new TravelLegMaintenance(this));
-//		changePanel(new MainMenu(this));
+		changePanel(new MainMenu(this));
 
 //		changePanel(new AdminReport(this));
 
 //		changePanel(new AdminReport(this));
 //		changePanel(new ViewTrip(this));
-		changePanel(new PlanTrip(this));
+//		changePanel(new PlanTrip(this));
 
 
 	}

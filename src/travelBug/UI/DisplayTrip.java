@@ -4,22 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 import travelBug.library.CircularLinkedList;
 import travelBug.obj.TravelLegInfo;
-<<<<<<< HEAD
-=======
-import travelBug.obj.User;
-
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.awt.event.ItemListener;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.awt.event.ItemEvent;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 
 public class DisplayTrip extends JPanel {
 	
@@ -32,12 +18,9 @@ public class DisplayTrip extends JPanel {
 	
 	
 	
-	private final UIControl mainFrame;
-	
 	public DisplayTrip(UIControl parent,CircularLinkedList<TravelLegInfo> d) {
 
 		super();
-		this.mainFrame = parent;
 		tempCircularLinkedList = d;
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));

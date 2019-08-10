@@ -1,10 +1,5 @@
 package travelBug.UI;
 
-import static org.junit.Assert.isArray;
-
-
-import java.util.Iterator;
-import java.util.LinkedList;
 
 import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;

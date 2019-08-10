@@ -264,12 +264,12 @@ public class DisplayTrip extends JPanel {
 		lblToData.setText(dest);
 		lblDistanceData.setText(Double.toString(distance));
 		lblTotalTimeData.setText(Double.toString(duration));
-		lblAdultData.setText("4");
-		lblChildData.setText("5");
+		lblAdultData.setText("");
+		lblChildData.setText("");
 		lblTravelCostData.setText(Double.toString(price));
-		lblAdultCostData.setText("RM400");
-		lblChildCostData.setText("RM250");
-		lblTotalTravelCostData.setText("RM650");
+		lblAdultCostData.setText("");
+		lblChildCostData.setText("");
+		lblTotalTravelCostData.setText("");
 		
 
 

@@ -5,10 +5,11 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import travelBug.library.CircularLinkedList;
 import travelBug.library.SinglyLinkedList;
+import travelBug.library.SortedLinkedList;
 import travelBug.obj.TravelLegInfo;
+import travelBug.obj.TravelPlane;
 
-import java.util.Date;
-import java.text.SimpleDateFormat;
+import java.util.Comparator;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -38,7 +39,7 @@ public class ViewTrip extends JPanel {
 	
 	
 private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLinkedList<CircularLinkedList<TravelLegInfo>>();
-
+private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPlane>();
 	
 	
 
@@ -55,6 +56,7 @@ private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLin
 
 	private void createGUI() {
 
+		
 //////////////////////add read write file data to circular link list///////////////////////
 //		
 //		tArray = tFile.readLinkArray();
@@ -72,6 +74,17 @@ private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLin
 //					                        tArray.getIndexElement(i).getDuration()
 //					                        ));
 //			}
+//		for(int i = 1; i <= temp.getNumberOfEntries();i++)
+//		for (int j = 1; j <= temp.getEntry(i).getNumberOfEntries(); j++) {
+//	        linkedList.add(new TravelLegInfo(temp.getEntry(i).getEntry(j).getCompany(),temp.getEntry(i).getEntry(j).getMode(),temp.getEntry(i).getEntry(j).getSource(),temp.getEntry(i).getEntry(j).getDest(),temp.getEntry(i).getEntry(j).getPrice(),temp.getEntry(i).getEntry(j).getDistance(),temp.getEntry(i).getEntry(j).getfromDate(),temp.getEntry(i).getEntry(j).gettoDate(),temp.getEntry(i).getEntry(j).getfromTime(),temp.getEntry(i).getEntry(j).gettoTime(),temp.getEntry(i).getEntry(j).getDuration()));
+//}
+//		SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(linkedList,
+//				Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
+//		
+//		for(int i = 1;i<=5;i++) {
+//			System.out.print(tArrayLinkedList.getEntry(i).getSource());
+//			System.out.println(tArrayLinkedList.getEntry(i).getPrice());
+//		}
 
 		// ====================Title=======================//
 		JLabel lblViewTrip = new JLabel("View Trip");
@@ -236,58 +249,14 @@ private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLin
 					}
 				});
 			}
-			//=============================================================//
-			
-			
-			///////////////////////// For readwrite file display///////////////////////////
-
-//			for (int j = 1; j <= tCircular.getSize(); j++) {
-//				pStrings += tCircular.getEntry(j).getDest();
-//				
-//				if(tCircular.getEntry(j+1) !=null) {
-//					pStrings +=  callArrow;
-//				}
-//			}
-			///////////////////////////
-
-			////////////////////////////////////////// Time
-			////////////////////////////////////////// calculation////////////////////////////////////////////
-			String dateStart = "01/14/2012 09:29:58";
-			String dateStop = "01/15/2012 10:31:48";
-
-			String tString = new String();
-
-			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-
-			Date d1 = null;
-			Date d2 = null;
-
-			try {
-				d1 = format.parse(dateStart);
-				d2 = format.parse(dateStop);
-
-				// in milliseconds
-				long diff = d2.getTime() - d1.getTime();
-
-				// long diffSeconds = diff / 1000 % 60; //define seconds
-				long diffMinutes = diff / (60 * 1000) % 60;
-				long diffHours = diff / (60 * 60 * 1000) % 24;
-				long diffDays = diff / (24 * 60 * 60 * 1000);
-
-				tString += diffDays + "D " + diffHours + "h " + diffMinutes + "m ";
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			/////////////////////////// For hard code display/////////////////////////////
 
 			String pStrings = new String();
 			double totalPrice = 0;
 
-			int adult = 4;
-			int kiddo = 5;
+			int adult = 1;
+			int kiddo = 1;
 			for (int j = 1; j <= temp.getEntry(i+1).getNumberOfEntries(); j++) {
 
 
@@ -295,25 +264,27 @@ private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLin
 				double adults = temp.getEntry(i+1).getEntry(j).getPrice() * adult;
 
 				totalPrice += kids + adults;
+				linkedList.add(new TravelPlane(temp.getEntry(i+1).getEntry(j).getSource(), temp.getEntry(i+1).getEntry(j).getDest(), totalPrice, temp.getEntry(i+1).getEntry(j).getDuration()));
+				
 
 				if (j == 1) {// Display first source and first destination
 
 					pStrings += temp.getEntry(i+1).getEntry(j).getSource();
 
 					pStrings += callFrontArrow;
-					pStrings += tString;
+//					pStrings += tString;
 					pStrings += callBackArrow;
 
 					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
 					pStrings += callFrontArrow;
-					pStrings += tString;
+//					pStrings += tString;
 					pStrings += callBackArrow;
 				} else {// Display next destination
 					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
 
 					if (temp.getEntry(i+1).getEntry(j + 1) != null) {
 						pStrings += callFrontArrow;
-						pStrings += tString;
+//						pStrings += tString;
 						pStrings += callBackArrow;
 					}
 				}
@@ -321,11 +292,20 @@ private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLin
 			}
 			///////////////////////////////////////////////////////////////////////////
 			// put data to panel
+			
 			txtArray[i].setText(pStrings + "\n Price: RM " + totalPrice);
 
 			callPanel.add(txtArray[i]);
 		}
 		add(callPanel);// display panel
+		
+		SortedLinkedList<TravelPlane> tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
+				Comparator.comparing(TravelPlane::getPrice));
+		
+		for(int i = 1;i <= tArrayLinkedList.getLength();i++) {
+			System.out.print(tArrayLinkedList.getEntry(i).getPrice());
+			System.out.println(tArrayLinkedList.getEntry(i).getSourceString());
+		}
 
 		// =====================Button======================//
 		btnBack = new JButton("Back");

@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+
 public class SortedLinkedList<T> implements SortedLinkListInterface<T>, Serializable {
 	private static final long serialVersionUID = 1L;
 	private Node firstNode;
@@ -52,7 +53,6 @@ public class SortedLinkedList<T> implements SortedLinkListInterface<T>, Serializ
 		}
 		return currNode;
 	}
-
 	public boolean addAll(SinglyLinkedList<T> anEntry) {
 		for (int i = 1; i <= anEntry.getNumberOfEntries(); i++) {
 			add((T) anEntry.getEntry(i));

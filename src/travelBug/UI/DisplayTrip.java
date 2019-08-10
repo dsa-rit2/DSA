@@ -39,10 +39,12 @@ public class DisplayTrip extends JPanel {
 		double price = 0.00;
 		
 		source   = tempCircularLinkedList.getEntry(1).getSource();
-		dest = tempCircularLinkedList.getEntry(tempCircularLinkedList.getNumberOfEntries()).getDest();
+		dest     = tempCircularLinkedList.getEntry(tempCircularLinkedList.getNumberOfEntries()).getDest();
+		
+
 		for(int i = 1; i <= tempCircularLinkedList.getNumberOfEntries(); i++) {
 			
-			
+
 			distance = tempCircularLinkedList.getEntry(i).getDistance();
 			duration = tempCircularLinkedList.getEntry(i).getDuration();
 			price    = tempCircularLinkedList.getEntry(i).getPrice();
@@ -225,7 +227,8 @@ public class DisplayTrip extends JPanel {
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
+//				SwingUtilities.invokeLater(() -> mainFrame
+//						.changePanel(new DisplayTrip(mainFrame, temp.getEntry(1))));
 				
 			}
 		});

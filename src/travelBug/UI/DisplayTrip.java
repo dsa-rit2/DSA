@@ -2,33 +2,15 @@ package travelBug.UI;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-
-import com.toedter.calendar.JDateChooser;
-
 import travelBug.library.CircularLinkedList;
-import travelBug.library.LinkArray;
-import travelBug.library.ReadWriteFile;
-import travelBug.obj.TravelLegAccount;
 import travelBug.obj.TravelLegInfo;
-import travelBug.obj.User;
-
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.awt.event.ItemListener;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.awt.event.ItemEvent;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class DisplayTrip extends JPanel {
 	
-	private JPanel panel;
-	private JLabel label;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton btnBack;
 	private CircularLinkedList<TravelLegInfo> tempCircularLinkedList;
 	

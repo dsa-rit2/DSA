@@ -14,6 +14,7 @@ import travelBug.library.CircularLinkedList;
 import travelBug.library.GroupList;
 import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
+import travelBug.library.SinglyLinkedList;
 import travelBug.obj.TravelLegAccount;
 import travelBug.obj.TravelLegInfo;
 import travelBug.obj.User;
@@ -54,21 +55,19 @@ public class ViewTrip extends JPanel {
 	////////
 	
 	
-	private ReadWriteFile<TravelLegInfo> tFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
-	private LinkArray<TravelLegInfo> tArray = tFile.readLinkArray();
+private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLinkedList<CircularLinkedList<TravelLegInfo>>();
 
-	private CircularLinkedList<CircularLinkedList<TravelLegInfo>> tCircular = new CircularLinkedList<CircularLinkedList<TravelLegInfo>>();
 	
 	
 
-	public ViewTrip(UIControl parent) {
+	public ViewTrip(UIControl parent, SinglyLinkedList<CircularLinkedList<TravelLegInfo>> t) {
 
 		super();
 		this.mainFrame = parent;
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
-
+		temp = t;
 		createGUI();
 	}
 
@@ -105,41 +104,7 @@ public class ViewTrip extends JPanel {
 		LocalDate pDate = LocalDate.now();
 		LocalTime pLocalTime = LocalTime.now();
 
-		CircularLinkedList<TravelLegInfo> pCircularLinkedList = new CircularLinkedList<TravelLegInfo>();
-		pCircularLinkedList.add(new TravelLegInfo("AAA",'T', "A", "B", 100.00, 120.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-		pCircularLinkedList.add(new TravelLegInfo("BBB",'T', "B", "C", 100.00, 130.00, pDate, pDate, pLocalTime, pLocalTime, 4));
-		pCircularLinkedList.add(new TravelLegInfo("CCC",'T', "C", "D", 100.00, 110.00, pDate, pDate, pLocalTime, pLocalTime, 3));
-		pCircularLinkedList.add(new TravelLegInfo("DDD",'T', "D", "E", 100.00, 150.00, pDate, pDate, pLocalTime, pLocalTime, 2));
-		pCircularLinkedList.add(new TravelLegInfo("EEE",'T', "E", "F", 100.00, 130.00, pDate, pDate, pLocalTime, pLocalTime, 2));
-		tCircular.add(pCircularLinkedList);
-		CircularLinkedList<TravelLegInfo> pCircularLinkedList2 = new CircularLinkedList<TravelLegInfo>();
-		pCircularLinkedList2.add(new TravelLegInfo("AAA",'T', "G", "H", 100.00, 130.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-		pCircularLinkedList2.add(new TravelLegInfo("BBB",'T', "H", "I", 100.00, 130.00, pDate, pDate, pLocalTime, pLocalTime, 4));
-		pCircularLinkedList2.add(new TravelLegInfo("CCC",'T', "I", "J", 100.00, 140.00, pDate, pDate, pLocalTime, pLocalTime, 3));
-		pCircularLinkedList2.add(new TravelLegInfo("DDD",'T', "J", "K", 100.00, 120.00, pDate, pDate, pLocalTime, pLocalTime, 2));
-		pCircularLinkedList2.add(new TravelLegInfo("EEE",'T', "K", "L", 100.00, 160.00, pDate, pDate, pLocalTime, pLocalTime, 2));
-		tCircular.add(pCircularLinkedList2);
-		CircularLinkedList<TravelLegInfo> pCircularLinkedList3 = new CircularLinkedList<TravelLegInfo>();
-		pCircularLinkedList3.add(new TravelLegInfo("AAA",'T', "L", "M", 100.00, 140.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-		pCircularLinkedList3.add(new TravelLegInfo("BBB",'T', "M", "N", 100.00, 130.00, pDate, pDate, pLocalTime, pLocalTime, 4));
-		pCircularLinkedList3.add(new TravelLegInfo("CCC",'T', "N", "O", 100.00, 120.00, pDate, pDate, pLocalTime, pLocalTime, 3));
-		pCircularLinkedList3.add(new TravelLegInfo("DDD",'T', "O", "P", 100.00, 150.00, pDate, pDate, pLocalTime, pLocalTime, 2));
-		pCircularLinkedList3.add(new TravelLegInfo("EEE",'T', "P", "Q", 100.00, 160.00, pDate, pDate, pLocalTime, pLocalTime, 2));
-		tCircular.add(pCircularLinkedList3);
-		CircularLinkedList<TravelLegInfo> pCircularLinkedList4 = new CircularLinkedList<TravelLegInfo>();
-		pCircularLinkedList4.add(new TravelLegInfo("AAA",'T', "R", "S", 100.00, 140.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-		pCircularLinkedList4.add(new TravelLegInfo("BBB",'T', "S", "T", 100.00, 130.00, pDate, pDate, pLocalTime, pLocalTime, 3));
-		pCircularLinkedList4.add(new TravelLegInfo("DDD",'T', "T", "U", 100.00, 110.00, pDate, pDate, pLocalTime, pLocalTime, 2));
-		pCircularLinkedList4.add(new TravelLegInfo("EEE",'T', "U", "V", 100.00, 150.00, pDate, pDate, pLocalTime, pLocalTime, 2));
-		pCircularLinkedList4.add(new TravelLegInfo("EEE",'T', "V", "W", 100.00, 160.00, pDate, pDate, pLocalTime, pLocalTime, 2));
-		tCircular.add(pCircularLinkedList4);
-		CircularLinkedList<TravelLegInfo> pCircularLinkedList5 = new CircularLinkedList<TravelLegInfo>();
-		pCircularLinkedList5.add(new TravelLegInfo("AAA",'T', "AA", "BB", 100.00, 140.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-		pCircularLinkedList5.add(new TravelLegInfo("BBB",'T', "BB", "CC", 100.00, 140.00, pDate, pDate, pLocalTime, pLocalTime, 4));
-		pCircularLinkedList5.add(new TravelLegInfo("CCC",'T', "CC", "DD", 100.00, 120.00, pDate, pDate, pLocalTime, pLocalTime, 3));
-		pCircularLinkedList5.add(new TravelLegInfo("DDD",'T', "DD", "EE", 100.00, 160.00, pDate, pDate, pLocalTime, pLocalTime, 2));
-		pCircularLinkedList5.add(new TravelLegInfo("EEE",'T', "EE", "FF", 100.00, 140.00, pDate, pDate, pLocalTime, pLocalTime, 2));
-		tCircular.add(pCircularLinkedList5);
+		
 		
 		Font callFont = new Font("Segoe UI", Font.PLAIN, 16);
 		LineBorder lineBorder = new LineBorder(Color.GRAY, 2, true);
@@ -251,7 +216,7 @@ public class ViewTrip extends JPanel {
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
 							SwingUtilities.invokeLater(() -> mainFrame
-									.changePanel(new DisplayTrip(mainFrame, pCircularLinkedList)));
+									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(1))));
 							
 						}
 					}
@@ -342,31 +307,30 @@ public class ViewTrip extends JPanel {
 
 			int adult = 4;
 			int kiddo = 5;
+			for (int j = 1; j <= temp.getEntry(i+1).getNumberOfEntries(); j++) {
 
-			for (int j = 1; j <= tCircular.getEntry(i+1).getNumberOfEntries(); j++) {
 
-
-				double kids = tCircular.getEntry(i+1).getEntry(j).getPrice() * 0.5 * kiddo;
-				double adults = tCircular.getEntry(i+1).getEntry(j).getPrice() * adult;
+				double kids = temp.getEntry(i+1).getEntry(j).getPrice() * 0.5 * kiddo;
+				double adults = temp.getEntry(i+1).getEntry(j).getPrice() * adult;
 
 				totalPrice += kids + adults;
 
 				if (j == 1) {// Display first source and first destination
 
-					pStrings += tCircular.getEntry(i+1).getEntry(j).getSource();
+					pStrings += temp.getEntry(i+1).getEntry(j).getSource();
 
 					pStrings += callFrontArrow;
 					pStrings += tString;
 					pStrings += callBackArrow;
 
-					pStrings += tCircular.getEntry(i+1).getEntry(j).getDest();
+					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
 					pStrings += callFrontArrow;
 					pStrings += tString;
 					pStrings += callBackArrow;
 				} else {// Display next destination
-					pStrings += tCircular.getEntry(i+1).getEntry(j).getDest();
+					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
 
-					if (tCircular.getEntry(i+1).getEntry(j + 1) != null) {
+					if (temp.getEntry(i+1).getEntry(j + 1) != null) {
 						pStrings += callFrontArrow;
 						pStrings += tString;
 						pStrings += callBackArrow;
@@ -394,8 +358,8 @@ public class ViewTrip extends JPanel {
 		btnSelect = new JButton("Select");
 		btnSelect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SwingUtilities.invokeLater(() -> mainFrame
-						.changePanel(new DisplayTrip(mainFrame, pCircularLinkedList)));
+//				SwingUtilities.invokeLater(() -> mainFrame
+//						.changePanel(new DisplayTrip(mainFrame, pCircularLinkedList)));
 			}
 		});
 		btnSelect.setFont(new Font("Segoe UI", Font.PLAIN, 16));

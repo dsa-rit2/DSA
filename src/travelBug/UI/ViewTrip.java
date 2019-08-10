@@ -20,7 +20,6 @@ public class ViewTrip extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JPanel callPanel;
 	private JButton btnBack;
-	private JButton btnSelect;
 	private JTextField[] txtArray ;
 	private String callFrontArrow = "---";
 	private String callBackArrow = "-->";

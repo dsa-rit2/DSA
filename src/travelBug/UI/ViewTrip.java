@@ -11,8 +11,10 @@ import javax.swing.table.DefaultTableModel;
 import com.toedter.calendar.JDateChooser;
 
 import travelBug.library.CircularLinkedList;
+import travelBug.library.GroupList;
 import travelBug.library.LinkArray;
 import travelBug.library.ReadWriteFile;
+import travelBug.library.SinglyLinkedList;
 import travelBug.obj.TravelLegAccount;
 import travelBug.obj.TravelLegInfo;
 import travelBug.obj.User;
@@ -27,6 +29,8 @@ import java.awt.event.ItemEvent;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ViewTrip extends JPanel {
 
@@ -37,8 +41,6 @@ public class ViewTrip extends JPanel {
 	private JTextField[] txtArray = new JTextField[5];
 	private String callFrontArrow = "---";
 	private String callBackArrow = "-->";
-
-	private Vector<?> vector;
 
 	private final UIControl mainFrame;
 
@@ -51,20 +53,21 @@ public class ViewTrip extends JPanel {
 //	private CircularLinkedList<TravelLegAccount> tCircular = new CircularLinkedList<TravelLegAccount>();
 
 	////////
+	
+	
+private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLinkedList<CircularLinkedList<TravelLegInfo>>();
 
-	private ReadWriteFile<TravelLegInfo> tFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
-	private LinkArray<TravelLegInfo> tArray = tFile.readLinkArray();
+	
+	
 
-	private CircularLinkedList<TravelLegInfo> tCircular = new CircularLinkedList<TravelLegInfo>();
-
-	public ViewTrip(UIControl parent) {
+	public ViewTrip(UIControl parent, SinglyLinkedList<CircularLinkedList<TravelLegInfo>> t) {
 
 		super();
 		this.mainFrame = parent;
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
-
+		temp = t;
 		createGUI();
 	}
 
@@ -97,18 +100,12 @@ public class ViewTrip extends JPanel {
 
 		// ==========================Containers=============//
 
-		CircularLinkedList<TravelLegInfo> pCircularLinkedList = new CircularLinkedList<TravelLegInfo>();
+		
 		LocalDate pDate = LocalDate.now();
 		LocalTime pLocalTime = LocalTime.now();
-//		pCircularLinkedList
-//	//			.add(new TravelLegInfo('T', "A", "B", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-//		pCircularLinkedList
-//				.add(new TravelLegInfo('T', "B", "C", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-//		pCircularLinkedList
-//				.add(new TravelLegInfo('T', "C", "D", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-//		pCircularLinkedList
-//				.add(new TravelLegInfo('T', "D", "E", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
 
+		
+		
 		Font callFont = new Font("Segoe UI", Font.PLAIN, 16);
 		LineBorder lineBorder = new LineBorder(Color.GRAY, 2, true);
 		callPanel = new JPanel(new GridLayout(5, 5));
@@ -117,7 +114,7 @@ public class ViewTrip extends JPanel {
 		
 		
 		//====================On Click=========================//
-		for (int i = 0; i < txtArray.length; ++i) {
+		for (int i = 0; i < 5; ++i) {
 			txtArray[i] = new JTextField(80);
 			txtArray[i].setFont(callFont);
 			txtArray[i].setEditable(false);
@@ -219,7 +216,7 @@ public class ViewTrip extends JPanel {
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
 							SwingUtilities.invokeLater(() -> mainFrame
-									.changePanel(new DisplayTrip(mainFrame, pCircularLinkedList)));
+									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(1))));
 							
 						}
 					}
@@ -310,30 +307,30 @@ public class ViewTrip extends JPanel {
 
 			int adult = 4;
 			int kiddo = 5;
+			for (int j = 1; j <= temp.getEntry(i+1).getNumberOfEntries(); j++) {
 
-			for (int j = 1; j <= pCircularLinkedList.getNumberOfEntries(); j++) {
 
-				double kids = pCircularLinkedList.getEntry(j).getPrice() * 0.5 * kiddo;
-				double adults = pCircularLinkedList.getEntry(j).getPrice() * adult;
+				double kids = temp.getEntry(i+1).getEntry(j).getPrice() * 0.5 * kiddo;
+				double adults = temp.getEntry(i+1).getEntry(j).getPrice() * adult;
 
 				totalPrice += kids + adults;
 
 				if (j == 1) {// Display first source and first destination
 
-					pStrings += pCircularLinkedList.getEntry(j).getSource();
+					pStrings += temp.getEntry(i+1).getEntry(j).getSource();
 
 					pStrings += callFrontArrow;
 					pStrings += tString;
 					pStrings += callBackArrow;
 
-					pStrings += pCircularLinkedList.getEntry(j).getDest();
+					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
 					pStrings += callFrontArrow;
 					pStrings += tString;
 					pStrings += callBackArrow;
 				} else {// Display next destination
-					pStrings += pCircularLinkedList.getEntry(j).getDest();
+					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
 
-					if (pCircularLinkedList.getEntry(j + 1) != null) {
+					if (temp.getEntry(i+1).getEntry(j + 1) != null) {
 						pStrings += callFrontArrow;
 						pStrings += tString;
 						pStrings += callBackArrow;
@@ -359,6 +356,12 @@ public class ViewTrip extends JPanel {
 		add(btnBack);
 
 		btnSelect = new JButton("Select");
+		btnSelect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				SwingUtilities.invokeLater(() -> mainFrame
+//						.changePanel(new DisplayTrip(mainFrame, pCircularLinkedList)));
+			}
+		});
 		btnSelect.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnSelect.setForeground(Color.BLACK);
 		btnSelect.setBackground(Color.GRAY);

@@ -1,45 +1,29 @@
 package travelBug.UI;
 
 import java.awt.*;
-import java.awt.Window.Type;
-
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-
-import com.toedter.calendar.JDateChooser;
-
 import travelBug.library.CircularLinkedList;
-import travelBug.library.LinkArray;
-import travelBug.library.ReadWriteFile;
-import travelBug.obj.TravelLegAccount;
+import travelBug.library.SinglyLinkedList;
+import travelBug.library.SortedLinkedList;
 import travelBug.obj.TravelLegInfo;
-import travelBug.obj.User;
+import travelBug.obj.TravelPlane;
 
-import java.util.Date;
-import java.util.Vector;
-import java.text.SimpleDateFormat;
-import java.awt.event.ItemListener;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.awt.event.ItemEvent;
+import java.util.Comparator;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ViewTrip extends JPanel {
-
+	private static final long serialVersionUID = 1L;
 	private JPanel callPanel;
-	private JScrollPane scrollPane;
 	private JButton btnBack;
-	private JButton btnSelect;
-	private JTextField[] txtArray = new JTextField[5];
+	private JTextField[] txtArray ;
 	private String callFrontArrow = "---";
 	private String callBackArrow = "-->";
-
-	private Vector<?> vector;
-
+	private int adult=0,child=0;
 	private final UIControl mainFrame;
 
 	// Test//
@@ -51,25 +35,29 @@ public class ViewTrip extends JPanel {
 //	private CircularLinkedList<TravelLegAccount> tCircular = new CircularLinkedList<TravelLegAccount>();
 
 	////////
+	
+	
+private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLinkedList<CircularLinkedList<TravelLegInfo>>();
+private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPlane>();
+	
+	
 
-	private ReadWriteFile<TravelLegInfo> tFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
-	private LinkArray<TravelLegInfo> tArray = tFile.readLinkArray();
-
-	private CircularLinkedList<TravelLegInfo> tCircular = new CircularLinkedList<TravelLegInfo>();
-
-	public ViewTrip(UIControl parent) {
+	public ViewTrip(UIControl parent, SinglyLinkedList<CircularLinkedList<TravelLegInfo>> t, int a, int c) {
 
 		super();
 		this.mainFrame = parent;
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
-
+		temp = t;
+		adult = a;
+		child = c;
 		createGUI();
 	}
 
 	private void createGUI() {
 
+		
 //////////////////////add read write file data to circular link list///////////////////////
 //		
 //		tArray = tFile.readLinkArray();
@@ -87,6 +75,17 @@ public class ViewTrip extends JPanel {
 //					                        tArray.getIndexElement(i).getDuration()
 //					                        ));
 //			}
+//		for(int i = 1; i <= temp.getNumberOfEntries();i++)
+//		for (int j = 1; j <= temp.getEntry(i).getNumberOfEntries(); j++) {
+//	        linkedList.add(new TravelLegInfo(temp.getEntry(i).getEntry(j).getCompany(),temp.getEntry(i).getEntry(j).getMode(),temp.getEntry(i).getEntry(j).getSource(),temp.getEntry(i).getEntry(j).getDest(),temp.getEntry(i).getEntry(j).getPrice(),temp.getEntry(i).getEntry(j).getDistance(),temp.getEntry(i).getEntry(j).getfromDate(),temp.getEntry(i).getEntry(j).gettoDate(),temp.getEntry(i).getEntry(j).getfromTime(),temp.getEntry(i).getEntry(j).gettoTime(),temp.getEntry(i).getEntry(j).getDuration()));
+//}
+//		SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(linkedList,
+//				Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
+//		
+//		for(int i = 1;i<=5;i++) {
+//			System.out.print(tArrayLinkedList.getEntry(i).getSource());
+//			System.out.println(tArrayLinkedList.getEntry(i).getPrice());
+//		}
 
 		// ====================Title=======================//
 		JLabel lblViewTrip = new JLabel("View Trip");
@@ -97,27 +96,20 @@ public class ViewTrip extends JPanel {
 
 		// ==========================Containers=============//
 
-		CircularLinkedList<TravelLegInfo> pCircularLinkedList = new CircularLinkedList<TravelLegInfo>();
-		LocalDate pDate = LocalDate.now();
-		LocalTime pLocalTime = LocalTime.now();
-//		pCircularLinkedList
-//	//			.add(new TravelLegInfo('T', "A", "B", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-//		pCircularLinkedList
-//				.add(new TravelLegInfo('T', "B", "C", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-//		pCircularLinkedList
-//				.add(new TravelLegInfo('T', "C", "D", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-//		pCircularLinkedList
-//				.add(new TravelLegInfo('T', "D", "E", 100.00, 100.00, pDate, pDate, pLocalTime, pLocalTime, 5));
-
 		Font callFont = new Font("Segoe UI", Font.PLAIN, 16);
 		LineBorder lineBorder = new LineBorder(Color.GRAY, 2, true);
 		callPanel = new JPanel(new GridLayout(5, 5));
 		callPanel.setBorder(lineBorder);
 		callPanel.setBounds(40, 58, 811, 334);
 		
-		
+		int txtNum = 0;
+		if(temp.getNumberOfEntries()>5)
+			txtNum = 5;
+		else
+			txtNum = temp.getNumberOfEntries();
+		txtArray = new JTextField[txtNum];
 		//====================On Click=========================//
-		for (int i = 0; i < txtArray.length; ++i) {
+		for (int i = 0; i < txtNum; ++i) {
 			txtArray[i] = new JTextField(80);
 			txtArray[i].setFont(callFont);
 			txtArray[i].setEditable(false);
@@ -207,7 +199,8 @@ public class ViewTrip extends JPanel {
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
-							
+							SwingUtilities.invokeLater(() -> mainFrame
+									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(1),temp,adult,child)));
 
 						}
 					}
@@ -219,7 +212,7 @@ public class ViewTrip extends JPanel {
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
 							SwingUtilities.invokeLater(() -> mainFrame
-									.changePanel(new DisplayTrip(mainFrame, pCircularLinkedList)));
+									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(2),temp,adult,child)));
 							
 						}
 					}
@@ -230,7 +223,8 @@ public class ViewTrip extends JPanel {
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
-							
+							SwingUtilities.invokeLater(() -> mainFrame
+									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(3),temp,adult,child)));
 
 						}
 					}
@@ -241,7 +235,8 @@ public class ViewTrip extends JPanel {
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
-							
+							SwingUtilities.invokeLater(() -> mainFrame
+									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(4),temp,adult,child)));
 
 						}
 					}
@@ -252,90 +247,49 @@ public class ViewTrip extends JPanel {
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
-							
+							SwingUtilities.invokeLater(() -> mainFrame
+									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(5),temp,adult,child)));
 
 						}
 					}
 				});
 			}
-			//=============================================================//
-			
-			
-			///////////////////////// For readwrite file display///////////////////////////
-
-//			for (int j = 1; j <= tCircular.getSize(); j++) {
-//				pStrings += tCircular.getEntry(j).getDest();
-//				
-//				if(tCircular.getEntry(j+1) !=null) {
-//					pStrings +=  callArrow;
-//				}
-//			}
-			///////////////////////////
-
-			////////////////////////////////////////// Time
-			////////////////////////////////////////// calculation////////////////////////////////////////////
-			String dateStart = "01/14/2012 09:29:58";
-			String dateStop = "01/15/2012 10:31:48";
-
-			String tString = new String();
-
-			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-
-			Date d1 = null;
-			Date d2 = null;
-
-			try {
-				d1 = format.parse(dateStart);
-				d2 = format.parse(dateStop);
-
-				// in milliseconds
-				long diff = d2.getTime() - d1.getTime();
-
-				// long diffSeconds = diff / 1000 % 60; //define seconds
-				long diffMinutes = diff / (60 * 1000) % 60;
-				long diffHours = diff / (60 * 60 * 1000) % 24;
-				long diffDays = diff / (24 * 60 * 60 * 1000);
-
-				tString += diffDays + "D " + diffHours + "h " + diffMinutes + "m ";
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			/////////////////////////// For hard code display/////////////////////////////
 
 			String pStrings = new String();
 			double totalPrice = 0;
 
-			int adult = 4;
-			int kiddo = 5;
+			int adult = this.adult;
+			int kiddo = this.child;
+			for (int j = 1; j <= temp.getEntry(i+1).getNumberOfEntries(); j++) {
 
-			for (int j = 1; j <= pCircularLinkedList.getNumberOfEntries(); j++) {
 
-				double kids = pCircularLinkedList.getEntry(j).getPrice() * 0.5 * kiddo;
-				double adults = pCircularLinkedList.getEntry(j).getPrice() * adult;
+				double kids = temp.getEntry(i+1).getEntry(j).getPrice() * 0.5 * kiddo;
+				double adults = temp.getEntry(i+1).getEntry(j).getPrice() * adult;
 
 				totalPrice += kids + adults;
+				linkedList.add(new TravelPlane(temp.getEntry(i+1).getEntry(j).getSource(), temp.getEntry(i+1).getEntry(j).getDest(), totalPrice, temp.getEntry(i+1).getEntry(j).getDuration()));
+				
 
 				if (j == 1) {// Display first source and first destination
 
-					pStrings += pCircularLinkedList.getEntry(j).getSource();
+					pStrings += temp.getEntry(i+1).getEntry(j).getSource();
 
 					pStrings += callFrontArrow;
-					pStrings += tString;
+//					pStrings += tString;
 					pStrings += callBackArrow;
 
-					pStrings += pCircularLinkedList.getEntry(j).getDest();
+					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
 					pStrings += callFrontArrow;
-					pStrings += tString;
+//					pStrings += tString;
 					pStrings += callBackArrow;
 				} else {// Display next destination
-					pStrings += pCircularLinkedList.getEntry(j).getDest();
+					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
 
-					if (pCircularLinkedList.getEntry(j + 1) != null) {
+					if (temp.getEntry(i+1).getEntry(j + 1) != null) {
 						pStrings += callFrontArrow;
-						pStrings += tString;
+//						pStrings += tString;
 						pStrings += callBackArrow;
 					}
 				}
@@ -343,29 +297,39 @@ public class ViewTrip extends JPanel {
 			}
 			///////////////////////////////////////////////////////////////////////////
 			// put data to panel
+			
 			txtArray[i].setText(pStrings + "\n Price: RM " + totalPrice);
 
 			callPanel.add(txtArray[i]);
 		}
 		add(callPanel);// display panel
+		
+		
+		SortedLinkedList<TravelPlane> tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
+				Comparator.comparing(TravelPlane::getPrice));
+		
+		for(int i = 1;i <= tArrayLinkedList.getLength();i++) {
+			System.out.print(tArrayLinkedList.getEntry(i).getPrice());
+			System.out.println(tArrayLinkedList.getEntry(i).getSourceString());
+		}
 
 		// =====================Button======================//
 		btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				SwingUtilities.invokeLater(() -> mainFrame
+						.changePanel(new PlanTrip(mainFrame)));
+				
+			}
+		});
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnBack.setForeground(Color.BLACK);
 		btnBack.setBackground(Color.GRAY);
 		btnBack.setActionCommand("");
-		btnBack.setBounds(340, 410, 120, 40);
+		btnBack.setBounds(394, 403, 120, 40);
 		add(btnBack);
 
-		btnSelect = new JButton("Select");
-		btnSelect.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		btnSelect.setForeground(Color.BLACK);
-		btnSelect.setBackground(Color.GRAY);
-		btnSelect.setActionCommand("");
-		btnSelect.setBounds(470, 410, 120, 40);
-		add(btnSelect);
 
 	}
-
 }

@@ -214,5 +214,5 @@ public class SinglyLinkedList<T> implements linkListInterface<T> {
 			throw new UnsupportedOperationException("Not supported yet.");
 		}
 	}
+
 }
-//hello

@@ -3,7 +3,6 @@ package travelBug.obj;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import travelBug.library.library;
 
 public class SourceDest implements Serializable{
 	/**
@@ -24,7 +23,7 @@ public class SourceDest implements Serializable{
 	}
 
 	public void setL1(String source) {
-		this.l1 = l1;
+		this.l1 = source;
 	}
 
 	public String getL2() {
@@ -32,7 +31,7 @@ public class SourceDest implements Serializable{
 	}
 
 	public void setL2(String dest) {
-		this.l2 = l2;
+		this.l2 = dest;
 	}
 
 	public LocalDate getLocalDate() {

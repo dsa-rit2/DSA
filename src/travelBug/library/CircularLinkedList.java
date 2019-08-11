@@ -66,7 +66,6 @@ public class CircularLinkedList<T> implements CircularLinkListInterface<T> {
 	@Override
 	public boolean contains(T anEntry) {
 		Node currentNode = firstNode;
-		Node newNode = new Node(anEntry);
 		boolean contains = false;
 		do {
 			if (currentNode.data.equals(anEntry)) {
@@ -120,11 +119,6 @@ public class CircularLinkedList<T> implements CircularLinkListInterface<T> {
 		public Node(T data) {
 			this.data = data;
 			this.next = null;
-		}
-
-		public Node(T data, Node next) {
-			this.data = data;
-			this.next = next;
 		}
 
 		public void setNext(Node next) {

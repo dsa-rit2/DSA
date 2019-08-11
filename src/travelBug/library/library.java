@@ -2,14 +2,9 @@ package travelBug.library;
 
 import java.util.regex.*;
 import javax.swing.JOptionPane;
-
-import travelBug.obj.ComparePrice;
-import travelBug.obj.CompareTime;
-
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.time.*;
@@ -19,7 +14,6 @@ public class library {
 	public static final String currentDirectoryPath = System.getProperty("user.dir"); // Get root directory path
 	private static final Random RANDOM = new SecureRandom();
 	private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-	private static final int Hours = 0;
 
 	public static boolean validateTime(String time) {
 		Pattern pattern;

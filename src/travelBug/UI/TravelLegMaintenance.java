@@ -26,7 +26,6 @@ public class TravelLegMaintenance extends JPanel {
 	private static final long serialVersionUID = 5629499624569369278L;
 	private LinkArray<TravelLegInfo> tArray = new LinkArray<TravelLegInfo>();
 	private ReadWriteFile<TravelLegInfo> tFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
-	private SinglyLinkedList<ComparePrice> rArray = new SinglyLinkedList<ComparePrice>();
 	private JTextField tfSearch;
 	private JScrollPane scrollPane;
 	private JLabel lblSearchJLabel;
@@ -90,9 +89,8 @@ public class TravelLegMaintenance extends JPanel {
 					defaultTableModel = (DefaultTableModel) table.getModel();
 
 					int SelectedRowIndex = table.getSelectedRow();
-					vector = (Vector) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
+					vector = (Vector<?>) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
-						String iDString = vector.elementAt(0).toString();
 
 						SwingUtilities.invokeLater(() -> mainFrame
 								.changePanel(new TravelLegModify(vector, vector.elementAt(0).toString(), mainFrame)));
@@ -199,7 +197,7 @@ public class TravelLegMaintenance extends JPanel {
 				defaultTableModel = (DefaultTableModel) table.getModel();
 				int SelectedRowIndex = table.getSelectedRow();
 				if (SelectedRowIndex >= 0) {
-					vector = (Vector) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
+					vector = (Vector<?>) defaultTableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
 						int choice = JOptionPane.showConfirmDialog(null, "Do you want to delete it?", "Confirm",

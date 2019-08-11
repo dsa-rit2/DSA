@@ -83,7 +83,6 @@ public class ListLocation extends JPanel {
 		tableModel.addColumn("Type");
 		
 		lArray = lFile.readLinkArray();
-		LinkArray<Location> pArray = lFile.readLinkArray();
 		SinglyLinkedList<Location> oArray = library.Convertion(lArray);
 		SortedLinkedList<Location> tArrayLinkedList = new SortedLinkedList<Location>(oArray,
 				Comparator.comparing(Location::getName));
@@ -197,7 +196,7 @@ public class ListLocation extends JPanel {
 				tableModel = (DefaultTableModel) table.getModel();
 				int SelectedRowIndex = table.getSelectedRow();
 				if (SelectedRowIndex >= 0) {
-					vector = (Vector) tableModel.getDataVector().elementAt(SelectedRowIndex);
+					vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
 						int choice = JOptionPane.showConfirmDialog(null, "Do you want to delete it?", "Confirm",

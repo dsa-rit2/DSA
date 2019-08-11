@@ -11,7 +11,6 @@ import travelBug.obj.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,12 +18,6 @@ import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.xml.bind.ParseConversionEvent;
-import org.junit.Ignore;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.event.KeyAdapter;
@@ -38,7 +31,7 @@ public class AddTravelLeg extends JPanel {
 	private JTextField tfToTime;
 	private JTextField tfDistance;
 	private JTextField tfPrice;
-	private JComboBox  cbTransport;
+	private JComboBox<String>  cbTransport;
 	private LinkArray<TravelLegInfo> rArray = new LinkArray<TravelLegInfo>();
 	private ReadWriteFile<TravelLegInfo> rFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
 	private LinkArray<Location> cArray = new LinkArray<Location>();
@@ -190,7 +183,7 @@ public class AddTravelLeg extends JPanel {
 //========================================================================================================================//
 		String[] selectionString = { "Select The transport type", "Airplane", "Rail/Train", "Bus", "Car", "Ferry",
 				"Boat" };
-		cbTransport = new JComboBox(selectionString);
+		cbTransport = new JComboBox<String>(selectionString);
 		cbTransport.setEnabled(false);
 		cbTransport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -375,8 +368,6 @@ public class AddTravelLeg extends JPanel {
 				String distanceString = tfDistance.getText();
 				String transportTypeString = cbTransport.getSelectedItem().toString();
 				String dateString = "";
-				Date checkDate = dcFromDate.getDate();
-				Date checkDate1 = dcToDate.getDate();
 				String fromTimeString = tfFromTime.getText();
 				String toTimeString = tfToTime.getText();
 				int duration = 0;
@@ -436,7 +427,7 @@ public class AddTravelLeg extends JPanel {
 					try {
 						fromTime = LocalTime.parse(fromTimeString);
 					} catch (Exception e) {
-						// TODO: handle exception
+						e.printStackTrace();
 					}
 				}
 				// validation for to date
@@ -449,7 +440,7 @@ public class AddTravelLeg extends JPanel {
 					try {
 						toTime = LocalTime.parse(toTimeString);
 					} catch (Exception e) {
-						// TODO: handle exception
+						e.printStackTrace();
 					}
 				}
 				if (fromTimeString.length() > 0) {

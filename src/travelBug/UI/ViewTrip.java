@@ -214,7 +214,7 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 				});
 			}
 
-			/////////////////////////// For hard code display/////////////////////////////
+			///////////////////////////Pass data and display/////////////////////////////
 
 			String pStrings = new String();
 			double totalPrice = 0;
@@ -228,8 +228,19 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 				double adults = temp.getEntry(i+1).getEntry(j).getPrice() * adult;
 
 				totalPrice += kids + adults;
+				
+				/////////////////////////Sort///////////////////////////////////////////
+				
 				linkedList.add(new TravelPlane(temp.getEntry(i+1).getEntry(j).getSource(), temp.getEntry(i+1).getEntry(j).getDest(), totalPrice, temp.getEntry(i+1).getEntry(j).getDuration()));
 				
+				SortedLinkedList<TravelPlane> tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
+						Comparator.comparing(TravelPlane::getPrice));
+				
+				for(int k = 1;k <= tArrayLinkedList.getLength();k++) {
+					System.out.print(tArrayLinkedList.getEntry(k).getPrice());
+					System.out.println(tArrayLinkedList.getEntry(k).getSourceString());
+				}
+				///////////////////////////////////////////////////////////////////////////
 
 				if (j == 1) {// Display first source and first destination
 
@@ -260,14 +271,6 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 		}
 		add(callPanel);// display panel
 		
-		
-		SortedLinkedList<TravelPlane> tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
-				Comparator.comparing(TravelPlane::getPrice));
-		
-		for(int i = 1;i <= tArrayLinkedList.getLength();i++) {
-			System.out.print(tArrayLinkedList.getEntry(i).getPrice());
-			System.out.println(tArrayLinkedList.getEntry(i).getSourceString());
-		}
 
 		// =====================Button======================//
 		btnBack = new JButton("Back");

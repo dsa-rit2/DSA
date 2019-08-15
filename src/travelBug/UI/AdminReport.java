@@ -72,12 +72,13 @@ public class AdminReport extends JPanel {
 		table.getTableHeader().setOpaque(false);
 		table.getTableHeader().setBackground(Color.white);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.getTableHeader().setSize(1000, 500);
+//		table.getTableHeader().setSize(100, 400);
 		table.setBounds(34, 31, 537, 167);
 		table.setRowHeight(30);
-		table.getTableHeader().setPreferredSize(new Dimension(100, 40));
-		Font f = new Font("Arial", Font.BOLD, 25);
+		table.getTableHeader().setPreferredSize(new Dimension(30, 30));
+		Font f = new Font("Arial", Font.BOLD, 15);
 		table.getTableHeader().setFont(f);
+		
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(12, 93, 876, 297);
 		scrollPane.setEnabled(false);
@@ -123,16 +124,16 @@ public class AdminReport extends JPanel {
 		btnBack.setBounds(771, 397, 97, 25);
 		add(btnBack);
 
-		for (int i = 0; i < table.getColumnCount(); i++) {
-			int j = 0;
-			TableColumn column = table.getColumnModel().getColumn(i);
-			if (i >= 0) {
-				if (i == j) {
-					column.setPreferredWidth(30);
-				}
-			}
-			j++;
-		}
+//		for (int i = 0; i < table.getColumnCount(); i++) {
+//			int j = 0;
+//			TableColumn column = table.getColumnModel().getColumn(i);
+//			if (i >= 0) {
+//				if (i == j) {
+//					column.setPreferredWidth(30);
+//				}
+//			}
+//			j++;
+//		}
 
 		tableModel.addColumn("Source");
 		tableModel.addColumn("Destionation");

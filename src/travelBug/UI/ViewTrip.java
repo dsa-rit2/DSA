@@ -21,20 +21,9 @@ public class ViewTrip extends JPanel {
 	private JPanel callPanel;
 	private JButton btnBack;
 	private JTextField[] txtArray ;
-	private String callFrontArrow = "---";
-	private String callBackArrow = "-->";
+	private String callArrow = "-->";
 	private int adult=0,child=0;
 	private final UIControl mainFrame;
-
-	// Test//
-//	private ReadWriteFile<TravelLegAccount> tFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt",
-//			TravelLegAccount.class);
-//	private LinkArray<TravelLegAccount> tArray = tFile.readLinkArray();
-//	private LinkArray<User> uArray = new LinkArray<User>();
-
-//	private CircularLinkedList<TravelLegAccount> tCircular = new CircularLinkedList<TravelLegAccount>();
-
-	////////
 	
 	
 private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLinkedList<CircularLinkedList<TravelLegInfo>>();
@@ -56,36 +45,6 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 	}
 
 	private void createGUI() {
-
-		
-//////////////////////add read write file data to circular link list///////////////////////
-//		
-//		tArray = tFile.readLinkArray();
-//		for (int i = 0; i < tArray.size(); i++) {
-//			
-//			tCircular.add(new TravelLegInfo(tArray.getIndexElement(i).getMode(), 
-//					                        tArray.getIndexElement(i).getSource(),
-//					                        tArray.getIndexElement(i).getDest(), 
-//					                        tArray.getIndexElement(i).getPrice(),
-//					                        tArray.getIndexElement(i).getDistance(),
-//					                        tArray.getIndexElement(i).getfromDate(),
-//					                        tArray.getIndexElement(i).gettoDate(),
-//					                        tArray.getIndexElement(i).getfromTime(),
-//					                        tArray.getIndexElement(i).gettoTime(),
-//					                        tArray.getIndexElement(i).getDuration()
-//					                        ));
-//			}
-//		for(int i = 1; i <= temp.getNumberOfEntries();i++)
-//		for (int j = 1; j <= temp.getEntry(i).getNumberOfEntries(); j++) {
-//	        linkedList.add(new TravelLegInfo(temp.getEntry(i).getEntry(j).getCompany(),temp.getEntry(i).getEntry(j).getMode(),temp.getEntry(i).getEntry(j).getSource(),temp.getEntry(i).getEntry(j).getDest(),temp.getEntry(i).getEntry(j).getPrice(),temp.getEntry(i).getEntry(j).getDistance(),temp.getEntry(i).getEntry(j).getfromDate(),temp.getEntry(i).getEntry(j).gettoDate(),temp.getEntry(i).getEntry(j).getfromTime(),temp.getEntry(i).getEntry(j).gettoTime(),temp.getEntry(i).getEntry(j).getDuration()));
-//}
-//		SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(linkedList,
-//				Comparator.comparing(TravelLegInfo::getPrice).thenComparing(TravelLegInfo::getDuration));
-//		
-//		for(int i = 1;i<=5;i++) {
-//			System.out.print(tArrayLinkedList.getEntry(i).getSource());
-//			System.out.println(tArrayLinkedList.getEntry(i).getPrice());
-//		}
 
 		// ====================Title=======================//
 		JLabel lblViewTrip = new JLabel("View Trip");
@@ -276,21 +235,17 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 
 					pStrings += temp.getEntry(i+1).getEntry(j).getSource();
 
-					pStrings += callFrontArrow;
-//					pStrings += tString;
-					pStrings += callBackArrow;
+					pStrings += callArrow;
 
 					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
-					pStrings += callFrontArrow;
-//					pStrings += tString;
-					pStrings += callBackArrow;
+					pStrings += callArrow;
+
 				} else {// Display next destination
 					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
 
 					if (temp.getEntry(i+1).getEntry(j + 1) != null) {
-						pStrings += callFrontArrow;
-//						pStrings += tString;
-						pStrings += callBackArrow;
+						pStrings += callArrow;
+
 					}
 				}
 
@@ -298,6 +253,7 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 			///////////////////////////////////////////////////////////////////////////
 			// put data to panel
 			
+			txtArray[i].setHorizontalAlignment(SwingConstants.LEFT);
 			txtArray[i].setText(pStrings + "\n Price: RM " + totalPrice);
 
 			callPanel.add(txtArray[i]);

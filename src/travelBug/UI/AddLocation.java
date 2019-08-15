@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 public class AddLocation extends JPanel {
 	private static final long serialVersionUID = 1L; // Serializable purpose
 	private JTextField txtLocationName, txtState;
-	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblCountry, lblState, lblType;
+	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblCountry, lblState, lblType;	
 	private JLabel lblLongitude, lblLatitude;
 	private Label lblErrorLocationName, lblErrorContinent, lblErrorType, lblErrorState, lblErrorCountry;
 	private Label lblErrorLongitude, lblErrorLatitude;

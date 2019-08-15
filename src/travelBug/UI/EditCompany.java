@@ -200,10 +200,7 @@ public class EditCompany extends JPanel {
 		add(btnModify);
 
 		JButton btnBack = new JButton("Back");
-		btnBack.addActionListener(event -> {
-			library.dialogMessage("The page will redirect to the list company");
-			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
-		});
+		btnBack.addActionListener(event -> SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame))));
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnBack.setBounds(470, 368, 150, 50);
 		add(btnBack);

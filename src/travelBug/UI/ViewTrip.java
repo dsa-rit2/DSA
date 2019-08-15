@@ -6,6 +6,7 @@ import javax.swing.border.LineBorder;
 import travelBug.library.CircularLinkedList;
 import travelBug.library.SinglyLinkedList;
 import travelBug.library.SortedLinkedList;
+import travelBug.library.library;
 import travelBug.obj.TravelLegInfo;
 import travelBug.obj.TravelPlane;
 
@@ -41,6 +42,7 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 		temp = t;
 		adult = a;
 		child = c;
+		
 		createGUI();
 	}
 
@@ -275,7 +277,11 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 		btnBack.setActionCommand("");
 		btnBack.setBounds(394, 403, 120, 40);
 		add(btnBack);
-
+		if(temp.isEmpty()) {
+			library.dialogMessage("0 result is found");
+			SwingUtilities.invokeLater(() -> mainFrame
+					.changePanel(new PlanTrip(mainFrame)));
+		}
 
 	}
 }

@@ -28,27 +28,12 @@ public class UIControl extends JFrame {
 		getContentPane().setLayout(null);		
 
 		// ============= Change Panel Section =============
-
-
-//		changePanel(new ViewTrip(this));
-
-//	changePanel(new AddTravelLeg(this));
-
-//		changePanel(new AdminReport(this));
-//		changePanel(new TravelLegMaintenance(this));
 		changePanel(new MainMenu(this));
-
-//		changePanel(new AdminReport(this));
-
-//		changePanel(new AdminReport(this));
-//		changePanel(new ViewTrip(this));
-//		changePanel(new PlanTrip(this));
-
-
 	}
 
 	public void changePanel(JPanel panelName) {
 		getContentPane().removeAll(); // Remove all component
+		
 		// =================== Programe logo and name ==================
 		JLabel logoName = new JLabel("TravelBug");
 		logoName.setFont(new Font("Monospaced", Font.BOLD, 50));
@@ -58,7 +43,6 @@ public class UIControl extends JFrame {
 		logoName.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// =================== Content panel control ===================
-
 		panelName.setLocation(0, 115);
 		getContentPane().add(panelName);
 

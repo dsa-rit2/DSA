@@ -18,7 +18,9 @@ import java.awt.event.MouseEvent;
 public class ListCompany extends JPanel {
 	private static final long serialVersionUID = 1L; // Serializable purpose
 	private LinkArray<Company> cArray = new LinkArray<Company>();
+	private LinkArray<TravelLegAccount> tArray = new LinkArray<TravelLegAccount>();
 	private ReadWriteFile<Company> rFile = new ReadWriteFile<Company>("Company.txt", Company.class);
+	private ReadWriteFile<TravelLegAccount> tFile = new ReadWriteFile<TravelLegAccount>("TravelLegAccount.txt", TravelLegAccount.class);
 	private JTextField textField;
 	private JList<String> displayList;
 	DefaultListModel<String> listModel;
@@ -131,6 +133,7 @@ public class ListCompany extends JPanel {
 			if (displayList.getSelectedValue() == null) {
 				library.dialogMessage("You must select company first");
 			} else {
+				String shortForm = "";
 				String getCompany = displayList.getSelectedValue().toString();
 				int choice = JOptionPane.showConfirmDialog(null, "Do you want to delete it?", "Confirm",
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -138,9 +141,16 @@ public class ListCompany extends JPanel {
 					for (int i = 0; i < cArray.size(); i++) {
 						if (cArray.getIndexElement(i).getCompanyName().equalsIgnoreCase(getCompany)) {
 							cArray.deleteIndexItem(i);
+							shortForm = cArray.getIndexElement(i).getShortForm();
+						}
+					}
+					for(int j = 0; j<tArray.size();j++) {
+						if(library.getUsernameShortForm(tArray.getIndexElement(j).getUsername()).equalsIgnoreCase(shortForm)) {
+							tArray.deleteIndexItem(j);
 						}
 					}
 					rFile.writeLinkArray(cArray);
+					tFile.writeLinkArray(tArray);
 					library.dialogMessage("The company is deleted!!!");
 					updateList(null);
 				}

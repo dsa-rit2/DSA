@@ -40,11 +40,13 @@ public class TravelLegModify extends JPanel {
 	private Set<String> s = new TreeSet<String>();
 	private final UIControl mainframe;		// Store main frame
 	private JComboBox<String> cbTransport;
+	private String usernameString; 
 	
 		
 	public TravelLegModify(Vector<?> vector, String ID, UIControl parent) {
 		super();
 		this.mainframe = parent;
+		usernameString = parent.authUser.getUsername();
 		// ======================= Jpanel setting ========================//
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
@@ -562,7 +564,7 @@ public class TravelLegModify extends JPanel {
 				System.out.print(error);
 				if (!error) {
 					for (int i = 0; i < rArray.size(); i++) {
-						if (rArray.getIndexElement(i).getrecordNo().toString().matches(ID)) {
+						if (rArray.getIndexElement(i).getrecordNo().toString().equalsIgnoreCase(ID)) {
 							rArray.getIndexElement(i).setSource(srcLocationString);
 							rArray.getIndexElement(i).setDest(dstLocationString);
 							rArray.getIndexElement(i).setfromDate(fromDate);
@@ -573,9 +575,7 @@ public class TravelLegModify extends JPanel {
 							rArray.getIndexElement(i).setPrice(price);
 							rArray.getIndexElement(i).setDistance(distance);
 							rArray.getIndexElement(i).setDuration(duration);
-							
-							System.out.print(fromDate);
-							System.out.print(toDate);
+
 							
 						}
 					}

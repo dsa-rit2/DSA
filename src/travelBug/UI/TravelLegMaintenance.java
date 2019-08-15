@@ -373,7 +373,6 @@ public class TravelLegMaintenance extends JPanel {
 		updateLabel(null, null);
 
 	}
-
 	public void updateLabel(String searchItem, String searchString) {
 		if (lblUsername.getText().equalsIgnoreCase("Admin")) {
 			btnAddTravelleg.setEnabled(false);

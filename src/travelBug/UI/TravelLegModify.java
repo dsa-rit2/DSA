@@ -561,7 +561,6 @@ public class TravelLegModify extends JPanel {
 					}
 				}
 				// Write travel leg info into text file
-				System.out.print(error);
 				if (!error) {
 					for (int i = 0; i < rArray.size(); i++) {
 						if (rArray.getIndexElement(i).getrecordNo().toString().equalsIgnoreCase(ID)) {

@@ -46,11 +46,7 @@ public class TravelLegModify extends JPanel {
 	public TravelLegModify(Vector<?> vector, String ID, UIControl parent) {
 		super();
 		this.mainframe = parent;
-<<<<<<< HEAD
 		usernameString = parent.authUser.getUsername();
-=======
-		
->>>>>>> branch 'master' of https://github.com/dsa-rit2/DSA.git
 		// ======================= Jpanel setting ========================//
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
@@ -63,7 +59,6 @@ public class TravelLegModify extends JPanel {
 		for(int i = 0; i < cArray.size(); i++) {
 			s.add(cArray.getIndexElement(i).getName());
 		}
-		
 		// ============================ Content component =========================//
 		JLabel lblSourceLocation = new JLabel("Source location  :");
 		lblSourceLocation.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));

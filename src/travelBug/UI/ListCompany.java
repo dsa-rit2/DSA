@@ -140,8 +140,8 @@ public class ListCompany extends JPanel {
 				if (choice == JOptionPane.YES_NO_OPTION) {
 					for (int i = 0; i < cArray.size(); i++) {
 						if (cArray.getIndexElement(i).getCompanyName().equalsIgnoreCase(getCompany)) {
-							cArray.deleteIndexItem(i);
 							shortForm = cArray.getIndexElement(i).getShortForm();
+							cArray.deleteIndexItem(i);
 						}
 					}
 					for(int j = 0; j<tArray.size();j++) {

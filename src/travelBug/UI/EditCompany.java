@@ -65,6 +65,7 @@ public class EditCompany extends JPanel {
 		add(lblShortForm);
 
 		shortF = new JTextField();
+		shortF.setEditable(false);
 		shortF.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		shortF.setText(cArray.getIndexElement(companyFoundindex).getShortForm());
 		shortF.setBounds(333, 144, 300, 28);
@@ -156,23 +157,12 @@ public class EditCompany extends JPanel {
 				lblErrorShortForm.setVisible(true);
 				error++;
 			} else {
-				boolean shortFormErr = false;
-				for (int i = 0; i < cArray.size(); i++) {
-					if (cArray.getIndexElement(i).getShortForm().equalsIgnoreCase(sFormString))
-						shortFormErr = true;
-
-					
-				}
 				if (!library.isAlpha(sFormString)) {
 					lblErrorShortForm.setText("The short form must be alphabetic");
 					lblErrorShortForm.setVisible(true);
 					error++;
 				} else if (sFormString.length() > 10) {
 					lblErrorShortForm.setText("The short form must not excess 10 letter");
-					lblErrorShortForm.setVisible(true);
-					error++;
-				}else if(shortFormErr) {
-					lblErrorShortForm.setText("The short form is duplicated");
 					lblErrorShortForm.setVisible(true);
 					error++;
 				}
@@ -210,10 +200,7 @@ public class EditCompany extends JPanel {
 		add(btnModify);
 
 		JButton btnBack = new JButton("Back");
-		btnBack.addActionListener(event -> {
-			library.dialogMessage("The page will redirect to the list company");
-			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
-		});
+		btnBack.addActionListener(event -> SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame))));
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnBack.setBounds(470, 368, 150, 50);
 		add(btnBack);

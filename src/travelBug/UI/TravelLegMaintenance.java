@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Vector;
@@ -53,7 +54,7 @@ public class TravelLegMaintenance extends JPanel {
 		tArray = tFile.readLinkArray();
 		tfSearch = new JTextField();
 		tfSearch.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		tfSearch.setBounds(210, 0, 177, 36);
+		tfSearch.setBounds(210, 27, 177, 36);
 		add(tfSearch);
 		tfSearch.setColumns(10);
 		tfSearch.setText(null);
@@ -61,13 +62,13 @@ public class TravelLegMaintenance extends JPanel {
 		tfSearch1 = new JTextField();
 		tfSearch1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		tfSearch1.setColumns(10);
-		tfSearch1.setBounds(210, 35, 177, 36);
+		tfSearch1.setBounds(210, 61, 177, 36);
 		add(tfSearch1);
 		tfSearch1.setText(null);
 
 		lblSearchJLabel = new JLabel("Source Location       :");
 		lblSearchJLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblSearchJLabel.setBounds(12, 0, 177, 36);
+		lblSearchJLabel.setBounds(12, 27, 177, 36);
 		add(lblSearchJLabel);
 
 		defaultTableModel = new DefaultTableModel() {
@@ -116,7 +117,7 @@ public class TravelLegMaintenance extends JPanel {
 
 		table.setBounds(34, 31, 537, 167);
 		scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(12, 84, 876, 306);
+		scrollPane.setBounds(12, 97, 876, 306);
 		scrollPane.setEnabled(false);
 		add(scrollPane);
 
@@ -179,7 +180,7 @@ public class TravelLegMaintenance extends JPanel {
 				updateLabel(null, null);
 			}
 		});
-		btnNewButton.setBounds(513, 46, 109, 38);
+		btnNewButton.setBounds(513, 60, 109, 38);
 		add(btnNewButton);
 
 		btnAddTravelleg = new JButton("Add TravelLeg");
@@ -188,7 +189,7 @@ public class TravelLegMaintenance extends JPanel {
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddTravelLeg(mainFrame)));
 		});
 		btnAddTravelleg.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnAddTravelleg.setBounds(8, 395, 157, 42);
+		btnAddTravelleg.setBounds(12, 408, 157, 42);
 		add(btnAddTravelleg);
 
 		btnDelete = new JButton("Delete");
@@ -223,73 +224,73 @@ public class TravelLegMaintenance extends JPanel {
 		});
 		btnDelete.setForeground(Color.RED);
 		btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnDelete.setBounds(513, 395, 157, 42);
+		btnDelete.setBounds(513, 408, 157, 42);
 		add(btnDelete);
 
 		JButton btnSortPrice = new JButton("Cheapest");
 		btnSortPrice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				if (lblUsername.getText().equalsIgnoreCase("Admin")) {
 					btnAddTravelleg.setEnabled(false);
-						defaultTableModel = (DefaultTableModel) table.getModel();
-						defaultTableModel.setNumRows(0);
-						SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
-						SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
-								Comparator.comparing(TravelLegInfo::getPrice));
+					defaultTableModel = (DefaultTableModel) table.getModel();
+					defaultTableModel.setNumRows(0);
+					SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
+					SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
+							Comparator.comparing(TravelLegInfo::getPrice));
 
-						for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
+					for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
+						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+								|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
+							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
+									tArrayLinkedList.getEntry(j).getrecordNo(),
+									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
+									tArrayLinkedList.getEntry(j).getfromDate(),
+									tArrayLinkedList.getEntry(j).gettoDate(),
+									tArrayLinkedList.getEntry(j).getfromTime(),
+									tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
+									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
+									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+						}
+					}
+				} else {
+					defaultTableModel = (DefaultTableModel) table.getModel();
+					defaultTableModel.setNumRows(0);
+					SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
+					SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
+							Comparator.comparing(TravelLegInfo::getPrice));
+
+					for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
+						if (tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
 							if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-									|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
-											&& (tArrayLinkedList.getEntry(j).getfromDate()
-													.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
-								defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
-										tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
-										tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
-										tArrayLinkedList.getEntry(j).gettoDate(), tArrayLinkedList.getEntry(j).getfromTime(),
-										tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
-										tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
-										library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+									|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
+								defaultTableModel.insertRow(defaultTableModel.getRowCount(),
+										new Object[] { tArrayLinkedList.getEntry(j).getrecordNo(),
+												tArrayLinkedList.getEntry(j).getSource(),
+												tArrayLinkedList.getEntry(j).getDest(),
+												tArrayLinkedList.getEntry(j).getfromDate(),
+												tArrayLinkedList.getEntry(j).gettoDate(),
+												tArrayLinkedList.getEntry(j).getfromTime(),
+												tArrayLinkedList.getEntry(j).gettoTime(),
+												tArrayLinkedList.getEntry(j).getMode(),
+												tArrayLinkedList.getEntry(j).getPrice(),
+												tArrayLinkedList.getEntry(j).getDistance(),
+												library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
 							}
 						}
 					}
-				else {
-						defaultTableModel = (DefaultTableModel) table.getModel();
-						defaultTableModel.setNumRows(0);
-						SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
-						SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
-								Comparator.comparing(TravelLegInfo::getPrice));
-
-						for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-							if (tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
-								if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-										|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
-												&& (tArrayLinkedList.getEntry(j).getfromDate()
-														.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
-									defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
-											tArrayLinkedList.getEntry(j).getrecordNo(),
-											tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
-											tArrayLinkedList.getEntry(j).getfromDate(),
-											tArrayLinkedList.getEntry(j).gettoDate(),
-											tArrayLinkedList.getEntry(j).getfromTime(),
-											tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
-											tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
-											library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
-								}
-							}
-						}
 				}
-				}
+			}
 
 		});
-		btnSortPrice.setBounds(634, 55, 97, 25);
+		btnSortPrice.setBounds(634, 69, 97, 25);
 		add(btnSortPrice);
 
 		JButton btnSortDistance = new JButton("Fastest");
 		btnSortDistance.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			if (lblUsername.getText().equalsIgnoreCase("Admin")) {
-				btnAddTravelleg.setEnabled(false);
+				if (lblUsername.getText().equalsIgnoreCase("Admin")) {
+					btnAddTravelleg.setEnabled(false);
 					defaultTableModel = (DefaultTableModel) table.getModel();
 					defaultTableModel.setNumRows(0);
 					SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
@@ -298,20 +299,19 @@ public class TravelLegMaintenance extends JPanel {
 
 					for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
 						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
-										&& (tArrayLinkedList.getEntry(j).getfromDate()
-												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+								|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
 							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
-									tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
-									tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
-									tArrayLinkedList.getEntry(j).gettoDate(), tArrayLinkedList.getEntry(j).getfromTime(),
+									tArrayLinkedList.getEntry(j).getrecordNo(),
+									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
+									tArrayLinkedList.getEntry(j).getfromDate(),
+									tArrayLinkedList.getEntry(j).gettoDate(),
+									tArrayLinkedList.getEntry(j).getfromTime(),
 									tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
 									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
 									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
 						}
 					}
-				}
-			else {
+				} else {
 					defaultTableModel = (DefaultTableModel) table.getModel();
 					defaultTableModel.setNumRows(0);
 					SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
@@ -321,58 +321,58 @@ public class TravelLegMaintenance extends JPanel {
 					for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
 						if (tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
 							if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-									|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
-											&& (tArrayLinkedList.getEntry(j).getfromDate()
-													.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
-								defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
-										tArrayLinkedList.getEntry(j).getrecordNo(),
-										tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
-										tArrayLinkedList.getEntry(j).getfromDate(),
-										tArrayLinkedList.getEntry(j).gettoDate(),
-										tArrayLinkedList.getEntry(j).getfromTime(),
-										tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
-										tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
-										library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+									|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
+								defaultTableModel.insertRow(defaultTableModel.getRowCount(),
+										new Object[] { tArrayLinkedList.getEntry(j).getrecordNo(),
+												tArrayLinkedList.getEntry(j).getSource(),
+												tArrayLinkedList.getEntry(j).getDest(),
+												tArrayLinkedList.getEntry(j).getfromDate(),
+												tArrayLinkedList.getEntry(j).gettoDate(),
+												tArrayLinkedList.getEntry(j).getfromTime(),
+												tArrayLinkedList.getEntry(j).gettoTime(),
+												tArrayLinkedList.getEntry(j).getMode(),
+												tArrayLinkedList.getEntry(j).getPrice(),
+												tArrayLinkedList.getEntry(j).getDistance(),
+												library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
 							}
 						}
 					}
-			}
+				}
 			}
 
-	});
-		btnSortDistance.setBounds(728, 55, 97, 25);
+		});
+		btnSortDistance.setBounds(728, 69, 97, 25);
 		add(btnSortDistance);
 
 		JLabel lblDestinationLocation = new JLabel("Destination Location :");
 		lblDestinationLocation.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblDestinationLocation.setBounds(12, 35, 177, 36);
+		lblDestinationLocation.setBounds(12, 61, 177, 36);
 		add(lblDestinationLocation);
 
 		lblNewLabel = new JLabel("Hello :");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel.setBounds(513, 12, 62, 16);
+		lblNewLabel.setBounds(513, 37, 62, 16);
 		add(lblNewLabel);
 
 		lblUsername = new JLabel("");
 		lblUsername.setForeground(Color.BLUE);
 		lblUsername.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblUsername.setBounds(587, 12, 91, 16);
+		lblUsername.setBounds(587, 37, 91, 16);
 		add(lblUsername);
 		lblUsername.setText(mainFrame.authUser.getUsername());
-		
+
 		btnNewButton_1 = new JButton("Back");
-		btnNewButton_1.addActionListener(event->{
+		btnNewButton_1.addActionListener(event -> {
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new MainMenu(mainFrame)));
 		});
 		btnNewButton_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		btnNewButton_1.setBounds(694, 395, 157, 40);
+		btnNewButton_1.setBounds(695, 409, 157, 40);
 		add(btnNewButton_1);
 
 		updateLabel(null, null);
 
 	}
-
 	public void updateLabel(String searchItem, String searchString) {
 		if (lblUsername.getText().equalsIgnoreCase("Admin")) {
 			btnAddTravelleg.setEnabled(false);
@@ -384,10 +384,8 @@ public class TravelLegMaintenance extends JPanel {
 						Comparator.comparing(TravelLegInfo::getSource));
 
 				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-//					if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-//							|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
-//									&& (tArrayLinkedList.getEntry(j).getfromDate()
-//											.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+					if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+							|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
 						defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
 								tArrayLinkedList.getEntry(j).getrecordNo(), tArrayLinkedList.getEntry(j).getSource(),
 								tArrayLinkedList.getEntry(j).getDest(), tArrayLinkedList.getEntry(j).getfromDate(),
@@ -395,9 +393,9 @@ public class TravelLegMaintenance extends JPanel {
 								tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
 								tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
 								library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
-//					}
+					}
 				}
-			} else if (searchItem != null && searchString == null) {
+			} else if (!searchItem.isEmpty() && searchString.isEmpty()) {
 				searchItem = searchItem.toLowerCase();
 				SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
 				SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
@@ -407,11 +405,10 @@ public class TravelLegMaintenance extends JPanel {
 				defaultTableModel.setNumRows(0);
 
 				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-					if (tArrayLinkedList.getEntry(j).getSource().contains(searchItem)) {
+					if (tArrayLinkedList.getEntry(j).getSource().toLowerCase().contains(searchItem)) {
 						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
-										&& (tArrayLinkedList.getEntry(j).getfromDate()
-												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+								|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
+
 							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
 									tArrayLinkedList.getEntry(j).getrecordNo(),
 									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
@@ -424,7 +421,7 @@ public class TravelLegMaintenance extends JPanel {
 						}
 					}
 				}
-			} else if (searchItem == null && searchString != null) {
+			} else if (searchItem.isEmpty() && !searchString.isEmpty()) {
 				searchString = searchString.toLowerCase();
 				SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
 				SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
@@ -434,11 +431,9 @@ public class TravelLegMaintenance extends JPanel {
 				defaultTableModel.setNumRows(0);
 
 				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-					if (tArrayLinkedList.getEntry(j).getDest().contains(searchString)) {
+					if (tArrayLinkedList.getEntry(j).getDest().toLowerCase().contains(searchString)) {
 						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
-										&& (tArrayLinkedList.getEntry(j).getfromDate()
-												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+								|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
 							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
 									tArrayLinkedList.getEntry(j).getrecordNo(),
 									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
@@ -462,12 +457,10 @@ public class TravelLegMaintenance extends JPanel {
 				defaultTableModel.setNumRows(0);
 
 				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-					if (tArrayLinkedList.getEntry(j).getDest().toLowerCase().contains(searchString)
-							&& tArrayLinkedList.getEntry(j).getSource().toLowerCase().contains(searchItem)) {
+					if (tArrayLinkedList.getEntry(j).getSource().toLowerCase().contains(searchItem)
+							&& tArrayLinkedList.getEntry(j).getDest().toLowerCase().contains(searchString)) {
 						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
-										&& (tArrayLinkedList.getEntry(j).getfromDate()
-												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+								|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
 							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
 									tArrayLinkedList.getEntry(j).getrecordNo(),
 									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
@@ -480,7 +473,6 @@ public class TravelLegMaintenance extends JPanel {
 
 						}
 					}
-
 				}
 			}
 		} else {
@@ -494,9 +486,7 @@ public class TravelLegMaintenance extends JPanel {
 				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
 					if (tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
 						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
-										&& (tArrayLinkedList.getEntry(j).getfromDate()
-												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+								|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
 							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
 									tArrayLinkedList.getEntry(j).getrecordNo(),
 									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
@@ -507,9 +497,10 @@ public class TravelLegMaintenance extends JPanel {
 									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
 									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
 						}
+
 					}
 				}
-			} else if (searchItem != null && searchString == null) {
+			} else if (!searchItem.isEmpty() && searchString.isEmpty()) {
 				searchItem = searchItem.toLowerCase();
 				SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
 				SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
@@ -519,25 +510,27 @@ public class TravelLegMaintenance extends JPanel {
 				defaultTableModel.setNumRows(0);
 
 				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-					if (tArrayLinkedList.getEntry(j).getSource().contains(searchItem)
-							&& tArrayLinkedList.getEntry(j).getCompany().toString().equalsIgnoreCase(companyString)) {
-						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
-										&& (tArrayLinkedList.getEntry(j).getfromDate()
-												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
-							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
-									tArrayLinkedList.getEntry(j).getrecordNo(),
-									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
-									tArrayLinkedList.getEntry(j).getfromDate(),
-									tArrayLinkedList.getEntry(j).gettoDate(),
-									tArrayLinkedList.getEntry(j).getfromTime(),
-									tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
-									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
-									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+					if (tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
+						if (tArrayLinkedList.getEntry(j).getSource().toLowerCase().contains(searchItem)) {
+							if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+									|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
+								defaultTableModel.insertRow(defaultTableModel.getRowCount(),
+										new Object[] { tArrayLinkedList.getEntry(j).getrecordNo(),
+												tArrayLinkedList.getEntry(j).getSource(),
+												tArrayLinkedList.getEntry(j).getDest(),
+												tArrayLinkedList.getEntry(j).getfromDate(),
+												tArrayLinkedList.getEntry(j).gettoDate(),
+												tArrayLinkedList.getEntry(j).getfromTime(),
+												tArrayLinkedList.getEntry(j).gettoTime(),
+												tArrayLinkedList.getEntry(j).getMode(),
+												tArrayLinkedList.getEntry(j).getPrice(),
+												tArrayLinkedList.getEntry(j).getDistance(),
+												library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+							}
 						}
 					}
 				}
-			} else if (searchItem == null && searchString != null) {
+			} else if (searchItem.isEmpty() && !searchString.isEmpty()) {
 				searchString = searchString.toLowerCase();
 				SinglyLinkedList<TravelLegInfo> oArray = library.Convertion(tArray);
 				SortedLinkedList<TravelLegInfo> tArrayLinkedList = new SortedLinkedList<TravelLegInfo>(oArray,
@@ -547,21 +540,23 @@ public class TravelLegMaintenance extends JPanel {
 				defaultTableModel.setNumRows(0);
 
 				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-					if (tArrayLinkedList.getEntry(j).getDest().contains(searchString)
-							&& tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
-						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
-										&& (tArrayLinkedList.getEntry(j).getfromDate()
-												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
-							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
-									tArrayLinkedList.getEntry(j).getrecordNo(),
-									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
-									tArrayLinkedList.getEntry(j).getfromDate(),
-									tArrayLinkedList.getEntry(j).gettoDate(),
-									tArrayLinkedList.getEntry(j).getfromTime(),
-									tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
-									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
-									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+					if (tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
+						if (tArrayLinkedList.getEntry(j).getDest().toLowerCase().contains(searchString)) {
+							if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+									|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
+								defaultTableModel.insertRow(defaultTableModel.getRowCount(),
+										new Object[] { tArrayLinkedList.getEntry(j).getrecordNo(),
+												tArrayLinkedList.getEntry(j).getSource(),
+												tArrayLinkedList.getEntry(j).getDest(),
+												tArrayLinkedList.getEntry(j).getfromDate(),
+												tArrayLinkedList.getEntry(j).gettoDate(),
+												tArrayLinkedList.getEntry(j).getfromTime(),
+												tArrayLinkedList.getEntry(j).gettoTime(),
+												tArrayLinkedList.getEntry(j).getMode(),
+												tArrayLinkedList.getEntry(j).getPrice(),
+												tArrayLinkedList.getEntry(j).getDistance(),
+												library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+							}
 						}
 					}
 				}
@@ -576,13 +571,10 @@ public class TravelLegMaintenance extends JPanel {
 				defaultTableModel.setNumRows(0);
 
 				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
-					if (tArrayLinkedList.getEntry(j).getDest().toLowerCase().contains(searchString)
-							&& tArrayLinkedList.getEntry(j).getSource().toLowerCase().contains(searchItem)
-							&& tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
+					if (tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
+						if(tArrayLinkedList.getEntry(j).getSource().toLowerCase().contains(searchItem) && tArrayLinkedList.getEntry(j).getDest().toLowerCase().contains(searchString))
 						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-								|| (tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now()))
-										&& (tArrayLinkedList.getEntry(j).getfromDate()
-												.isBefore(tArrayLinkedList.getEntry(j).gettoDate()))) {
+								|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
 							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
 									tArrayLinkedList.getEntry(j).getrecordNo(),
 									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),

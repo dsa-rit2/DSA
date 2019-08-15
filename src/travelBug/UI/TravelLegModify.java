@@ -40,12 +40,13 @@ public class TravelLegModify extends JPanel {
 	private Set<String> s = new TreeSet<String>();
 	private final UIControl mainframe;		// Store main frame
 	private JComboBox<String> cbTransport;
+	private String usernameString; 
 	
 		
 	public TravelLegModify(Vector<?> vector, String ID, UIControl parent) {
 		super();
 		this.mainframe = parent;
-		
+		usernameString = parent.authUser.getUsername();
 		// ======================= Jpanel setting ========================//
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
@@ -58,7 +59,6 @@ public class TravelLegModify extends JPanel {
 		for(int i = 0; i < cArray.size(); i++) {
 			s.add(cArray.getIndexElement(i).getName());
 		}
-		
 		// ============================ Content component =========================//
 		JLabel lblSourceLocation = new JLabel("Source location  :");
 		lblSourceLocation.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
@@ -479,10 +479,11 @@ public class TravelLegModify extends JPanel {
 				}
 				if (!(((JTextField) dcFromDate.getDateEditor().getUiComponent()).getText().isEmpty())
 						&& !(((JTextField) dcToDate.getDateEditor().getUiComponent()).getText().isEmpty())) {
-					if (!fromDate.isBefore(toDate)) {
-						lblFromDateError.setText("[The [From] date must before [To] date]");
+					if (!(fromDate.isBefore(toDate)) && !(fromDate.equals(toDate)) && fromDate.isAfter(toDate)) {
+						lblFromDateError.setText("[The [From] date must before [To] date] or Equal");
 						error = true;
-					} else {
+					}
+					else {
 						lblFromDateError.setText("");
 					}
 				}
@@ -560,10 +561,9 @@ public class TravelLegModify extends JPanel {
 					}
 				}
 				// Write travel leg info into text file
-				System.out.print(error);
 				if (!error) {
 					for (int i = 0; i < rArray.size(); i++) {
-						if (rArray.getIndexElement(i).getrecordNo().toString().matches(ID)) {
+						if (rArray.getIndexElement(i).getrecordNo().toString().equalsIgnoreCase(ID)) {
 							rArray.getIndexElement(i).setSource(srcLocationString);
 							rArray.getIndexElement(i).setDest(dstLocationString);
 							rArray.getIndexElement(i).setfromDate(fromDate);
@@ -574,6 +574,8 @@ public class TravelLegModify extends JPanel {
 							rArray.getIndexElement(i).setPrice(price);
 							rArray.getIndexElement(i).setDistance(distance);
 							rArray.getIndexElement(i).setDuration(duration);
+
+							
 						}
 					}
 					rFile.writeLinkArray(rArray);

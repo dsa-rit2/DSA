@@ -44,10 +44,11 @@ public class AddTravelLegAccount extends JPanel {
 		tArray = tFile.readLinkArray();
 		createGui();
 	}
-	
+
 	public void createGui() {
 		removeAll();
-		// ======================================== Content component ==============================================//
+		// ======================================== Content component
+		// ==============================================//
 
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -106,19 +107,19 @@ public class AddTravelLegAccount extends JPanel {
 		lblPasswordError.setBackground(Color.white);
 		lblPasswordError.setBounds(312, 233, 416, 16);
 		add(lblPasswordError);
-		
+
 		lblPasswordError.setVisible(false);
 		lblUsernameError.setVisible(false);
 
-		
-		// ================================================ Button ====================================================//
+		// ================================================ Button
+		// ====================================================//
 		Button btnAdd = new Button("Add");
 		btnAdd.addActionListener(event -> {
 			String username = txtUserFront.getText() + "." + txtUserNameNum.getText();
 			String password = String.valueOf(txtPassword.getText());
 			String checkPass = library.validPassword(password);
 			int error = 0;
-		
+
 			lblPasswordError.setVisible(false);
 			lblUsernameError.setVisible(false);
 			lblUsernameError.setText("");

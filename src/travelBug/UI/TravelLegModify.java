@@ -477,10 +477,11 @@ public class TravelLegModify extends JPanel {
 				}
 				if (!(((JTextField) dcFromDate.getDateEditor().getUiComponent()).getText().isEmpty())
 						&& !(((JTextField) dcToDate.getDateEditor().getUiComponent()).getText().isEmpty())) {
-					if (!fromDate.isBefore(toDate)) {
-						lblFromDateError.setText("[The [From] date must before [To] date]");
+					if (!(fromDate.isBefore(toDate)) && !(fromDate.equals(toDate)) && fromDate.isAfter(toDate)) {
+						lblFromDateError.setText("[The [From] date must before [To] date] or Equal");
 						error = true;
-					} else {
+					}
+					else {
 						lblFromDateError.setText("");
 					}
 				}
@@ -572,6 +573,10 @@ public class TravelLegModify extends JPanel {
 							rArray.getIndexElement(i).setPrice(price);
 							rArray.getIndexElement(i).setDistance(distance);
 							rArray.getIndexElement(i).setDuration(duration);
+							
+							System.out.print(fromDate);
+							System.out.print(toDate);
+							
 						}
 					}
 					rFile.writeLinkArray(rArray);

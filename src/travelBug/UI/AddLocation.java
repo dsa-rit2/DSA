@@ -141,8 +141,7 @@ public class AddLocation extends JPanel {
 		lblLatitude.setBounds(560, 348, 81, 16);
 		add(lblLatitude);
 
-		// ==================================== Button
-		// ==================================//
+		// ======================= Button ========================
 		JButton btnAdd = new JButton("Add");
 		btnAdd.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		btnAdd.addActionListener(event -> submit());
@@ -151,14 +150,11 @@ public class AddLocation extends JPanel {
 
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		btnCancel.addActionListener(event -> {
-			library.dialogMessage("The page will redirect to list location");
-			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
-		});
+		btnCancel.addActionListener(event -> SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame))));
 		btnCancel.setBounds(569, 402, 120, 35);
 		add(btnCancel);
 
-		// ===================== Error message ====================
+		// ==================== Error message ====================
 		lblErrorLocationName = new Label("");
 		lblErrorLocationName.setForeground(Color.RED);
 		lblErrorLocationName.setBackground(Color.white);
@@ -292,6 +288,7 @@ public class AddLocation extends JPanel {
 				error = true;
 			}
 		}
+		
 		if (txtLongitude.getText().isEmpty()) {
 			lblErrorLongitude.setText("Longitude is empty");
 			lblErrorLongitude.setVisible(true);
@@ -305,6 +302,7 @@ public class AddLocation extends JPanel {
 				error = true;
 			}
 		}
+		
 		if (txtLatitude.getText().isEmpty()) {
 			lblErrorLatitude.setText("Latitude is empty");
 			lblErrorLatitude.setVisible(true);

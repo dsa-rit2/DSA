@@ -8,17 +8,13 @@ import travelBug.obj.*;
 //=========================
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
 public class ModifyLocation extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtLocationName, txtState, txtLongitude, txtLatitude;
 	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblCountry, lblState, lblType;
-	private Label lblErrorLocationName, lblErrorContinent, lblErrorType, lblErrorState, lblErrorCountry;
-	private Label lblErrorLongitude, lblErrorLatitude;
+	private Label lblErrorLocationName, lblErrorContinent, lblErrorType, lblErrorState, lblErrorCountry, lblErrorLongitude, lblErrorLatitude;
 	private JComboBox<String> cbCountry, cbType;
 	private LinkArray<Location> lArray = new LinkArray<Location>();
 	private ReadWriteFile<Location> lFile = new ReadWriteFile<Location>("Location.txt", Location.class);
@@ -27,7 +23,6 @@ public class ModifyLocation extends JPanel {
 	private final UIControl mainFrame;
 
 	public ModifyLocation(UIControl parent, String inputName) {
-
 		// ==================== JPanel setting =====================
 		super();
 		mainFrame = parent;
@@ -47,9 +42,7 @@ public class ModifyLocation extends JPanel {
 			}
 		}
 
-		// ====================================================Content Component
-		// ==========================================================//
-
+		// ====================== Content Component =========================
 		txtLocationName = new JTextField();
 		txtLocationName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtLocationName.setBounds(300, 64, 500, 30);
@@ -57,7 +50,7 @@ public class ModifyLocation extends JPanel {
 		add(txtLocationName);
 		txtLocationName.setColumns(10);
 
-		lblNewLabel = new JLabel("Add Location");
+		lblNewLabel = new JLabel("Edit Location");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 30));
 		lblNewLabel.setBounds(12, 13, 876, 50);
@@ -96,15 +89,10 @@ public class ModifyLocation extends JPanel {
 		txtState = new JTextField();
 		txtState.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtState.setBounds(300, 238, 500, 30);
-		txtState.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				submit();
-			}
-		});
+		txtState.addActionListener(e -> submit());
 		txtState.setText(lArray.getIndexElement(locationFound).getState());
-		add(txtState);
 		txtState.setColumns(10);
+		add(txtState);
 
 		txtLongitude = new JTextField();
 		txtLongitude.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -153,9 +141,8 @@ public class ModifyLocation extends JPanel {
 		cbCountry.setBounds(300, 182, 300, 30);
 		add(cbCountry);
 		loadC(lArray.getIndexElement(locationFound).getContinent(), lArray.getIndexElement(locationFound).getCountry());
-		// =============================================== Error Message
-		// =====================================================//
-
+		
+		// ====================== Error Message =======================
 		lblErrorLocationName = new Label("");
 		lblErrorLocationName.setForeground(Color.RED);
 		lblErrorLocationName.setBackground(Color.white);
@@ -205,21 +192,15 @@ public class ModifyLocation extends JPanel {
 		lblErrorLongitude.setVisible(false);
 		lblErrorState.setVisible(false);
 		lblErrorType.setVisible(false);
-		// ============================================== Button
-		// ============================================= //
-
+		
+		// ====================== Buttons =========================
 		JButton btnAdd = new JButton("Change");
-		btnAdd.addActionListener(event -> {
-			submit();
-		});
+		btnAdd.addActionListener(event -> submit());
 		btnAdd.setBounds(279, 393, 97, 25);
 		add(btnAdd);
 
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(event -> {
-			library.dialogMessage("The page will redirect to the list location");
-			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame)));
-		});
+		btnCancel.addActionListener(event -> SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListLocation(mainFrame))));
 		btnCancel.setBounds(489, 393, 97, 25);
 		add(btnCancel);
 
@@ -239,9 +220,9 @@ public class ModifyLocation extends JPanel {
 		double longitude = 0.00;
 		double latitude = 0.00;
 		char typeChar = 0;
-		int error = 0;
+		boolean error = false;
 
-		// ======================== Clear error message=========================//
+		// ===================== Clear error message ======================
 		lblErrorContinent.setVisible(false);
 		lblErrorCountry.setVisible(false);
 		lblErrorLatitude.setVisible(false);
@@ -260,50 +241,57 @@ public class ModifyLocation extends JPanel {
 		if (locationName.isEmpty()) {
 			lblErrorLocationName.setText("The location name cannot be empty");
 			lblErrorLocationName.setVisible(true);
-			error++;
+			error = true;
 		}
+		
 		if (cbContinent.getSelectedIndex() == 0) {
 			lblErrorContinent.setText("The continent cannot be empty");
 			lblErrorContinent.setVisible(true);
-			error++;
+			error = true;
 		}
+		
 		if (state.isEmpty()) {
 			lblErrorState.setText("The state cannot be empty");
 			lblErrorState.setVisible(true);
-			error++;
+			error = true;
 		}
+		
 		if (cbCountry.getSelectedIndex() == 0) {
 			lblErrorCountry.setText("Please select country");
 			lblErrorCountry.setVisible(true);
-			error++;
+			error = true;
 		}
+		
 		if (cbType.getSelectedIndex() == 0) {
 			lblErrorType.setText("Please select type");
 			lblErrorType.setVisible(true);
-			error++;
+			error = true;
 		} else {
 			typeChar = library.getTypeChar(type);
 			if (typeChar == 0) {
 				lblErrorType.setText("The type is wrong");
 				lblErrorType.setVisible(true);
-				error++;
+				error = true;
 			}
 		}
+		
 		if (txtLongitude.getText().isEmpty()) {
 			lblErrorLongitude.setText("Longitude is empty");
 			lblErrorLongitude.setVisible(true);
-			error++;
+			error = true;
 		} else {
 			longitude = Double.parseDouble(txtLongitude.getText());
 		}
+		
 		if (txtLatitude.getText().isEmpty()) {
 			lblErrorLatitude.setText("Latitude is empty");
 			lblErrorLatitude.setVisible(true);
-			error++;
+			error = true;
 		} else {
 			latitude = Double.parseDouble(txtLatitude.getText());
 		}
-		if (error == 0) {
+		
+		if (!error) {
 			lArray.getIndexElement(locationFound).setName(locationName);
 			lArray.getIndexElement(locationFound).setContinent(continent);
 			lArray.getIndexElement(locationFound).setCountry(country);

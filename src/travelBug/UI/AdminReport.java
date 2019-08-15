@@ -7,8 +7,10 @@ package travelBug.UI;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.table.DefaultTableModel;
 
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import travelBug.library.LinkArray;
@@ -65,7 +67,9 @@ public class AdminReport extends JPanel {
 				return false;
 			}
 		};
+		
 		table = new JTable(tableModel);
+	
 		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 //		Color ivory = new Color(255, 255, 208);
 //		table.setBackground(ivory);
@@ -83,6 +87,7 @@ public class AdminReport extends JPanel {
 		scrollPane.setBounds(12, 93, 876, 297);
 		scrollPane.setEnabled(false);
 		add(scrollPane);
+		
 
 		// Month dropdownlist
 		comboBox = new JComboBox<String>(

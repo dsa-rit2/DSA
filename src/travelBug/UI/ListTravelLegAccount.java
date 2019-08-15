@@ -63,7 +63,6 @@ public class ListTravelLegAccount extends JPanel {
 		cArray = cFile.readLinkArray();
 		for (int i = 0; i < cArray.size(); i++) {
 			if (cArray.getIndexElement(i).getCompanyName().equalsIgnoreCase(companyName)) {
-				cArray.getIndexElement(i).print();
 				indexCompany = i;
 				break;
 			}

@@ -124,15 +124,7 @@ public class MainMenu extends JPanel {
 
 	// ------------Travel Leg Content----------------------------
 	private void travelLegGUI() {
-		Button button = new Button("Plan Trip");
-		button.addActionListener(event -> {
-			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new PlanTrip(mainFrame)));
-		});
-		button.setFont(new Font("Segoe UI", Font.PLAIN, 22));
-		button.setForeground(Color.WHITE);
-		button.setBackground(new Color(139, 69, 19));
-		button.setBounds(123, 124, 189, 61);
-		add(button);
+//		
 
 		Button button_1 = new Button("Log Out");
 		button_1.addActionListener(event -> {
@@ -152,7 +144,7 @@ public class MainMenu extends JPanel {
 		button_2.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		button_2.setForeground(Color.WHITE);
 		button_2.setBackground(new Color(139, 69, 19));
-		button_2.setBounds(378, 124, 298, 61);
+		button_2.setBounds(300, 124, 298, 61);
 
 		add(button_2);
 	}

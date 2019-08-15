@@ -80,12 +80,7 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 1) {
-							
 							txtArray[0].setBackground(Color.lightGray);
-							txtArray[1].setBackground(Color.white);
-							txtArray[2].setBackground(Color.white);
-							txtArray[3].setBackground(Color.white);
-							txtArray[4].setBackground(Color.white);
 						}
 					}
 				});
@@ -95,12 +90,8 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 1) {
-							
 							txtArray[0].setBackground(Color.white);
 							txtArray[1].setBackground(Color.lightGray);
-							txtArray[2].setBackground(Color.white);
-							txtArray[3].setBackground(Color.white);
-							txtArray[4].setBackground(Color.white);
 						}
 					}
 				});
@@ -114,8 +105,6 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 							txtArray[0].setBackground(Color.white);
 							txtArray[1].setBackground(Color.white);
 							txtArray[2].setBackground(Color.lightGray);
-							txtArray[3].setBackground(Color.white);
-							txtArray[4].setBackground(Color.white);
 						}
 					}
 				});
@@ -130,7 +119,6 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 							txtArray[1].setBackground(Color.white);
 							txtArray[2].setBackground(Color.white);
 							txtArray[3].setBackground(Color.lightGray);
-							txtArray[4].setBackground(Color.white);
 						}
 					}
 				});
@@ -140,7 +128,6 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 1) {
-							
 							txtArray[0].setBackground(Color.white);
 							txtArray[1].setBackground(Color.white);
 							txtArray[2].setBackground(Color.white);

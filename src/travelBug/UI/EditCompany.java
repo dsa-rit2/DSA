@@ -46,51 +46,55 @@ public class EditCompany extends JPanel {
 
 		// ==================== Content component =========================
 		JLabel lblNewLabel = new JLabel("Company Name:");
-		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblNewLabel.setBounds(228, 71, 141, 30);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel.setBounds(180, 64, 141, 30);
 		add(lblNewLabel);
 
 		txtAsd = new JTextField();
-		txtAsd.setFont(new Font("Calibri", Font.BOLD, 14));
+		txtAsd.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		txtAsd.setText(cArray.getIndexElement(companyFoundindex).getCompanyName());
-		txtAsd.setBounds(417, 76, 207, 28);
+		txtAsd.setBounds(333, 71, 300, 28);
 		add(txtAsd);
 		txtAsd.setColumns(10);
 
 		JLabel lblShortForm = new JLabel("Short Form:");
-		lblShortForm.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblShortForm.setBounds(228, 144, 141, 30);
+		lblShortForm.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblShortForm.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblShortForm.setBounds(180, 137, 141, 30);
 		add(lblShortForm);
 
 		shortF = new JTextField();
-		shortF.setFont(new Font("Calibri", Font.BOLD, 14));
+		shortF.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		shortF.setText(cArray.getIndexElement(companyFoundindex).getShortForm());
-		shortF.setBounds(417, 149, 207, 28);
+		shortF.setBounds(333, 144, 300, 28);
 		add(shortF);
 		shortF.setColumns(10);
 
 		JLabel lblPhoneNumber = new JLabel("Phone Number:");
-		lblPhoneNumber.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblPhoneNumber.setBounds(228, 212, 141, 30);
+		lblPhoneNumber.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPhoneNumber.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblPhoneNumber.setBounds(180, 205, 141, 30);
 		add(lblPhoneNumber);
 
 		phoneN = new JTextField();
-		phoneN.setFont(new Font("Calibri", Font.BOLD, 14));
+		phoneN.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		phoneN.setText(cArray.getIndexElement(companyFoundindex).getPhoneNum());
-		phoneN.setBounds(417, 217, 207, 28);
+		phoneN.setBounds(333, 212, 300, 28);
 		add(phoneN);
 		phoneN.setColumns(10);
 
 		JLabel lblDescription = new JLabel("Description:");
-		lblDescription.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblDescription.setBounds(228, 275, 141, 30);
+		lblDescription.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDescription.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblDescription.setBounds(180, 276, 141, 30);
 		add(lblDescription);
 
 		Descriptiontxt = new JTextField();
-		Descriptiontxt.setFont(new Font("Calibri", Font.BOLD, 15));
+		Descriptiontxt.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		Descriptiontxt.setHorizontalAlignment(SwingConstants.LEFT);
 		Descriptiontxt.setText(cArray.getIndexElement(companyFoundindex).getDescription());
-		Descriptiontxt.setBounds(417, 275, 219, 28);
+		Descriptiontxt.setBounds(333, 278, 300, 28);
 		add(Descriptiontxt);
 		Descriptiontxt.setColumns(20);
 
@@ -98,25 +102,25 @@ public class EditCompany extends JPanel {
 		Label lblErrorCompanyName = new Label("");
 		lblErrorCompanyName.setForeground(Color.RED);
 		lblErrorCompanyName.setBackground(Color.white);
-		lblErrorCompanyName.setBounds(667, 73, 207, 14);
+		lblErrorCompanyName.setBounds(333, 105, 300, 14);
 		add(lblErrorCompanyName);
 
 		Label lblErrorDescription = new Label("");
 		lblErrorDescription.setForeground(Color.RED);
 		lblErrorDescription.setBackground(Color.white);
-		lblErrorDescription.setBounds(667, 275, 207, 14);
+		lblErrorDescription.setBounds(333, 312, 300, 14);
 		add(lblErrorDescription);
 
 		Label lblErrorShortForm = new Label("");
 		lblErrorShortForm.setForeground(Color.RED);
 		lblErrorShortForm.setBackground(Color.white);
-		lblErrorShortForm.setBounds(667, 144, 207, 14);
+		lblErrorShortForm.setBounds(333, 178, 300, 14);
 		add(lblErrorShortForm);
 
 		Label lblErrorPhoneNum = new Label("");
 		lblErrorPhoneNum.setForeground(Color.RED);
 		lblErrorPhoneNum.setBackground(Color.white);
-		lblErrorPhoneNum.setBounds(667, 212, 207, 14);
+		lblErrorPhoneNum.setBounds(333, 246, 300, 14);
 		add(lblErrorPhoneNum);
 
 		lblErrorCompanyName.setVisible(false);
@@ -125,7 +129,7 @@ public class EditCompany extends JPanel {
 		lblErrorShortForm.setVisible(false);
 		// =========================== Buttons =============================
 		JButton btnModify = new JButton("Modify");
-		btnModify.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		btnModify.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnModify.addActionListener(event -> {
 			int error = 0;
 			String companyName = txtAsd.getText();
@@ -202,7 +206,7 @@ public class EditCompany extends JPanel {
 				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 			}
 		});
-		btnModify.setBounds(276, 354, 141, 62);
+		btnModify.setBounds(276, 368, 150, 50);
 		add(btnModify);
 
 		JButton btnBack = new JButton("Back");
@@ -210,8 +214,8 @@ public class EditCompany extends JPanel {
 			library.dialogMessage("The page will redirect to the list company");
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ListCompany(mainFrame)));
 		});
-		btnBack.setFont(new Font("Calibri", Font.BOLD, 15));
-		btnBack.setBounds(457, 354, 141, 63);
+		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		btnBack.setBounds(470, 368, 150, 50);
 		add(btnBack);
 
 	}

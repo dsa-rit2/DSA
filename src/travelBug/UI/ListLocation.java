@@ -43,8 +43,8 @@ public class ListLocation extends JPanel {
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		setBounds(new Rectangle(new Dimension(900, 450)));
+		
 		// ==========================Get the data==================================
-
 		tableModel = new DefaultTableModel() {
 			private static final long serialVersionUID = 1L;
 
@@ -67,8 +67,7 @@ public class ListLocation extends JPanel {
 					vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						SwingUtilities.invokeLater(() -> mainFrame
-								.changePanel(new ModifyLocation(mainFrame, vector.elementAt(0).toString())));
+						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame, vector.elementAt(0).toString())));
 					}
 				}
 			}
@@ -93,9 +92,7 @@ public class ListLocation extends JPanel {
 
 		load(null);
 
-//		table.setShowGrid(false);
 		table.setBounds(34, 31, 537, 167);
-//		contentPane.add(table);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(12, 93, 876, 297);
 		scrollPane.setEnabled(false);
@@ -114,7 +111,7 @@ public class ListLocation extends JPanel {
 		JLabel lblNewLabel = new JLabel("List Location");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel.setBounds(314, 13, 200, 35);
+		lblNewLabel.setBounds(360, 13, 200, 35);
 		add(lblNewLabel);
 
 		textField = new JTextField();
@@ -144,13 +141,10 @@ public class ListLocation extends JPanel {
 		lblNewLabel_1.setBounds(50, 52, 78, 32);
 		add(lblNewLabel_1);
 
-		// ======================== Button ================================//
-
+		// ======================== Button ===========================
 		JButton btnNewButton = new JButton("Add Location");
 		btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		btnNewButton.addActionListener(event -> {
-			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddLocation(mainFrame)));
-		});
+		btnNewButton.addActionListener(event -> SwingUtilities.invokeLater(() -> mainFrame.changePanel(new AddLocation(mainFrame))));
 		btnNewButton.setBounds(12, 403, 130, 35);
 		add(btnNewButton);
 
@@ -220,7 +214,7 @@ public class ListLocation extends JPanel {
 			}
 		});
 
-		btnDelete.setBounds(568, 403, 130, 35);
+		btnDelete.setBounds(596, 403, 130, 35);
 		add(btnDelete);
 
 		btnModify = new JButton("Modify");
@@ -234,8 +228,7 @@ public class ListLocation extends JPanel {
 					vector = (Vector<?>) tableModel.getDataVector().elementAt(SelectedRowIndex);
 					if (vector != null) {
 //	    			Redirect the thing to modify location
-						SwingUtilities.invokeLater(() -> mainFrame
-								.changePanel(new ModifyLocation(mainFrame, vector.elementAt(0).toString())));
+						SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ModifyLocation(mainFrame, vector.elementAt(0).toString())));
 					}
 				} else {
 					library.dialogMessage("Please choose one location to modify");
@@ -243,16 +236,13 @@ public class ListLocation extends JPanel {
 
 			}
 		});
-		btnModify.setBounds(415, 403, 130, 35);
+		btnModify.setBounds(443, 403, 130, 35);
 		add(btnModify);
 
 		btnBack = new JButton("Back");
-		btnBack.addActionListener(event -> {
-			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new MainMenu(mainFrame)));
-
-		});
+		btnBack.addActionListener(event -> SwingUtilities.invokeLater(() -> mainFrame.changePanel(new MainMenu(mainFrame))));
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		btnBack.setBounds(730, 403, 130, 34);
+		btnBack.setBounds(758, 403, 130, 34);
 		add(btnBack);
 
 		btnReset = new JButton("Reset");
@@ -266,11 +256,9 @@ public class ListLocation extends JPanel {
 		btnReset.setForeground(new Color(0, 0, 255));
 		btnReset.setBounds(787, 55, 85, 25);
 		add(btnReset);
-
 	}
 
-	// =============================== Additional
-	// function=======================================//
+	// ========================= Additional function ============================
 	public void load(String anyString) {
 		tableModel.setRowCount(0);
 		if (anyString == null) {
@@ -279,7 +267,6 @@ public class ListLocation extends JPanel {
 						lArray.getIndexElement(i).getState(), lArray.getIndexElement(i).getCountry(),
 						library.getTypeString(lArray.getIndexElement(i).getType()) };
 				tableModel.addRow(dataStrings);
-				lArray.getIndexElement(i).print();
 			}
 		} else {
 			anyString = anyString.toUpperCase();

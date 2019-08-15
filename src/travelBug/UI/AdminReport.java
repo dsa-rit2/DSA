@@ -67,14 +67,14 @@ public class AdminReport extends JPanel {
 		};
 		table = new JTable(tableModel);
 		table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		Color ivory = new Color(255, 255, 208);
-		table.setBackground(ivory);
+//		Color ivory = new Color(255, 255, 208);
+//		table.setBackground(ivory);
 		table.getTableHeader().setOpaque(false);
 		table.getTableHeader().setBackground(Color.white);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setSize(1000, 500);
 		table.setBounds(34, 31, 537, 167);
-		table.setRowHeight(100);
+		table.setRowHeight(30);
 		table.getTableHeader().setPreferredSize(new Dimension(100, 40));
 		Font f = new Font("Arial", Font.BOLD, 25);
 		table.getTableHeader().setFont(f);
@@ -128,7 +128,7 @@ public class AdminReport extends JPanel {
 			TableColumn column = table.getColumnModel().getColumn(i);
 			if (i >= 0) {
 				if (i == j) {
-					column.setPreferredWidth(100);
+					column.setPreferredWidth(30);
 				}
 			}
 			j++;
@@ -145,7 +145,7 @@ public class AdminReport extends JPanel {
 			TableColumn column = table.getColumnModel().getColumn(i);
 			if (i >= 0) {
 				if (i == j)
-					column.setPreferredWidth(50);
+					column.setPreferredWidth(30);
 			}
 			j++;
 		}
@@ -172,7 +172,7 @@ public class AdminReport extends JPanel {
 							size--;
 						}
 					}
-					System.out.println(currVal + currVal2 + count2);
+//					System.out.println(currVal + currVal2 + count2);
 					tableModel.addRow(new String[] { currVal, currVal2, Integer.toString(count2) });
 //					System.out.print("Source : " + currVal + " Dest: " + currVal2 + " Count : " + count2 + "\n");
 				}
@@ -195,7 +195,7 @@ public class AdminReport extends JPanel {
 								size--;
 							}
 						}
-						System.out.println(currVal + currVal2 + count2);
+//						System.out.println(currVal + currVal2 + count2);
 						tableModel.addRow(new String[] { currVal, currVal2, Integer.toString(count2) });
 					}
 				}

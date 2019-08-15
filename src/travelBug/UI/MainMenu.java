@@ -2,6 +2,8 @@ package travelBug.UI;
 
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class MainMenu extends JPanel {
@@ -37,6 +39,8 @@ public class MainMenu extends JPanel {
 		add(lblMainMenu);
 		lblMainMenu.setFont(new Font("Times New Roman", Font.BOLD, 20));
 
+		
+	
 		// ----------------------- Check Role ------------------------
 		if (parent.authUser.getRole().equalsIgnoreCase("Admin")) {
 			adminGUI();
@@ -50,6 +54,7 @@ public class MainMenu extends JPanel {
 	// --------------------------Admin Content----------------------
 	private void adminGUI() {
 
+		
 		Button button = new Button("Customer List");
 		button.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		button.setForeground(Color.WHITE);
@@ -103,6 +108,17 @@ public class MainMenu extends JPanel {
 		button_4.setBackground(new Color(139, 69, 19));
 		button_4.setBounds(690, 383, 189, 61);
 		add(button_4);
+		
+		Button button_5 = new Button("Travel Lag Maintanance");
+		button_5.addActionListener(event->{
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new TravelLegMaintenance(mainFrame)));
+
+		});
+		button_5.setForeground(Color.WHITE);
+		button_5.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		button_5.setBackground(new Color(139, 69, 19));
+		button_5.setBounds(237, 332, 244, 61);
+		add(button_5);
 
 	}
 

@@ -417,6 +417,8 @@ public class PlanTrip extends JPanel {
 			}
 
 			if (!error) {
+				ReadWriteFile<SourceDest> sFile = new ReadWriteFile<SourceDest>("sourceDes.txt", SourceDest.class);
+				SinglyLinkedList<SourceDest> sList = new SinglyLinkedList<SourceDest>();
 				ReadWriteFile<TravelLegInfo> readLocationFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt",
 						TravelLegInfo.class);
 				SinglyLinkedList<TravelLegInfo> travelLocationList = library
@@ -426,10 +428,13 @@ public class PlanTrip extends JPanel {
 						travelLocationList, Comparator.comparing(TravelLegInfo::getSource));
 				GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> desLocation = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(
 						travelLocationList, Comparator.comparing(TravelLegInfo::getDest));
-
+				
 				String srcTravel = locationName1.getSelectedItem().toString();
 				String desTravel = locationName2.getSelectedItem().toString();
-
+				
+				sList = library.Convertion(sFile.readLinkArray());
+				sList.add(new SourceDest(srcTravel, desTravel));
+				sFile.writeLinkArray(library.Converted(sList));
 				// Direct Travel -------------------------------------------------------------
 				for (TravelLegInfo location : travelLocationList) {
 					if (location.getSource().equalsIgnoreCase(srcTravel)

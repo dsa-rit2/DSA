@@ -21,8 +21,9 @@ public class ViewTrip extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JPanel callPanel;
 	private JButton btnBack;
-	private JTextField[] txtArray ;
-	private String callArrow = "-->";
+	private JTextPane[] txtArray;
+	private String callFrontArrow = "--[";
+	private String callBackArrow = "]-->";
 	private int adult=0,child=0;
 	private final UIControl mainFrame;
 	private int txtNum= 0;
@@ -62,21 +63,21 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 		LineBorder lineBorder = new LineBorder(Color.GRAY, 2, true);
 		callPanel = new JPanel(new GridLayout(5, 5));
 		callPanel.setBorder(lineBorder);
-		callPanel.setBounds(40, 58, 811, 334);
+		callPanel.setBounds(35, 58, 827, 334);
 		
 		this.txtNum = 0;
 		if(temp.getNumberOfEntries()>5)
 			txtNum = 5;
 		else
 			txtNum = temp.getNumberOfEntries();
-		txtArray = new JTextField[txtNum];
+		txtArray = new JTextPane[txtNum];
 		//====================On Click=========================//
 		for (int i = 0; i < txtNum; ++i) {
-			txtArray[i] = new JTextField(80);
+			txtArray[i] = new JTextPane();
 			txtArray[i].setFont(callFont);
 			txtArray[i].setEditable(false);
 			txtArray[i].setBackground(Color.white);
-			txtArray[i].setHorizontalAlignment(SwingConstants.CENTER);
+			//txtArray[i].setHorizontalAlignment(SwingConstants.CENTER);
 			
 			if(i == 0) {
 				txtArray[i].addMouseListener(new MouseAdapter() {
@@ -257,16 +258,22 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 
 					pStrings += temp.getEntry(i+1).getEntry(j).getSource();
 
-					pStrings += callArrow;
+					pStrings += callFrontArrow;
+					pStrings += temp.getEntry(i+1).getEntry(j).getMode();
+					pStrings += callBackArrow;
 
 					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
-					pStrings += callArrow;
+					pStrings += callFrontArrow;
+					pStrings += temp.getEntry(i+1).getEntry(j).getMode();
+					pStrings += callBackArrow;
 
 				} else {// Display next destination
 					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
 
 					if (temp.getEntry(i+1).getEntry(j + 1) != null) {
-						pStrings += callArrow;
+						pStrings += callFrontArrow;
+						pStrings += temp.getEntry(i+1).getEntry(j).getMode();
+						pStrings += callBackArrow;
 
 					}
 				}
@@ -275,8 +282,8 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 			///////////////////////////////////////////////////////////////////////////
 			// put data to panel
 			
-			txtArray[i].setHorizontalAlignment(SwingConstants.LEFT);
-			txtArray[i].setText(pStrings + "\n Price: RM " + totalPrice);
+			//txtArray[i].setHorizontalAlignment(SwingConstants.LEFT);
+			txtArray[i].setText(pStrings + "\nPrice: RM " + totalPrice);
 
 			callPanel.add(txtArray[i]);
 		}

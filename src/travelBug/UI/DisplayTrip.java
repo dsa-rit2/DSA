@@ -2,18 +2,11 @@ package travelBug.UI;
 
 import java.awt.*;
 import javax.swing.*;
-
 import travelBug.library.CircularLinkedList;
 import travelBug.library.SinglyLinkedList;
 import travelBug.obj.TravelLegInfo;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class DisplayTrip extends JPanel {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private UIControl mainFrame;
 	private JButton btnBack;
@@ -22,7 +15,6 @@ public class DisplayTrip extends JPanel {
 	private int adult = 0, child = 0;
 	
 	public DisplayTrip(UIControl parent,CircularLinkedList<TravelLegInfo> d, SinglyLinkedList<CircularLinkedList<TravelLegInfo>> t, int a, int c) {
-
 		super();
 		this.mainFrame = parent;
 		tempCircularLinkedList = d;
@@ -36,9 +28,7 @@ public class DisplayTrip extends JPanel {
 		createGUI();
 	}
 	
-	
 	private void createGUI() {
-		
 		String source = null;
 		String dest = null;
 		double distance = 0.00;
@@ -49,23 +39,20 @@ public class DisplayTrip extends JPanel {
 		double ChildCost = 0.00;
 		double total = 0.00;
 		
-		source   = tempCircularLinkedList.getEntry(1).getSource();
-		dest     = tempCircularLinkedList.getEntry(tempCircularLinkedList.getNumberOfEntries()).getDest();
-		
+		source = tempCircularLinkedList.getEntry(1).getSource();
+		dest   = tempCircularLinkedList.getEntry(tempCircularLinkedList.getNumberOfEntries()).getDest();
 
 		for(int i = 1; i <= tempCircularLinkedList.getNumberOfEntries(); i++) {
-			
-
-			distance += tempCircularLinkedList.getEntry(i).getDistance();
-			duration += tempCircularLinkedList.getEntry(i).getDuration();
-			price    = tempCircularLinkedList.getEntry(i).getPrice();
+			distance 	+= tempCircularLinkedList.getEntry(i).getDistance();
+			duration 	+= tempCircularLinkedList.getEntry(i).getDuration();
+			price    	= tempCircularLinkedList.getEntry(i).getPrice();
 			travelprice += price;
-			AdultCost = travelprice * adult;
-			ChildCost = travelprice * child * 0.5;
-			total = AdultCost + ChildCost;
+			AdultCost 	= travelprice * adult;
+			ChildCost 	= travelprice * child * 0.5;
+			total 		= AdultCost + ChildCost;
 		}
 		
-		// ====================Title=======================//
+		// ==================== Title =======================
 		JLabel lblViewTrip = new JLabel("Display Trip");
 		lblViewTrip.setHorizontalAlignment(SwingConstants.CENTER);
 		lblViewTrip.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -74,7 +61,7 @@ public class DisplayTrip extends JPanel {
 		
 		//////////////////////////////////////////////////////Content/////////////////////////////////////////////////////////////
 		
-		//============================From================================//
+		//======================== From ===========================
 		JLabel lblFrom = new JLabel("From                       : ");
 		lblFrom.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFrom.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -86,10 +73,8 @@ public class DisplayTrip extends JPanel {
 		lblFromData.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblFromData.setBounds(328, 55, 493, 45);
 		add(lblFromData);
-		
-		//===============================================================//
-		
-		//============================To================================//
+
+		//============================ To =============================
 		JLabel lblTo = new JLabel("To                            : ");
 		lblTo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTo.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -101,10 +86,8 @@ public class DisplayTrip extends JPanel {
 		lblToData.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblToData.setBounds(328, 89, 493, 45);
 		add(lblToData);
-		
-		//===============================================================//
-		
-		//=========================Total Distance============================//
+
+		//====================== Total Distance =======================
 		JLabel lblDistance = new JLabel("Total Distance        : ");
 		lblDistance.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDistance.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -116,10 +99,8 @@ public class DisplayTrip extends JPanel {
 		lblDistanceData.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblDistanceData.setBounds(328, 123, 493, 45);
 		add(lblDistanceData);
-		
-		//===============================================================//
-		
-		//=========================Total Time============================//
+
+		//========================= Total Time ========================
 		JLabel lblTotalduration = new JLabel("Total Duration        : ");
 		lblTotalduration.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotalduration.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -131,10 +112,8 @@ public class DisplayTrip extends JPanel {
 		lbldurationData.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lbldurationData.setBounds(328, 156, 493, 45);
 		add(lbldurationData);
-		
-		//===============================================================//
-		
-		//=========================Adult============================//
+
+		//========================= Adult ============================
 		JLabel lblAdult = new JLabel("Adlut                       : ");
 		lblAdult.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAdult.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -146,9 +125,8 @@ public class DisplayTrip extends JPanel {
 		lblAdultData.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblAdultData.setBounds(328, 191, 493, 45);
 		add(lblAdultData);
-		//===============================================================//
-		
-		//=========================Child============================//
+
+		//========================= Child ============================
 		JLabel lblChild = new JLabel("Child                        : ");
 		lblChild.setHorizontalAlignment(SwingConstants.LEFT);
 		lblChild.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -161,9 +139,7 @@ public class DisplayTrip extends JPanel {
 		lblChildData.setBounds(328, 226, 493, 45);
 		add(lblChildData);
 		
-		//===============================================================//
-		
-		//=========================Travel Cost============================//
+		//========================= Travel Cost ============================
 		JLabel lblTravelCost = new JLabel("Travel Cost              : ");
 		lblTravelCost.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTravelCost.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -176,9 +152,7 @@ public class DisplayTrip extends JPanel {
 		lblTravelCostData.setBounds(328, 261, 493, 45);
 		add(lblTravelCostData);
 		
-		//===============================================================//
-		
-		//=========================Total Adult Cost============================//
+		//========================= Total Adult Cost ==========================
 		JLabel lblAdultCost = new JLabel("Total Adult Cost      : ");
 		lblAdultCost.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAdultCost.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -191,9 +165,7 @@ public class DisplayTrip extends JPanel {
 		lblAdultCostData.setBounds(328, 298, 493, 45);
 		add(lblAdultCostData);
 		
-		//===============================================================//
-		
-		//=========================Total Child Cost============================//
+		//========================= Total Child Cost ===========================
 		JLabel lblChildCost = new JLabel("Total Child Cost       : ");
 		lblChildCost.setHorizontalAlignment(SwingConstants.LEFT);
 		lblChildCost.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -206,9 +178,7 @@ public class DisplayTrip extends JPanel {
 		lblChildCostData.setBounds(328, 336, 493, 45);
 		add(lblChildCostData);
 		
-		//===============================================================//
-		
-		//=========================Total Travel Cost============================//
+		//========================= Total Travel Cost ===========================
 		JLabel lblTotalTravelCost = new JLabel("Total Travel Cost     : ");
 		lblTotalTravelCost.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotalTravelCost.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -221,25 +191,14 @@ public class DisplayTrip extends JPanel {
 		lblTotalTravelCostData.setBounds(328, 374, 493, 45);
 		add(lblTotalTravelCostData);
 		
-		//===============================================================//
-		
-		//Button
+		//=========================== Button ==========================
 		btnBack = new JButton("Back");
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				SwingUtilities.invokeLater(() -> mainFrame
-						.changePanel(new ViewTrip(mainFrame, temp,adult,child)));
-				
-			}
-		});
+		btnBack.addActionListener(event -> SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ViewTrip(mainFrame, temp,adult,child))));
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnBack.setForeground(Color.BLACK);
 		btnBack.setBackground(Color.GRAY);
-		
 		btnBack.setBounds(733, 399, 120, 40);
 		add(btnBack);
-		//
 		
 		lblFromData.setText(source);
 		lblToData.setText(dest);
@@ -251,9 +210,5 @@ public class DisplayTrip extends JPanel {
 		lblAdultCostData.setText(Double.toString(AdultCost));
 		lblChildCostData.setText(Double.toString(ChildCost));
 		lblTotalTravelCostData.setText(Double.toString(total));
-		
-
-
-		
 	}
 }

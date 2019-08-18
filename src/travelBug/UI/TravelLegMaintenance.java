@@ -16,14 +16,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Vector;
 import javax.swing.border.MatteBorder;
 
 public class TravelLegMaintenance extends JPanel {
-
 	private static final long serialVersionUID = 5629499624569369278L;
 	private LinkArray<TravelLegInfo> tArray = new LinkArray<TravelLegInfo>();
 	private ReadWriteFile<TravelLegInfo> tFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
@@ -53,22 +51,22 @@ public class TravelLegMaintenance extends JPanel {
 		// ========================== Content component =========================//
 		tArray = tFile.readLinkArray();
 		tfSearch = new JTextField();
-		tfSearch.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		tfSearch.setBounds(210, 27, 177, 36);
+		tfSearch.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		tfSearch.setBounds(210, 27, 177, 30);
 		add(tfSearch);
 		tfSearch.setColumns(10);
 		tfSearch.setText(null);
 
 		tfSearch1 = new JTextField();
-		tfSearch1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfSearch1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tfSearch1.setColumns(10);
-		tfSearch1.setBounds(210, 61, 177, 36);
+		tfSearch1.setBounds(210, 62, 177, 30);
 		add(tfSearch1);
 		tfSearch1.setText(null);
 
 		lblSearchJLabel = new JLabel("Source Location       :");
 		lblSearchJLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblSearchJLabel.setBounds(12, 27, 177, 36);
+		lblSearchJLabel.setBounds(12, 27, 177, 30);
 		add(lblSearchJLabel);
 
 		defaultTableModel = new DefaultTableModel() {
@@ -173,14 +171,14 @@ public class TravelLegMaintenance extends JPanel {
 		// =============================== Button ===================================//
 		JButton btnNewButton = new JButton("Reset");
 		btnNewButton.setForeground(Color.RED);
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				tfSearch.setText("");
 				updateLabel(null, null);
 			}
 		});
-		btnNewButton.setBounds(513, 60, 109, 38);
+		btnNewButton.setBounds(576, 57, 109, 30);
 		add(btnNewButton);
 
 		btnAddTravelleg = new JButton("Add TravelLeg");
@@ -224,7 +222,7 @@ public class TravelLegMaintenance extends JPanel {
 		});
 		btnDelete.setForeground(Color.RED);
 		btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnDelete.setBounds(513, 408, 157, 42);
+		btnDelete.setBounds(549, 408, 157, 42);
 		add(btnDelete);
 
 		JButton btnSortPrice = new JButton("Cheapest");
@@ -283,7 +281,7 @@ public class TravelLegMaintenance extends JPanel {
 			}
 
 		});
-		btnSortPrice.setBounds(634, 69, 97, 25);
+		btnSortPrice.setBounds(697, 61, 97, 25);
 		add(btnSortPrice);
 
 		JButton btnSortDistance = new JButton("Fastest");
@@ -341,24 +339,25 @@ public class TravelLegMaintenance extends JPanel {
 			}
 
 		});
-		btnSortDistance.setBounds(728, 69, 97, 25);
+		btnSortDistance.setBounds(791, 61, 97, 25);
 		add(btnSortDistance);
 
 		JLabel lblDestinationLocation = new JLabel("Destination Location :");
 		lblDestinationLocation.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblDestinationLocation.setBounds(12, 61, 177, 36);
+		lblDestinationLocation.setBounds(12, 61, 177, 30);
 		add(lblDestinationLocation);
 
-		lblNewLabel = new JLabel("Hello :");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel.setBounds(513, 37, 62, 16);
+		lblNewLabel = new JLabel("Hello: ");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblNewLabel.setBounds(576, 13, 80, 30);
 		add(lblNewLabel);
 
 		lblUsername = new JLabel("");
 		lblUsername.setForeground(Color.BLUE);
-		lblUsername.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblUsername.setBounds(587, 37, 91, 16);
+		lblUsername.setHorizontalAlignment(SwingConstants.LEFT);
+		lblUsername.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblUsername.setBounds(668, 14, 150, 30);
 		add(lblUsername);
 		lblUsername.setText(mainFrame.authUser.getUsername());
 
@@ -367,12 +366,13 @@ public class TravelLegMaintenance extends JPanel {
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new MainMenu(mainFrame)));
 		});
 		btnNewButton_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		btnNewButton_1.setBounds(695, 409, 157, 40);
+		btnNewButton_1.setBounds(731, 409, 157, 40);
 		add(btnNewButton_1);
 
 		updateLabel(null, null);
 
 	}
+
 	public void updateLabel(String searchItem, String searchString) {
 		if (lblUsername.getText().equalsIgnoreCase("Admin")) {
 			btnAddTravelleg.setEnabled(false);
@@ -572,20 +572,24 @@ public class TravelLegMaintenance extends JPanel {
 
 				for (int j = 1; j <= tArrayLinkedList.getLength(); j++) {
 					if (tArrayLinkedList.getEntry(j).getCompany().equalsIgnoreCase(companyString)) {
-						if(tArrayLinkedList.getEntry(j).getSource().toLowerCase().contains(searchItem) && tArrayLinkedList.getEntry(j).getDest().toLowerCase().contains(searchString))
-						if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
-								|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
-							defaultTableModel.insertRow(defaultTableModel.getRowCount(), new Object[] {
-									tArrayLinkedList.getEntry(j).getrecordNo(),
-									tArrayLinkedList.getEntry(j).getSource(), tArrayLinkedList.getEntry(j).getDest(),
-									tArrayLinkedList.getEntry(j).getfromDate(),
-									tArrayLinkedList.getEntry(j).gettoDate(),
-									tArrayLinkedList.getEntry(j).getfromTime(),
-									tArrayLinkedList.getEntry(j).gettoTime(), tArrayLinkedList.getEntry(j).getMode(),
-									tArrayLinkedList.getEntry(j).getPrice(), tArrayLinkedList.getEntry(j).getDistance(),
-									library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
+						if (tArrayLinkedList.getEntry(j).getSource().toLowerCase().contains(searchItem)
+								&& tArrayLinkedList.getEntry(j).getDest().toLowerCase().contains(searchString))
+							if (tArrayLinkedList.getEntry(j).getfromDate().isEqual(LocalDate.now())
+									|| tArrayLinkedList.getEntry(j).getfromDate().isAfter(LocalDate.now())) {
+								defaultTableModel.insertRow(defaultTableModel.getRowCount(),
+										new Object[] { tArrayLinkedList.getEntry(j).getrecordNo(),
+												tArrayLinkedList.getEntry(j).getSource(),
+												tArrayLinkedList.getEntry(j).getDest(),
+												tArrayLinkedList.getEntry(j).getfromDate(),
+												tArrayLinkedList.getEntry(j).gettoDate(),
+												tArrayLinkedList.getEntry(j).getfromTime(),
+												tArrayLinkedList.getEntry(j).gettoTime(),
+												tArrayLinkedList.getEntry(j).getMode(),
+												tArrayLinkedList.getEntry(j).getPrice(),
+												tArrayLinkedList.getEntry(j).getDistance(),
+												library.convertString((tArrayLinkedList.getEntry(j).getDuration())) });
 
-						}
+							}
 					}
 
 				}

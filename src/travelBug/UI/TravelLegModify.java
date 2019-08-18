@@ -27,12 +27,7 @@ import com.toedter.calendar.JTextFieldDateEditor;
 
 public class TravelLegModify extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JTextField tfSourceL;
-	private JTextField tfDestinationL;
-	private JTextField tfFromTime;
-	private JTextField tfToTime;
-	private JTextField tfDistance;
-	private JTextField tfPrice;
+	private JTextField tfSourceL, tfDestinationL, tfFromTime, tfToTime, tfDistance, tfPrice;
 	private LinkArray<TravelLegInfo> rArray = new LinkArray<TravelLegInfo>();
 	private ReadWriteFile<TravelLegInfo> rFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
 	private LinkArray<Location> cArray = new LinkArray<Location>();

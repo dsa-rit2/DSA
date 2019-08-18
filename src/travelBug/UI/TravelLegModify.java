@@ -9,6 +9,7 @@ import travelBug.obj.Location;
 import travelBug.obj.*;
 //=========================
 import java.awt.*;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -21,7 +22,6 @@ import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
-import javax.swing.*;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 

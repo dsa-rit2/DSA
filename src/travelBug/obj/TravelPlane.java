@@ -4,16 +4,18 @@ public class TravelPlane {
 	
 	private int duration;
 	private double price;
-	private String sourceString;
-	private String destString;
-	
-	public TravelPlane(String sourString,String destString,double price,int duration) {
-		this.duration = duration;
-		this.price = price;
-		this.sourceString = sourString;
-		this.destString = destString;
+	private String plan;
+	private String source;
+	private String dest;
 		
 	
+	public TravelPlane(String plan, double price,int duration, String source, String dest) {
+		this.plan = plan;
+		this.duration = duration;
+		this.price = price;
+		this.source = source;
+		this.dest = dest;
+		
 	}
 	public void setDuration(int duration) {
 		this.duration = duration;
@@ -28,16 +30,22 @@ public class TravelPlane {
 	public double getPrice() {
 		return price;
 	}
-	public void setSource(String sourceString) {
-		this.sourceString = sourceString;
+	public String getPlan() {
+		return plan;
 	}
-	public String getSourceString() {
-		return sourceString;
+	public void setPlan(String plan) {
+		this.plan = plan;
 	}
-	public void setDest(String destString) {
-		this.destString = destString;
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
 	}
 	public String getDest() {
-		return destString;
-	}	
+		return dest;
+	}
+	public void setDest(String dest) {
+		this.dest = dest;
+	}
 }

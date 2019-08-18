@@ -49,6 +49,10 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 	}
 
 	private void createGUI() {
+		
+		int sortDuration = 0;
+		String pStrings = new String();
+		double totalPrice = 0;
 
 		// ====================Title=======================//
 		JLabel lblViewTrip = new JLabel("View Trip");
@@ -56,6 +60,62 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 		lblViewTrip.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblViewTrip.setBounds(10, 15, 878, 45);
 		add(lblViewTrip);
+		// ===============================================//
+		
+		//=====================Store combine and sort by price===============//
+		
+		for(int i=0; i<temp.getNumberOfEntries();i++) {
+			
+			int adult = this.adult;
+			int kiddo = this.child;
+			String source = new String();
+			String dest = new String();
+			
+			for (int j = 1; j <= temp.getEntry(i+1).getNumberOfEntries(); j++) {
+				
+				double kids = temp.getEntry(i+1).getEntry(j).getPrice() * 0.5 * kiddo;
+				double adults = temp.getEntry(i+1).getEntry(j).getPrice() * adult;
+
+				totalPrice += kids + adults;
+				
+				if (j == 1) {// Display first source and first destination
+
+					pStrings += temp.getEntry(i+1).getEntry(j).getSource();
+					source = temp.getEntry(i+1).getEntry(j).getSource();
+
+					pStrings += callFrontArrow;
+					pStrings += temp.getEntry(i+1).getEntry(j).getMode();
+					pStrings += callBackArrow;
+
+					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
+					pStrings += callFrontArrow;
+					pStrings += temp.getEntry(i+1).getEntry(j).getMode();
+					pStrings += callBackArrow;
+
+				} else {// Display next destination
+					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
+
+					if (temp.getEntry(i+1).getEntry(j + 1) != null) {
+						pStrings += callFrontArrow;
+						pStrings += temp.getEntry(i+1).getEntry(j).getMode();
+						pStrings += callBackArrow;
+						
+						sortDuration = temp.getEntry(i+1).getEntry(j).getDuration();
+
+					}
+					
+				}
+				dest = temp.getEntry(i+1).getEntry(j).getDest();
+			}
+			
+			linkedList.add(new TravelPlane(pStrings, totalPrice, sortDuration, source, dest));
+			pStrings = "";
+			totalPrice = 0;
+		}
+		SortedLinkedList<TravelPlane> tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
+				Comparator.comparing(TravelPlane::getPrice));
+		
+		//=====================================================================================//
 
 		// ==========================Containers=============//
 
@@ -66,18 +126,18 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 		callPanel.setBounds(35, 58, 827, 334);
 		
 		this.txtNum = 0;
-		if(temp.getNumberOfEntries()>5)
+		if(tArrayLinkedList.getLength()>5)
 			txtNum = 5;
 		else
-			txtNum = temp.getNumberOfEntries();
+			txtNum = tArrayLinkedList.getLength();
 		txtArray = new JTextPane[txtNum];
+		
 		//====================On Click=========================//
 		for (int i = 0; i < txtNum; ++i) {
 			txtArray[i] = new JTextPane();
 			txtArray[i].setFont(callFont);
 			txtArray[i].setEditable(false);
 			txtArray[i].setBackground(Color.white);
-			//txtArray[i].setHorizontalAlignment(SwingConstants.CENTER);
 			
 			if(i == 0) {
 				txtArray[i].addMouseListener(new MouseAdapter() {
@@ -226,68 +286,14 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 				});
 			}
 
-			///////////////////////////Pass data and display/////////////////////////////
-
-			String pStrings = new String();
-			double totalPrice = 0;
-
-			int adult = this.adult;
-			int kiddo = this.child;
-			for (int j = 1; j <= temp.getEntry(i+1).getNumberOfEntries(); j++) {
-
-
-				double kids = temp.getEntry(i+1).getEntry(j).getPrice() * 0.5 * kiddo;
-				double adults = temp.getEntry(i+1).getEntry(j).getPrice() * adult;
-
-				totalPrice += kids + adults;
-				
-				/////////////////////////Sort///////////////////////////////////////////
-				
-				linkedList.add(new TravelPlane(temp.getEntry(i+1).getEntry(j).getSource(), temp.getEntry(i+1).getEntry(j).getDest(), totalPrice, temp.getEntry(i+1).getEntry(j).getDuration()));
-				
-				SortedLinkedList<TravelPlane> tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
-						Comparator.comparing(TravelPlane::getPrice));
-				
-				for(int k = 1;k <= tArrayLinkedList.getLength();k++) {
-					System.out.print(tArrayLinkedList.getEntry(k).getPrice());
-					System.out.println(tArrayLinkedList.getEntry(k).getSourceString());
-				}
-				///////////////////////////////////////////////////////////////////////////
-
-				if (j == 1) {// Display first source and first destination
-
-					pStrings += temp.getEntry(i+1).getEntry(j).getSource();
-
-					pStrings += callFrontArrow;
-					pStrings += temp.getEntry(i+1).getEntry(j).getMode();
-					pStrings += callBackArrow;
-
-					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
-					pStrings += callFrontArrow;
-					pStrings += temp.getEntry(i+1).getEntry(j).getMode();
-					pStrings += callBackArrow;
-
-				} else {// Display next destination
-					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
-
-					if (temp.getEntry(i+1).getEntry(j + 1) != null) {
-						pStrings += callFrontArrow;
-						pStrings += temp.getEntry(i+1).getEntry(j).getMode();
-						pStrings += callBackArrow;
-
-					}
-				}
-
-			}
-			///////////////////////////////////////////////////////////////////////////
-			// put data to panel
 			
-			//txtArray[i].setHorizontalAlignment(SwingConstants.LEFT);
-			txtArray[i].setText(pStrings + "\nPrice: RM " + totalPrice);
-
+			txtArray[i].setText(tArrayLinkedList.getEntry(i+1).getPlan() + "\nPrice: RM " + 
+								tArrayLinkedList.getEntry(i+1).getPrice());
 			callPanel.add(txtArray[i]);
+
 		}
 		add(callPanel);// display panel
+		
 		
 
 		// =====================Button======================//

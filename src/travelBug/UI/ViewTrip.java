@@ -21,7 +21,7 @@ public class ViewTrip extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JPanel callPanel;
 	private JButton btnBack;
-	private JTextField[] txtArray ;
+	private JTextArea[] txtArray ;
 	private String callArrow = "-->";
 	private int adult=0,child=0;
 	private final UIControl mainFrame;
@@ -69,15 +69,18 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 			txtNum = 5;
 		else
 			txtNum = temp.getNumberOfEntries();
-		txtArray = new JTextField[txtNum];
+		txtArray = new JTextArea[txtNum];
 		//====================On Click=========================//
 		for (int i = 0; i < txtNum; ++i) {
-			txtArray[i] = new JTextField(80);
+			txtArray[i] = new JTextArea();
 			txtArray[i].setFont(callFont);
 			txtArray[i].setEditable(false);
 			txtArray[i].setBackground(Color.white);
-			txtArray[i].setHorizontalAlignment(SwingConstants.CENTER);
-			
+//			txtArray[i].setHorizontalAlignment(SwingConstants.CENTER);
+			JScrollPane sp = new JScrollPane();
+//			sp.setBounds(277, 251, 500, 120);
+			add(sp);
+			sp.setViewportView(txtArray[i]);
 			if(i == 0) {
 				txtArray[i].addMouseListener(new MouseAdapter() {
 
@@ -275,7 +278,7 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 			///////////////////////////////////////////////////////////////////////////
 			// put data to panel
 			
-			txtArray[i].setHorizontalAlignment(SwingConstants.LEFT);
+//			txtArray[i].setHorizontalAlignment(SwingConstants.LEFT);
 			txtArray[i].setText(pStrings + "\n Price: RM " + totalPrice);
 
 			callPanel.add(txtArray[i]);

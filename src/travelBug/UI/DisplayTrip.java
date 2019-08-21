@@ -4,20 +4,23 @@ import java.awt.*;
 import javax.swing.*;
 import travelBug.library.CircularLinkedList;
 import travelBug.library.SinglyLinkedList;
+import travelBug.library.SortedLinkedList;
+import travelBug.library.library;
 import travelBug.obj.TravelLegInfo;
+import travelBug.obj.TravelPlane;
 
 public class DisplayTrip extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private UIControl mainFrame;
 	private JButton btnBack;
-	private CircularLinkedList<TravelLegInfo> tempCircularLinkedList;
+	private TravelPlane plane;
 	private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLinkedList<CircularLinkedList<TravelLegInfo>>();
 	private int adult = 0, child = 0;
 	
-	public DisplayTrip(UIControl parent,CircularLinkedList<TravelLegInfo> d, SinglyLinkedList<CircularLinkedList<TravelLegInfo>> t, int a, int c) {
+	public DisplayTrip(UIControl parent,TravelPlane p , SinglyLinkedList<CircularLinkedList<TravelLegInfo>> t, int a, int c) {
 		super();
 		this.mainFrame = parent;
-		tempCircularLinkedList = d;
+		plane = p;
 		adult = a;
 		child = c;
 		temp = t;
@@ -32,26 +35,22 @@ public class DisplayTrip extends JPanel {
 		String source = null;
 		String dest = null;
 		double distance = 0.00;
-		int duration = 0;
+		String duration;
 		double travelprice = 0.00;
-		double price = 0.00;
 		double AdultCost = 0.00;
 		double ChildCost = 0.00;
 		double total = 0.00;
 		
-		source = tempCircularLinkedList.getEntry(1).getSource();
-		dest   = tempCircularLinkedList.getEntry(tempCircularLinkedList.getNumberOfEntries()).getDest();
+		source = plane.getSource();
+		dest   = plane.getDest();
+		distance 	= plane.getDistance();
+		duration 	= library.convertString(plane.getDuration()); 
+		total       = plane.getPrice();
+		AdultCost 	= plane.getAdultPrice();
+		ChildCost 	= plane.getKiddoPrice();
+		travelprice = AdultCost / adult;
 
-		for(int i = 1; i <= tempCircularLinkedList.getNumberOfEntries(); i++) {
-			distance 	+= tempCircularLinkedList.getEntry(i).getDistance();
-			duration 	+= tempCircularLinkedList.getEntry(i).getDuration();
-			price    	= tempCircularLinkedList.getEntry(i).getPrice();
-			travelprice += price;
-			AdultCost 	= travelprice * adult;
-			ChildCost 	= travelprice * child * 0.5;
-			total 		= AdultCost + ChildCost;
-		}
-		
+
 		// ==================== Title =======================
 		JLabel lblViewTrip = new JLabel("Display Trip");
 		lblViewTrip.setHorizontalAlignment(SwingConstants.CENTER);
@@ -202,13 +201,13 @@ public class DisplayTrip extends JPanel {
 		
 		lblFromData.setText(source);
 		lblToData.setText(dest);
-		lblDistanceData.setText(Double.toString(distance));
-		lbldurationData.setText(Integer.toString(duration));
+		lblDistanceData.setText(Double.toString(distance)+" km");
+		lbldurationData.setText(duration);
 		lblAdultData.setText(Integer.toString(adult));
 		lblChildData.setText(Integer.toString(child));
-		lblTravelCostData.setText(Double.toString(travelprice));
-		lblAdultCostData.setText(Double.toString(AdultCost));
-		lblChildCostData.setText(Double.toString(ChildCost));
-		lblTotalTravelCostData.setText(Double.toString(total));
+		lblTravelCostData.setText("RM"+Double.toString(travelprice)+"0");
+		lblAdultCostData.setText("RM"+Double.toString(AdultCost)+"0");
+		lblChildCostData.setText("RM"+Double.toString(ChildCost)+"0");
+		lblTotalTravelCostData.setText("RM"+Double.toString(total)+"0");
 	}
 }

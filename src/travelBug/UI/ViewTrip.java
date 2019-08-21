@@ -20,19 +20,18 @@ import java.awt.event.ActionEvent;
 public class ViewTrip extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JPanel callPanel;
-	private JButton btnBack;
+	private JButton btnBack, btnPrice, btnDuration;
 	private JTextPane[] txtArray;
 	private String callFrontArrow = "--[";
 	private String callBackArrow = "]-->";
-	private int adult=0,child=0;
+	private int adult = 0, child = 0;
 	private final UIControl mainFrame;
-	private int txtNum= 0;
-	
-	
-private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLinkedList<CircularLinkedList<TravelLegInfo>>();
-private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPlane>();
-	
-	
+	private int txtNum = 0;
+	private SortedLinkedList<TravelPlane> tArrayLinkedList;
+
+	private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLinkedList<CircularLinkedList<TravelLegInfo>>();
+	private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPlane>();
+	private CircularLinkedList<TravelPlane> tCircular = new CircularLinkedList<TravelPlane>();
 
 	public ViewTrip(UIControl parent, SinglyLinkedList<CircularLinkedList<TravelLegInfo>> t, int a, int c) {
 
@@ -44,15 +43,16 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 		temp = t;
 		adult = a;
 		child = c;
-		
-		createGUI();
+		createGUI(0);
 	}
 
-	private void createGUI() {
-		
+	private void createGUI(int num) {
+		removeAll();
 		int sortDuration = 0;
 		String pStrings = new String();
 		double totalPrice = 0;
+		double adultPrice = 0;
+		double kiddoPrice = 0;
 
 		// ====================Title=======================//
 		JLabel lblViewTrip = new JLabel("View Trip");
@@ -61,61 +61,76 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 		lblViewTrip.setBounds(10, 15, 878, 45);
 		add(lblViewTrip);
 		// ===============================================//
-		
-		//=====================Store combine and sort by price===============//
-		
-		for(int i=0; i<temp.getNumberOfEntries();i++) {
-			
+
+		// =====================Store combine and sort by price===============//
+
+		for (int i = 1; i <= temp.getNumberOfEntries(); i++) {
+
 			int adult = this.adult;
 			int kiddo = this.child;
 			String source = new String();
 			String dest = new String();
-			
-			for (int j = 1; j <= temp.getEntry(i+1).getNumberOfEntries(); j++) {
-				
-				double kids = temp.getEntry(i+1).getEntry(j).getPrice() * 0.5 * kiddo;
-				double adults = temp.getEntry(i+1).getEntry(j).getPrice() * adult;
+			double distance = 0;
+
+			for (int j = 1; j <= temp.getEntry(i).getNumberOfEntries(); j++) {
+
+				double kids = temp.getEntry(i).getEntry(j).getPrice() * kiddo * 0.5;
+				double adults = temp.getEntry(i).getEntry(j).getPrice() * adult;
+
+				adultPrice += adults;
+				kiddoPrice += kids;
 
 				totalPrice += kids + adults;
-				
+
 				if (j == 1) {// Display first source and first destination
 
-					pStrings += temp.getEntry(i+1).getEntry(j).getSource();
-					source = temp.getEntry(i+1).getEntry(j).getSource();
+					pStrings += temp.getEntry(i).getEntry(j).getSource();
+					source = temp.getEntry(i).getEntry(j).getSource();
 
 					pStrings += callFrontArrow;
-					pStrings += temp.getEntry(i+1).getEntry(j).getMode();
+					pStrings += temp.getEntry(i).getEntry(j).getMode();
 					pStrings += callBackArrow;
 
-					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
+					pStrings += temp.getEntry(i).getEntry(j).getDest();
 					pStrings += callFrontArrow;
-					pStrings += temp.getEntry(i+1).getEntry(j).getMode();
+					pStrings += temp.getEntry(i).getEntry(j).getMode();
 					pStrings += callBackArrow;
+
+					sortDuration += temp.getEntry(i).getEntry(j).getDuration();
+					distance += temp.getEntry(i).getEntry(j).getDistance();
 
 				} else {// Display next destination
-					pStrings += temp.getEntry(i+1).getEntry(j).getDest();
+					pStrings += temp.getEntry(i).getEntry(j).getDest();
 
-					if (temp.getEntry(i+1).getEntry(j + 1) != null) {
+					if (temp.getEntry(i).getEntry(j + 1) != null) {
 						pStrings += callFrontArrow;
-						pStrings += temp.getEntry(i+1).getEntry(j).getMode();
+						pStrings += temp.getEntry(i).getEntry(j).getMode();
 						pStrings += callBackArrow;
-						
-						sortDuration = temp.getEntry(i+1).getEntry(j).getDuration();
+
+						sortDuration += temp.getEntry(i).getEntry(j).getDuration();
+						distance += temp.getEntry(i).getEntry(j).getDistance();
 
 					}
-					
+
 				}
-				dest = temp.getEntry(i+1).getEntry(j).getDest();
+				dest = temp.getEntry(i).getEntry(j).getDest();
 			}
-			
-			linkedList.add(new TravelPlane(pStrings, totalPrice, sortDuration, source, dest));
+
+			linkedList.add(new TravelPlane(pStrings, adultPrice, kiddoPrice, totalPrice, sortDuration, source, dest,
+					distance, i));
 			pStrings = "";
 			totalPrice = 0;
+			adultPrice = 0;
+			kiddoPrice = 0;
 		}
-		SortedLinkedList<TravelPlane> tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
-				Comparator.comparing(TravelPlane::getPrice));
-		
-		//=====================================================================================//
+
+		makeThing(num);
+
+		for (int k = 1; k <= tArrayLinkedList.getLength(); k++) {
+			tCircular.add(tArrayLinkedList.getEntry(k));
+		}
+
+		// =====================================================================================//
 
 		// ==========================Containers=============//
 
@@ -124,45 +139,44 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 		callPanel = new JPanel(new GridLayout(5, 5));
 		callPanel.setBorder(lineBorder);
 		callPanel.setBounds(35, 58, 827, 334);
-		
+
 		this.txtNum = 0;
-		if(tArrayLinkedList.getLength()>5)
+		if (tArrayLinkedList.getLength() > 5)
 			txtNum = 5;
 		else
 			txtNum = tArrayLinkedList.getLength();
 		txtArray = new JTextPane[txtNum];
-		
-		//====================On Click=========================//
+
+		// ====================On Click=========================//
 		for (int i = 0; i < txtNum; ++i) {
 			txtArray[i] = new JTextPane();
 			txtArray[i].setFont(callFont);
 			txtArray[i].setEditable(false);
 			txtArray[i].setBackground(Color.white);
-			
-			if(i == 0) {
+
+			if (i == 0) {
 				txtArray[i].addMouseListener(new MouseAdapter() {
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 1) {
-							for(int j = 0; j<txtNum;j++) {
-								if(j==0)
+							for (int j = 0; j < txtNum; j++) {
+								if (j == 0)
 									txtArray[0].setBackground(Color.lightGray);
 								else {
 									txtArray[j].setBackground(Color.white);
 								}
 							}
-							
+
 						}
 					}
 				});
-			}
-			else if(i == 1) {
+			} else if (i == 1) {
 				txtArray[i].addMouseListener(new MouseAdapter() {
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 1) {
-							for(int j = 0; j<txtNum;j++) {
-								if(j==1)
+							for (int j = 0; j < txtNum; j++) {
+								if (j == 1)
 									txtArray[1].setBackground(Color.lightGray);
 								else {
 									txtArray[j].setBackground(Color.white);
@@ -171,15 +185,14 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 						}
 					}
 				});
-			}
-			else if(i == 2) {
+			} else if (i == 2) {
 				txtArray[i].addMouseListener(new MouseAdapter() {
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 1) {
-							
-							for(int j = 0; j<txtNum;j++) {
-								if(j==2)
+
+							for (int j = 0; j < txtNum; j++) {
+								if (j == 2)
 									txtArray[2].setBackground(Color.lightGray);
 								else {
 									txtArray[j].setBackground(Color.white);
@@ -188,15 +201,14 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 						}
 					}
 				});
-			}
-			else if(i == 3) {
+			} else if (i == 3) {
 				txtArray[i].addMouseListener(new MouseAdapter() {
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 1) {
-							
-							for(int j = 0; j<txtNum;j++) {
-								if(j==3)
+
+							for (int j = 0; j < txtNum; j++) {
+								if (j == 3)
 									txtArray[3].setBackground(Color.lightGray);
 								else {
 									txtArray[j].setBackground(Color.white);
@@ -205,14 +217,13 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 						}
 					}
 				});
-			}
-			else if(i == 4) {
+			} else if (i == 4) {
 				txtArray[i].addMouseListener(new MouseAdapter() {
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 1) {
-							for(int j = 0; j<txtNum;j++) {
-								if(j==4)
+							for (int j = 0; j < txtNum; j++) {
+								if (j == 4)
 									txtArray[4].setBackground(Color.lightGray);
 								else {
 									txtArray[j].setBackground(Color.white);
@@ -222,101 +233,135 @@ private SinglyLinkedList<TravelPlane> linkedList = new SinglyLinkedList<TravelPl
 					}
 				});
 			}
-			//=============================================================//
-			
-			//========================Double Click=========================//
-			if(i == 0) {
+			// =============================================================//
+
+			// ========================Double Click=========================//
+			if (i == 0) {
 				txtArray[i].addMouseListener(new MouseAdapter() {
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
-							SwingUtilities.invokeLater(() -> mainFrame
-									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(1),temp,adult,child)));
+							SwingUtilities.invokeLater(() -> mainFrame.changePanel(
+									new DisplayTrip(mainFrame, tCircular.getEntry(1), temp, adult, child)));
 
 						}
 					}
 				});
-			}
-			else if(i == 1) {
+			} else if (i == 1) {
 				txtArray[i].addMouseListener(new MouseAdapter() {
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
-							SwingUtilities.invokeLater(() -> mainFrame
-									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(2),temp,adult,child)));
-							
-						}
-					}
-				});
-			}
-			else if(i == 2) {
-				txtArray[i].addMouseListener(new MouseAdapter() {
-
-					public void mouseClicked(MouseEvent arg0) {
-						if (arg0.getClickCount() == 2) {
-							SwingUtilities.invokeLater(() -> mainFrame
-									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(3),temp,adult,child)));
+							SwingUtilities.invokeLater(() -> mainFrame.changePanel(
+									new DisplayTrip(mainFrame, tCircular.getEntry(2), temp, adult, child)));
 
 						}
 					}
 				});
-			}
-			else if(i == 3) {
+			} else if (i == 2) {
 				txtArray[i].addMouseListener(new MouseAdapter() {
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
-							SwingUtilities.invokeLater(() -> mainFrame
-									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(4),temp,adult,child)));
+							SwingUtilities.invokeLater(() -> mainFrame.changePanel(
+									new DisplayTrip(mainFrame, tCircular.getEntry(3), temp, adult, child)));
 
 						}
 					}
 				});
-			}
-			else if(i == 4) {
+			} else if (i == 3) {
 				txtArray[i].addMouseListener(new MouseAdapter() {
 
 					public void mouseClicked(MouseEvent arg0) {
 						if (arg0.getClickCount() == 2) {
-							SwingUtilities.invokeLater(() -> mainFrame
-									.changePanel(new DisplayTrip(mainFrame, temp.getEntry(5),temp,adult,child)));
+							SwingUtilities.invokeLater(() -> mainFrame.changePanel(
+									new DisplayTrip(mainFrame, tCircular.getEntry(4), temp, adult, child)));
+						}
+					}
+				});
+			} else if (i == 4) {
 
+				txtArray[i].addMouseListener(new MouseAdapter() {
+
+					public void mouseClicked(MouseEvent arg0) {
+						if (arg0.getClickCount() == 2) {
+							SwingUtilities.invokeLater(() -> mainFrame.changePanel(
+									new DisplayTrip(mainFrame, tCircular.getEntry(5), temp, adult, child)));
 						}
 					}
 				});
 			}
 
-			
-			txtArray[i].setText(tArrayLinkedList.getEntry(i+1).getPlan() + "\nPrice: RM " + 
-								tArrayLinkedList.getEntry(i+1).getPrice());
+			txtArray[i].setText(tArrayLinkedList.getEntry(i + 1).getPlan() + "\nPrice: RM "
+					+ tArrayLinkedList.getEntry(i + 1).getPrice());
+
 			callPanel.add(txtArray[i]);
 
 		}
 		add(callPanel);// display panel
-		
-		
 
 		// =====================Button======================//
 		btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				SwingUtilities.invokeLater(() -> mainFrame
-						.changePanel(new PlanTrip(mainFrame)));
-				
+
+				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new PlanTrip(mainFrame)));
+
 			}
 		});
 		btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnBack.setForeground(Color.BLACK);
 		btnBack.setBackground(Color.GRAY);
 		btnBack.setActionCommand("");
-		btnBack.setBounds(394, 403, 120, 40);
+		btnBack.setBounds(742, 403, 120, 40);
 		add(btnBack);
-		if(temp.isEmpty()) {
-			library.dialogMessage("0 result is found");
-			SwingUtilities.invokeLater(() -> mainFrame
-					.changePanel(new PlanTrip(mainFrame)));
-		}
 
+		btnPrice = new JButton("Price");
+		btnPrice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/////
+				createGUI(0);
+			}
+		});
+		btnPrice.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		btnPrice.setForeground(Color.BLACK);
+		btnPrice.setBackground(Color.GRAY);
+		btnPrice.setActionCommand("");
+		btnPrice.setBounds(35, 403, 120, 40);
+		add(btnPrice);
+
+		btnDuration = new JButton("Duration");
+		btnDuration.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				////
+				createGUI(1);
+			}
+		});
+		btnDuration.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		btnDuration.setForeground(Color.BLACK);
+		btnDuration.setBackground(Color.GRAY);
+		btnDuration.setActionCommand("");
+		btnDuration.setBounds(165, 403, 120, 40);
+		add(btnDuration);
+
+		if (temp.isEmpty()) {
+			library.dialogMessage("0 result is found");
+			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new PlanTrip(mainFrame)));
+		}
+		revalidate();
+		repaint();
 	}
+
+	public void makeThing(int input) {
+		if (input == 0)
+			tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
+					Comparator.comparing(TravelPlane::getPrice));
+		else if (input == 1)
+			tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
+					Comparator.comparing(TravelPlane::getDuration));
+//		else if(input==2)
+//			tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
+//					Comparator.comparing(TravelPlane::getDuration));
+	}
+	
 }

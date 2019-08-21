@@ -9,6 +9,7 @@ import travelBug.obj.Location;
 import travelBug.obj.*;
 //=========================
 import java.awt.*;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -21,18 +22,12 @@ import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
-import javax.swing.*;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 
 public class TravelLegModify extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JTextField tfSourceL;
-	private JTextField tfDestinationL;
-	private JTextField tfFromTime;
-	private JTextField tfToTime;
-	private JTextField tfDistance;
-	private JTextField tfPrice;
+	private JTextField tfSourceL, tfDestinationL, tfFromTime, tfToTime, tfDistance, tfPrice;
 	private LinkArray<TravelLegInfo> rArray = new LinkArray<TravelLegInfo>();
 	private ReadWriteFile<TravelLegInfo> rFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
 	private LinkArray<Location> cArray = new LinkArray<Location>();
@@ -40,13 +35,11 @@ public class TravelLegModify extends JPanel {
 	private Set<String> s = new TreeSet<String>();
 	private final UIControl mainframe;		// Store main frame
 	private JComboBox<String> cbTransport;
-	private String usernameString; 
 	
-		
 	public TravelLegModify(Vector<?> vector, String ID, UIControl parent) {
 		super();
 		this.mainframe = parent;
-		usernameString = parent.authUser.getUsername();
+		parent.authUser.getUsername();
 		// ======================= Jpanel setting ========================//
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
@@ -574,8 +567,6 @@ public class TravelLegModify extends JPanel {
 							rArray.getIndexElement(i).setPrice(price);
 							rArray.getIndexElement(i).setDistance(distance);
 							rArray.getIndexElement(i).setDuration(duration);
-
-							
 						}
 					}
 					rFile.writeLinkArray(rArray);

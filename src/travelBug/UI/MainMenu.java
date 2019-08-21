@@ -2,8 +2,6 @@ package travelBug.UI;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 
 public class MainMenu extends JPanel {

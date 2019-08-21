@@ -17,6 +17,7 @@ public class DisplayTrip extends JPanel {
 	private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLinkedList<CircularLinkedList<TravelLegInfo>>();
 	private int adult = 0, child = 0;
 	private int sortInt;
+	
 	public DisplayTrip(UIControl parent,TravelPlane p , SinglyLinkedList<CircularLinkedList<TravelLegInfo>> t, int a, int c,int sort) {
 		super();
 		this.mainFrame = parent;
@@ -202,13 +203,13 @@ public class DisplayTrip extends JPanel {
 		
 		lblFromData.setText(source);
 		lblToData.setText(dest);
-		lblDistanceData.setText(Double.toString(distance)+" km");
+		lblDistanceData.setText(String.format("%.2f",distance)+"km");
 		lbldurationData.setText(duration);
 		lblAdultData.setText(Integer.toString(adult));
 		lblChildData.setText(Integer.toString(child));
-		lblTravelCostData.setText("RM"+Double.toString(travelprice)+"0");
-		lblAdultCostData.setText("RM"+Double.toString(AdultCost)+"0");
-		lblChildCostData.setText("RM"+Double.toString(ChildCost)+"0");
-		lblTotalTravelCostData.setText("RM"+Double.toString(total)+"0");
+		lblTravelCostData.setText("RM"+String.format("%.2f",travelprice));
+		lblAdultCostData.setText("RM"+String.format("%.2f",AdultCost));
+		lblChildCostData.setText("RM"+String.format("%.2f",ChildCost));
+		lblTotalTravelCostData.setText("RM"+String.format("%.2f",total));
 	}
 }

@@ -27,6 +27,7 @@ public class ViewTrip extends JPanel {
 	private final UIControl mainFrame;
 	private int txtNum = 0, sortInt;
 	private JTextPane[] txtArray;
+	private JLabel lblmodeA, lblmodeR, lblmodeB, lblmodeC, lblmodeF, lblmodeT;
 	private SortedLinkedList<TravelPlane> tArrayLinkedList;
 
 	private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLinkedList<CircularLinkedList<TravelLegInfo>>();
@@ -60,6 +61,32 @@ public class ViewTrip extends JPanel {
 		lblViewTrip.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblViewTrip.setBounds(10, 15, 878, 45);
 		add(lblViewTrip);
+		
+		
+		lblmodeA = new JLabel("A = Airplane");
+		lblmodeA.setBounds(740, 0, 75, 20);
+		add(lblmodeA);
+		
+		lblmodeR = new JLabel("R = Rail/Train");
+		lblmodeR.setBounds(740, 10, 75, 20);
+		add(lblmodeR);
+		
+		lblmodeB = new JLabel("B = Bus");
+		lblmodeB.setBounds(740, 20, 75, 20);
+		add(lblmodeB);
+		
+		lblmodeC = new JLabel("C = Car");
+		lblmodeC.setBounds(740, 30, 75, 20);
+		add(lblmodeC);
+		
+		lblmodeF = new JLabel("F = Ferry");
+		lblmodeF.setBounds(740, 40, 75, 20);
+		add(lblmodeF);
+		
+		lblmodeT = new JLabel("T = Boat");
+		lblmodeT.setBounds(740, 50, 75, 20);
+		add(lblmodeT);
+		
 		// ===============================================//
 
 		// =====================Store combine and sort by price===============//
@@ -138,7 +165,7 @@ public class ViewTrip extends JPanel {
 		LineBorder lineBorder = new LineBorder(Color.GRAY, 2, true);
 		callPanel = new JPanel(new GridLayout(5, 5));
 		callPanel.setBorder(lineBorder);
-		callPanel.setBounds(35, 58, 827, 334);
+		callPanel.setBounds(35, 68, 827, 330);
 
 		this.txtNum = 0;
 		if (tArrayLinkedList.getLength() > 5)
@@ -362,5 +389,4 @@ public class ViewTrip extends JPanel {
 			tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
 					Comparator.comparing(TravelPlane::getDuration));
 	}
-	
 }

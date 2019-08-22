@@ -27,7 +27,7 @@ public class ViewTrip extends JPanel {
 	private final UIControl mainFrame;
 	private int txtNum = 0, sortInt;
 	private JTextPane[] txtArray;
-	private JLabel lblmodeA, lblmodeR, lblmodeB, lblmodeC, lblmodeF, lblmodeT;
+	private JLabel lblmode;
 	private SortedLinkedList<TravelPlane> tArrayLinkedList;
 
 	private SinglyLinkedList<CircularLinkedList<TravelLegInfo>> temp = new SinglyLinkedList<CircularLinkedList<TravelLegInfo>>();
@@ -57,35 +57,17 @@ public class ViewTrip extends JPanel {
 		double kiddoPrice = 0;
 		// ====================Title=======================//
 		JLabel lblViewTrip = new JLabel("View Trip");
-		lblViewTrip.setHorizontalAlignment(SwingConstants.CENTER);
+		lblViewTrip.setHorizontalAlignment(SwingConstants.LEFT);
 		lblViewTrip.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblViewTrip.setBounds(10, 15, 878, 45);
+		lblViewTrip.setBounds(35, 22, 145, 45);
 		add(lblViewTrip);
 		
 		
-		lblmodeA = new JLabel("A = Airplane");
-		lblmodeA.setBounds(740, 0, 75, 20);
-		add(lblmodeA);
+		lblmode = new JLabel("A = Airplane | R = Rail/Train | B = Bus | C = Car | F = Ferry | T = Boat");
+		lblmode.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblmode.setBounds(316, 38, 546, 20);
+		add(lblmode);
 		
-		lblmodeR = new JLabel("R = Rail/Train");
-		lblmodeR.setBounds(740, 10, 75, 20);
-		add(lblmodeR);
-		
-		lblmodeB = new JLabel("B = Bus");
-		lblmodeB.setBounds(740, 20, 75, 20);
-		add(lblmodeB);
-		
-		lblmodeC = new JLabel("C = Car");
-		lblmodeC.setBounds(740, 30, 75, 20);
-		add(lblmodeC);
-		
-		lblmodeF = new JLabel("F = Ferry");
-		lblmodeF.setBounds(740, 40, 75, 20);
-		add(lblmodeF);
-		
-		lblmodeT = new JLabel("T = Boat");
-		lblmodeT.setBounds(740, 50, 75, 20);
-		add(lblmodeT);
 		
 		// ===============================================//
 
@@ -109,7 +91,7 @@ public class ViewTrip extends JPanel {
 
 				totalPrice += kids + adults;
 
-				if (j == 1) {// Display first source and first destination
+				if (j == 1 && temp.getEntry(i).getEntry(j + 1) != null) {// Display first source and first destination
 
 					pStrings += temp.getEntry(i).getEntry(j).getSource();
 					source = temp.getEntry(i).getEntry(j).getSource();
@@ -117,7 +99,8 @@ public class ViewTrip extends JPanel {
 					pStrings += callFrontArrow;
 					pStrings += temp.getEntry(i).getEntry(j).getMode();
 					pStrings += callBackArrow;
-
+					
+					
 					pStrings += temp.getEntry(i).getEntry(j).getDest();
 					pStrings += callFrontArrow;
 					pStrings += temp.getEntry(i).getEntry(j).getMode();
@@ -126,7 +109,25 @@ public class ViewTrip extends JPanel {
 					sortDuration += temp.getEntry(i).getEntry(j).getDuration();
 					distance += temp.getEntry(i).getEntry(j).getDistance();
 
-				} else {// Display next destination
+				}
+				else if (j == 1 && temp.getEntry(i).getEntry(j + 1) == null) {
+					
+					pStrings += temp.getEntry(i).getEntry(j).getSource();
+					source = temp.getEntry(i).getEntry(j).getSource();
+
+					pStrings += callFrontArrow;
+					pStrings += temp.getEntry(i).getEntry(j).getMode();
+					pStrings += callBackArrow;
+					
+					
+					pStrings += temp.getEntry(i).getEntry(j).getDest();
+
+					sortDuration += temp.getEntry(i).getEntry(j).getDuration();
+					distance += temp.getEntry(i).getEntry(j).getDistance();
+					
+				}
+				else {// Display next destination
+					
 					pStrings += temp.getEntry(i).getEntry(j).getDest();
 
 					if (temp.getEntry(i).getEntry(j + 1) != null) {

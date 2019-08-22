@@ -4,7 +4,6 @@ import java.awt.*;
 import javax.swing.*;
 import travelBug.library.CircularLinkedList;
 import travelBug.library.SinglyLinkedList;
-import travelBug.library.SortedLinkedList;
 import travelBug.library.library;
 import travelBug.obj.TravelLegInfo;
 import travelBug.obj.TravelPlane;

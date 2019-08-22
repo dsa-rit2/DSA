@@ -1,4 +1,5 @@
 import travelBug.UI.*;
+import travelBug.library.library;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -8,7 +9,9 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
     		try {
     			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    		} catch (Exception e) { e.printStackTrace(); }
+    		} catch (Exception e) { 
+    			library.dialogMessage(e.getMessage());
+    		}
     		new Authentication();
         });
 	}

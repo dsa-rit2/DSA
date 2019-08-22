@@ -47,6 +47,7 @@ public class ModifyLocation extends JPanel {
 		txtLocationName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtLocationName.setBounds(300, 64, 500, 30);
 		txtLocationName.setText(lArray.getIndexElement(locationFound).getName());
+		txtLocationName.setEnabled(false);
 		add(txtLocationName);
 		txtLocationName.setColumns(10);
 

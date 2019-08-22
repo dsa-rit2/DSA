@@ -118,7 +118,7 @@ public class MainMenu extends JPanel {
 		button_4.setBounds(690, 383, 189, 61);
 		add(button_4);
 		
-		Button button_5 = new Button("Travel Lag Maintanance");
+		Button button_5 = new Button("Travel Leg Maintanance");
 		button_5.addActionListener(event->{
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new TravelLegMaintenance(mainFrame)));
 

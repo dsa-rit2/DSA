@@ -62,17 +62,7 @@ public class MainMenu extends JPanel {
 
 	// --------------------------Admin Content----------------------
 	private void adminGUI() {
-//		String dateString = "2019-08-23";
-//		LocalDate toDate = LocalDate.parse(dateString);
-//		LinkArray<TravelLegInfo> pArray = new LinkArray<TravelLegInfo>();
-//		ReadWriteFile<TravelLegInfo> rFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
-//		pArray = rFile.readLinkArray();
-//		for(int i = 0; i<pArray.size();i++) {
-//			pArray.getIndexElement(i).setfromDate(toDate);
-//			pArray.getIndexElement(i).settoDate(toDate);
-//			System.out.println(pArray.getIndexElement(i).getfromDate());
-//		}
-//		rFile.writeLinkArray(pArray);
+
 		Button button = new Button("Customer List");
 		button.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		button.setForeground(Color.WHITE);

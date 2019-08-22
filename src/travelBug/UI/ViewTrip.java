@@ -348,7 +348,6 @@ public class ViewTrip extends JPanel {
 		btnPrice = new JButton("Price");
 		btnPrice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/////
 				SwingUtilities.invokeLater(() -> mainFrame.changePanel(
 						new ViewTrip(mainFrame, temp, adult, child,0)));
 			}
@@ -378,16 +377,27 @@ public class ViewTrip extends JPanel {
 			library.dialogMessage("0 result is found");
 			SwingUtilities.invokeLater(() -> mainFrame.changePanel(new PlanTrip(mainFrame)));
 		}
+		buttonChanged(sortInt);
 		revalidate();
 		repaint();
 	}
 
 	public void makeThing(int input) {
-		if (input == 0)
+		if (input == 0) 
 			tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
 					Comparator.comparing(TravelPlane::getPrice));
-		else if (input == 1)
+		else if (input == 1) 
 			tArrayLinkedList = new SortedLinkedList<TravelPlane>(linkedList,
 					Comparator.comparing(TravelPlane::getDuration));
+		
+	}
+	public void buttonChanged(int input) {
+		if(input == 0) {
+			btnPrice.setEnabled(false);
+			btnDuration.setEnabled(true);
+		}else if(input == 1) {
+			btnPrice.setEnabled(true);
+			btnDuration.setEnabled(false);
+		}
 	}
 }

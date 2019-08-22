@@ -427,7 +427,7 @@ public class AddTravelLeg extends JPanel {
 					try {
 						fromTime = LocalTime.parse(fromTimeString);
 					} catch (Exception e) {
-						e.printStackTrace();
+						library.dialogMessage("Invalid time format");
 					}
 				}
 				// validation for to date
@@ -440,7 +440,7 @@ public class AddTravelLeg extends JPanel {
 					try {
 						toTime = LocalTime.parse(toTimeString);
 					} catch (Exception e) {
-						e.printStackTrace();
+						library.dialogMessage("Invalid time format");
 					}
 				}
 				if (fromTimeString.length() > 0) {

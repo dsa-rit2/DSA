@@ -40,6 +40,7 @@ public class TravelLegModify extends JPanel {
 		super();
 		this.mainframe = parent;
 		parent.authUser.getUsername();
+		
 		// ======================= Jpanel setting ========================//
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
@@ -48,10 +49,10 @@ public class TravelLegModify extends JPanel {
 		// ====================== Content component =======================//
 		rArray = rFile.readLinkArray();
 		cArray = cFile.readLinkArray();
-		s = new TreeSet<String>();
 		for(int i = 0; i < cArray.size(); i++) {
 			s.add(cArray.getIndexElement(i).getName());
 		}
+		
 		// ============================ Content component =========================//
 		JLabel lblSourceLocation = new JLabel("Source location  :");
 		lblSourceLocation.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
@@ -65,30 +66,25 @@ public class TravelLegModify extends JPanel {
 			public void keyReleased(java.awt.event.KeyEvent evtEvent) {
 				boolean foundSource = false;
 				boolean foundDestination = false;
-				if(evtEvent.getKeyCode() == KeyEvent.VK_BACK_SPACE || evtEvent.getKeyCode() == KeyEvent.VK_SHIFT)
-				{				
-				}
-				else {					
-				String to_checkString = tfSourceL.getText();
-				int to_check_len = to_checkString.length();
-				for(String data:s) {
-					
-					String check_from_dataString = "";
-					for(int i = 0; i < to_check_len;i++) {
-						
-						if(to_check_len <= data.length()) {
-							check_from_dataString = check_from_dataString + data.charAt(i);
+				if (evtEvent.getKeyCode() != KeyEvent.VK_BACK_SPACE && evtEvent.getKeyCode() != KeyEvent.VK_SHIFT) {					
+					String to_checkString = tfSourceL.getText();
+					int to_check_len = to_checkString.length();
+					for (String data:s) {
+						String check_from_dataString = "";
+						for (int i = 0; i < to_check_len;i++) {
+							if (to_check_len <= data.length()) {
+								check_from_dataString = check_from_dataString + data.charAt(i);
+							}
 							
-						}
-						if(check_from_dataString.equalsIgnoreCase(to_checkString))
-						{
-							tfSourceL.setText(data);
-							tfSourceL.setSelectionStart(to_check_len);
-							tfSourceL.setSelectionEnd(data.length());
+							if (check_from_dataString.equalsIgnoreCase(to_checkString))
+							{
+								tfSourceL.setText(data);
+								tfSourceL.setSelectionStart(to_check_len);
+								tfSourceL.setSelectionEnd(data.length());
+							}
 						}
 					}
 				}
-			}
 				for(int i = 0; i < cArray.size(); i++) {
 					if((tfSourceL.getText().toString().equalsIgnoreCase(cArray.getIndexElement(i).getName()))) {
 						foundSource = true;
@@ -125,40 +121,36 @@ public class TravelLegModify extends JPanel {
 			public void keyReleased(java.awt.event.KeyEvent evtEvent) {
 				boolean foundSource = false;
 				boolean foundDestination = false;
-				if(evtEvent.getKeyCode() == KeyEvent.VK_BACK_SPACE || evtEvent.getKeyCode() == KeyEvent.VK_SHIFT)
-				{					
-				}
-				else {					
-				String to_checkString = tfDestinationL.getText();
-				int to_check_len = to_checkString.length();
-				for(String data:s) {
-					
-					String check_from_dataString = "";
-					for(int i = 0; i < to_check_len;i++) {
-						
-						if(to_check_len <= data.length()) {
-							check_from_dataString = check_from_dataString + data.charAt(i);
-							
-						}
-						if(check_from_dataString.equalsIgnoreCase(to_checkString))
-						{
-							tfDestinationL.setText(data);
-							tfDestinationL.setSelectionStart(to_check_len);
-							tfDestinationL.setSelectionEnd(data.length());
+				if (evtEvent.getKeyCode() != KeyEvent.VK_BACK_SPACE && evtEvent.getKeyCode() != KeyEvent.VK_SHIFT) {
+					String to_checkString = tfDestinationL.getText();
+					int to_check_len = to_checkString.length();
+					for (String data:s) {
+						String check_from_dataString = "";
+						for (int i = 0; i < to_check_len;i++) {
+							if (to_check_len <= data.length()) {
+								check_from_dataString = check_from_dataString + data.charAt(i);
+							}
+							if (check_from_dataString.equalsIgnoreCase(to_checkString)) {
+								tfDestinationL.setText(data);
+								tfDestinationL.setSelectionStart(to_check_len);
+								tfDestinationL.setSelectionEnd(data.length());
+							}
 						}
 					}
 				}
-			}
+				
 				for(int i = 0; i < cArray.size(); i++) {
 					if((tfSourceL.getText().toString().equalsIgnoreCase(cArray.getIndexElement(i).getName()))) {
 						foundSource = true;
 					}
 				}
+				
 				for(int i = 0; i < cArray.size(); i++) {
 					if((tfDestinationL.getText().toString().equalsIgnoreCase(cArray.getIndexElement(i).getName()))){
 						foundDestination = true;
 					}
 				}
+				
 				if(foundSource && foundDestination) {
 					cbTransport.setEnabled(true);
 					tfDistance.setText("0.0");
@@ -175,28 +167,25 @@ public class TravelLegModify extends JPanel {
 
 		cbTransport = new JComboBox<String>(new String[]{ "Select The transport type", "Airplane", "Rail/Train", "Bus", "Car", "Ferry", "Boat" });
 		cbTransport.setEnabled(false);
-		cbTransport.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				double latitude1 = 0.0;
-				double latitude2 = 0.0;
-				double longtitude1 = 0.0;
-				double longtitude2 = 0.0;
-				if(cbTransport.getSelectedItem().toString() != "Select The transport type" && tfSourceL.getText().toString() != null && tfDestinationL.getText().toString() != null) {
-					for(int i = 0; i < cArray.size(); i++) {
-						if((cArray.getIndexElement(i).getName()).equalsIgnoreCase(tfSourceL.getText().toString())) {
+		cbTransport.addActionListener(event -> {
+			double latitude1 = 0.0, latitude2 = 0.0, longtitude1 = 0.0, longtitude2 = 0.0;
+				
+			if(cbTransport.getSelectedItem().toString() != "Select The transport type" && tfSourceL.getText().toString() != null && tfDestinationL.getText().toString() != null) {
+				for(int i = 0; i < cArray.size(); i++) {
+					if(cArray.getIndexElement(i).getName().equalsIgnoreCase(tfSourceL.getText().toString())) {
 						latitude1 = cArray.getIndexElement(i).getLatitude();
 						longtitude1 = cArray.getIndexElement(i).getLongitude();
-						}
-						if((cArray.getIndexElement(i).getName()).equalsIgnoreCase(tfDestinationL.getText().toString())) {
-							latitude2 = cArray.getIndexElement(i).getLatitude();
-							longtitude2 = cArray.getIndexElement(i).getLongitude();
-						}
+					}
 					
-						double distance1 = library.CoordinateDistance(longtitude1, latitude1, longtitude2, latitude2);
-						String distanceString = String.format ("%.2f", distance1);
-						tfDistance.setText(distanceString);
+					if(cArray.getIndexElement(i).getName().equalsIgnoreCase(tfDestinationL.getText().toString())) {
+						latitude2 = cArray.getIndexElement(i).getLatitude();
+						longtitude2 = cArray.getIndexElement(i).getLongitude();
+					}
+				
+					double distance1 = library.CoordinateDistance(longtitude1, latitude1, longtitude2, latitude2);
+					String distanceString = String.format ("%.2f", distance1);
+					tfDistance.setText(distanceString);
 				}
-			}
 			}
 		});
 		cbTransport.setFont(new Font("Source Code Pro Black", Font.BOLD, 15));
@@ -355,10 +344,7 @@ public class TravelLegModify extends JPanel {
 		
 		Button btnCancel = new Button("Cancel");
 		btnCancel.setForeground(Color.RED);
-		btnCancel.addActionListener(event ->  {
-			library.dialogMessage("The page will redirect to list TravelLeg\n");
-			SwingUtilities.invokeLater(() -> mainframe.changePanel(new TravelLegMaintenance(mainframe)));
-		});
+		btnCancel.addActionListener(event -> SwingUtilities.invokeLater(() -> mainframe.changePanel(new TravelLegMaintenance(mainframe))));
 		btnCancel.setFont(new Font("Source Code Pro Black", Font.BOLD, 16));
 		btnCancel.setBounds(438, 390, 161, 50);
 		add(btnCancel);
@@ -570,7 +556,6 @@ public class TravelLegModify extends JPanel {
 						}
 					}
 					rFile.writeLinkArray(rArray);
-					library.dialogMessage("The travelLeg is updated\nThe page will redirect to list TravelLeg");
 					SwingUtilities.invokeLater(() -> mainframe.changePanel(new TravelLegMaintenance(mainframe)));
 					
 				}

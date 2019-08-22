@@ -404,7 +404,7 @@ public class AddTravelLeg extends JPanel {
 					lblFromDateError.setText("[Date should be filled!]");
 					error = true;
 				} else {
-					lblFromDateError.setText("");
+					System.out.println(dcFromDate.getDate());
 					dateString = new SimpleDateFormat("yyyy-MM-dd").format(dcFromDate.getDate());
 					fromDate = LocalDate.parse(dateString);
 				}

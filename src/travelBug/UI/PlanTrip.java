@@ -47,6 +47,28 @@ public class PlanTrip extends JPanel {
 		add(lblFindTheBest);
 		lblFindTheBest.setFont(new Font("Segoe UI", Font.BOLD, 30));
 		lblFindTheBest.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		// ========================== Error Message ============================
+		Label errorPpl = new Label("Number of people is 0");
+		errorPpl.setBackground(Color.WHITE);
+		errorPpl.setForeground(Color.RED);
+		errorPpl.setBounds(308, 360, 240, 24);
+		errorPpl.setVisible(false);
+		add(errorPpl);
+		
+		Label errorTo = new Label("Please fulfill all the requirement");
+		errorTo.setBackground(Color.WHITE);
+		errorTo.setForeground(Color.RED);
+		errorTo.setBounds(62, 329, 240, 24);
+		errorTo.setVisible(false);
+		add(errorTo);
+		
+		Label errorFrom = new Label("Please fulfill all the requirement");
+		errorFrom.setBackground(Color.WHITE);
+		errorFrom.setForeground(Color.RED);
+		errorFrom.setBounds(62, 169, 240, 24);
+		errorFrom.setVisible(false);
+		add(errorFrom);
 
 		// ========================== Continent ============================
 		SinglyLinkedList<Location> locationList = library.Convertion(locationArray);
@@ -386,43 +408,61 @@ public class PlanTrip extends JPanel {
 			childCount = Integer.parseInt(childSpinner.getValue().toString());
 
 			if (continent1.getSelectedIndex() <= 0) {
+				errorFrom.setVisible(true);
 				error = true;
 			} else if (country1.getSelectedIndex() <= 0) {
+				errorFrom.setVisible(true);
 				error = true;
 			} else if (place1.getSelectedIndex() <= 0) {
+				errorFrom.setVisible(true);
 				error = true;
 			} else if (locationName1.getSelectedIndex() <= 0) {
+				errorFrom.setVisible(true);
 				error = true;
+			}
+			else {
+				errorFrom.setVisible(false);
 			}
 
 			if (continent2.getSelectedIndex() <= 0) {
+				errorTo.setVisible(true);
 				error = true;
 			} else if (country2.getSelectedIndex() <= 0) {
+				errorTo.setVisible(true);
 				error = true;
 			} else if (place2.getSelectedIndex() <= 0) {
+				errorTo.setVisible(true);
 				error = true;
 			} else if (locationName2.getSelectedIndex() <= 0) {
+				errorTo.setVisible(true);
 				error = true;
+			}
+			else {
+				errorTo.setVisible(false);
 			}
 
 			if (editor1.getText().isEmpty()) {
+				errorFrom.setVisible(true);
 				error = true;
 			}
 			if (editor2.getText().isEmpty()) {
+				errorTo.setVisible(true);
 				error = true;
 			}
 
-			if (adultCount == 0) {
+			if (adultCount == 0 && childCount == 0) {
+				errorPpl.setVisible(true);
 				error = true;
+			}
+			else {
+				errorPpl.setVisible(false);
 			}
 
 			if (!error) {
 				ReadWriteFile<SourceDest> sFile = new ReadWriteFile<SourceDest>("sourceDes.txt", SourceDest.class);
 				SinglyLinkedList<SourceDest> sList = new SinglyLinkedList<SourceDest>();
-				ReadWriteFile<TravelLegInfo> readLocationFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt",
-						TravelLegInfo.class);
-				SinglyLinkedList<TravelLegInfo> travelLocationList = library
-						.Convertion(readLocationFile.readLinkArray());
+				ReadWriteFile<TravelLegInfo> readLocationFile = new ReadWriteFile<TravelLegInfo>("TravelLeg.txt", TravelLegInfo.class);
+				SinglyLinkedList<TravelLegInfo> travelLocationList = library.Convertion(readLocationFile.readLinkArray());
 				SinglyLinkedList<CircularLinkedList<TravelLegInfo>> searchedTravelPlan = new SinglyLinkedList<CircularLinkedList<TravelLegInfo>>();
 				GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>> srcLocation = new GroupList<TravelLegInfo, SinglyLinkedList<TravelLegInfo>>(
 						travelLocationList, Comparator.comparing(TravelLegInfo::getSource));
@@ -576,6 +616,11 @@ public class PlanTrip extends JPanel {
 
 				}
 				SwingUtilities.invokeLater(() -> mainFrame.changePanel(new ViewTrip(mainFrame, searchedTravelPlan, adultCount, childCount,0)));
+			}
+			else {
+//				errorPpl.setVisible(false);
+//				errorFrom.setVisible(false);
+//				errorTo.setVisible(false);
 			}
 		});
 	}

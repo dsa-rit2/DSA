@@ -61,7 +61,7 @@ public class SortedLinkedList<T> implements SortedLinkListInterface<T>, Serializ
 	}
 
 	public boolean remove(T anEntry) {
-		throw new UnsupportedOperationException(); // Left as Practical exercise
+		throw new UnsupportedOperationException();
 	}
 
 	public T getEntry(int givenPosition) {
